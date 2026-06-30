@@ -1,7 +1,7 @@
 export default function Navbar() {
   return (
     <div className="sticky top-5 z-50 max-w-[80%] mx-auto mt-4 px-4">
-      <nav className="flex items-center justify-between px-4 py-3 rounded-xl border border-white/10 backdrop-blur-md bg-black/15">
+      <nav className="flex items-center justify-between px-4 py-3 rounded-xl border border-white/10 backdrop-blur-md ">
         
         
         <div className="flex items-center gap-4">
@@ -10,7 +10,7 @@ export default function Navbar() {
             alt="logo" 
             className="h-10 w-10"
           />
-          <span className="text-white font-semibold text-[23px]">Fusion AI</span>
+          <span className="text-white font-semibold text-[23px]">Oraami</span>
         </div>
 
         

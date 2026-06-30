@@ -30,5 +30,87 @@ body {
 }
 
 @utility animate-marquee {
-  animation: marquee 16s linear infinite;
+  animation: marquee 20s linear infinite;
+}
+
+@keyframes slideUpFromBelow {
+  from {
+    transform: translateY(60px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.powered-text {
+  animation: slideUpFromBelow linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 700%;
+}
+@keyframes spinBall {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(400deg);
+  }
+}
+
+.spin-ball {
+  animation: spinBall 10s linear infinite;
+}
+
+@keyframes orbitLight {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes orbitLight {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.light-border {
+  position: relative;
+}
+
+.light-border::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 9999px;
+  background: conic-gradient(from 0deg, transparent 0%, rgba(255, 137, 24, 0.9) 10%, transparent 25%);
+  animation: orbitLight 3s linear infinite;
+  z-index: -1;
+}
+
+.card-light-border {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.card-light-border::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: conic-gradient(from 0deg, transparent 0%, rgba(255, 137, 24, 0.9) 8%, transparent 20%);
+  animation: orbitLight 4s linear infinite;
+  z-index: 0;
+}
+
+.card-light-border > .card-inner {
+  position: relative;
+  z-index: 1;
+  margin: 1px;
+  border-radius: inherit;
 }
