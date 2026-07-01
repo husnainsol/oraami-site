@@ -24,6 +24,9 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+           /*Animations*/
+
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
@@ -35,7 +38,7 @@ body {
 
 @keyframes slideUpFromBelow {
   from {
-    transform: translateY(60px);
+    transform: translateY(100px);
     opacity: 0;
   }
   to {
@@ -59,7 +62,7 @@ body {
 }
 
 .spin-ball {
-  animation: spinBall 10s linear infinite;
+  animation: spinBall 6s linear infinite;
 }
 
 @keyframes orbitLight {
@@ -69,28 +72,6 @@ body {
   100% {
     transform: rotate(360deg);
   }
-}
-@keyframes orbitLight {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.light-border {
-  position: relative;
-}
-
-.light-border::before {
-  content: "";
-  position: absolute;
-  inset: -3px;
-  border-radius: 9999px;
-  background: conic-gradient(from 0deg, transparent 0%, rgba(255, 137, 24, 0.9) 10%, transparent 25%);
-  animation: orbitLight 3s linear infinite;
-  z-index: -1;
 }
 
 .card-light-border {

@@ -4,13 +4,13 @@ export default function Navbar() {
       <nav className="flex items-center justify-between px-4 py-3 rounded-xl border border-white/10 backdrop-blur-md ">
         
         
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <img 
-            src="https://framerusercontent.com/images/VNxTg4trlyPkvi55POCdKXQ04kY.png" 
+            src="/O.svg" 
             alt="logo" 
             className="h-10 w-10"
           />
-          <span className="text-white font-semibold text-[23px]">Oraami</span>
+          <span className="text-white font-semibold text-[23px]">raami</span>
         </div>
 
         

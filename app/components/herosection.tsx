@@ -1,16 +1,14 @@
 export default function Hero() {
   return (
-    <section className="relative w-full min-h-screen overflow-hidden bg-black">
+    <section className="relative min-h-screen w-full overflow-hidden bg-black">
 
-      <video
-        src="https://framerusercontent.com/assets/Bax1SXv4b9QI33bMvkicABKnI.mp4"
-        autoPlay loop muted playsInline
-        className="absolute top-0 right-0 h-full w-[100%] object-cover"
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/hero-gradient.svg')" }}
       />
 
-      
-      <div className="absolute inset-0 bg-black/40"/>
-      <div className="relative z-10 px-45 pt-28 pb-20">
+      <div className="absolute inset-0 bg-black/30"/>
+      <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 py-24 text-center sm:px-10 lg:px-16">
 
         
         <div className="inline-block p-[2px] rounded-full bg-gradient-to-r from-orange-500 via-black to-blue-500 mb-3">
@@ -22,17 +20,17 @@ export default function Hero() {
         </div>
 
         
-        <h1 className="text-6xl font-bold text-white leading-tight mb-6 max-w-lg">
+        <h1 className="mb-6 max-w-3xl text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
           Automate Your AI Workflows with AI Agent
         </h1>
 
         
-        <p className="text-white/100 text-lg max-w-[37%] mb-10">
+        <p className="mb-10 max-w-2xl text-base text-gray-200 sm:text-lg">
           Connect your favorite apps, set triggers and watch AI handle the rest - no coding required. Get up and running in minutes.
         </p>
 
         
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col items-center gap-4 sm:flex-row">
 
           
           <div className="relative inline-block">

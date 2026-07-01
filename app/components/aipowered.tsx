@@ -5,22 +5,18 @@ export default function AIPowered() {
       <div className="flex items-center justify-center gap-4 mb-16">
 
         <img 
-            src="https://framerusercontent.com/images/VNxTg4trlyPkvi55POCdKXQ04kY.png" 
+            src="/O.svg" 
             alt="logo" 
             className="spin-ball w-35 h-35 rounded-full"
 />
 
         <h2 className="text-9xl font-bold text-white">AI</h2>
 
-        <h2 className="powered-text text-9xl font-bold"
-          style={{
-            backgroundImage: "linear-gradient(90deg, rgb(0,152,243) 0%, rgb(0,191,251) 37.5%, rgb(255,82,29) 70%, rgb(159,78,0) 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-          }}
-        >
-          Powered
-        </h2>
+        <h2
+       className="powered-text text-9xl font-bold bg-[linear-gradient(90deg,rgb(0,152,243)_0%,rgb(0,191,251)_37.5%,rgb(255,82,29)_70%,rgb(159,78,0)_100%)] bg-clip-text text-transparent"
+>
+  Powered
+</h2>
 
       </div>
 
