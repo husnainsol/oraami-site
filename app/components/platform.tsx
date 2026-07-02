@@ -1,9 +1,9 @@
 export default function Platform() {
   return (
-    <section className="relative w-full bg-black py-24 px-16 ">
+    <section className="relative w-full bg-black py-24 px-8 ">
  
       {/* Top heading */}
-      <div className="text-center mb-16">
+      <div className="text-center mb-12">
         <div className="inline-block p-[2px] rounded-full bg-gradient-to-r from-orange-500 via-black to-blue-500 mb-4">
           <div className="bg-black rounded-full px-4 py-1">
             <span className="text-white text-xs font-semibold tracking-widest uppercase">
@@ -12,7 +12,7 @@ export default function Platform() {
           </div>
         </div>
 
-        <h2 className="text-5xl font-bold text-white mb-6 max-w-2xl mx-auto leading-tight">
+        <h2 className="text-5xl font-bold text-white mb-6-xl mx-auto leading-tight">
             One platform.{" "}
             <span className="bg-gradient-to-r from-[rgb(255,82,29)] to-[rgb(255,137,24)] bg-clip-text text-transparent">
              Every tool
@@ -26,10 +26,10 @@ export default function Platform() {
       </div>
 
       {/* First Row  */}
-      <div className="grid grid-cols-1 gap-6 max-w-6xl mx-auto mb-6 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 max-w-5xl mx-auto mb-6 lg:grid-cols-3">
 
         {/* Card 1  */}
-        <div className="card-light-border h-[380px] lg:col-span-2">
+        <div className="card-light-border h-[350px] lg:col-span-2">
           <div className="card-inner bg-[#0a0a0a] rounded-2xl overflow-hidden relative w-full h-full">
             <img
               src="/g3.svg"
@@ -67,7 +67,7 @@ export default function Platform() {
         </div>
 
         {/* Card 4 */}
-        <div className="card-light-border h-[420px] lg:col-span-2">
+        <div className="card-light-border h-[450px] lg:col-span-2">
           <div className="card-inner bg-[#0a0a0a] rounded-2xl overflow-hidden relative w-full h-full">
             <img
               src="/g6.svg"

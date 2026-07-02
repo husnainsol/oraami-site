@@ -1,10 +1,10 @@
 import Navbar from "./components/navbar"
 import Hero from "./components/herosection"
 import TrustBar from "./components/trustbar"
-import Heroimg from "./components/heroimg"
 import Features from "./components/features"
 import AiPowered from "./components/aipowered"
 import Platform from "./components/platform"
+import Testimonials from "./components/testimonial"
 
 
 export default function Home() {
@@ -15,6 +15,7 @@ export default function Home() {
     <TrustBar/>
     <Features/>
     <Platform/>
+    <Testimonials/>
     <AiPowered/>
     </main>
   );

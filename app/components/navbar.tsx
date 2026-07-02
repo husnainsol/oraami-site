@@ -1,7 +1,7 @@
 export default function Navbar() {
   return (
-    <div className="sticky top-5 z-50 max-w-[80%] mx-auto mt-4 px-4">
-      <nav className="flex items-center justify-between px-4 py-3 rounded-xl border border-white/10 backdrop-blur-md ">
+    <div className="fixed left-1/2 top-5 z-50 w-full max-w-[80%] -translate-x-1/2 px-4">
+      <nav className="flex items-center justify-between rounded-xl border border-white/10 bg-black/25 px-4 py-3 backdrop-blur-md">
         
         
         <div className="flex items-center gap-2">
@@ -15,12 +15,12 @@ export default function Navbar() {
 
         
         <div className="flex items-center gap-7">
-          <a href="#" className="text-white/70 text-[19px] hover:text-white">About us</a>
-          <a href="#" className="text-white/70 text-[19px] hover:text-white">Pricing</a>
-          <a href="#" className="text-white/70 text-[19px] hover:text-white">Integration</a>
-          <a href="#" className="text-white/70 text-[19px] hover:text-white">Blog</a>
+          <a href="#" className="text-white/70 text-[19px] hover:text-white">About ICP</a>
+          <a href="#" className="text-white/70 text-[19px] hover:text-white">Features</a>
+          <a href="#" className="text-white/70 text-[19px] hover:text-white">Integrations</a>
+          <a href="#" className="text-white/70 text-[19px] hover:text-white">Testimonial</a>
           <a href="#" className="text-white/70 text-[19px] hover:text-white">Contact</a>
-          <a href="#" className="text-white/70 text-[19px] hover:text-white">Waitlist</a>
+          <a href="#" className="text-white/70 text-[19px] hover:text-white">About</a>
         </div>
 
           <div className="relative inline-block">
