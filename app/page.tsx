@@ -5,6 +5,8 @@ import Features from "./components/features"
 import AiPowered from "./components/aipowered"
 import Platform from "./components/platform"
 import Testimonials from "./components/testimonial"
+import LeadIntl from "./components/leadintl"
+import Footer from "./components/footer"
 
 
 export default function Home() {
@@ -17,6 +19,8 @@ export default function Home() {
     <Platform/>
     <Testimonials/>
     <AiPowered/>
+    <LeadIntl/>
+    <Footer/>
     </main>
   );
 }

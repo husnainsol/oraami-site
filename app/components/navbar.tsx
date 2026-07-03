@@ -1,7 +1,7 @@
 export default function Navbar() {
   return (
     <div className="fixed left-1/2 top-5 z-50 w-full max-w-[80%] -translate-x-1/2 px-4">
-      <nav className="flex items-center justify-between rounded-xl border border-white/10 bg-black/25 px-4 py-3 backdrop-blur-md">
+      <nav className="flex items-center justify-between rounded-xl border border-white/10 bg-black/25 px-4 py-3 backdrop-blur-xm">
         
         
         <div className="flex items-center gap-2">

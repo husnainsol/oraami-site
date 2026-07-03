@@ -18,11 +18,11 @@ export default function AIPowered() {
       <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.9fr_1.05fr] lg:gap-16">
         <div className="pt-2">
           <h3 className="text-3xl font-bold leading-tight text-white sm:text-4xl">
-            Let&apos;s <span className="text-[#ff5a1f]">talk</span> with us
+            Let's <span className="text-[#ff5a1f]">talk</span> with us
           </h3>
 
           <p className="mt-4 max-w-sm text-sm leading-6 text-white/85 sm:text-base">
-            Questions, comments, or suggestions? Simply fill in the form and we&apos;ll be in touch shortly.
+            Questions, comments, or suggestions? Simply fill in the form and we'll be in touch shortly.
           </p>
 
           <div className="mt-9 flex flex-col gap-6 text-base text-white/90">

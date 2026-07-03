@@ -29,7 +29,7 @@ export default function Testimonials() {
       </div>
 
       {/* Stacking Rows */}
-<div className="max-w-5xl mx-auto flex flex-col gap-10">
+<div className="max-w-3xl mx-auto flex flex-col gap-10">
 
   <div className="sticky-card sticky-card-1 grid grid-cols-2 gap-6 bg-black pb-4" style={{ top: "110px", zIndex: 1 }}>
     <img src="/t1.svg" alt="Testimonial 1" className="w-full h-auto block rounded-2xl"/>
