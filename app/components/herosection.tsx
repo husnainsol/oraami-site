@@ -20,12 +20,13 @@ export default function Hero() {
         </span>
 
         <h1 className="max-w-4xl text-balance text-4xl font-semibold leading-[1.06] tracking-normal text-[#f3f3f1] sm:text-6xl lg:text-7xl">
-          Identify customers
-          <br />
-          <span className="text-[#ff5a1f]">most likely</span> to convert
+          <span className="hero-entrance hero-entrance-delay-heading-1 block">Identify customers</span>
+          <span className="hero-entrance hero-entrance-delay-heading-2 block">
+            <span className="text-[#ff5a1f]">most likely</span> to convert
+          </span>
         </h1>
 
-        <p className="mt-7 max-w-2xl text-pretty text-base leading-8 text-white/62 sm:text-lg">
+        <p className="hero-entrance hero-entrance-delay-paragraph mt-7 max-w-2xl text-pretty text-base leading-8 text-white/62 sm:text-lg">
           Oraami analyzes your website, understands your product and audience, and surfaces the leads
           that match your ideal customer profile automatically.
         </p>
