@@ -23,11 +23,11 @@ function NavLink({ href, children, ...rest }: ComponentProps<"a">) {
 }
 
 const NAV_LINKS = [
-  { href: "#features", label: "Features" },
-  { href: "#platform", label: "Platform" },
-  { href: "#testimonials", label: "Testimonials" },
+  { href: "/features", label: "Features" },
+  { href: "/platform", label: "Platform" },
+  { href: "#pricing", label: "Pricing" },
+  { href: "/blog", label: "Blog" },
   { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
 ]
 
 export default function Navbar() {
@@ -37,6 +37,8 @@ export default function Navbar() {
   const onHome = pathname === "/"
 
   const to = (href: string) => (href.startsWith("#") ? (onHome ? href : `/${href}`) : href)
+  const isActive = (href: string) =>
+    href.startsWith("/") && (pathname === href || pathname.startsWith(`${href}/`))
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
@@ -56,23 +58,34 @@ export default function Navbar() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
-        scrolled || open ? "border-b border-black/10 bg-canvas/95 backdrop-blur-md" : "border-b border-transparent"
+        scrolled || open ? "border-b border-black/[0.07] bg-canvas/85 backdrop-blur-md" : "border-b border-transparent"
       }`}
     >
-      <div className="relative flex items-center justify-between py-4 pl-6 pr-4 sm:pl-10 sm:pr-6 lg:pl-12 lg:pr-12">
-
+      <div className="mx-auto flex max-w-[1240px] items-center justify-between px-6 py-4 sm:px-10 lg:px-12">
         <NavLink
           href={onHome ? "#hero" : "/"}
-          onClick={() => setOpen(false)}
           className="flex items-center gap-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
         >
           <Image src="/O.svg" alt="Oraami" width={28} height={28} className="h-7 w-7" />
           <span className="text-[17px] font-bold uppercase tracking-[0.14em] text-ink">Oraami</span>
         </NavLink>
 
-        <div className="flex items-center gap-3">
+        <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
+          {NAV_LINKS.map((link) => (
+            <NavLink
+              key={link.href}
+              href={to(link.href)}
+              className={`text-[14px] font-medium transition-colors hover:text-ink ${
+                isActive(link.href) ? "text-ink" : "text-muted"
+              }`}
+            >
+              {link.label}
+            </NavLink>
+          ))}
+        </nav>
 
-          <Button href="/contact" variant="primary" size="md" icon={ArrowRight} className="hidden sm:inline-flex">
+        <div className="flex items-center gap-3">
+          <Button href="/contact" variant="primary" size="md" icon={ArrowRight} className="hidden lg:inline-flex">
             Book a call
           </Button>
 
@@ -82,19 +95,9 @@ export default function Navbar() {
             aria-expanded={open}
             aria-controls="nav-menu"
             aria-label={open ? "Close menu" : "Open menu"}
-            className={`group relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/50 ${
-              open ? "bg-brand" : "bg-ink"
-            }`}
+            className="flex h-11 w-11 items-center justify-center rounded-xl border border-black/10 bg-canvas-soft text-ink transition-colors hover:border-black/20 lg:hidden"
           >
-            <span
-              aria-hidden
-              className={`absolute inset-0 origin-left scale-x-0 transition-transform duration-300 ease-out group-hover:scale-x-100 ${
-                open ? "bg-brand-hover" : "bg-brand"
-              }`}
-            />
-            <span className="relative z-10 flex items-center justify-center">
-              {open ? <X className="h-5 w-5" aria-hidden="true" /> : <Menu className="h-5 w-5" aria-hidden="true" />}
-            </span>
+            {open ? <X className="h-5 w-5" aria-hidden="true" /> : <Menu className="h-5 w-5" aria-hidden="true" />}
           </button>
         </div>
       </div>
@@ -103,28 +106,23 @@ export default function Navbar() {
         <nav
           id="nav-menu"
           aria-label="Primary"
-          className="absolute right-4 top-full w-[300px] max-w-[calc(100vw-2rem)] bg-ink p-6 shadow-2xl lg:right-12"
+          className="mx-auto max-w-[1240px] px-6 pb-5 sm:px-10 lg:hidden"
         >
-          <div className="flex flex-col">
-            {NAV_LINKS.map((link, i) => (
+          <div className="flex flex-col rounded-2xl border border-black/[0.08] bg-canvas-soft p-3">
+            {NAV_LINKS.map((link) => (
               <NavLink
                 key={link.href}
                 href={to(link.href)}
                 onClick={() => setOpen(false)}
-                className="flex items-center justify-between border-b border-white/10 py-3.5 text-sm uppercase tracking-widest text-white/75 transition-colors first:pt-0 hover:text-white"
+                className="rounded-xl px-3 py-3 text-[15px] font-medium text-ink transition-colors hover:bg-black/[0.04]"
               >
                 {link.label}
-                <span className="text-[10px] text-white/30">0{i + 1}</span>
               </NavLink>
             ))}
+            <Button href="/contact" variant="primary" fullWidth icon={ArrowRight} className="mt-2" onClick={() => setOpen(false)}>
+              Book a call
+            </Button>
           </div>
-          <Link
-            href="/contact"
-            onClick={() => setOpen(false)}
-            className="mt-6 flex items-center justify-center rounded-xl bg-brand px-5 py-3 text-xs uppercase tracking-widest text-white transition-colors hover:bg-brand-hover"
-          >
-            Book a Call
-          </Link>
         </nav>
       )}
     </header>
