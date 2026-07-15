@@ -42,7 +42,7 @@ export default function FeaturesPage() {
             WebkitMaskImage: "linear-gradient(to bottom, black 0%, transparent 85%)",
           }}
         />
-        <div className="relative mx-auto max-w-[1240px] px-6 pb-14 pt-32 sm:px-10 lg:px-12 lg:pb-16">
+        <div className="site-container relative pb-14 pt-32 lg:pb-16">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.18em] text-faint">
               <span className="h-1.5 w-1.5 bg-brand" />
@@ -59,7 +59,7 @@ export default function FeaturesPage() {
       </section>
 
       <section className="w-full bg-canvas">
-        <div className="mx-auto max-w-[1240px] px-6 py-16 sm:px-10 lg:px-12 lg:py-20">
+        <div className="site-container py-16 lg:py-20">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {AREAS.map((a) => {
               const { Icon } = a
@@ -91,7 +91,7 @@ export default function FeaturesPage() {
       </section>
 
       <section className="w-full border-t border-black/10 bg-canvas-soft">
-        <div className="mx-auto max-w-[1240px] px-6 py-16 sm:px-10 lg:px-12 lg:py-20">
+        <div className="site-container py-16 lg:py-20">
           <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
             <h2 className="max-w-xl text-[28px] font-medium leading-[1.1] tracking-[-0.02em] text-heading sm:text-[36px]">
               See what Oraami researches for your ICP

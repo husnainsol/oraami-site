@@ -64,7 +64,7 @@ export default function WhyChooseUs() {
         }}
       />
 
-      <div className="relative mx-auto max-w-[1240px] px-6 py-20 sm:px-10 lg:px-12 lg:py-20">
+      <div className="site-container relative py-20">
 
         <div className="max-w-2xl">
           <div className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-faint">

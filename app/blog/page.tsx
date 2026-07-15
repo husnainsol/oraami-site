@@ -45,7 +45,7 @@ export default function BlogPage() {
             WebkitMaskImage: "linear-gradient(to bottom, black 0%, transparent 85%)",
           }}
         />
-        <div className="relative mx-auto max-w-[1240px] px-6 pb-16 pt-28 sm:px-10 lg:px-12 lg:pb-16 lg:pt-32">
+        <div className="site-container relative pb-16 pt-28 lg:pb-16 lg:pt-32">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-faint">
               <span className="h-1.5 w-1.5 bg-brand" />
@@ -62,7 +62,7 @@ export default function BlogPage() {
       </section>
 
       <section className="w-full bg-canvas">
-        <div className="mx-auto max-w-[1240px] px-6 py-20 sm:px-10 lg:px-12 lg:py-20">
+        <div className="site-container py-20">
           {featured && (
             <Link
               href={`/blog/${featured.slug}`}

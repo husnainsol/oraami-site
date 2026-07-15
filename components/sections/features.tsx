@@ -18,7 +18,7 @@ const AREAS: Area[] = [
 export default function Features() {
   return (
     <section id="features" className="relative w-full border-b border-black/10 bg-canvas text-ink">
-      <div className="mx-auto max-w-[1240px] px-6 py-20 sm:px-10 lg:px-12">
+      <div className="site-container py-20">
         <div className="max-w-2xl">
           <div className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.18em] text-faint">
             <span className="h-1.5 w-1.5 bg-brand" />

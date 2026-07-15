@@ -42,6 +42,27 @@ body {
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
+/* Shared page-width boundary. Section backgrounds remain full bleed while their
+   direct content wrappers opt into this centered, responsive container. */
+.site-container {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 40rem) {
+  .site-container {
+    padding-inline: 2.5rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .site-container {
+    padding-inline: 3rem;
+  }
+}
+
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
@@ -55,7 +76,7 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 @utility hero-rise {
-  animation: heroRise 0.75s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: heroRise 2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 @keyframes hubPulse {

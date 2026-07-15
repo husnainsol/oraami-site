@@ -57,7 +57,7 @@ export default function AboutPage() {
             WebkitMaskImage: "linear-gradient(to bottom, black 0%, transparent 85%)",
           }}
         />
-        <div className="relative mx-auto max-w-[1240px] px-6 pb-16 pt-28 sm:px-10 lg:px-12 lg:pb-16 lg:pt-32">
+        <div className="site-container relative pb-16 pt-28 lg:pb-16 lg:pt-32">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-faint">
               <span className="h-1.5 w-1.5 bg-brand" />
@@ -74,7 +74,7 @@ export default function AboutPage() {
       </section>
 
       <section className="w-full bg-canvas">
-        <div className="mx-auto max-w-[1240px] px-6 py-20 sm:px-10 lg:px-12 lg:py-20">
+        <div className="site-container py-20">
           <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_1.1fr] lg:gap-20">
             <div>
               <p className={LABEL}>Why we built Oraami</p>
@@ -98,7 +98,7 @@ export default function AboutPage() {
       </section>
 
       <section className="w-full border-y border-black/10 bg-canvas-alt">
-        <div className="mx-auto max-w-[1240px] px-6 py-20 sm:px-10 lg:px-12 lg:py-20">
+        <div className="site-container py-20">
           <div className="max-w-2xl">
             <div className={`inline-flex items-center gap-2 ${LABEL}`}>
               <span className="h-1.5 w-1.5 bg-brand" />
@@ -127,7 +127,7 @@ export default function AboutPage() {
       </section>
 
       <section className="w-full bg-surface-dark text-white">
-        <div className="mx-auto max-w-[1240px] px-6 py-16 sm:px-10 lg:px-12 lg:py-20">
+        <div className="site-container py-16 lg:py-20">
           <div className="grid grid-cols-2 gap-x-8 gap-y-10 lg:grid-cols-4">
             {STATS.map((s) => (
               <div key={s.label} className="border-t-2 border-white/80 pt-6">
@@ -140,7 +140,7 @@ export default function AboutPage() {
       </section>
 
       <section className="w-full bg-canvas">
-        <div className="mx-auto max-w-[1240px] px-6 py-20 sm:px-10 lg:px-12 lg:py-20">
+        <div className="site-container py-20">
           <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
             <h2 className="max-w-2xl text-[32px] font-medium leading-[1.05] tracking-[-0.03em] text-heading sm:text-[44px]">
               Ready to find customers ready to buy?

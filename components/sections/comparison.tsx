@@ -20,7 +20,7 @@ export default function Comparison() {
   return (
     <section className="relative w-full overflow-hidden border-b border-white/10 bg-surface-dark text-white">
 
-      <div className="relative mx-auto max-w-[1240px] px-6 sm:px-10 lg:px-12">
+      <div className="site-container relative">
 
         <div className="grid lg:grid-cols-[minmax(300px,1fr)_2fr]">
           <div className="hidden lg:block" />

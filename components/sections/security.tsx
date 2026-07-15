@@ -45,7 +45,7 @@ function BoxIcon({ Icon }: { Icon: LucideIcon }) {
 export default function Security() {
   return (
     <section id="security" className="relative w-full border-b border-black/10 bg-canvas text-ink">
-      <div className="mx-auto max-w-[1240px] px-6 py-20 sm:px-10 lg:px-12 lg:py-20">
+      <div className="site-container py-20">
         <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_1.25fr] lg:gap-20">
 
           <div className="lg:sticky lg:top-24 lg:self-start">

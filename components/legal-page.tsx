@@ -25,7 +25,7 @@ export default function LegalPage({
             WebkitMaskImage: "linear-gradient(to bottom, black 0%, transparent 85%)",
           }}
         />
-        <div className="relative mx-auto max-w-[1240px] px-6 pb-14 pt-28 sm:px-10 lg:px-12 lg:pb-20 lg:pt-32">
+        <div className="site-container relative pb-14 pt-28 lg:pb-20 lg:pt-32">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-faint">
               <span className="h-1.5 w-1.5 bg-brand" />

@@ -25,8 +25,8 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative z-10 flex flex-1 items-center px-5 pb-10 pt-28 sm:px-8">
-        <div className="mx-auto grid w-full max-w-[1200px] items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <div className="relative z-10 flex flex-1 items-center pb-10 pt-28">
+        <div className="site-container grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div className="max-w-xl">
             <div className="hero-rise inline-flex items-center gap-2 rounded-full border border-black/10 bg-canvas-soft px-3.5 py-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-brand" style={{ animation: "hubPulse 1.6s ease-in-out infinite" }} />
@@ -73,7 +73,7 @@ export default function Hero() {
       </div>
 
       <div className="relative z-10 border-t border-black/10">
-        <div className="mx-auto grid max-w-[1200px] grid-cols-1 divide-y divide-black/10 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+        <div className="site-container grid grid-cols-1 divide-y divide-black/10 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
           <Stat top="89% ICP match accuracy" bottom="on every account we surface" />
           <Stat top="200M+ verified contacts" bottom="enriched and kept current" />
           <Stat top="Website to qualified lead" bottom="in a single automated motion" />

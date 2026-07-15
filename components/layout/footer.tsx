@@ -48,7 +48,7 @@ const socials = [
 export default function Footer() {
   return (
     <footer id="contact" className="w-full border-t border-black/10 bg-canvas">
-      <div className="mx-auto w-full max-w-[1240px] px-6 pb-10 pt-16 sm:px-10 lg:px-12">
+      <div className="site-container pb-10 pt-16">
         <div className="flex gap-16 max-lg:flex-col max-lg:gap-12">
           <div className="flex w-[260px] shrink-0 flex-col max-lg:w-auto">
             <Link href="/" aria-label="Oraami home" className="inline-flex w-fit items-center gap-2.5">

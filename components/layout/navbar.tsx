@@ -61,7 +61,7 @@ export default function Navbar() {
         scrolled || open ? "border-b border-black/[0.07] bg-canvas/85 backdrop-blur-md" : "border-b border-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-[1240px] items-center justify-between px-6 py-4 sm:px-10 lg:px-12">
+      <div className="site-container flex items-center justify-between py-4">
         <NavLink
           href={onHome ? "#hero" : "/"}
           className="flex items-center gap-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
@@ -106,7 +106,7 @@ export default function Navbar() {
         <nav
           id="nav-menu"
           aria-label="Primary"
-          className="mx-auto max-w-[1240px] px-6 pb-5 sm:px-10 lg:hidden"
+          className="site-container pb-5 lg:hidden"
         >
           <div className="flex flex-col rounded-2xl border border-black/[0.08] bg-canvas-soft p-3">
             {NAV_LINKS.map((link) => (

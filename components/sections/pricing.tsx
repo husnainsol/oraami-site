@@ -59,7 +59,7 @@ export default function Pricing() {
 
   return (
     <section id="pricing" className="relative w-full overflow-hidden border-b border-white/10 bg-surface-dark text-white">
-      <div className="mx-auto max-w-[1240px] px-6 py-20 sm:px-10 lg:px-12 lg:py-20">
+      <div className="site-container py-20">
 
         <div className="flex flex-col justify-between gap-10 lg:flex-row lg:items-end">
           <div className="max-w-2xl">
