@@ -84,12 +84,77 @@ body {
   50% { opacity: 0.5; }
 }
 
+@property --automation-beam-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes automationBorderBeam {
+  to { --automation-beam-angle: 360deg; }
+}
+
+.automation-card {
+  position: relative;
+  isolation: isolate;
+}
+
+.automation-card::before,
+.automation-card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: 1;
+  pointer-events: none;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  background:
+    conic-gradient(
+      from var(--automation-beam-angle),
+      transparent 0deg 250deg,
+      color-mix(in srgb, var(--color-brand) 5%, transparent) 270deg,
+      color-mix(in srgb, var(--color-brand) 14%, transparent) 292deg,
+      color-mix(in srgb, var(--color-brand) 32%, transparent) 312deg,
+      color-mix(in srgb, var(--color-brand) 68%, transparent) 331deg,
+      var(--color-brand) 344deg,
+      color-mix(in srgb, var(--color-brand) 82%, white) 349deg,
+      color-mix(in srgb, var(--color-brand) 38%, transparent) 356deg,
+      transparent 360deg
+    )
+    border-box;
+  mask:
+    linear-gradient(#000 0 0) padding-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  animation: automationBorderBeam 3.5s linear infinite;
+}
+
+.automation-card::after {
+  inset: -2px;
+  border-width: 2px;
+  opacity: 0.5;
+  filter: blur(4.5px);
+  will-change: filter, opacity;
+  transition: opacity 250ms ease, filter 250ms ease;
+}
+
+.automation-card:hover::after {
+  opacity: 0.78;
+  filter: blur(5.5px);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .automation-card::before,
+  .automation-card::after {
+    animation: none !important;
+    opacity: 0.3;
   }
 }
 

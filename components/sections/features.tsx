@@ -38,7 +38,7 @@ export default function Features() {
             return (
               <div
                 key={a.n}
-                className="group flex flex-col rounded-2xl border border-black/[0.08] bg-canvas-soft p-6 transition-all duration-200 hover:-translate-y-1 hover:border-brand/30 hover:shadow-[0_20px_44px_-26px_rgba(60,25,10,0.4)]"
+                className="automation-card group flex flex-col rounded-2xl border border-black/[0.08] bg-canvas-soft p-6 transition-all duration-200 hover:-translate-y-1 hover:border-brand/30 hover:shadow-[0_20px_44px_-26px_rgba(60,25,10,0.4)]"
               >
                 <div className="flex items-center justify-between">
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand/10 text-brand transition-colors duration-200 group-hover:bg-brand group-hover:text-on-primary">
