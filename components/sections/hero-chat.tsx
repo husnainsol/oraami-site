@@ -75,11 +75,11 @@ export default function HeroChat() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="relative hero-rise" style={{ animationDelay: "0.25s" }}>
+      <div className="relative">
         <span aria-hidden className="absolute -left-2 -top-2 z-10 h-4 w-4 border-l-2 border-t-2 border-brand" />
         <span aria-hidden className="absolute -bottom-2 -right-2 z-10 h-4 w-4 border-b-2 border-r-2 border-brand" />
 
-        <div className="overflow-hidden rounded-xl border border-white/10 bg-console font-mono shadow-[0_40px_90px_-40px_rgba(0,0,0,0.6)]">
+        <div className="overflow-hidden rounded-xl border border-white/10 bg-console font-mono shadow-[0_42px_90px_-44px_rgba(0,0,0,0.72)]">
 
           <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
             <div className="flex items-center gap-2.5">
@@ -96,7 +96,7 @@ export default function HeroChat() {
             </span>
           </div>
 
-          <div className="relative h-[416px] overflow-hidden">
+          <div className="relative h-[390px] overflow-hidden sm:h-[404px] lg:h-[390px] xl:h-[404px]">
             <div
               aria-hidden
               className="pointer-events-none absolute inset-0"
@@ -194,9 +194,14 @@ export default function HeroChat() {
               )}
             </AnimatePresence>
 
-            <span className="pt-1 text-white/30">
+            <span className="pt-1 text-white/30" aria-label="Terminal ready">
               <span className="text-brand">$</span>
-              <span className="ml-1 inline-block h-3.5 w-1.5 translate-y-0.5 bg-white/40" style={{ animation: "hubPulse 1s steps(1) infinite" }} />
+              <motion.span
+                aria-hidden="true"
+                className="ml-1 inline-block h-3.5 w-1.5 translate-y-0.5 bg-white/40"
+                animate={reduce ? undefined : { opacity: [1, 1, 0, 0] }}
+                transition={{ duration: 1.1, times: [0, 0.48, 0.49, 1], repeat: Infinity }}
+              />
             </span>
             </div>
           </div>

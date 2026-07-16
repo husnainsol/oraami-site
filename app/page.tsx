@@ -1,5 +1,4 @@
 import Hero from "@/components/sections/hero"
-import TrustBar from "@/components/sections/trustbar"
 import Features from "@/components/sections/features"
 import Platform from "@/components/sections/platform"
 import Results from "@/components/sections/results"
@@ -15,7 +14,6 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <TrustBar />
       <Features />
       <Platform />
       <Results />

@@ -12,15 +12,15 @@ const LOGOS: Logo[] = [
 
 function LogoSet() {
   return (
-    <div className="flex shrink-0 items-center" aria-hidden>
-      {LOGOS.map((l) => (
-        <span key={l.src} className="flex w-[230px] shrink-0 items-center justify-center">
+    <div className="flex shrink-0 items-center" aria-hidden="true">
+      {LOGOS.map((logo) => (
+        <span key={logo.src} className="flex w-[148px] shrink-0 items-center justify-center sm:w-[162px] lg:w-[172px]">
           <Image
-            src={l.src}
+            src={logo.src}
             alt=""
-            width={l.width}
-            height={l.height}
-            className="h-9 w-auto max-w-[190px] object-contain opacity-60 brightness-0"
+            width={logo.width}
+            height={logo.height}
+            className="h-6 w-auto max-w-[120px] object-contain opacity-100 grayscale sm:h-7 sm:max-w-[134px] lg:h-8 lg:max-w-[146px]"
           />
         </span>
       ))}
@@ -30,34 +30,26 @@ function LogoSet() {
 
 function Marquee() {
   return (
-    <div className="flex w-max animate-marquee items-center">
+    <div className="flex w-max animate-marquee items-center" style={{ animationDuration: "34s" }}>
       <LogoSet />
       <LogoSet />
     </div>
   )
 }
 
-const LABEL = "text-[15px] font-medium uppercase text-black"
-
 export default function TrustBar() {
   return (
-    <section aria-label="Trusted by" className="relative w-full overflow-hidden border-b border-black/10 bg-canvas">
-      <div className="relative py-10 md:py-16">
-
-        <div className="hidden items-center md:flex">
-          <span className={`ml-[8%] shrink-0 whitespace-nowrap pr-[120px] ${LABEL}`}>Trusted by:</span>
-          <div className="flex-1 overflow-hidden">
-            <Marquee />
-          </div>
-        </div>
-
-        <div className="flex flex-col items-center gap-6 md:hidden">
-          <span className={LABEL}>Trusted by:</span>
-          <div className="w-full overflow-hidden">
-            <Marquee />
-          </div>
-        </div>
+    <div aria-label="Trusted by growing B2B teams" className="w-full max-w-[36rem]">
+      <p className="text-[12.5px] font-medium uppercase tracking-[0.15em] text-faint">Trusted by</p>
+      <div
+        className="mt-3 w-full overflow-hidden"
+        style={{
+          maskImage: "linear-gradient(to right, transparent, black 2%, black 98%, transparent)",
+          WebkitMaskImage: "linear-gradient(to right, transparent, black 12%, black 98%, transparent)",
+        }}
+      >
+        <Marquee />
       </div>
-    </section>
+    </div>
   )
 }
