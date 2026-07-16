@@ -57,8 +57,8 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
-        scrolled || open ? "border-b border-black/[0.07] bg-canvas/85 backdrop-blur-md" : "border-b border-transparent"
+      className={`fixed left-1/2 top-3 z-50 w-[calc(100%-2rem)] max-w-[76rem] -translate-x-1/2 overflow-hidden rounded-2xl border transition-colors duration-300 sm:top-4 sm:w-[calc(100%-4rem)] ${
+        scrolled || open ? "border-black/[0.07] bg-canvas/85 shadow-sm backdrop-blur-md" : "border-transparent"
       }`}
     >
       <div className="site-container flex items-center justify-between py-4">
