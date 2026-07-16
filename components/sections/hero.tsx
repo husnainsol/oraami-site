@@ -78,7 +78,7 @@ export default function Hero() {
             </h1>
 
             <p className="hero-rise mt-5 max-w-[32rem] text-[17px] leading-[1.7] text-muted" style={{ animationDelay: "0.12s" }}>
-              Oraami&apos;s AI reads your website, learns who you sell to, and surfaces the accounts most likely to convert — just ask.
+              Oraami's AI reads your website, learns who you sell to, and surfaces the accounts most likely to convert — just ask.
             </p>
 
             <div className="hero-rise mt-7 flex flex-wrap gap-3.5" style={{ animationDelay: "0.18s" }}>

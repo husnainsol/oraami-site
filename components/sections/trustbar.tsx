@@ -30,7 +30,7 @@ function LogoSet() {
 
 function Marquee() {
   return (
-    <div className="flex w-max animate-marquee items-center" style={{ animationDuration: "34s" }}>
+    <div className="flex w-max animate-marquee items-center" style={{ animationDuration: "18s" }}>
       <LogoSet />
       <LogoSet />
     </div>
