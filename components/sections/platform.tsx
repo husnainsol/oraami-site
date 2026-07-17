@@ -1,4 +1,6 @@
+"use client"
 
+import { useEffect, useRef, useState } from "react"
 
 function IconDefine() {
   return (
@@ -46,9 +48,101 @@ const STEPS: Step[] = [
   { n: "04", label: "Engage", Icon: IconEngage, title: "Engage & build trust", desc: "8–12 personalised emails over 6–12 weeks that turn cold leads into warm relationships." },
 ]
 
-export default function Platform() {
+type ConnectorArrowsProps = { segment: number; signal: string | null }
+
+function ConnectorArrows({ segment, signal }: ConnectorArrowsProps) {
   return (
-    <section id="platform" className="relative w-full border-b border-black/10 bg-canvas text-ink">
+    <>
+      <span className={"process-connector-arrow process-connector-arrow--1 " + (signal === segment + "-0" ? "is-signalled" : "")} />
+      <span className={"process-connector-arrow process-connector-arrow--2 " + (signal === segment + "-1" ? "is-signalled" : "")} />
+    </>
+  )
+}
+
+export default function Platform() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const [started, setStarted] = useState(false)
+  const [activeStep, setActiveStep] = useState(-1)
+  const [beamStep, setBeamStep] = useState(0)
+  const [revealedStep, setRevealedStep] = useState(-1)
+  const [arrowSignal, setArrowSignal] = useState<string | null>(null)
+  const [isResetting, setIsResetting] = useState(false)
+
+  useEffect(() => {
+    const section = sectionRef.current
+    if (!section) return
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
+    if (reducedMotion.matches) {
+      setStarted(true)
+      setBeamStep(3)
+      setActiveStep(3)
+      setRevealedStep(3)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStarted(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.25 },
+    )
+
+    observer.observe(section)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!started || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+    const timers: number[] = []
+    let stopped = false
+    const schedule = (delay: number, action: () => void) => {
+      timers.push(window.setTimeout(action, delay))
+    }
+    const activate = (step: number) => {
+      setActiveStep(step)
+      setRevealedStep((current) => Math.max(current, step))
+    }
+    const runCycle = (): void => {
+      if (stopped) return
+      setIsResetting(false)
+      setBeamStep(0)
+      setArrowSignal(null)
+      activate(0)
+
+      schedule(650, () => setBeamStep(1))
+      schedule(920, () => setArrowSignal("0-0"))
+      schedule(1220, () => setArrowSignal("0-1"))
+      schedule(1550, () => { setArrowSignal(null); activate(1) })
+
+      schedule(2150, () => setBeamStep(2))
+      schedule(2420, () => setArrowSignal("1-0"))
+      schedule(2720, () => setArrowSignal("1-1"))
+      schedule(3050, () => { setArrowSignal(null); activate(2) })
+
+      schedule(3650, () => setBeamStep(3))
+      schedule(3920, () => setArrowSignal("2-0"))
+      schedule(4220, () => setArrowSignal("2-1"))
+      schedule(4550, () => { setArrowSignal(null); activate(3) })
+
+      schedule(6050, () => setIsResetting(true))
+      schedule(6350, () => { setBeamStep(0); setArrowSignal(null); setActiveStep(-1) })
+      schedule(6600, runCycle)
+    }
+
+    schedule(250, runCycle)
+    return () => {
+      stopped = true
+      timers.forEach(window.clearTimeout)
+    }
+  }, [started])
+
+  return (
+    <section ref={sectionRef} id="platform" className="relative w-full border-b border-black/10 bg-canvas text-ink">
       <div className="site-container py-20">
 
         <div className="max-w-2xl">
@@ -64,29 +158,36 @@ export default function Platform() {
           </p>
         </div>
 
-        <div className="relative mt-16 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
-
-          <div aria-hidden className="absolute left-6 right-6 top-6 hidden border-t border-dashed border-black/20 lg:block" />
+        <div className={"process-flow relative mt-16 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4 " + (isResetting ? "is-resetting" : "")}>
 
           {STEPS.map((s, i) => {
             const { Icon } = s
+            const isActive = activeStep === i
+            const isRevealed = revealedStep >= i
             return (
-              <div key={s.n} className="relative">
+              <div key={s.n} className={"process-step relative " + (isActive ? "is-active " : "") + (isRevealed ? "is-revealed" : "")}>
+                {i < STEPS.length - 1 && (
+                  <>
+                    <span aria-hidden className={"process-mobile-track sm:hidden " + (beamStep > i ? "is-travelled" : "")}>
+                      <ConnectorArrows segment={i} signal={arrowSignal} />
+                    </span>
+                    <span aria-hidden className={"process-desktop-segment hidden lg:block " + (beamStep > i ? "is-travelled" : "")}>
+                      <ConnectorArrows segment={i} signal={arrowSignal} />
+                    </span>
+                  </>
+                )}
 
                 <div className="flex items-center justify-between">
-                  <span className="flex h-12 items-center rounded-md border border-black/20 bg-white px-4 text-[15px] text-ink">
+                  <span className="process-number flex h-12 items-center rounded-md border border-black/20 bg-white px-4 text-[15px] text-ink">
                     <span className="text-brand">.</span>
                     {s.n}
                   </span>
-                  {i < STEPS.length - 1 && (
-                    <svg aria-hidden width="16" height="16" viewBox="0 0 16 16" fill="none" className="mr-1 hidden bg-white text-line-num lg:block">
-                      <path d="M2 8h12m0 0-4-4m4 4-4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  )}
                 </div>
 
-                <div className="mt-10">
-                  <Icon />
+                <div className="process-content mt-10">
+                  <span className={"process-icon process-icon--" + (i + 1)}>
+                    <Icon />
+                  </span>
                   <p className="mt-7 text-[11px] uppercase tracking-widest text-brand">{s.label}</p>
                   <h3 className="mt-3 text-[20px] font-medium tracking-tight text-ink">{s.title}</h3>
                   <p className="mt-3 max-w-[15rem] text-[15px] leading-relaxed text-muted">{s.desc}</p>

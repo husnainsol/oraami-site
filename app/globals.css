@@ -73,7 +73,7 @@ body {
 
 @keyframes heroRise {
   from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
+  to { opacity: 1; translate: 0 0; }
 }
 @utility hero-rise {
   animation: heroRise 2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
@@ -84,66 +84,269 @@ body {
   50% { opacity: 0.5; }
 }
 
-@property --automation-beam-angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
-@keyframes automationBorderBeam {
-  to { --automation-beam-angle: 360deg; }
-}
-
 .automation-card {
   position: relative;
   isolation: isolate;
+  transform: translate3d(0, 0, 0);
+  transition: transform 250ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 250ms ease, border-color 250ms ease;
 }
 
-.automation-card::before,
-.automation-card::after {
+.automation-card:hover {
+  transform: translate3d(0, -4px, 0);
+}
+
+@keyframes automationLargeEnter {
+  from { opacity: 0; scale: 0.985; }
+  to { opacity: 1; scale: 1; }
+}
+
+@keyframes automationCardEnter {
+  from { opacity: 0; translate: 0 10px; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+.automation-card--large { animation: automationLargeEnter 650ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.automation-card--medium { animation: automationCardEnter 560ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.automation-card--small { animation: automationCardEnter 480ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.automation-card--small:nth-child(3), .automation-card--small:nth-child(6) { animation-delay: 70ms; }
+.automation-card--small:nth-child(4) { animation-delay: 140ms; }
+
+@supports (animation-timeline: view()) {
+  .automation-card {
+    animation-timeline: view();
+    animation-range: entry 5% cover 28%;
+  }
+
+  .automation-card--small:nth-child(3), .automation-card--small:nth-child(6) { animation-range: entry 8% cover 31%; }
+  .automation-card--small:nth-child(4) { animation-range: entry 11% cover 34%; }
+}
+
+.process-flow.is-resetting .process-desktop-segment,
+.process-flow.is-resetting .process-mobile-track {
+  opacity: 0;
+}
+
+.process-desktop-segment {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  width: calc(100% + 2rem);
+  height: 1px;
+  z-index: 0;
+  background: repeating-linear-gradient(90deg, color-mix(in srgb, black 20%, transparent) 0 5px, transparent 5px 10px);
+  transition: opacity 300ms ease;
+}
+
+.process-desktop-segment::before {
   content: "";
   position: absolute;
-  inset: -1px;
+  inset: 0;
+  background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--color-brand) 62%, transparent) 0 6px, transparent 6px 10px);
+  scale: 0 1;
+  transform-origin: left;
+  transition: scale 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.process-desktop-segment::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-brand) 82%, white);
+  box-shadow: -8px 0 12px color-mix(in srgb, var(--color-brand) 30%, transparent);
+  opacity: 0;
+  translate: -50% -50%;
+  transition: left 900ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 200ms ease;
+}
+
+.process-desktop-segment.is-travelled::before { scale: 1 1; }
+.process-desktop-segment.is-travelled::after { left: 100%; opacity: 0.9; }
+
+.process-mobile-track {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  width: 1px;
+  height: calc(100% + 3.5rem);
+  z-index: 0;
+  background: repeating-linear-gradient(180deg, color-mix(in srgb, black 18%, transparent) 0 5px, transparent 5px 10px);
+  transition: opacity 300ms ease;
+}
+
+.process-mobile-track::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(180deg, color-mix(in srgb, var(--color-brand) 62%, transparent) 0 6px, transparent 6px 10px);
+  scale: 1 0;
+  transform-origin: top;
+  transition: scale 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.process-mobile-track::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-brand) 82%, white);
+  box-shadow: 0 -8px 12px color-mix(in srgb, var(--color-brand) 28%, transparent);
+  opacity: 0;
+  translate: -50% -50%;
+  transition: top 900ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 200ms ease;
+}
+
+.process-mobile-track.is-travelled::before { scale: 1 1; }
+.process-mobile-track.is-travelled::after { top: 100%; opacity: 0.9; }
+
+.process-connector-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  width: 7px;
+  height: 7px;
+  border-top: 1.25px solid var(--color-line-num);
+  border-right: 1.25px solid var(--color-line-num);
+  rotate: 45deg;
+  translate: -50% -50%;
+  transition: border-color 180ms ease, scale 180ms ease, filter 180ms ease;
+}
+
+.process-connector-arrow--1 { left: 34%; }
+.process-connector-arrow--2 { left: 68%; }
+
+.process-mobile-track .process-connector-arrow {
+  left: 50%;
+  rotate: 135deg;
+}
+
+.process-mobile-track .process-connector-arrow--1 { top: 34%; }
+.process-mobile-track .process-connector-arrow--2 { top: 68%; }
+
+.process-connector-arrow.is-signalled {
+  border-color: var(--color-brand);
+  scale: 1.12;
+  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--color-brand) 55%, transparent));
+}
+
+.process-step {
   z-index: 1;
-  pointer-events: none;
-  border: 1px solid transparent;
-  border-radius: inherit;
-  background:
-    conic-gradient(
-      from var(--automation-beam-angle),
-      transparent 0deg 250deg,
-      color-mix(in srgb, var(--color-brand) 5%, transparent) 270deg,
-      color-mix(in srgb, var(--color-brand) 14%, transparent) 292deg,
-      color-mix(in srgb, var(--color-brand) 32%, transparent) 312deg,
-      color-mix(in srgb, var(--color-brand) 68%, transparent) 331deg,
-      var(--color-brand) 344deg,
-      color-mix(in srgb, var(--color-brand) 82%, white) 349deg,
-      color-mix(in srgb, var(--color-brand) 38%, transparent) 356deg,
-      transparent 360deg
-    )
-    border-box;
-  mask:
-    linear-gradient(#000 0 0) padding-box,
-    linear-gradient(#000 0 0);
-  mask-composite: exclude;
-  animation: automationBorderBeam 3.5s linear infinite;
 }
 
-.automation-card::after {
-  inset: -2px;
-  border-width: 2px;
-  opacity: 0.5;
-  filter: blur(4.5px);
-  will-change: filter, opacity;
-  transition: opacity 250ms ease, filter 250ms ease;
+.process-number {
+  position: relative;
+  z-index: 2;
+  transition: border-color 300ms ease, box-shadow 300ms ease, scale 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.automation-card:hover::after {
-  opacity: 0.78;
-  filter: blur(5.5px);
+.process-content {
+  opacity: 0;
+  translate: 0 10px;
+  transition: opacity 560ms ease, translate 560ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.process-step.is-revealed .process-content {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.process-step.is-active .process-number {
+  border-color: color-mix(in srgb, var(--color-brand) 48%, transparent);
+  box-shadow: 0 8px 24px -16px color-mix(in srgb, var(--color-brand) 52%, transparent);
+  animation: processNumberPulse 620ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.process-icon .stroke-outline {
+  transition: stroke 300ms ease;
+}
+
+.process-step:hover .process-icon .stroke-outline,
+.process-step.is-active .process-icon .stroke-outline {
+  stroke: color-mix(in srgb, var(--color-brand) 72%, var(--color-ink));
+}
+
+.process-icon {
+  display: inline-flex;
+  transform-origin: center;
+  transition: color 300ms ease, scale 300ms ease, filter 300ms ease;
+}
+
+.process-step.is-active .process-icon {
+  color: var(--color-brand);
+  scale: 1.035;
+}
+
+.process-step:hover .process-content {
+  translate: 0 -4px;
+}
+
+.process-step:hover .process-number {
+  border-color: color-mix(in srgb, var(--color-brand) 42%, transparent);
+  box-shadow: 0 8px 22px -17px color-mix(in srgb, var(--color-brand) 45%, transparent);
+}
+
+.process-step:hover .process-icon {
+  scale: 1.045;
+}
+
+.process-step.is-active .process-icon--1 svg { animation: processTargetFocus 700ms ease; }
+.process-step.is-active .process-icon--2 svg { animation: processResearchMove 700ms ease; }
+.process-step.is-active .process-icon--3 path { animation: processMatchLeft 700ms ease; }
+.process-step.is-active .process-icon--3 rect { animation: processMatchRight 700ms ease; }
+.process-step.is-active .process-icon--4 svg { animation: processEngageMove 700ms ease; }
+
+@keyframes processNumberPulse {
+  45% { scale: 1.035; }
+}
+
+@keyframes processTargetFocus {
+  45% { scale: 1.055; }
+}
+
+@keyframes processResearchMove {
+  45% { rotate: 5deg; translate: 1px -1px; }
+}
+
+@keyframes processMatchLeft {
+  45% { translate: 2px 0; }
+}
+
+@keyframes processMatchRight {
+  45% { translate: -2px 0; }
+}
+
+@keyframes processEngageMove {
+  45% { translate: 4px -2px; rotate: -2deg; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .process-content {
+    opacity: 1 !important;
+    translate: none !important;
+  }
+
+  .process-desktop-segment::before,
+  .process-mobile-track::before {
+    scale: 1 1 !important;
+  }
+
+  .process-desktop-segment::after,
+  .process-mobile-track::after {
+    display: none;
+  }
+
+  .automation-card {
+    animation: none !important;
+    opacity: 1;
+    scale: 1;
+    translate: none;
+  }
+
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
@@ -151,11 +354,6 @@ body {
     scroll-behavior: auto !important;
   }
 
-  .automation-card::before,
-  .automation-card::after {
-    animation: none !important;
-    opacity: 0.3;
-  }
 }
 
 html.lenis,

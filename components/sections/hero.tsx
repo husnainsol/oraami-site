@@ -17,8 +17,8 @@ type StatProps = {
 
 function Stat({ icon: Icon, value, suffix = "", phrase, label }: StatProps) {
   return (
-    <article className="group flex h-full min-h-[98px] items-start gap-4 rounded-2xl border border-black/[0.08] bg-canvas px-5 py-5 shadow-[0_10px_30px_-24px_rgba(32,21,21,0.35)] transition-[transform,background-color,border-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-black/[0.12] hover:bg-canvas-soft hover:shadow-[0_16px_34px_-24px_rgba(32,21,21,0.42)] sm:px-6">
-      <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand/[0.08] text-brand transition-transform duration-200 group-hover:-translate-y-0.5">
+    <article className="group flex h-full min-h-[98px] items-start gap-4 rounded-2xl border border-black/[0.08] bg-canvas px-5 py-5 shadow-[0_10px_30px_-24px_rgba(32,21,21,0.35)] transition-[background-color,border-color,box-shadow] duration-200 hover:border-black/[0.12] hover:bg-canvas-soft hover:shadow-[0_16px_34px_-24px_rgba(32,21,21,0.42)] sm:px-6">
+      <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand/[0.08] text-brand">
         <Icon className="h-4 w-4" aria-hidden="true" />
       </span>
       <div>
@@ -40,8 +40,6 @@ function Stat({ icon: Icon, value, suffix = "", phrase, label }: StatProps) {
 
 export default function Hero() {
   const reduceMotion = useReducedMotion()
-  const float = reduceMotion ? undefined : { y: [0, -7, 0] }
-
   return (
     <section id="hero" className="relative w-full overflow-hidden bg-canvas text-ink">
       <div
@@ -122,13 +120,9 @@ export default function Hero() {
                 style={{ background: "radial-gradient(circle at 50% 55%, rgba(255,122,51,0.16), transparent 68%)" }}
               />
 
-              <motion.div
-                animate={float}
-                transition={{ duration: 7, ease: "easeInOut", repeat: Infinity }}
-                className="relative z-10 drop-shadow-[0_34px_55px_rgba(60,30,20,0.14)]"
-              >
+              <div className="relative z-10 drop-shadow-[0_34px_55px_rgba(60,30,20,0.14)]">
                 <HeroChat />
-              </motion.div>
+              </div>
 
             </div>
           </div>
