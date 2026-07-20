@@ -1,5 +1,9 @@
+"use client"
+
+import { useRef } from "react"
 import { ArrowRight, Briefcase, Building2, Landmark, LineChart, Monitor, Server } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
+import { motion, useInView, useReducedMotion, type Variants } from "framer-motion"
 import { Button } from "@/components/ui/button"
 
 type Industry = { name: string; Icon: LucideIcon; items: string[] }
@@ -13,20 +17,51 @@ const INDUSTRIES: Industry[] = [
   { name: "Fintech", Icon: Landmark, items: ["Account research", "Compliant outreach", "Sequenced touches", "Clean handoffs"] },
 ]
 
+const ease = [0.22, 1, 0.36, 1] as const
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      delay: index < 3 ? index * 0.09 : 0.15 + (index - 3) * 0.09,
+      ease,
+    },
+  }),
+}
+
 function IndustryIcon({ Icon }: { Icon: LucideIcon }) {
   return (
-    <div className="relative flex h-11 w-11 shrink-0 items-center justify-center border border-black/15">
-      <Icon className="h-5 w-5 text-ink" strokeWidth={1.5} aria-hidden="true" />
-      <span aria-hidden className="absolute -right-[5px] -top-[5px] h-2.5 w-2.5 bg-brand" />
+    <div className="relative flex h-11 w-11 shrink-0 items-center justify-center border border-black/15 transition-colors duration-300 group-hover:border-brand/25">
+      <Icon
+        className="h-5 w-5 text-ink transition-[color,transform] duration-300 ease-out group-hover:-translate-y-0.5 group-hover:text-ink-soft"
+        strokeWidth={1.5}
+        aria-hidden="true"
+      />
+      <span
+        aria-hidden
+        className="absolute -right-[5px] -top-[5px] h-2.5 w-2.5 bg-brand transition-transform duration-300 ease-out group-hover:scale-[1.15]"
+      />
     </div>
   )
 }
 
 export default function Solutions() {
-  return (
-    <section className="relative w-full border-b border-black/10 bg-canvas text-ink">
-      <div className="site-container py-20">
+  const sectionRef = useRef<HTMLElement>(null)
+  const reduceMotion = useReducedMotion()
+  const entered = useInView(sectionRef, { once: true, margin: "0px 0px -20% 0px" })
+  const animationState = reduceMotion || entered ? "visible" : "hidden"
 
+  return (
+    <section ref={sectionRef} className="relative w-full overflow-hidden border-b border-black/10 bg-canvas text-ink">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_55%_58%,rgba(255,79,0,0.025),transparent_42%)]"
+      />
+
+      <div className="site-container relative py-20">
         <div className="max-w-2xl">
           <div className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-faint">
             <span className="h-1.5 w-1.5 bg-brand" />
@@ -40,35 +75,53 @@ export default function Solutions() {
           </p>
         </div>
 
-        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {INDUSTRIES.map((ind) => {
+        <div className="mt-16 grid auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-6 lg:gap-y-7 lg:px-[30px]">
+          {INDUSTRIES.map((ind, index) => {
             const { Icon } = ind
+            const rowOffset = index < 3 ? "lg:-translate-x-[30px]" : "lg:translate-x-[30px]"
+
             return (
-              <div
-                key={ind.name}
-                className="group relative flex flex-col overflow-hidden rounded-xl border border-black/10 bg-canvas-soft p-7 transition-all duration-300 hover:-translate-y-1 hover:border-brand/30 hover:shadow-[0_24px_50px_-28px_rgba(20,10,0,0.4)]"
-              >
-                <span aria-hidden className="absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 bg-brand transition-transform duration-300 group-hover:scale-x-100" />
-                <div className="flex items-center gap-4">
-                  <IndustryIcon Icon={Icon} />
-                  <h3 className="text-[15px] font-medium uppercase leading-snug tracking-wide text-ink">
-                    {ind.name}
-                  </h3>
-                </div>
-                <ul className="mt-6 space-y-2.5 border-t border-dashed border-black/15 pt-6">
-                  {ind.items.map((t) => (
-                    <li key={t} className="flex gap-2 text-[15px] leading-relaxed text-muted">
-                      <span className="text-brand">&gt;</span>
-                      {t}
-                    </li>
-                  ))}
-                </ul>
+              <div key={ind.name} className={rowOffset}>
+                <motion.div
+                  custom={index}
+                  initial={reduceMotion ? false : "hidden"}
+                  animate={animationState}
+                  variants={cardVariants}
+                  whileHover={reduceMotion ? undefined : { y: -5 }}
+                  transition={{ duration: 0.27, ease }}
+                  className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-black/10 bg-canvas-soft p-7 transition-[border-color,box-shadow] duration-[275ms] ease-out hover:border-brand/30 hover:shadow-[0_26px_52px_-28px_rgba(20,10,0,0.45)]"
+                >
+                  <span
+                    aria-hidden
+                    className="absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 bg-brand transition-transform duration-[275ms] ease-out group-hover:scale-x-100"
+                  />
+
+                  <div className="flex items-center gap-4">
+                    <IndustryIcon Icon={Icon} />
+                    <h3 className="text-[15px] font-medium uppercase leading-snug tracking-wide text-ink">
+                      {ind.name}
+                    </h3>
+                  </div>
+
+                  <ul className="mt-6 space-y-2.5 border-t border-dashed border-black/15 pt-6">
+                    {ind.items.map((text, itemIndex) => (
+                      <li
+                        key={text}
+                        style={{ transitionDelay: `${itemIndex * 40}ms` }}
+                        className="flex gap-2 text-[15px] leading-relaxed text-muted transition-transform duration-200 ease-out group-hover:translate-x-1"
+                      >
+                        <span className="text-brand">&gt;</span>
+                        {text}
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
               </div>
             )
           })}
         </div>
 
-        <div className="mt-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+        <div className="mt-12 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <p className="text-[15px] leading-relaxed text-muted">Not listed? We adapt to any B2B motion.</p>
           <Button href="/contact" variant="secondary" icon={ArrowRight} className="shrink-0">
             Book a call
