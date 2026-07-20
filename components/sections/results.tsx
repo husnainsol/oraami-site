@@ -1,5 +1,3 @@
-import CountUp from "@/components/ui/count-up"
-
 type Result = { start: number; end?: number; suffix?: string; label: string; desc: string }
 
 const RESULTS: Result[] = [
@@ -51,13 +49,7 @@ export default function Results() {
           {RESULTS.map((r) => (
             <div key={r.label} className="border-t-2 border-ink pt-7">
               <p className="text-[clamp(3.25rem,6vw,5rem)] font-medium leading-none tracking-tight text-ink">
-                <CountUp end={r.start} duration={4000} startOnView />
-                {r.end != null && (
-                  <>
-                    –<CountUp end={r.end} suffix={r.suffix} duration={4000} startOnView />
-                  </>
-                )}
-                {r.end == null && r.suffix}
+                {r.end != null ? `${r.start}–${r.end}${r.suffix ?? ""}` : `${r.start}${r.suffix ?? ""}`}
               </p>
               <p className="mt-6 text-[12px] uppercase tracking-widest text-brand">{r.label}</p>
               <p className="mt-3 max-w-[15rem] text-[15px] leading-relaxed text-muted">{r.desc}</p>
