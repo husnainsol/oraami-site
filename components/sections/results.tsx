@@ -29,7 +29,7 @@ const RESULTS: Result[] = [
 
 export default function Results() {
   return (
-    <section className="relative w-full border-b border-black/10 bg-canvas-alt text-ink">
+    <section className="relative w-full border-b border-black/10 bg-[#FAF8F6] text-ink">
       <div className="site-container py-20">
 
         <div className="max-w-2xl">
@@ -47,8 +47,8 @@ export default function Results() {
 
         <div className="mt-16 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
           {RESULTS.map((r) => (
-            <div key={r.label} className="border-t-2 border-ink pt-7">
-              <p className="text-[clamp(3.25rem,6vw,5rem)] font-medium leading-none tracking-tight text-ink">
+            <div key={r.label} className="border-t-2 border-black/10 pt-7">
+              <p className="text-[clamp(3.25rem,6vw,5rem)] font-medium leading-none tracking-tight text-heading">
                 {r.end != null ? `${r.start}–${r.end}${r.suffix ?? ""}` : `${r.start}${r.suffix ?? ""}`}
               </p>
               <p className="mt-6 text-[12px] uppercase tracking-widest text-brand">{r.label}</p>

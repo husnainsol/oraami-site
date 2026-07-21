@@ -79,7 +79,7 @@ export default function HeroChat() {
         <span aria-hidden className="absolute -left-2 -top-2 z-10 h-4 w-4 border-l-2 border-t-2 border-brand" />
         <span aria-hidden className="absolute -bottom-2 -right-2 z-10 h-4 w-4 border-b-2 border-r-2 border-brand" />
 
-        <div className="overflow-hidden rounded-xl border border-white/10 bg-console font-mono shadow-[0_42px_90px_-44px_rgba(0,0,0,0.72)]">
+        <div className="overflow-hidden rounded-xl border border-white/14 bg-[#1E1A4D] font-mono shadow-[0_42px_90px_-44px_rgba(0,0,0,0.72)]">
 
           <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
             <div className="flex items-center gap-2.5">

@@ -178,7 +178,7 @@ export default function Platform() {
                 )}
 
                 <div className="flex items-center justify-between">
-                  <span className="process-number flex h-12 items-center rounded-md border border-black/20 bg-white px-4 text-[15px] text-ink">
+                  <span className="process-number flex h-12 items-center rounded-md border border-black/20 bg-[#1E1A4D] px-4 text-[15px] text-[#FAF8F6]">
                     <span className="text-brand">.</span>
                     {s.n}
                   </span>

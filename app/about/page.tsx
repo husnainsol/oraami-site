@@ -126,7 +126,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="w-full bg-surface-dark text-white">
+      <section className="w-full bg-[#1E1A4D] text-white">
         <div className="site-container py-16 lg:py-20">
           <div className="grid grid-cols-2 gap-x-8 gap-y-10 lg:grid-cols-4">
             {STATS.map((s) => (

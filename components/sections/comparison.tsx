@@ -86,7 +86,7 @@ export default function Comparison() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full overflow-hidden border-b border-white/10 bg-surface-dark text-white"
+      className="relative w-full overflow-hidden border-b border-white/10 bg-[#1E1A4D] text-white"
     >
       <div
         aria-hidden
@@ -142,7 +142,7 @@ export default function Comparison() {
               hidden: {},
               visible: { opacity: 0.58, transition: { delay: 1.25, duration: 0.55, ease } },
             }}
-            className="relative rounded-xl border border-white/[0.08] bg-white/[0.018] p-6 sm:p-7 lg:self-start"
+            className="relative rounded-xl border border-white/[0.08] bg-white/20 p-6 sm:p-7 lg:self-start"
           >
             <motion.p
               initial={reduceMotion ? false : { opacity: 0, y: 12 }}
@@ -197,7 +197,7 @@ export default function Comparison() {
               style={{ y: reduceMotion ? 0 : cardY }}
               whileHover={reduceMotion ? undefined : { y: -4 }}
               transition={{ duration: 0.28, ease }}
-              className="group relative overflow-hidden rounded-xl lg:flex lg:min-h-[420px] lg:flex-col border border-brand/25 bg-[#2b1c18] p-6 shadow-[0_24px_80px_rgba(255,80,20,0.08)] transition-[border-color,box-shadow] duration-300 hover:border-brand/40 hover:shadow-[0_28px_90px_rgba(255,80,20,0.12)] sm:p-7"
+              className="group relative overflow-hidden rounded-xl lg:flex lg:min-h-[420px] lg:flex-col border border-brand/25 bg-[#FAF8F6]/90 p-6 shadow-[0_24px_80px_rgba(255,80,20,0.08)] transition-[border-color,box-shadow] duration-300 hover:border-brand/40 hover:shadow-[0_28px_90px_rgba(255,80,20,0.12)] sm:p-7"
             >
               <motion.span
                 aria-hidden
@@ -221,7 +221,7 @@ export default function Comparison() {
                     variants={positiveRow}
                     whileHover={reduceMotion ? undefined : { x: 4 }}
                     transition={{ duration: 0.25, ease }}
-                    className="flex items-start gap-3 text-[15px] leading-[1.45] text-white/95"
+                    className="flex items-start gap-3 text-[15px] leading-[1.45] text-ink"
                   >
                     <motion.span variants={positiveRow} className="mt-0.5 shrink-0 text-brand transition-colors group-hover:text-[#ff6a29]">
                       <DrawnCheck />

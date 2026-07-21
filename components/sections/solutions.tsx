@@ -34,9 +34,9 @@ const cardVariants: Variants = {
 
 function IndustryIcon({ Icon }: { Icon: LucideIcon }) {
   return (
-    <div className="relative flex h-11 w-11 shrink-0 items-center justify-center border border-black/15 transition-colors duration-300 group-hover:border-brand/25">
+    <div className="relative flex h-11 w-11 shrink-0 items-center justify-center border border-black/10 bg-white/10 ring-1 ring-black/5 transition-colors duration-300 group-hover:border-brand/25 group-hover:bg-brand">
       <Icon
-        className="h-5 w-5 text-ink transition-[color,transform] duration-300 ease-out group-hover:-translate-y-0.5 group-hover:text-ink-soft"
+        className="h-5 w-5 text-brand transition-colors duration-300 ease-out group-hover:text-on-primary"
         strokeWidth={1.5}
         aria-hidden="true"
       />
@@ -87,28 +87,23 @@ export default function Solutions() {
                   initial={reduceMotion ? false : "hidden"}
                   animate={animationState}
                   variants={cardVariants}
-                  whileHover={reduceMotion ? undefined : { y: -5 }}
                   transition={{ duration: 0.27, ease }}
-                  className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-black/10 bg-canvas-soft p-7 transition-[border-color,box-shadow] duration-[275ms] ease-out hover:border-brand/30 hover:shadow-[0_26px_52px_-28px_rgba(20,10,0,0.45)]"
+                  className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-white/14 bg-[#1E1A4D] p-7 transition-colors duration-[275ms] ease-out hover:border-brand/30"
                 >
-                  <span
-                    aria-hidden
-                    className="absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 bg-brand transition-transform duration-[275ms] ease-out group-hover:scale-x-100"
-                  />
 
                   <div className="flex items-center gap-4">
                     <IndustryIcon Icon={Icon} />
-                    <h3 className="text-[15px] font-medium uppercase leading-snug tracking-wide text-ink">
+                    <h3 className="text-[15px] font-medium uppercase leading-snug tracking-wide text-[#FCFCFA]">
                       {ind.name}
                     </h3>
                   </div>
 
-                  <ul className="mt-6 space-y-2.5 border-t border-dashed border-black/15 pt-6">
+                  <ul className="mt-6 space-y-2.5 border-t border-dashed border-white/14 pt-6">
                     {ind.items.map((text, itemIndex) => (
                       <li
                         key={text}
                         style={{ transitionDelay: `${itemIndex * 40}ms` }}
-                        className="flex gap-2 text-[15px] leading-relaxed text-muted transition-transform duration-200 ease-out group-hover:translate-x-1"
+                        className="flex gap-2 text-[15px] leading-relaxed text-[#FCFCFA]/68 transition-transform duration-200 ease-out group-hover:translate-x-1"
                       >
                         <span className="text-brand">&gt;</span>
                         {text}

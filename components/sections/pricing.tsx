@@ -58,7 +58,7 @@ export default function Pricing() {
   const [annual, setAnnual] = useState(true)
 
   return (
-    <section id="pricing" className="relative w-full overflow-hidden border-b border-white/10 bg-surface-dark text-white">
+    <section id="pricing" className="relative w-full overflow-hidden border-b border-white/10 bg-[#1E1A4D] text-white">
       <div className="site-container py-20">
 
         <div className="flex flex-col justify-between gap-10 lg:flex-row lg:items-end">

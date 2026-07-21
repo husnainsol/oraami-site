@@ -302,7 +302,7 @@ export default function Dossier() {
   }
 
   return (
-    <section id="lead-dossier" ref={sectionRef} className="relative w-full overflow-hidden border-b border-black/10 bg-canvas-alt text-ink">
+    <section id="lead-dossier" ref={sectionRef} className="relative w-full overflow-hidden border-b border-black/10 bg-[#FAF8F6] text-ink">
       <div className="site-container py-24 sm:py-28 lg:py-36">
         <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-16">
           <div className="max-w-[740px]">
@@ -310,7 +310,7 @@ export default function Dossier() {
               <span data-eyebrow-marker className="h-2 w-2 bg-brand" aria-hidden="true" />
               The output
             </div>
-            <h2 data-dossier-heading className="mt-5 text-[38px] font-medium leading-[0.98] tracking-[-0.045em] text-heading sm:text-[48px] lg:text-[56px]">
+            <h2 data-dossier-heading className="mt-5 text-[38px] font-medium leading-[0.98] tracking-[-0.045em] text-ink sm:text-[48px] lg:text-[56px]">
               Anatomy of a <span className="relative whitespace-nowrap">researched<span className="absolute inset-x-0 -bottom-1 h-px bg-brand/55" aria-hidden="true" /></span> lead
             </h2>
             <p data-dossier-description className="mt-6 max-w-[610px] text-[16px] leading-[1.7] text-muted sm:text-[17px]">
@@ -328,11 +328,11 @@ export default function Dossier() {
           <div
             data-dossier-shell
             onPointerMove={handlePointerMove}
-            className="group/dossier relative isolate overflow-hidden rounded-[16px] border border-[#d9d0c8] bg-[#fbf8f5] shadow-[0_24px_80px_rgba(34,20,18,0.08)] transition-[transform,box-shadow] duration-300 ease-out motion-safe:hover:-translate-y-0.5 motion-safe:hover:shadow-[0_28px_84px_rgba(34,20,18,0.11)]"
+            className="group/dossier relative isolate overflow-hidden rounded-[16px] border border-[#d9d0c8] bg-[#FCFCFA] shadow-[0_24px_80px_rgba(34,20,18,0.08)] transition-[transform,box-shadow] duration-300 ease-out motion-safe:hover:-translate-y-0.5 motion-safe:hover:shadow-[0_28px_84px_rgba(34,20,18,0.11)]"
           >
             <div className="pointer-events-none absolute inset-0 z-10 hidden bg-[radial-gradient(280px_circle_at_var(--mouse-x,72%)_var(--mouse-y,50%),rgba(255,65,25,0.04),transparent_60%)] opacity-0 transition-opacity duration-300 group-hover/dossier:opacity-100 motion-reduce:hidden md:block" aria-hidden="true" />
             <div className="relative z-20">
-              <div className="grid min-h-[72px] items-center gap-4 border-b border-black/[0.09] bg-white/50 px-5 py-4 sm:px-7 md:grid-cols-[auto_minmax(120px,1fr)_auto] md:gap-7 md:py-0">
+              <div className="grid min-h-[72px] items-center gap-4 border-b border-black/10 bg-[#FCFCFA]/6 px-5 py-4 sm:px-7 md:grid-cols-[auto_minmax(120px,1fr)_auto] md:gap-7 md:py-0">
                 <div data-dossier-meta className="flex min-w-max items-center gap-3">
                   <span className="relative flex h-2 w-2" aria-hidden="true">
                     <span className="absolute inline-flex h-full w-full bg-brand/20" />
@@ -361,7 +361,7 @@ export default function Dossier() {
                     <p className="text-[10px] uppercase tracking-[0.12em] text-faint">Sources</p>
                     <p data-source-count className="mt-0.5 text-[12px] font-medium tabular-nums text-ink">14</p>
                   </div>
-                  <div className="inline-flex h-7 items-center gap-1.5 border border-[#d9d0c8] bg-[#f3eee8] px-2.5 text-[10px] font-medium text-ink-soft">
+                  <div className="inline-flex h-7 items-center gap-1.5 border border-[#d9d0c8] bg-[#FCFCFA] px-2.5 text-[10px] font-medium text-muted">
                     <CircleCheck data-complete-check className="h-3 w-3 text-[#49815e]" strokeWidth={2} aria-hidden="true" />
                     <span data-research-status aria-hidden="true">Research complete</span>
                     <span className="sr-only">Research complete</span>
@@ -379,25 +379,25 @@ export default function Dossier() {
                         <span>Industrial automation</span><span aria-hidden="true">·</span><span>320 employees</span><span aria-hidden="true">·</span><span>San Francisco</span>
                       </p>
                     </div>
-                    <div data-fit-score data-fit-metric className="group/fit relative min-w-[148px] overflow-hidden border border-brand/25 bg-[#fff7f2] px-4 py-3.5 transition-colors duration-200 hover:border-brand/45">
+                    <div data-fit-score data-fit-metric className="group/fit relative min-w-[148px] overflow-hidden border border-brand/25 bg-[#FCFCFA] px-4 py-3.5 transition-colors duration-200 hover:border-brand/45">
                       <span data-fit-pulse className="pointer-events-none absolute inset-0 bg-brand opacity-0" aria-hidden="true" />
                       <div className="relative flex items-end justify-between gap-4">
                         <span aria-hidden="true" className="text-[30px] font-medium leading-none tracking-[-0.04em] text-brand tabular-nums"><span data-fit-score-value>92</span><span className="ml-0.5 text-[13px] tracking-normal text-brand-faded">/100</span></span>
                         <span className="sr-only">Fit score 92 out of 100</span>
-                        <span data-high-fit className="mb-0.5 border border-brand/20 bg-white/80 px-1.5 py-1 text-[9px] font-medium uppercase tracking-[0.12em] text-ink">High fit</span>
+                        <span data-high-fit className="mb-0.5 border border-brand/20 bg-[#FCFCFA]/6 px-1.5 py-1 text-[9px] font-medium uppercase tracking-[0.12em] text-ink">High fit</span>
                       </div>
                       <div className="relative mt-3 h-1 overflow-hidden bg-brand/10" aria-hidden="true"><div data-fit-score-bar className="h-full w-full origin-left bg-brand" /></div>
                     </div>
                   </div>
 
-                  <div className="mt-10 border-t border-black/[0.07] pt-8">
+                  <div className="mt-10 border-t border-black/10 pt-8">
                     <p data-group-label="signals" className={LABEL}>Buying signals</p>
                     <div className="mt-4 flex flex-wrap gap-2.5">
                       {SIGNALS.map((signal) => (
                         <span
                           key={signal.label}
                           data-buying-signal
-                          className="group/signal inline-flex min-h-9 items-center gap-2 border border-[#ded6cf] bg-white/70 px-3 text-[12px] font-medium text-ink-soft transition-[transform,border-color,background-color] duration-200 motion-safe:hover:-translate-y-0.5 hover:border-brand/30 hover:bg-[#fff8f4]"
+                          className="group/signal inline-flex min-h-9 items-center gap-2 border border-[#ded6cf] bg-[#FCFCFA]/6 px-3 text-[12px] font-medium text-muted transition-[transform,border-color,background-color] duration-200 motion-safe:hover:-translate-y-0.5 hover:border-brand/30 hover:bg-[#fff8f4]"
                         >
                           <span data-signal-marker className="flex h-5 w-5 items-center justify-center bg-brand/[0.08] text-brand transition-colors duration-200 group-hover/signal:bg-brand/[0.13]" aria-hidden="true"><signal.icon className="h-3 w-3" strokeWidth={1.8} /></span>
                           {signal.label}
@@ -410,7 +410,7 @@ export default function Dossier() {
                     <p data-group-label="committee" className={LABEL}>Buying committee</p>
                     <div className="relative mt-4 grid gap-2 sm:grid-cols-2">
                       {COMMITTEE.map((person) => (
-                        <div key={person.initials} data-stakeholder className="group/person flex min-h-[66px] items-center gap-3 border border-black/[0.07] bg-white/45 p-2.5 transition-[background-color,border-color] duration-200 hover:border-black/[0.13] hover:bg-white/90">
+                        <div key={person.initials} data-stakeholder className="group/person flex min-h-[66px] items-center gap-3 border border-black/10 bg-[#FCFCFA]/6 p-2.5 transition-[background-color,border-color] duration-200 hover:border-[#FCFCFA]/20 hover:bg-[#FCFCFA]/10">
                           <span data-avatar className={`flex h-10 w-10 shrink-0 items-center justify-center border border-black/10 text-[11px] font-medium text-ink ${person.tone}`}>
                             {person.initials}
                           </span>
@@ -426,9 +426,9 @@ export default function Dossier() {
 
                   <div className="mt-9">
                     <p data-group-label="proof" className={LABEL}>Matched proof</p>
-                    <div data-proof-card className="group/proof relative mt-4 flex items-center gap-3 overflow-hidden border border-brand/20 bg-[#fff8f3] p-4 transition-[transform,border-color,background-color] duration-200 motion-safe:hover:-translate-y-0.5 hover:border-brand/40 hover:bg-[#fff5ee]">
+                    <div data-proof-card className="group/proof relative mt-4 flex items-center gap-3 overflow-hidden border border-brand/20 bg-[#FCFCFA] p-4 transition-[transform,border-color,background-color] duration-200 motion-safe:hover:-translate-y-0.5 hover:border-brand/40 hover:bg-[#FCFCFA]">
                       <span className="flex h-8 w-8 shrink-0 items-center justify-center bg-brand">
-                        <Check data-proof-check className="h-3.5 w-3.5 text-white" strokeWidth={2.5} aria-hidden="true" />
+                        <Check data-proof-check className="h-3.5 w-3.5 text-ink" strokeWidth={2.5} aria-hidden="true" />
                       </span>
                       <div data-proof-text className="min-w-0 flex-1">
                         <p className="text-[13px] font-medium text-ink">Solstice Cloud</p>
@@ -441,17 +441,17 @@ export default function Dossier() {
                   </div>
                 </div>
 
-                <div className="relative overflow-hidden border-t border-black/10 lg:border-l lg:border-t-0">
+                <div className="relative overflow-hidden border-t border-[#FCFCFA]/14 lg:border-l lg:border-t-0">
                   <span data-panel-divider className="absolute left-0 top-0 z-30 hidden h-full w-px bg-brand/45 lg:block" aria-hidden="true" />
-                  <div data-right-panel className="group/panel relative flex h-full min-h-[430px] flex-col overflow-hidden bg-ink p-6 text-white sm:p-8 lg:p-9 xl:p-10">
+                  <div data-right-panel className="group/panel relative flex h-full min-h-[430px] flex-col overflow-hidden bg-[#1E1A4D] p-6 text-[#FCFCFA] sm:p-8 lg:p-9 xl:p-10">
                     <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-white/20 via-white/5 to-transparent" aria-hidden="true" />
                     <div className="flex items-center justify-between gap-4">
-                      <p data-opening-label className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/48">Suggested opening</p>
-                      <span className="flex h-7 w-7 items-center justify-center border border-white/10 bg-white/[0.045] text-brand"><Sparkles className="h-3.5 w-3.5" strokeWidth={1.7} aria-hidden="true" /></span>
+                      <p data-opening-label className="text-[10px] font-medium uppercase tracking-[0.18em] text-[#FCFCFA]/48">Suggested opening</p>
+                      <span className="flex h-7 w-7 items-center justify-center border border-white/10 bg-[#FCFCFA]/6 text-brand"><Sparkles className="h-3.5 w-3.5" strokeWidth={1.7} aria-hidden="true" /></span>
                     </div>
-                    <div className="mt-5 border border-white/[0.09] bg-white/[0.035] p-5 transition-[background-color,border-color] duration-200 group-hover/panel:border-white/[0.13] group-hover/panel:bg-white/[0.05]">
+                    <div className="mt-5 border border-white/[0.09] bg-[#1E1A4D] p-5 transition-[background-color,border-color] duration-200 group-hover/panel:border-white/[0.13] group-hover/panel:bg-[#1E1A4D]">
                       <span className="block text-[34px] font-light leading-[0.65] text-brand/70" aria-hidden="true">“</span>
-                      <p data-opening-text aria-label={`“${OPENING}”`} className="mt-3 text-[16px] leading-[1.75] text-white/85">
+                      <p data-opening-text aria-label={`“${OPENING}”`} className="mt-3 text-[16px] leading-[1.75] text-[#FCFCFA]/85">
                         {OPENING_WORDS.map((word, index) => (
                           <span key={word + "-" + index} data-opening-word aria-hidden="true" className="inline-block">{word}{index < OPENING_WORDS.length - 1 ? "\u00a0" : ""}</span>
                         ))}
@@ -473,8 +473,8 @@ export default function Dossier() {
                             <span data-personalisation-pulse className="pointer-events-none absolute inset-0 bg-brand opacity-0" aria-hidden="true" />
                           )}
                           <div className="relative flex items-end justify-between gap-4">
-                            <span className="text-[10px] font-medium uppercase tracking-[0.15em] text-white/45">{score.label}</span>
-                            <span aria-hidden="true" className={"text-[22px] font-medium leading-none tabular-nums " + (score.kind === "personalisation" ? "text-brand" : "text-white/90")}><span data-quality-value={score.kind === "quality" ? "" : undefined} data-personalisation-value={score.kind === "personalisation" ? "" : undefined}>{score.value}</span><span className={score.kind === "quality" ? "text-[12px] text-white/35" : ""}>{score.suffix}</span></span>
+                            <span className="text-[10px] font-medium uppercase tracking-[0.15em] text-[#FCFCFA]/45">{score.label}</span>
+                            <span aria-hidden="true" className={"text-[22px] font-medium leading-none tabular-nums " + (score.kind === "personalisation" ? "text-brand" : "text-[#FCFCFA]/90")}><span data-quality-value={score.kind === "quality" ? "" : undefined} data-personalisation-value={score.kind === "personalisation" ? "" : undefined}>{score.value}</span><span className={score.kind === "quality" ? "text-[12px] text-[#FCFCFA]/35" : ""}>{score.suffix}</span></span>
                             <span className="sr-only">{score.kind === "quality" ? "Quality score 4.8 out of 5" : "Personalisation 100 percent"}</span>
                           </div>
                           {score.kind === "quality" ? (
@@ -494,8 +494,8 @@ export default function Dossier() {
                           )}
                         </div>
                       ))}
-                      <div data-score-row className="flex items-center justify-between border-t border-white/10 pt-4 text-[10px] font-medium uppercase tracking-[0.15em] text-white/45">
-                        <span>Evidence used</span><span className="text-white/85"><span data-source-count>14</span> sources</span>
+                      <div data-score-row className="flex items-center justify-between border-t border-white/10 pt-4 text-[10px] font-medium uppercase tracking-[0.15em] text-[#FCFCFA]/45">
+                        <span>Evidence used</span><span className="text-[#FCFCFA]/85"><span data-source-count>14</span> sources</span>
                       </div>
                     </div>
                   </div>
