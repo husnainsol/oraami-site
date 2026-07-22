@@ -4,7 +4,6 @@ import Platform from "@/components/sections/platform"
 import Results from "@/components/sections/results"
 import Comparison from "@/components/sections/comparison"
 import Solutions from "@/components/sections/solutions"
-import Dossier from "@/components/sections/dossier"
 import WhyChooseUs from "@/components/sections/why-choose-us"
 import Testimonials from "@/components/sections/testimonials"
 import Pricing from "@/components/sections/pricing"
@@ -19,7 +18,6 @@ export default function Home() {
       <Results />
       <Comparison />
       <Solutions />
-      <Dossier />
       <WhyChooseUs />
       <Testimonials />
       <Pricing />

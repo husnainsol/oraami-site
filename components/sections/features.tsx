@@ -1,144 +1,88 @@
 "use client"
 
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from "react"
-import {
-  AnimatePresence,
-  motion,
-  useInView,
-  useReducedMotion,
-  type Variants,
-} from "framer-motion"
+import { AnimatePresence, motion, useAnimationControls, useInView, useReducedMotion, type Variants } from "framer-motion"
 import {
   ArrowRight,
-  BadgeCheck,
   BarChart3,
-  BrainCircuit,
-  ChartColumn,
-  DatabaseZap,
-  Gauge,
   Mail,
   Network,
   Search,
-  ShieldCheck,
   Target,
-  TimerReset,
-  Workflow,
 } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
-type FeaturePoint = {
-  Icon: LucideIcon
-  title: string
-  desc: string
-}
-
 type Feature = {
-  n: string
   id: string
-  category: string
   Icon: LucideIcon
   title: string
   desc: string
   metric: string
   metricLabel: string
   tags: string[]
-  points: FeaturePoint[]
 }
 
 const FEATURES: Feature[] = [
   {
-    n: "01",
     id: "icp",
-    category: "Targeting",
     Icon: Target,
-    title: "ICP research & targeting",
+    title: "ICP Research & Targeting",
     desc:
       "Every ICP is capped at 50 high-fit leads, so your team works a laser-focused list built around the accounts most likely to convert.",
     metric: "50",
     metricLabel: "accounts per ICP",
     tags: ["50 leads / ICP", "High-fit", "Focused list"],
-    points: [
-      { Icon: Target, title: "Clear targeting criteria", desc: "Keeps research focused and outreach relevant from the start." },
-      { Icon: BadgeCheck, title: "High-fit accounts only", desc: "Prioritises the prospects most likely to convert." },
-      { Icon: TimerReset, title: "Less wasted time", desc: "Reduces effort spent on poor-fit accounts." },
-    ],
   },
   {
-    n: "02",
     id: "research",
-    category: "Research",
     Icon: Search,
-    title: "Deep lead research",
+    title: "Deep Lead Research",
     desc: "5-10 minutes of autonomous AI research on every prospect before you reach out.",
     metric: "5-10",
     metricLabel: "minutes per lead",
     tags: ["Autonomous", "Enrichment", "Pre-outreach"],
-    points: [
-      { Icon: Search, title: "Deep company context", desc: "Pulls the intelligence needed to personalise with confidence." },
-      { Icon: BrainCircuit, title: "Autonomous research", desc: "Runs before outreach so reps start with context, not guesswork." },
-      { Icon: DatabaseZap, title: "Stakeholder details", desc: "Surfaces decision-makers and account signals in one pass." },
-    ],
   },
   {
-    n: "03",
     id: "stakeholders",
-    category: "Contacts",
     Icon: Network,
-    title: "Multi-stakeholder mapping",
+    title: "Multi-Stakeholder Mapping",
     desc: "Map 6-10 decision-makers per account, not just a single point of contact.",
     metric: "6-10",
     metricLabel: "people per account",
     tags: ["Buying committee", "Roles", "Coverage"],
-    points: [
-      { Icon: Network, title: "Full committee view", desc: "Makes it easier to see who influences the deal." },
-      { Icon: Workflow, title: "Role clarity", desc: "Helps reps understand decision, technical, and economic buyers." },
-      { Icon: BadgeCheck, title: "Complete coverage", desc: "Keeps the team from relying on a single contact." },
-    ],
   },
   {
-    n: "04",
     id: "sequences",
-    category: "Outreach",
     Icon: Mail,
-    title: "Trust-building sequences",
+    title: "Trust-Building Sequences",
     desc: "8-12 personalised emails over 6-12 weeks that build genuine relationships.",
     metric: "6-12",
     metricLabel: "week window",
     tags: ["8-12 touches", "Trust", "Follow-up"],
-    points: [
-      { Icon: Mail, title: "Sequenced touches", desc: "Keeps outreach paced and relevant over time." },
-      { Icon: TimerReset, title: "Longer trust window", desc: "Supports a 6-12 week relationship-building motion." },
-      { Icon: ShieldCheck, title: "Human cadence", desc: "Helps each touch feel deliberate, not automated." },
-    ],
   },
   {
-    n: "05",
     id: "analytics",
-    category: "Analytics",
     Icon: BarChart3,
     title: "Analytics & Reporting",
     desc: "Track replies, meetings, and pipeline performance across every ICP in real time.",
     metric: "Live",
     metricLabel: "reporting view",
     tags: ["Real-Time", "Reporting", "Pipeline"],
-    points: [
-      { Icon: ChartColumn, title: "Real-time tracking", desc: "Keeps performance visible across active ICPs." },
-      { Icon: BadgeCheck, title: "Reply and meeting visibility", desc: "Shows how outreach is converting into conversations." },
-      { Icon: Workflow, title: "Pipeline progress", desc: "Surfaces movement from lead activity to booked meetings." },
-    ],
   },
 ]
 
 const ease = [0.22, 1, 0.36, 1] as const
+const FEATURE_AUTOPLAY_SECONDS = 7
+const FEATURE_AUTOPLAY_MS = FEATURE_AUTOPLAY_SECONDS * 1000
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 18 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.62, ease },
+    transition: { duration: 0.6, ease },
   },
 }
 
@@ -147,364 +91,307 @@ const listVariants: Variants = {
   visible: {
     transition: {
       staggerChildren: 0.07,
-      delayChildren: 0.12,
+      delayChildren: 0.08,
     },
   },
 }
 
-function PreviewFrame({ children }: { children: ReactNode }) {
+const panelVariants: Variants = {
+  hidden: { opacity: 0, y: 14 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.48,
+      ease,
+      when: "beforeChildren",
+      staggerChildren: 0.06,
+      delayChildren: 0.03,
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: 10,
+    transition: {
+      duration: 0.24,
+      ease,
+    },
+  },
+}
+
+const detailVariants: Variants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.34, ease },
+  },
+}
+
+const demoEase = [0.22, 1, 0.36, 1] as const
+
+function VisualizationFrame({ children }: { children: ReactNode }) {
   return (
-    <div className="relative overflow-hidden rounded-[26px] border border-black/10 bg-[#FCFCFA] shadow-[0_20px_55px_-34px_rgba(32,21,21,0.5)]">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,79,0,0.06),transparent_35%),linear-gradient(180deg,rgba(255,255,255,0.92),rgba(252,252,250,1))]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.12] [background-image:linear-gradient(to_right,rgba(32,21,21,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(32,21,21,0.08)_1px,transparent_1px)] [background-size:88px_88px]"
-      />
-      <div className="relative p-4 sm:p-5">{children}</div>
+    <div className="relative h-[520px] overflow-hidden rounded-[28px] border border-black/10 bg-[#FAF8F6] p-4 shadow-[0_24px_60px_-38px_rgba(32,21,21,0.5)] sm:h-[540px] sm:p-5 lg:h-[560px] lg:p-6">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:linear-gradient(to_right,rgba(32,21,21,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(32,21,21,0.12)_1px,transparent_1px)] [background-size:72px_72px]" />
+      <div className="relative h-full overflow-hidden rounded-[22px] border border-black/10 bg-white p-3 sm:p-4">{children}</div>
     </div>
   )
 }
 
+function ChartGrid({ width = 420, height = 220 }: { width?: number; height?: number }) {
+  return (
+    <g aria-hidden="true">
+      {[0.2, 0.4, 0.6, 0.8].map((ratio) => (
+        <line key={"h" + ratio} x1="28" x2={width - 12} y1={height * ratio} y2={height * ratio} stroke="rgba(32,21,21,0.075)" />
+      ))}
+      {[0.2, 0.4, 0.6, 0.8].map((ratio) => (
+        <line key={"v" + ratio} y1="12" y2={height - 24} x1={width * ratio} x2={width * ratio} stroke="rgba(32,21,21,0.055)" />
+      ))}
+    </g>
+  )
+}
+
+function AnimatedLine({
+  d,
+  color,
+  loop,
+  delay = 0,
+  dashed = false,
+  width = 2.5,
+}: {
+  d: string
+  color: string
+  loop: boolean
+  delay?: number
+  dashed?: boolean
+  width?: number
+}) {
+  return (
+    <motion.path
+      d={d}
+      fill="none"
+      stroke={color}
+      strokeWidth={width}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeDasharray={dashed ? "6 6" : undefined}
+      initial={false}
+      animate={{ pathLength: loop ? [0, 1, 1, 0] : 1, opacity: loop ? [0.15, 1, 1, 0.15] : 1 }}
+      transition={loop ? { duration: 7.2, delay, times: [0, 0.64, 0.92, 1], repeat: Infinity, repeatDelay: 1, ease: demoEase } : { duration: 0 }}
+    />
+  )
+}
+
+function ChartTooltip({ title, value, className = "" }: { title: string; value: string; className?: string }) {
+  return (
+    <div className={"rounded-lg border border-black/10 bg-white/95 px-2.5 py-2 shadow-[0_12px_28px_-22px_rgba(32,21,21,0.5)] " + className}>
+      <p className="text-[7px] uppercase tracking-[0.1em] text-faint">{title}</p>
+      <p className="mt-0.5 text-[9px] font-medium text-ink">{value}</p>
+    </div>
+  )
+}
+
+const ICP_POINTS = [
+  [58, 182, 330, 58, true], [84, 150, 354, 82, true], [112, 196, 376, 48, true],
+  [136, 126, 312, 92, true], [164, 172, 390, 112, true], [188, 106, 342, 122, true],
+  [72, 92, 212, 158, false], [102, 72, 178, 188, false], [130, 220, 236, 206, false],
+  [154, 52, 252, 174, false], [184, 232, 274, 220, false], [214, 144, 290, 194, false],
+  [242, 88, 286, 142, false], [266, 214, 302, 224, false], [292, 162, 318, 186, false],
+  [316, 116, 362, 72, true], [338, 138, 382, 96, true], [362, 178, 398, 132, true],
+] as const
+
+function IcpTargetingChart({ play, reduce }: { play: boolean; reduce: boolean }) {
+  const loop = play && !reduce
+  return (
+    <VisualizationFrame>
+      <svg viewBox="0 0 420 250" className="h-full w-full" role="img" aria-label="Buying intent versus ICP fit scatter plot">
+        <ChartGrid width={420} height={250} />
+        <motion.rect x="302" y="24" width="104" height="100" rx="14" fill="rgba(255,79,0,0.055)" stroke="#FF4F00" strokeDasharray="5 5" animate={loop ? { opacity: [0, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.2, times: [0, 0.2, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }} />
+        <text x="354" y="40" textAnchor="middle" fontSize="8" fill="#FF4F00">TARGET ZONE</text>
+        <text x="214" y="246" textAnchor="middle" fontSize="8" fill="rgba(32,21,21,0.48)">BUYING INTENT</text>
+        <text x="9" y="132" textAnchor="middle" fontSize="8" fill="rgba(32,21,21,0.48)" transform="rotate(-90 9 132)">ICP FIT</text>
+        {ICP_POINTS.map((point, index) => {
+          const [x, y, tx, ty, qualified] = point
+          return (
+            <motion.circle
+              key={index}
+              r={qualified ? 4.5 : 3.5}
+              fill={qualified ? "#FF4F00" : index % 2 ? "#7157A8" : "#2563EB"}
+              animate={loop ? { cx: [x, x, tx], cy: [y, y, ty], opacity: qualified ? [0.25, 0.75, 1, 1, 0.25] : [0.25, 0.7, 0.12, 0, 0.25] } : { cx: qualified ? tx : x, cy: qualified ? ty : y, opacity: qualified ? 1 : 0.14 }}
+              transition={loop ? { duration: 7.2, delay: index * 0.035, times: [0, 0.2, 0.72, 0.92, 1], repeat: Infinity, repeatDelay: 1, ease: demoEase } : { duration: 0 }}
+            />
+          )
+        })}
+      </svg>
+      <motion.div className="absolute right-5 top-5 z-20" animate={loop ? { opacity: [0, 0, 1, 1, 0], y: [6, 6, 0, 0, -3] } : { opacity: 1, y: 0 }} transition={loop ? { duration: 7.2, times: [0, 0.55, 0.68, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>
+        <ChartTooltip title="Northfield" value="Fit 94 · Intent high" />
+      </motion.div>
+    </VisualizationFrame>
+  )
+}
+
+const RESEARCH_LINES = [
+  { label: "Hiring", color: "#2563EB", d: "M22 180 C60 174 72 148 106 154 S150 120 182 128 S230 86 264 104 S310 52 394 68" },
+  { label: "Technology", color: "#7157A8", d: "M22 192 C70 186 84 166 124 170 S174 142 210 150 S258 110 296 122 S344 90 394 98" },
+  { label: "Growth", color: "#0F766E", d: "M22 202 C60 190 92 196 126 178 S182 170 218 142 S264 154 304 112 S350 120 394 86" },
+  { label: "News", color: "#D97706", d: "M22 212 C66 204 92 184 132 194 S184 154 226 176 S270 126 316 144 S360 106 394 118" },
+  { label: "Intent", color: "#FF4F00", d: "M22 220 C70 216 98 200 138 202 S192 188 232 166 S284 140 320 96 S360 72 394 42" },
+]
+
+function DeepResearchChart({ play, reduce }: { play: boolean; reduce: boolean }) {
+  const loop = play && !reduce
+  return (
+    <VisualizationFrame>
+      <svg viewBox="0 0 420 250" className="h-full w-full" role="img" aria-label="Research signal intensity over time">
+        <ChartGrid width={420} height={250} />
+        {RESEARCH_LINES.map((line, index) => <AnimatedLine key={line.label} d={line.d} color={line.color} loop={loop} delay={index * 0.12} width={index === 4 ? 3 : 1.8} />)}
+        <motion.line x1="320" x2="320" y1="30" y2="224" stroke="#FF4F00" strokeWidth="1.5" strokeDasharray="4 4" animate={loop ? { opacity: [0, 0, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.2, times: [0, 0.54, 0.64, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }} />
+        <motion.circle cx="320" cy="96" r="5" fill="#FF4F00" animate={loop ? { r: [3, 3, 7, 5, 3], opacity: [0, 0, 1, 1, 0] } : { r: 5, opacity: 1 }} transition={loop ? { duration: 7.2, times: [0, 0.54, 0.66, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }} />
+        <motion.text x="244" y="118" fontSize="8" fill="#0F766E" animate={loop ? { opacity: [0, 0.25, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.2, times: [0, 0.34, 0.5, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Growth</motion.text>
+        <motion.text x="330" y="86" fontSize="8" fill="#FF4F00" animate={loop ? { opacity: [0, 0, 1, 1, 0], y: [4, 4, 0, 0, -2] } : { opacity: 1, y: 0 }} transition={loop ? { duration: 7.2, times: [0, 0.56, 0.68, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Buying Signal</motion.text>
+      </svg>
+      <motion.div className="absolute right-5 top-5" animate={loop ? { opacity: [0, 0, 1, 1, 0], y: [5, 5, 0, 0, -3] } : { opacity: 1, y: 0 }} transition={loop ? { duration: 7.2, times: [0, 0.56, 0.68, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>
+        <ChartTooltip title="Buying trigger" value="CRM migration detected" />
+      </motion.div>
+    </VisualizationFrame>
+  )
+}
+
+const MAP_NODES = [
+  { role: "Champion", name: "Sales Director", x: 76, y: 64, color: "#0F766E" },
+  { role: "Decision maker", name: "VP Revenue", x: 344, y: 62, color: "#FF4F00" },
+  { role: "Influencer", name: "RevOps Lead", x: 62, y: 196, color: "#7157A8" },
+  { role: "Technical", name: "IT Director", x: 344, y: 196, color: "#2563EB" },
+  { role: "Finance", name: "CFO", x: 372, y: 128, color: "#D97706" },
+]
+
+function StakeholderMapChart({ play, reduce }: { play: boolean; reduce: boolean }) {
+  const loop = play && !reduce
+  return (
+    <VisualizationFrame>
+      <svg viewBox="0 0 420 250" className="absolute inset-0 h-full w-full" aria-hidden="true">
+        {MAP_NODES.map((node, index) => (
+          <motion.path key={node.role} d={"M210 128 Q" + (210 + (node.x - 210) * 0.35) + " " + (node.y + 18) + " " + node.x + " " + node.y} fill="none" stroke={node.color} strokeOpacity={index < 2 ? 0.82 : 0.28} strokeWidth={index < 2 ? 2.5 : 1.2 + index * 0.22} animate={{ pathLength: loop ? [0, 1, 1, 0] : 1 }} transition={loop ? { duration: 7.2, delay: index * 0.13, times: [0, 0.58, 0.92, 1], repeat: Infinity, repeatDelay: 1, ease: demoEase } : { duration: 0 }} />
+        ))}
+        <AnimatedLine d="M76 64 Q210 18 344 62" color="#FF4F00" loop={loop} delay={0.7} dashed width={2.8} />
+        <motion.circle r="4" fill="#FF4F00" animate={loop ? { cx: [76, 210, 344, 344, 76], cy: [64, 30, 62, 62, 64], opacity: [0, 1, 1, 0, 0] } : { cx: 344, cy: 62, opacity: 1 }} transition={loop ? { duration: 7.2, times: [0, 0.45, 0.72, 0.92, 1], repeat: Infinity, repeatDelay: 1, ease: "linear" } : { duration: 0 }} />
+      </svg>
+      <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-xl border border-brand/20 bg-brand/5 px-3 py-2 text-center"><p className="text-[7px] uppercase tracking-[0.1em] text-brand">Account</p><p className="mt-0.5 text-[11px] font-medium text-ink">Northfield</p></div>
+      {MAP_NODES.map((node, index) => (
+        <motion.div key={node.role} className="absolute z-10 w-[90px] -translate-x-1/2 -translate-y-1/2 rounded-lg border bg-white px-2 py-1.5 shadow-[0_10px_24px_-22px_rgba(32,21,21,0.48)]" style={{ left: (node.x / 420) * 100 + "%", top: (node.y / 250) * 100 + "%", borderColor: node.color + "33" }} animate={loop ? { opacity: [0, 1, 1, 0], scale: [0.86, 1, 1.03, 0.9] } : { opacity: 1, scale: 1 }} transition={loop ? { duration: 7.2, delay: index * 0.13, times: [0, 0.22, 0.84, 1], repeat: Infinity, repeatDelay: 1, ease: demoEase } : { duration: 0 }}><p className="truncate text-[7px] uppercase tracking-[0.08em]" style={{ color: node.color }}>{node.role}</p><p className="truncate text-[9px] font-medium text-ink">{node.name}</p></motion.div>
+      ))}
+      <motion.div className="absolute bottom-5 left-1/2 z-20 -translate-x-1/2 rounded-full border border-brand/20 bg-white px-3 py-1 text-[8px] font-medium text-brand" animate={loop ? { opacity: [0, 0, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.2, times: [0, 0.58, 0.7, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Best path: Champion -&gt; VP Revenue</motion.div>
+    </VisualizationFrame>
+  )
+}
+
+const ENGAGEMENT_LINES = [
+  { label: "Email opens", color: "#2563EB", d: "M22 196 C58 192 82 172 118 178 S166 142 202 150 S250 112 286 122 S342 80 396 92" },
+  { label: "LinkedIn", color: "#7157A8", d: "M22 208 C74 204 88 186 130 192 S182 168 222 174 S276 146 316 154 S360 128 396 134" },
+  { label: "Content", color: "#D97706", d: "M22 216 C84 212 106 198 146 202 S202 186 240 190 S288 166 326 170 S370 142 396 148" },
+  { label: "Replies", color: "#FF4F00", d: "M22 224 C120 222 158 214 210 212 S280 194 320 174 S366 126 396 116" },
+]
+
+function SequenceTimelineChart({ play, reduce }: { play: boolean; reduce: boolean }) {
+  const loop = play && !reduce
+  return (
+    <VisualizationFrame>
+      <div className="flex h-full flex-col">
+        <div className="relative min-h-0 flex-1">
+          <svg viewBox="0 0 420 240" className="h-full w-full" role="img" aria-label="Multi-channel engagement rising over time">
+            <ChartGrid width={420} height={240} />
+            {ENGAGEMENT_LINES.map((line, index) => <AnimatedLine key={line.label} d={line.d} color={line.color} loop={loop} delay={index * 0.14} width={index === 3 ? 3 : 2} />)}
+            {[82, 146, 210, 276, 326, 396].map((x, index) => (
+              <motion.g key={x} animate={loop ? { opacity: [0, 0, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.8, delay: index * 0.22, times: [0, 0.35, 0.55, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>
+                <line x1={x} x2={x} y1="34" y2="222" stroke="rgba(255,79,0,0.16)" strokeDasharray="3 4" />
+                <circle cx={x} cy={index === 5 ? 116 : 178 - index * 10} r="4" fill={index === 5 ? "#FF4F00" : "#FAF8F6"} stroke="#FF4F00" />
+              </motion.g>
+            ))}
+            <motion.text x="168" y="144" fontSize="8" fill="#7157A8" animate={loop ? { opacity: [0, 0.2, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.8, times: [0, 0.3, 0.46, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Active</motion.text>
+            <motion.text x="356" y="108" fontSize="8" fill="#FF4F00" animate={loop ? { opacity: [0, 0, 1, 1, 0], y: [3, 3, 0, 0, -2] } : { opacity: 1, y: 0 }} transition={loop ? { duration: 7.8, times: [0, 0.62, 0.76, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Reply</motion.text>
+          </svg>
+          <motion.div className="absolute right-4 top-4" animate={loop ? { opacity: [0, 0, 1, 1, 0], scale: [0.95, 0.95, 1, 1, 0.95] } : { opacity: 1, scale: 1 }} transition={loop ? { duration: 7.8, times: [0, 0.68, 0.78, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}><ChartTooltip title="Outcome" value="Meeting booked" /></motion.div>
+        </div>
+        <div className="relative h-[82px] shrink-0 border-t border-black/5 pt-5">
+          <div className="absolute left-[5%] right-[5%] top-[29px] h-px bg-black/10" />
+          <motion.div className="absolute left-[5%] top-7 h-0.5 w-[90%] origin-left bg-brand" animate={{ scaleX: loop ? [0, 1, 1, 0] : 1 }} transition={loop ? { duration: 7.8, times: [0, 0.82, 0.94, 1], repeat: Infinity, repeatDelay: 1, ease: "linear" } : { duration: 0 }} />
+          <div className="relative grid grid-cols-6">
+            {["Email", "LinkedIn", "Follow-up", "Case study", "Insight", "Meeting"].map((label, index) => <motion.div key={label} className="text-center" animate={loop ? { opacity: [0.3, 1, 1, 0.3] } : { opacity: 1 }} transition={loop ? { duration: 7.8, delay: index * 0.28, times: [0, 0.35, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}><span className="mx-auto block h-3 w-3 rounded-full border-2 border-brand bg-white" /><p className="mt-3 truncate text-[7px] text-muted">{label}</p></motion.div>)}
+          </div>
+        </div>
+      </div>
+    </VisualizationFrame>
+  )
+}
+
+function AnalyticsDashboardChart({ play, reduce }: { play: boolean; reduce: boolean }) {
+  const loop = play && !reduce
+  const current = "M18 142 C58 134 78 110 112 118 S166 84 198 94 S250 58 286 72 S340 32 386 42"
+  const previous = "M18 156 C62 148 86 132 122 138 S174 112 210 120 S262 92 302 104 S348 76 386 84"
+  return (
+    <VisualizationFrame>
+      <svg viewBox="0 0 404 180" className="h-full w-full" role="img" aria-label="Meeting rate current and previous period">
+        <defs><linearGradient id="analyticsAreaPro" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#FF4F00" stopOpacity="0.22" /><stop offset="100%" stopColor="#FF4F00" stopOpacity="0" /></linearGradient></defs>
+        <ChartGrid width={404} height={180} />
+        <motion.path d={current + " L386 172 L18 172 Z"} fill="url(#analyticsAreaPro)" animate={{ opacity: loop ? [0, 1, 1, 0] : 1 }} transition={loop ? { duration: 7.2, times: [0, 0.66, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }} />
+        <AnimatedLine d={previous} color="rgba(113,87,168,0.55)" loop={loop} dashed width={1.8} />
+        <AnimatedLine d={current} color="#FF4F00" loop={loop} delay={0.12} width={3} />
+        {[[112,118],[198,94],[286,72],[386,42]].map(([x,y], index) => <motion.circle key={x} cx={x} cy={y} r="4" fill="#FF4F00" stroke="white" strokeWidth="2" animate={loop ? { opacity: [0, 0, 1, 1, 0], scale: [0.6, 0.6, 1, 1, 0.6] } : { opacity: 1, scale: 1 }} transition={loop ? { duration: 7.2, delay: index * 0.11, times: [0, 0.55, 0.68, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }} />)}
+        <motion.text x="202" y="84" fontSize="8" fill="#FF4F00" animate={loop ? { opacity: [0, 0.2, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.2, times: [0, 0.34, 0.48, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Growth</motion.text>
+        <motion.text x="338" y="36" fontSize="8" fill="#0F766E" animate={loop ? { opacity: [0, 0, 1, 1, 0], y: [3, 3, 0, 0, -2] } : { opacity: 1, y: 0 }} transition={loop ? { duration: 7.2, times: [0, 0.58, 0.7, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Top Account</motion.text>
+      </svg>
+    </VisualizationFrame>
+  )
+}
+
+function FeatureVisualization({ featureId, play, reduce }: { featureId: Feature["id"]; play: boolean; reduce: boolean }) {
+  if (featureId === "icp") return <IcpTargetingChart play={play} reduce={reduce} />
+  if (featureId === "research") return <DeepResearchChart play={play} reduce={reduce} />
+  if (featureId === "stakeholders") return <StakeholderMapChart play={play} reduce={reduce} />
+  if (featureId === "sequences") return <SequenceTimelineChart play={play} reduce={reduce} />
+  return <AnalyticsDashboardChart play={play} reduce={reduce} />
+}
+
 function FeatureVisual({ feature, reduce }: { feature: Feature; reduce: boolean }) {
-  const motionProps = reduce ? {} : { initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 } }
-
-  if (feature.id === "icp") {
-    return (
-      <PreviewFrame>
-        <motion.div className="grid gap-4 sm:grid-cols-[1.08fr_0.92fr]" {...motionProps} transition={{ duration: 0.45, ease }}>
-          <div className="rounded-2xl border border-black/10 bg-white p-4">
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <p className="text-[11px] uppercase tracking-[0.18em] text-faint">ICP filters</p>
-                <p className="mt-1 text-[15px] font-medium text-ink">50 high-fit leads selected</p>
-              </div>
-              <div className="rounded-full bg-brand/10 px-3 py-1 text-[12px] font-medium text-brand">High-fit only</div>
-            </div>
-            <div className="mt-4 space-y-3">
-              {[
-                ["Northfield", "92 fit", "Enterprise SaaS"],
-                ["Solstice Cloud", "89 fit", "Security"],
-                ["Cascade Health", "86 fit", "Healthcare"],
-              ].map(([company, score, industry], index) => (
-                <div key={company} className="rounded-2xl border border-black/10 bg-[#FCFCFA] px-3 py-3.5">
-                  <div className="flex items-center justify-between gap-3">
-                    <div>
-                      <p className="text-[14px] font-medium text-ink">{company}</p>
-                      <p className="text-[12px] text-muted">{industry}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-[12px] font-semibold text-brand">{score}</p>
-                      <p className="text-[11px] uppercase tracking-[0.14em] text-faint">fit</p>
-                    </div>
-                  </div>
-                  <div className="mt-3 h-1.5 rounded-full bg-black/5">
-                    <motion.div
-                      className="h-full rounded-full bg-brand"
-                      initial={reduce ? { width: "72%" } : { width: "0%" }}
-                      animate={{ width: `${72 + index * 6}%` }}
-                      transition={{ duration: 0.55, delay: 0.12 + index * 0.08, ease }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="space-y-4 rounded-2xl border border-black/10 bg-[#FCFCFA] p-4">
-            <div className="rounded-2xl border border-brand/15 bg-brand/5 px-4 py-4">
-              <p className="text-[11px] uppercase tracking-[0.18em] text-brand">Lead score</p>
-              <p className="mt-2 text-[28px] font-medium leading-none text-ink">92</p>
-              <p className="mt-1 text-[12px] text-muted">Clear fit for the current ICP</p>
-            </div>
-            <div className="space-y-2.5">
-              {[
-                ["Industry match", "Strong"],
-                ["Target fit", "High"],
-                ["List size", "50 accounts"],
-              ].map(([label, value]) => (
-                <div key={label} className="flex items-center justify-between rounded-2xl border border-black/10 bg-white px-3 py-3">
-                  <p className="text-[12px] text-muted">{label}</p>
-                  <p className="text-[13px] font-medium text-ink">{value}</p>
-                </div>
-              ))}
-            </div>
-            <div className="rounded-2xl border border-black/10 bg-white px-4 py-4">
-              <p className="text-[11px] uppercase tracking-[0.16em] text-faint">Account summary</p>
-              <p className="mt-2 text-[14px] leading-relaxed text-muted">
-                High-fit accounts stay visible at a glance without the noise of extra widgets.
-              </p>
-            </div>
-          </div>
+  const visualRef = useRef<HTMLDivElement>(null)
+  const inView = useInView(visualRef, { margin: "0px 0px -12% 0px" })
+  return (
+    <div ref={visualRef}>
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div key={feature.id} initial={reduce ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={reduce ? undefined : { opacity: 0, y: -8 }} transition={{ duration: reduce ? 0 : 0.32, ease }}>
+          <FeatureVisualization featureId={feature.id} play={inView} reduce={reduce} />
         </motion.div>
-      </PreviewFrame>
-    )
-  }
+      </AnimatePresence>
+    </div>
+  )
+}
 
-  if (feature.id === "research") {
-    return (
-      <PreviewFrame>
-        <motion.div className="grid gap-4 sm:grid-cols-[0.92fr_1.08fr]" {...motionProps} transition={{ duration: 0.45, ease }}>
-          <div className="rounded-2xl border border-black/10 bg-white p-4">
-            <p className="text-[11px] uppercase tracking-[0.18em] text-faint">Research timeline</p>
-            <div className="mt-4 space-y-4">
-              {[
-                ["01", "Scan the account", "Signals and context are gathered first"],
-                ["02", "Resolve the lead", "Company and contact data are enriched"],
-                ["03", "Draft the angle", "Research is ready for outreach"],
-              ].map(([step, title, desc], index) => (
-                <div key={step} className="flex gap-3">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-brand/20 bg-brand/10 text-[12px] font-semibold text-brand">
-                    {step}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-[14px] font-medium text-ink">{title}</p>
-                    <p className="text-[12px] leading-relaxed text-muted">{desc}</p>
-                    {index < 2 && <div className="mt-3 ml-4 h-5 w-px bg-brand/15" />}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="space-y-4 rounded-2xl border border-black/10 bg-[#FCFCFA] p-4">
-            <div className="rounded-2xl border border-black/10 bg-white p-4">
-              <div className="flex items-center justify-between gap-3">
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.18em] text-faint">Lead intelligence</p>
-                  <p className="mt-1 text-[16px] font-medium text-ink">Northfield Systems</p>
-                </div>
-                <div className="rounded-full bg-brand/10 px-3 py-1 text-[12px] font-medium text-brand">5-10 min</div>
-              </div>
-              <div className="mt-4 rounded-2xl border border-brand/15 bg-brand/5 px-4 py-4">
-                <p className="text-[12px] uppercase tracking-[0.16em] text-brand">Research complete</p>
-                <p className="mt-1 text-[15px] font-medium leading-relaxed text-ink">
-                  Company context, role detail, and the latest signal are ready in one view.
-                </p>
-              </div>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-3">
-              {[
-                ["Recent signal", "Hiring for RevOps"],
-                ["Decision maker", "VP Revenue Operations"],
-                ["Stack", "CRM + enrichment"],
-              ].map(([label, value]) => (
-                <div key={label} className="rounded-2xl border border-black/10 bg-white px-3 py-3">
-                  <p className="text-[11px] uppercase tracking-[0.14em] text-faint">{label}</p>
-                  <p className="mt-1 text-[13px] font-medium text-ink">{value}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      </PreviewFrame>
-    )
-  }
+function AutoplayProgress({ paused }: { paused: boolean }) {
+  const controls = useAnimationControls()
 
-  if (feature.id === "stakeholders") {
-    return (
-      <PreviewFrame>
-        <motion.div className="grid gap-4 sm:grid-cols-[1fr_0.98fr]" {...motionProps} transition={{ duration: 0.45, ease }}>
-          <div className="rounded-2xl border border-black/10 bg-white p-4">
-            <p className="text-[11px] uppercase tracking-[0.18em] text-faint">Buying committee</p>
-            <div className="mt-4 space-y-3">
-              {[
-                ["RevOps", "Decision maker", "92 coverage"],
-                ["Sales", "Champion", "84 coverage"],
-                ["IT", "Influencer", "76 coverage"],
-                ["Finance", "Approver", "81 coverage"],
-              ].map(([role, title, coverage], index) => (
-                <div key={role} className="flex items-center justify-between rounded-2xl border border-black/10 bg-[#FCFCFA] px-3 py-3">
-                  <div className="min-w-0">
-                    <p className="text-[13px] font-medium text-ink">{role}</p>
-                    <p className="text-[12px] text-muted">{title}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-[12px] font-medium text-brand">{coverage}</p>
-                    <motion.div
-                      className="mt-2 h-1.5 rounded-full bg-brand/15"
-                      initial={reduce ? { width: "100%" } : { width: 0 }}
-                      animate={{ width: index % 2 === 0 ? "92%" : "78%" }}
-                      transition={{ duration: 0.45, delay: 0.12 + index * 0.06, ease }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="relative rounded-2xl border border-black/10 bg-[#FCFCFA] p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-[11px] uppercase tracking-[0.18em] text-faint">Coverage map</p>
-                <p className="mt-1 text-[16px] font-medium text-ink">Northfield buying committee</p>
-              </div>
-              <Network className="h-5 w-5 text-brand" aria-hidden="true" />
-            </div>
-            <div className="relative mt-4 flex min-h-[248px] items-center justify-center rounded-2xl border border-black/10 bg-white">
-              <div className="absolute inset-0 [background-image:radial-gradient(circle_at_center,rgba(255,79,0,0.06),transparent_42%)]" />
-              <div className="relative z-10 rounded-2xl border border-brand/15 bg-brand/5 px-4 py-3 text-center">
-                <p className="text-[12px] uppercase tracking-[0.16em] text-brand">Account</p>
-                <p className="mt-1 text-[14px] font-medium text-ink">Northfield</p>
-              </div>
-              <div className="absolute left-6 top-8 rounded-2xl border border-black/10 bg-[#FCFCFA] px-3 py-3 shadow-[0_10px_24px_-20px_rgba(32,21,21,0.45)]">
-                <p className="text-[12px] font-medium text-ink">RevOps</p>
-                <p className="text-[11px] text-muted">Decision maker</p>
-              </div>
-              <div className="absolute right-6 top-8 rounded-2xl border border-black/10 bg-[#FCFCFA] px-3 py-3 shadow-[0_10px_24px_-20px_rgba(32,21,21,0.45)]">
-                <p className="text-[12px] font-medium text-ink">Sales</p>
-                <p className="text-[11px] text-muted">Champion</p>
-              </div>
-              <div className="absolute left-6 bottom-8 rounded-2xl border border-black/10 bg-[#FCFCFA] px-3 py-3 shadow-[0_10px_24px_-20px_rgba(32,21,21,0.45)]">
-                <p className="text-[12px] font-medium text-ink">IT</p>
-                <p className="text-[11px] text-muted">Influencer</p>
-              </div>
-              <div className="absolute right-6 bottom-8 rounded-2xl border border-black/10 bg-[#FCFCFA] px-3 py-3 shadow-[0_10px_24px_-20px_rgba(32,21,21,0.45)]">
-                <p className="text-[12px] font-medium text-ink">Finance</p>
-                <p className="text-[11px] text-muted">Approver</p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </PreviewFrame>
-    )
-  }
+  useEffect(() => {
+    if (paused) {
+      controls.stop()
+      return
+    }
 
-  if (feature.id === "sequences") {
-    return (
-      <PreviewFrame>
-        <motion.div className="grid gap-4 sm:grid-cols-[0.94fr_1.06fr]" {...motionProps} transition={{ duration: 0.45, ease }}>
-          <div className="rounded-2xl border border-black/10 bg-white p-4">
-            <p className="text-[11px] uppercase tracking-[0.18em] text-faint">Sequence timeline</p>
-            <div className="mt-4 space-y-4">
-              {[
-                ["Week 01", "Intro + relevance", "Initial personal outreach"],
-                ["Week 02", "Signal follow-up", "Tie the message to context"],
-                ["Week 04", "Proof + case study", "Build trust with evidence"],
-                ["Week 08", "Final nudge", "Stay present without noise"],
-              ].map(([week, title, desc], index) => (
-                <div key={week} className="flex gap-3 rounded-2xl border border-black/10 bg-[#FCFCFA] px-3 py-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-brand/20 bg-brand/10 text-[11px] font-semibold text-brand">
-                    {index + 1}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-[12px] uppercase tracking-[0.14em] text-faint">{week}</p>
-                    <p className="mt-0.5 text-[13px] font-medium text-ink">{title}</p>
-                    <p className="text-[12px] text-muted">{desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="rounded-2xl border border-black/10 bg-[#FCFCFA] p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-[11px] uppercase tracking-[0.18em] text-faint">Cadence</p>
-                <p className="mt-1 text-[16px] font-medium text-ink">6-12 week trust window</p>
-              </div>
-              <Mail className="h-5 w-5 text-brand" aria-hidden="true" />
-            </div>
-            <div className="mt-4 rounded-2xl border border-black/10 bg-white p-4">
-              <div className="flex items-center justify-between text-[12px] text-muted">
-                <span>Sequence progress</span>
-                <span className="font-medium text-ink">8 touches</span>
-              </div>
-              <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                {Array.from({ length: 4 }).map((_, index) => (
-                  <motion.div
-                    key={index}
-                    className="rounded-2xl border border-brand/10 bg-[#FCFCFA] px-3 py-3"
-                    initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.35, delay: 0.08 + index * 0.05, ease }}
-                  >
-                    <div className="h-1.5 rounded-full bg-brand/20" />
-                    <p className="mt-3 text-[12px] font-medium text-ink">Touch {index + 1}</p>
-                    <p className="text-[11px] text-muted">Personalised</p>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-            <div className="mt-4 rounded-xl border border-black/10 bg-white px-3 py-3 text-[12px] text-muted">
-              Outreach stays paced and human across the full relationship window.
-            </div>
-          </div>
-        </motion.div>
-      </PreviewFrame>
-    )
-  }
+    controls.set({ scaleX: 0 })
+    void controls.start({
+      scaleX: 1,
+      transition: { duration: FEATURE_AUTOPLAY_SECONDS, ease: "linear" },
+    })
+
+    return () => controls.stop()
+  }, [controls, paused])
 
   return (
-    <PreviewFrame>
-      <motion.div className="grid gap-4 sm:grid-cols-[1fr_1.02fr]" {...motionProps} transition={{ duration: 0.45, ease }}>
-        <div className="rounded-2xl border border-black/10 bg-white p-4">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-faint">Pipeline analytics</p>
-          <div className="mt-4 rounded-2xl border border-brand/15 bg-brand/5 p-4">
-            <div className="flex items-center justify-between text-[12px] text-muted">
-              <span>Conversion rate</span>
-              <span className="font-medium text-ink">24%</span>
-            </div>
-            <div className="mt-3 flex h-24 items-end gap-2">
-              {[42, 58, 36, 72, 64, 84].map((height, index) => (
-                <div key={index} className="flex-1">
-                  <motion.div
-                    className="rounded-t-xl bg-brand"
-                    initial={reduce ? { height: `${height}%` } : { height: 0 }}
-                    animate={{ height: `${height}%` }}
-                    transition={{ duration: 0.5, delay: 0.08 + index * 0.05, ease }}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="mt-4 grid gap-3 sm:grid-cols-3">
-            {[
-              ["Replies", "128"],
-              ["Meetings", "34"],
-              ["Pipeline", "$420k"],
-            ].map(([label, value]) => (
-              <div key={label} className="rounded-2xl border border-black/10 bg-[#FCFCFA] px-3 py-3">
-                <p className="text-[11px] uppercase tracking-[0.14em] text-faint">{label}</p>
-                <p className="mt-1 text-[14px] font-medium text-ink">{value}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="rounded-2xl border border-black/10 bg-[#FCFCFA] p-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.18em] text-faint">Reporting view</p>
-              <p className="mt-1 text-[16px] font-medium text-ink">Performance by ICP</p>
-            </div>
-            <Gauge className="h-5 w-5 text-brand" aria-hidden="true" />
-          </div>
-          <div className="mt-4 space-y-3 rounded-2xl border border-black/10 bg-white p-4">
-            {[
-              ["ICP A", 92],
-              ["ICP B", 78],
-              ["ICP C", 64],
-            ].map(([label, value]) => (
-              <div key={label}>
-                <div className="flex items-center justify-between text-[12px] text-muted">
-                  <span>{label}</span>
-                  <span>{value}%</span>
-                </div>
-                <div className="mt-2 h-2 rounded-full bg-black/5">
-                  <motion.div
-                    className="h-full rounded-full bg-brand"
-                    initial={reduce ? { width: `${value}%` } : { width: 0 }}
-                    animate={{ width: `${value}%` }}
-                    transition={{ duration: 0.45, ease }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 rounded-xl border border-black/10 bg-white px-3 py-3">
-            <p className="text-[12px] text-muted">Replies, meetings, and pipeline progress stay visible in one clean reporting screen.</p>
-          </div>
-        </div>
-      </motion.div>
-    </PreviewFrame>
+    <motion.span
+      aria-hidden="true"
+      className="absolute inset-0 origin-left rounded-full bg-brand"
+      initial={{ scaleX: 0 }}
+      animate={controls}
+    />
   )
 }
 
@@ -514,6 +401,8 @@ function FeatureTab({
   active,
   onSelect,
   reduce,
+  autoplayPaused,
+  autoplayCycle,
   registerTabRef,
 }: {
   feature: Feature
@@ -521,6 +410,8 @@ function FeatureTab({
   active: boolean
   onSelect: (index: number) => void
   reduce: boolean
+  autoplayPaused: boolean
+  autoplayCycle: number
   registerTabRef: (index: number, node: HTMLButtonElement | null) => void
 }) {
   return (
@@ -537,40 +428,69 @@ function FeatureTab({
       }}
       whileHover={reduce ? undefined : { y: -2 }}
       whileTap={reduce ? undefined : { scale: 0.99 }}
-      className="relative flex h-[120px] flex-[0_0_auto] min-w-[184px] max-w-[220px] items-start gap-3 overflow-hidden rounded-2xl border px-4 py-4 text-left transition-[transform,box-shadow,border-color,background-color] duration-200 sm:min-w-[190px] lg:min-w-[196px]"
-      animate={active ? { borderColor: "rgba(255,79,0,0.28)" } : { borderColor: "rgba(32,21,21,0.10)" }}
-      style={{ backgroundColor: active ? "#1E1A4D" : "#FCFCFA" }}
+      className="group relative flex h-[140px] w-full flex-col justify-between overflow-hidden rounded-2xl border px-4 py-4 text-left transition-[transform,box-shadow,border-color,background-color] duration-200"
+      animate={
+        active
+          ? {
+              borderColor: "rgba(255,79,0,0.26)",
+              boxShadow: "0 18px 36px -28px rgba(32,21,21,0.42)",
+            }
+          : {
+              borderColor: "rgba(32,21,21,0.10)",
+              boxShadow: "0 10px 22px -24px rgba(32,21,21,0.26)",
+            }
+      }
+      style={{ backgroundColor: active ? "#1E1A4D" : "#FAF8F6" }}
     >
-      {active && (
+      {active ? (
         <motion.span
-          layoutId="features-active-indicator"
-          className="absolute inset-0 rounded-2xl border border-brand/20 bg-[#1E1A4D] shadow-[0_16px_36px_-28px_rgba(32,21,21,0.55)]"
-          transition={{ duration: reduce ? 0 : 0.45, ease }}
+          layoutId="features-active-tab"
+          className="absolute inset-0 rounded-2xl border border-brand/15 bg-[#1E1A4D]"
+          transition={{ duration: reduce ? 0 : 0.42, ease }}
         />
-      )}
-      <span className="relative z-10 flex items-center gap-3 pt-0.5">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-black/10 bg-white/10 text-[12px] font-semibold text-brand">
-          {feature.n}
+      ) : null}
+
+      <span className="relative z-10 flex h-full min-w-0 flex-col items-start justify-center gap-4">
+        <span
+          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border text-brand shadow-[0_10px_22px_-20px_rgba(32,21,21,0.42)] ${
+            active ? "border-white/10 bg-white/10" : "border-black/10 bg-white"
+          }`}
+        >
+          <feature.Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
         </span>
-        <span className="flex items-center justify-center rounded-xl bg-white p-2 text-brand shadow-[0_10px_24px_-20px_rgba(32,21,21,0.5)]">
-          <feature.Icon className="h-4.5 w-4.5" strokeWidth={1.75} aria-hidden="true" />
-        </span>
-      </span>
-      <span className="relative z-10 min-w-0 flex-1">
-        <span className={`block text-[11px] uppercase tracking-[0.16em] ${active ? "text-[#FCFCFA]/55" : "text-faint"}`}>
-          {feature.category}
-        </span>
-        <span className={`mt-1 block min-h-[2.6rem] break-normal text-[14px] font-medium leading-snug ${active ? "text-[#FCFCFA]" : "text-ink"}`}>
+        <span
+          className={`block text-[14px] font-medium leading-[1.35] ${active ? "text-[#FAF8F6]" : "text-ink"}`}
+          style={{
+            display: "-webkit-box",
+            WebkitBoxOrient: "vertical",
+            WebkitLineClamp: 2,
+            overflow: "hidden",
+          }}
+        >
           {feature.title}
         </span>
       </span>
-      {active && (
-        <motion.span
-          layoutId="features-active-underline"
-          className="absolute inset-x-4 bottom-0 h-0.5 rounded-full bg-brand"
-          transition={{ duration: reduce ? 0 : 0.35, ease }}
-        />
-      )}
+
+      <motion.span
+        aria-hidden="true"
+        className={`absolute inset-x-4 bottom-0 h-0.5 overflow-hidden rounded-full ${active ? "bg-brand/20" : "bg-transparent"}`}
+        layoutId="features-active-underline"
+        transition={{ duration: reduce ? 0 : 0.32, ease }}
+      >
+        {active ? (
+          reduce ? (
+            <span className="absolute inset-0 bg-brand" />
+          ) : (
+            <AutoplayProgress key={autoplayCycle} paused={autoplayPaused} />
+          )
+        ) : null}
+      </motion.span>
+      <span
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-0 rounded-2xl border transition-opacity duration-200 ${
+          active ? "border-white/5 opacity-100" : "border-black/5 opacity-0 group-hover:opacity-100"
+        }`}
+      />
     </motion.button>
   )
 }
@@ -579,80 +499,52 @@ function FeatureDetails({ feature, reduce }: { feature: Feature; reduce: boolean
   return (
     <motion.div
       key={feature.id}
-      className="grid gap-8 lg:grid-cols-[minmax(0,0.94fr)_minmax(0,1.06fr)] lg:gap-10"
-      initial={reduce ? false : { opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
-      transition={{ duration: reduce ? 0 : 0.45, ease }}
+      role="tabpanel"
+      id={`feature-panel-${feature.id}`}
+      aria-labelledby={`feature-tab-${feature.id}`}
+      className="grid gap-8 lg:grid-cols-[minmax(0,0.48fr)_minmax(0,0.52fr)] lg:gap-9"
+      variants={panelVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
     >
-      <motion.div className="space-y-8" initial={false} animate={reduce ? { opacity: 1 } : { opacity: 1 }}>
-        <div className="inline-flex items-center gap-2 rounded-full border border-brand/15 bg-brand/5 px-3.5 py-1.5 text-[12px] font-medium text-brand">
-          <feature.Icon className="h-3.5 w-3.5" strokeWidth={1.8} aria-hidden="true" />
-          {feature.category}
+      <motion.div className="flex h-full flex-col justify-center py-4 lg:min-h-[560px] lg:py-8" variants={detailVariants}>
+        <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-brand/15 bg-brand/5 text-brand">
+          <feature.Icon className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
         </div>
-        <div>
-          <p className="text-[12px] uppercase tracking-[0.18em] text-faint">{feature.n}</p>
-          <h3 className="mt-3 text-[30px] font-medium leading-[1.04] tracking-[-0.03em] text-heading sm:text-[36px] lg:text-[40px]">
+
+        <div className="mt-8 space-y-6">
+          <h3 className="max-w-[15ch] text-[32px] font-medium leading-[1.06] tracking-[-0.03em] text-heading sm:text-[38px] lg:text-[42px]">
             {feature.title}
           </h3>
-          <p className="mt-5 max-w-xl text-[16px] leading-[1.78] text-muted sm:text-[17px]">{feature.desc}</p>
+          <p className="max-w-[36rem] text-[16px] leading-[1.78] text-muted sm:text-[17px]">{feature.desc}</p>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-3">
-          {feature.points.map((point, pointIndex) => (
-            <motion.div
-              key={point.title}
-              className="rounded-[22px] border border-black/10 bg-white p-4 shadow-[0_10px_24px_-24px_rgba(32,21,21,0.4)]"
-              initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: reduce ? 0 : 0.32, delay: 0.12 + pointIndex * 0.06, ease }}
-            >
-              <div className="flex items-start gap-3">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
-                  <point.Icon className="h-4.5 w-4.5" strokeWidth={1.8} aria-hidden="true" />
-                </span>
-                <div className="min-w-0">
-                  <p className="text-[14px] font-medium leading-tight text-ink">{point.title}</p>
-                  <p className="mt-1 text-[12px] leading-relaxed text-muted">{point.desc}</p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        <div className="flex flex-wrap gap-2">
-          {feature.tags.map((tag, tagIndex) => (
-            <motion.span
-              key={tag}
-              className="rounded-full border border-brand/15 bg-brand/5 px-2.5 py-1.5 text-[11px] font-medium text-brand"
-              initial={reduce ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: reduce ? 0 : 0.3, delay: 0.22 + tagIndex * 0.05, ease }}
-            >
-              {tag}
-            </motion.span>
-          ))}
-        </div>
-
-        <div className="rounded-[22px] border border-black/10 bg-white px-5 py-5 shadow-[0_14px_32px_-28px_rgba(32,21,21,0.45)]">
+        <motion.div
+          className="mt-12 rounded-[24px] border border-black/10 bg-white px-5 py-5 shadow-[0_14px_32px_-30px_rgba(32,21,21,0.45)]"
+          variants={detailVariants}
+          initial={reduce ? false : { opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: reduce ? 0 : 0.34, delay: 0.18, ease }}
+        >
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-[11px] uppercase tracking-[0.18em] text-faint">Outcome</p>
-              <p className="mt-2 text-[22px] font-medium tracking-[-0.02em] text-ink">{feature.metric}</p>
-              <p className="mt-1 text-[14px] text-muted">{feature.metricLabel}</p>
+              <p className="mt-2 text-[22px] font-medium tracking-[-0.02em] text-ink">{feature.metric} {feature.metricLabel}</p>
             </div>
-            <div className="inline-flex rounded-full bg-brand/10 px-3 py-1.5 text-[12px] font-medium text-brand">
+            <div className="inline-flex rounded-full border border-brand/15 bg-brand/5 px-3 py-1.5 text-[12px] font-medium text-brand">
               Quality-first motion
             </div>
           </div>
-        </div>
+        </motion.div>
       </motion.div>
 
       <motion.div
         className="lg:pt-1"
-        initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
+        variants={detailVariants}
+        initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: reduce ? 0 : 0.52, delay: 0.08, ease }}
+        transition={{ duration: reduce ? 0 : 0.48, delay: 0.08, ease }}
       >
         <FeatureVisual feature={feature} reduce={reduce} />
       </motion.div>
@@ -662,9 +554,12 @@ function FeatureDetails({ feature, reduce }: { feature: Feature; reduce: boolean
 
 export default function Features() {
   const sectionRef = useRef<HTMLElement>(null)
+  const tabListRef = useRef<HTMLDivElement>(null)
   const reduce = useReducedMotion() ?? false
   const entered = useInView(sectionRef, { once: true, amount: 0.18 })
   const [activeIndex, setActiveIndex] = useState(0)
+  const [autoplayPaused, setAutoplayPaused] = useState(false)
+  const [autoplayCycle, setAutoplayCycle] = useState(0)
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([])
   const activeFeature = FEATURES[activeIndex]
 
@@ -672,16 +567,48 @@ export default function Features() {
     tabRefs.current[index] = node
   }
 
-  const handleSelect = (nextIndex: number) => {
+  const handleSelect = (nextIndex: number, options?: { focusTab?: boolean }) => {
     setActiveIndex(nextIndex)
-    tabRefs.current[nextIndex]?.focus()
+    setAutoplayCycle((cycle) => cycle + 1)
+
+    if (options?.focusTab) {
+      tabRefs.current[nextIndex]?.focus({ preventScroll: true })
+    }
+  }
+
+  const handleAutoplayResume = () => {
+    setAutoplayPaused(false)
+    setAutoplayCycle((cycle) => cycle + 1)
   }
 
   useEffect(() => {
-    tabRefs.current[activeIndex]?.scrollIntoView({
+    if (reduce || autoplayPaused || !entered) return
+
+    const timer = window.setTimeout(() => {
+      setActiveIndex((current) => (current + 1) % FEATURES.length)
+      setAutoplayCycle((cycle) => cycle + 1)
+    }, FEATURE_AUTOPLAY_MS)
+
+    return () => window.clearTimeout(timer)
+  }, [autoplayCycle, autoplayPaused, entered, reduce])
+
+  useEffect(() => {
+    const tabList = tabListRef.current
+    const activeTab = tabRefs.current[activeIndex]
+
+    if (!tabList || !activeTab) return
+
+    const tabLeft = activeTab.offsetLeft
+    const tabRight = tabLeft + activeTab.offsetWidth
+    const visibleLeft = tabList.scrollLeft
+    const visibleRight = visibleLeft + tabList.clientWidth
+
+    if (tabLeft >= visibleLeft && tabRight <= visibleRight) return
+
+    const nextLeft = tabLeft - (tabList.clientWidth - activeTab.offsetWidth) / 2
+    tabList.scrollTo({
+      left: Math.max(0, nextLeft),
       behavior: reduce ? "auto" : "smooth",
-      inline: "center",
-      block: "nearest",
     })
   }, [activeIndex, reduce])
 
@@ -709,7 +636,7 @@ export default function Features() {
     }
 
     event.preventDefault()
-    handleSelect(nextIndex)
+    handleSelect(nextIndex, { focusTab: true })
   }
 
   return (
@@ -720,22 +647,17 @@ export default function Features() {
       />
 
       <div className="site-container relative py-20 sm:py-24">
-        <motion.div
-          initial={reduce ? false : "hidden"}
-          animate={entered ? "visible" : "hidden"}
-          variants={fadeUp}
-          className="max-w-2xl"
-        >
-          <div className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.18em] text-faint">
+        <motion.div initial={reduce ? false : "hidden"} animate={entered ? "visible" : "hidden"} variants={listVariants} className="max-w-2xl">
+          <motion.div variants={fadeUp} className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.18em] text-faint">
             <span className="h-1.5 w-1.5 bg-brand" />
             What we automate
-          </div>
-          <h2 className="mt-4 text-[32px] font-medium leading-[1.05] tracking-[-0.02em] text-heading sm:text-[40px] lg:text-[44px]">
+          </motion.div>
+          <motion.h2 variants={fadeUp} className="mt-4 text-[32px] font-medium leading-[1.05] tracking-[-0.02em] text-heading sm:text-[40px] lg:text-[44px]">
             What Oraami automates
-          </h2>
-          <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-muted">
+          </motion.h2>
+          <motion.p variants={fadeUp} className="mt-5 max-w-xl text-[17px] leading-relaxed text-muted">
             From ICP definition to trust-building sequences, the full quality-first BDR motion is handled end to end.
-          </p>
+          </motion.p>
         </motion.div>
 
         <motion.div
@@ -744,20 +666,30 @@ export default function Features() {
           initial={false}
           animate={entered ? "visible" : "hidden"}
           variants={listVariants}
-          className="relative mt-12 rounded-[28px] border border-black/10 bg-[#FCFCFA] p-3 shadow-[0_20px_55px_-40px_rgba(32,21,21,0.45)]"
+          className="relative mt-12 rounded-[28px] border border-black/10 bg-[#FAF8F6] p-3 shadow-[0_20px_55px_-40px_rgba(32,21,21,0.45)]"
           onKeyDown={handleKeyDown}
+          onMouseEnter={() => setAutoplayPaused(true)}
+          onMouseLeave={handleAutoplayResume}
         >
-          <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 rounded-l-[28px] bg-gradient-to-r from-[#FCFCFA] to-transparent" />
-          <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 rounded-r-[28px] bg-gradient-to-l from-[#FCFCFA] to-transparent" />
-          <div className="flex flex-nowrap gap-3 overflow-x-auto overflow-y-hidden pb-2 pr-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 rounded-l-[28px] bg-gradient-to-r from-[#FAF8F6] to-transparent"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 rounded-r-[28px] bg-gradient-to-l from-[#FAF8F6] to-transparent"
+          />
+          <div ref={tabListRef} className="flex flex-nowrap gap-3 overflow-x-auto overflow-y-hidden pb-2 pr-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:overflow-visible">
             {FEATURES.map((feature, index) => (
-              <motion.div key={feature.id} variants={fadeUp} className="shrink-0">
+              <motion.div key={feature.id} variants={fadeUp} className="shrink-0 w-[220px] lg:flex-1 lg:w-auto lg:min-w-0">
                 <FeatureTab
                   feature={feature}
                   index={index}
                   active={index === activeIndex}
                   onSelect={handleSelect}
                   reduce={reduce}
+                  autoplayPaused={autoplayPaused || !entered}
+                  autoplayCycle={autoplayCycle}
                   registerTabRef={registerTabRef}
                 />
               </motion.div>
@@ -766,7 +698,7 @@ export default function Features() {
         </motion.div>
 
         <motion.div
-          className="mt-8 rounded-[30px] border border-black/10 bg-[#FCFCFA] p-4 shadow-[0_22px_60px_-42px_rgba(32,21,21,0.55)] sm:p-5 lg:min-h-[720px] lg:p-6"
+          className="mt-8 rounded-[32px] border border-black/10 bg-[#FAF8F6] p-4 shadow-[0_22px_60px_-42px_rgba(32,21,21,0.55)] sm:p-5 lg:p-6"
           initial={reduce ? false : { opacity: 0, y: 16 }}
           animate={entered ? { opacity: 1, y: 0 } : undefined}
           transition={{ duration: reduce ? 0 : 0.55, ease }}
@@ -779,7 +711,7 @@ export default function Features() {
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 14 }}
           animate={entered ? { opacity: 1, y: 0 } : undefined}
-          transition={{ duration: reduce ? 0 : 0.5, delay: 0.2, ease }}
+          transition={{ duration: reduce ? 0 : 0.48, delay: 0.18, ease }}
           className="mt-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center"
         >
           <p className="text-[15px] leading-relaxed text-muted">
