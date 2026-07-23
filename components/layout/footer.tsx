@@ -1,8 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, Mail } from "lucide-react"
+import { Mail } from "lucide-react"
 import type { ComponentProps } from "react"
-import { Button } from "@/components/ui/button"
 
 const footerLinks = {
   Product: [
@@ -14,7 +13,7 @@ const footerLinks = {
   Company: [
     { name: "About", href: "/about" },
     { name: "Blog", href: "/blog" },
-    { name: "Clients", href: "/#testimonials" },
+    { name: "Testimonials", href: "/#testimonials" },
     { name: "Contact", href: "/contact" },
   ],
   Legal: [
@@ -47,58 +46,113 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer id="contact" className="w-full border-t border-black/10 bg-canvas">
-      <div className="site-container pb-10 pt-16">
-        <div className="flex gap-16 max-lg:flex-col max-lg:gap-12">
-          <div className="flex w-[260px] shrink-0 flex-col max-lg:w-auto">
-            <Link href="/" aria-label="Oraami home" className="inline-flex w-fit items-center gap-2.5">
-              <Image src="/O.svg" alt="" width={26} height={26} className="h-6 w-6" />
-              <span className="text-[16px] font-bold uppercase tracking-[0.14em] text-ink">Oraami</span>
+    <footer id="contact" className="w-full bg-oraami-accent-secondary px-4 py-4 text-white sm:px-5 sm:py-5 lg:px-6 lg:py-6">
+      
+          <div className="border border-brand/40 bg-brand px-6 py-7 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] sm:px-7 sm:py-8 lg:flex lg:items-center lg:justify-between lg:px-8">
+            <div className="max-w-2xl">
+              <h2 className="text-[28px] font-medium leading-[1.05] tracking-[-0.03em] sm:text-[34px] lg:text-[38px]">
+                Ready to book more meetings with quality-first outreach?
+              </h2>
+              <p className="mt-3 max-w-xl text-[14px] leading-relaxed text-white/78 sm:text-[15px]">
+                Oraami combines deep lead research, buying-committee mapping, and trust-building sequences to help revenue teams find customers ready to buy.
+              </p>
+            </div>
+
+            <Link
+              href="/contact"
+              className="mt-6 inline-flex h-12 items-center justify-center rounded-none border border-white/15 bg-oraami-accent-secondary px-6 text-[12px] font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:bg-[#140f38] lg:mt-0"
+            >
+              Book a call
             </Link>
-            <p className="mt-5 max-w-[260px] text-[15px] leading-relaxed text-muted">
-              The quality-first AI BDR — deep research and trust-building outreach that books meetings, not spam.
-            </p>
-            <div className="mt-7 flex items-center gap-3">
-              {socials.map(({ Icon, label, href }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-black/12 text-muted transition-colors duration-200 hover:border-ink hover:text-ink"
-                >
-                  <Icon className="h-4 w-4" />
+          </div>
+
+          <div className="grid gap-10 pb-14 pt-8 lg:grid-cols-[1.15fr_0.95fr_0.95fr_1fr] lg:gap-8">
+            <div>
+              <Link href="/" aria-label="Oraami home" className="inline-flex items-center gap-3">
+                <Image src="/O.svg" alt="" width={28} height={28} className="h-7 w-7" />
+                <span className="text-[16px] font-bold uppercase tracking-[0.08em] text-white">Oraami</span>
+              </Link>
+              <p className="mt-5 max-w-[18rem] text-[14px] leading-[1.9] text-white/42">
+                The quality-first AI BDR for teams that want better-fit accounts, stronger outreach, and more booked meetings.
+              </p>
+              <div className="mt-7 flex items-center gap-4 text-white/85">
+                {socials.map(({ Icon, label, href }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="transition-colors hover:text-brand"
+                  >
+                    <Icon className="h-4 w-4" />
+                  </a>
+                ))}
+              </div>
+              <div className="mt-6">
+                <p className="text-[12px] text-white/35">Write to us</p>
+                <a href="mailto:hello@oraami.com" className="mt-1 block text-[14px] font-medium text-white transition-colors hover:text-brand">
+                  hello@oraami.com
                 </a>
-              ))}
+              </div>
+            </div>
+
+            <div>
+              <p className="text-[12px] font-semibold text-white">Useful Links</p>
+              <ul className="mt-5 space-y-3.5 text-[14px] text-white/42">
+                {[...footerLinks.Product, ...footerLinks.Company].slice(0, 6).map((link) => (
+                  <li key={link.name}>
+                    <Link href={link.href} className="transition-colors hover:text-white">
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <p className="text-[12px] font-semibold text-white">Our Services</p>
+              <ul className="mt-5 space-y-3.5 text-[14px] text-white/42">
+                <li>ICP research and targeting</li>
+                <li>Deep lead research</li>
+                <li>Buying committee mapping</li>
+                <li>Trust-building sequences</li>
+                <li>Quality scoring and routing</li>
+                <li>Pipeline reporting</li>
+              </ul>
+            </div>
+
+            <div>
+              <p className="text-[12px] font-semibold text-white">Newsletter</p>
+              <p className="mt-5 max-w-[18rem] text-[14px] leading-[1.8] text-white/42">
+                Subscribe for product updates, outreach insights, and new ideas on quality-first prospecting.
+              </p>
+              <form className="mt-6" action="mailto:hello@oraami.com" method="post" encType="text/plain">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  className="h-11 w-full border border-white/20 bg-transparent px-4 text-[14px] text-white outline-none placeholder:text-white/30"
+                />
+                <button
+                  type="submit"
+                  className="mt-3 inline-flex h-11 w-full items-center justify-center border border-brand/60 bg-brand text-[13px] font-medium text-white transition-colors hover:bg-brand-hover"
+                >
+                  Subscribe
+                </button>
+              </form>
             </div>
           </div>
 
-          <nav className="grid flex-1 grid-cols-3 gap-7 max-sm:grid-cols-2 max-sm:gap-y-10" aria-label="Footer navigation">
-            {Object.entries(footerLinks).map(([title, columnLinks]) => (
-              <div key={title}>
-                <p className="text-[12px] font-semibold uppercase tracking-[0.1em] text-faint">{title}</p>
-                <ul className="mt-4 flex flex-col gap-2.5">
-                  {columnLinks.map((link) => (
-                    <li key={link.name}>
-                      <Link href={link.href} className="text-[14px] text-muted transition-colors hover:text-ink">
-                        {link.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </nav>
-        </div>
 
-        <div className="mt-14 flex flex-col gap-4 border-t border-black/10 pt-6 text-[13px] text-muted sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Oraami. All rights reserved.</p>
-          <Button href="/contact" variant="secondary" size="sm" icon={ArrowRight} className="w-fit">
-            Book a call
-          </Button>
-        </div>
-      </div>
+          <div className="mt-8 pt-10 pb-5 text-[12px] text-white/32 sm:flex sm:items-center sm:justify-between">
+            <p>© {new Date().getFullYear()} Oraami. All rights reserved.</p>
+            <div className="mt-3 flex items-center gap-4 sm:mt-0">
+              <Link href="/privacy" className="transition-colors hover:text-white">Privacy</Link>
+              <Link href="/terms" className="transition-colors hover:text-white">Terms</Link>
+            </div>
+          </div>
+      
     </footer>
   )
 }

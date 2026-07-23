@@ -56,16 +56,6 @@ export default function Hero() {
       <div className="relative z-10 pb-7 pt-28 sm:pt-32 lg:pb-5 lg:pt-30">
         <div className="site-container grid max-w-[74rem] items-center gap-14 lg:grid-cols-[0.94fr_1.06fr] lg:gap-12 xl:gap-16">
           <div className="max-w-[34rem] lg:pb-1">
-            <div className="hero-rise inline-flex items-center gap-2 rounded-full border border-black/10 bg-canvas-soft px-3.5 py-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-brand" style={{ animation: "hubPulse 1.6s ease-in-out infinite" }} />
-              <span className="text-[12px] uppercase tracking-[0.14em] text-ink-mute">AI Lead Intelligence</span>
-            </div>
-
-            <div className="hero-rise mt-5 flex items-center gap-2.5" style={{ animationDelay: "0.04s" }} aria-hidden="true">
-              <span className="h-px w-10 bg-brand" />
-              <span className="h-1 w-1 rounded-full bg-brand/50" />
-            </div>
-
             <h1
               className="hero-rise mt-4 text-balance text-[44px] font-medium leading-[1.02] tracking-[-0.025em] text-ink sm:text-[56px] lg:text-[60px] xl:text-[64px]"
               style={{ animationDelay: "0.06s" }}

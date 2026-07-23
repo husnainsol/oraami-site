@@ -75,8 +75,8 @@ export default function Navbar() {
             <NavLink
               key={link.href}
               href={to(link.href)}
-              className={`text-[14px] font-medium transition-colors hover:text-ink ${
-                isActive(link.href) ? "text-ink" : "text-muted"
+              className={`relative text-[14px] font-medium transition-colors hover:text-brand ${
+                isActive(link.href) ? "text-brand" : "text-muted"
               }`}
             >
               {link.label}
@@ -114,7 +114,7 @@ export default function Navbar() {
                 key={link.href}
                 href={to(link.href)}
                 onClick={() => setOpen(false)}
-                className="rounded-xl px-3 py-3 text-[15px] font-medium text-ink transition-colors hover:bg-black/[0.04]"
+                className={`rounded-xl px-3 py-3 text-[15px] font-medium transition-colors ${isActive(link.href) ? "bg-brand/8 text-brand" : "text-ink hover:bg-black/[0.04] hover:text-brand"}`}
               >
                 {link.label}
               </NavLink>

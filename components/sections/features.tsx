@@ -30,7 +30,7 @@ const FEATURES: Feature[] = [
     Icon: Target,
     title: "ICP Research & Targeting",
     desc:
-      "Every ICP is capped at 50 high-fit leads, so your team works a laser-focused list built around the accounts most likely to convert.",
+      "Every ICP is capped at a tightly curated set of high-fit leads, so your team works a laser-focused list built around the accounts most likely to convert faster.",
     metric: "50",
     metricLabel: "accounts per ICP",
     tags: ["50 leads / ICP", "High-fit", "Focused list"],
@@ -39,7 +39,7 @@ const FEATURES: Feature[] = [
     id: "research",
     Icon: Search,
     title: "Deep Lead Research",
-    desc: "5-10 minutes of autonomous AI research on every prospect before you reach out.",
+    desc: "Several minutes of autonomous AI research happens on every prospect before your team ever reaches out with context.",
     metric: "5-10",
     metricLabel: "minutes per lead",
     tags: ["Autonomous", "Enrichment", "Pre-outreach"],
@@ -48,7 +48,7 @@ const FEATURES: Feature[] = [
     id: "stakeholders",
     Icon: Network,
     title: "Multi-Stakeholder Mapping",
-    desc: "Map 6-10 decision-makers per account, not just a single point of contact.",
+    desc: "Map several decision-makers across each account, not just a single point of contact or surface-level champion.",
     metric: "6-10",
     metricLabel: "people per account",
     tags: ["Buying committee", "Roles", "Coverage"],
@@ -57,7 +57,7 @@ const FEATURES: Feature[] = [
     id: "sequences",
     Icon: Mail,
     title: "Trust-Building Sequences",
-    desc: "8-12 personalised emails over 6-12 weeks that build genuine relationships.",
+    desc: "A carefully timed sequence of personalised emails over an extended window builds genuine relationships and stronger trust.",
     metric: "6-12",
     metricLabel: "week window",
     tags: ["8-12 touches", "Trust", "Follow-up"],
@@ -66,7 +66,7 @@ const FEATURES: Feature[] = [
     id: "analytics",
     Icon: BarChart3,
     title: "Analytics & Reporting",
-    desc: "Track replies, meetings, and pipeline performance across every ICP in real time.",
+    desc: "Track replies, meetings, and pipeline performance across every ICP in real time with clearer team visibility.",
     metric: "Live",
     metricLabel: "reporting view",
     tags: ["Real-Time", "Reporting", "Pipeline"],
@@ -132,7 +132,7 @@ const demoEase = [0.22, 1, 0.36, 1] as const
 
 function VisualizationFrame({ children }: { children: ReactNode }) {
   return (
-    <div className="relative h-[520px] overflow-hidden rounded-[28px] border border-black/10 bg-[#FAF8F6] p-4 shadow-[0_24px_60px_-38px_rgba(32,21,21,0.5)] sm:h-[540px] sm:p-5 lg:h-[560px] lg:p-6">
+    <div className="relative h-[520px] overflow-hidden rounded-[28px] border border-black/10 bg-oraami-accent-24 p-4 shadow-[0_24px_60px_-38px_rgba(32,21,21,0.5)] sm:h-[540px] sm:p-5 lg:h-[560px] lg:p-6">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:linear-gradient(to_right,rgba(32,21,21,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(32,21,21,0.12)_1px,transparent_1px)] [background-size:72px_72px]" />
       <div className="relative h-full overflow-hidden rounded-[22px] border border-black/10 bg-white p-3 sm:p-4">{children}</div>
     </div>
@@ -207,8 +207,8 @@ function IcpTargetingChart({ play, reduce }: { play: boolean; reduce: boolean })
     <VisualizationFrame>
       <svg viewBox="0 0 420 250" className="h-full w-full" role="img" aria-label="Buying intent versus ICP fit scatter plot">
         <ChartGrid width={420} height={250} />
-        <motion.rect x="302" y="24" width="104" height="100" rx="14" fill="rgba(255,79,0,0.055)" stroke="#FF4F00" strokeDasharray="5 5" animate={loop ? { opacity: [0, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.2, times: [0, 0.2, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }} />
-        <text x="354" y="40" textAnchor="middle" fontSize="8" fill="#FF4F00">TARGET ZONE</text>
+        <motion.rect x="302" y="24" width="104" height="100" rx="14" fill="rgba(255,79,0,0.055)" stroke="var(--color-oraami-accent-1)" strokeDasharray="5 5" animate={loop ? { opacity: [0, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.2, times: [0, 0.2, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }} />
+        <text x="354" y="40" textAnchor="middle" fontSize="8" fill="var(--color-oraami-accent-1)">TARGET ZONE</text>
         <text x="214" y="246" textAnchor="middle" fontSize="8" fill="rgba(32,21,21,0.48)">BUYING INTENT</text>
         <text x="9" y="132" textAnchor="middle" fontSize="8" fill="rgba(32,21,21,0.48)" transform="rotate(-90 9 132)">ICP FIT</text>
         {ICP_POINTS.map((point, index) => {
@@ -217,7 +217,7 @@ function IcpTargetingChart({ play, reduce }: { play: boolean; reduce: boolean })
             <motion.circle
               key={index}
               r={qualified ? 4.5 : 3.5}
-              fill={qualified ? "#FF4F00" : index % 2 ? "#7157A8" : "#2563EB"}
+              fill={qualified ? "var(--color-oraami-accent-1)" : index % 2 ? "var(--color-oraami-accent-26)" : "var(--color-oraami-accent-27)"}
               animate={loop ? { cx: [x, x, tx], cy: [y, y, ty], opacity: qualified ? [0.25, 0.75, 1, 1, 0.25] : [0.25, 0.7, 0.12, 0, 0.25] } : { cx: qualified ? tx : x, cy: qualified ? ty : y, opacity: qualified ? 1 : 0.14 }}
               transition={loop ? { duration: 7.2, delay: index * 0.035, times: [0, 0.2, 0.72, 0.92, 1], repeat: Infinity, repeatDelay: 1, ease: demoEase } : { duration: 0 }}
             />
@@ -232,11 +232,11 @@ function IcpTargetingChart({ play, reduce }: { play: boolean; reduce: boolean })
 }
 
 const RESEARCH_LINES = [
-  { label: "Hiring", color: "#2563EB", d: "M22 180 C60 174 72 148 106 154 S150 120 182 128 S230 86 264 104 S310 52 394 68" },
-  { label: "Technology", color: "#7157A8", d: "M22 192 C70 186 84 166 124 170 S174 142 210 150 S258 110 296 122 S344 90 394 98" },
-  { label: "Growth", color: "#0F766E", d: "M22 202 C60 190 92 196 126 178 S182 170 218 142 S264 154 304 112 S350 120 394 86" },
-  { label: "News", color: "#D97706", d: "M22 212 C66 204 92 184 132 194 S184 154 226 176 S270 126 316 144 S360 106 394 118" },
-  { label: "Intent", color: "#FF4F00", d: "M22 220 C70 216 98 200 138 202 S192 188 232 166 S284 140 320 96 S360 72 394 42" },
+  { label: "Hiring", color: "var(--color-oraami-accent-27)", d: "M22 180 C60 174 72 148 106 154 S150 120 182 128 S230 86 264 104 S310 52 394 68" },
+  { label: "Technology", color: "var(--color-oraami-accent-26)", d: "M22 192 C70 186 84 166 124 170 S174 142 210 150 S258 110 296 122 S344 90 394 98" },
+  { label: "Growth", color: "var(--color-oraami-accent-25)", d: "M22 202 C60 190 92 196 126 178 S182 170 218 142 S264 154 304 112 S350 120 394 86" },
+  { label: "News", color: "var(--color-oraami-accent-28)", d: "M22 212 C66 204 92 184 132 194 S184 154 226 176 S270 126 316 144 S360 106 394 118" },
+  { label: "Intent", color: "var(--color-oraami-accent-1)", d: "M22 220 C70 216 98 200 138 202 S192 188 232 166 S284 140 320 96 S360 72 394 42" },
 ]
 
 function DeepResearchChart({ play, reduce }: { play: boolean; reduce: boolean }) {
@@ -246,10 +246,10 @@ function DeepResearchChart({ play, reduce }: { play: boolean; reduce: boolean })
       <svg viewBox="0 0 420 250" className="h-full w-full" role="img" aria-label="Research signal intensity over time">
         <ChartGrid width={420} height={250} />
         {RESEARCH_LINES.map((line, index) => <AnimatedLine key={line.label} d={line.d} color={line.color} loop={loop} delay={index * 0.12} width={index === 4 ? 3 : 1.8} />)}
-        <motion.line x1="320" x2="320" y1="30" y2="224" stroke="#FF4F00" strokeWidth="1.5" strokeDasharray="4 4" animate={loop ? { opacity: [0, 0, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.2, times: [0, 0.54, 0.64, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }} />
-        <motion.circle cx="320" cy="96" r="5" fill="#FF4F00" animate={loop ? { r: [3, 3, 7, 5, 3], opacity: [0, 0, 1, 1, 0] } : { r: 5, opacity: 1 }} transition={loop ? { duration: 7.2, times: [0, 0.54, 0.66, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }} />
-        <motion.text x="244" y="118" fontSize="8" fill="#0F766E" animate={loop ? { opacity: [0, 0.25, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.2, times: [0, 0.34, 0.5, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Growth</motion.text>
-        <motion.text x="330" y="86" fontSize="8" fill="#FF4F00" animate={loop ? { opacity: [0, 0, 1, 1, 0], y: [4, 4, 0, 0, -2] } : { opacity: 1, y: 0 }} transition={loop ? { duration: 7.2, times: [0, 0.56, 0.68, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Buying Signal</motion.text>
+        <motion.line x1="320" x2="320" y1="30" y2="224" stroke="var(--color-oraami-accent-1)" strokeWidth="1.5" strokeDasharray="4 4" animate={loop ? { opacity: [0, 0, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.2, times: [0, 0.54, 0.64, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }} />
+        <motion.circle cx="320" cy="96" r="5" fill="var(--color-oraami-accent-1)" animate={loop ? { r: [3, 3, 7, 5, 3], opacity: [0, 0, 1, 1, 0] } : { r: 5, opacity: 1 }} transition={loop ? { duration: 7.2, times: [0, 0.54, 0.66, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }} />
+        <motion.text x="244" y="118" fontSize="8" fill="var(--color-oraami-accent-25)" animate={loop ? { opacity: [0, 0.25, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.2, times: [0, 0.34, 0.5, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Growth</motion.text>
+        <motion.text x="330" y="86" fontSize="8" fill="var(--color-oraami-accent-1)" animate={loop ? { opacity: [0, 0, 1, 1, 0], y: [4, 4, 0, 0, -2] } : { opacity: 1, y: 0 }} transition={loop ? { duration: 7.2, times: [0, 0.56, 0.68, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Buying Signal</motion.text>
       </svg>
       <motion.div className="absolute right-5 top-5" animate={loop ? { opacity: [0, 0, 1, 1, 0], y: [5, 5, 0, 0, -3] } : { opacity: 1, y: 0 }} transition={loop ? { duration: 7.2, times: [0, 0.56, 0.68, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>
         <ChartTooltip title="Buying trigger" value="CRM migration detected" />
@@ -259,11 +259,11 @@ function DeepResearchChart({ play, reduce }: { play: boolean; reduce: boolean })
 }
 
 const MAP_NODES = [
-  { role: "Champion", name: "Sales Director", x: 76, y: 64, color: "#0F766E" },
-  { role: "Decision maker", name: "VP Revenue", x: 344, y: 62, color: "#FF4F00" },
-  { role: "Influencer", name: "RevOps Lead", x: 62, y: 196, color: "#7157A8" },
-  { role: "Technical", name: "IT Director", x: 344, y: 196, color: "#2563EB" },
-  { role: "Finance", name: "CFO", x: 372, y: 128, color: "#D97706" },
+  { role: "Champion", name: "Sales Director", x: 76, y: 64, color: "var(--color-oraami-accent-25)" },
+  { role: "Decision maker", name: "VP Revenue", x: 344, y: 62, color: "var(--color-oraami-accent-1)" },
+  { role: "Influencer", name: "RevOps Lead", x: 62, y: 196, color: "var(--color-oraami-accent-26)" },
+  { role: "Technical", name: "IT Director", x: 344, y: 196, color: "var(--color-oraami-accent-27)" },
+  { role: "Finance", name: "CFO", x: 372, y: 128, color: "var(--color-oraami-accent-28)" },
 ]
 
 function StakeholderMapChart({ play, reduce }: { play: boolean; reduce: boolean }) {
@@ -274,8 +274,8 @@ function StakeholderMapChart({ play, reduce }: { play: boolean; reduce: boolean 
         {MAP_NODES.map((node, index) => (
           <motion.path key={node.role} d={"M210 128 Q" + (210 + (node.x - 210) * 0.35) + " " + (node.y + 18) + " " + node.x + " " + node.y} fill="none" stroke={node.color} strokeOpacity={index < 2 ? 0.82 : 0.28} strokeWidth={index < 2 ? 2.5 : 1.2 + index * 0.22} animate={{ pathLength: loop ? [0, 1, 1, 0] : 1 }} transition={loop ? { duration: 7.2, delay: index * 0.13, times: [0, 0.58, 0.92, 1], repeat: Infinity, repeatDelay: 1, ease: demoEase } : { duration: 0 }} />
         ))}
-        <AnimatedLine d="M76 64 Q210 18 344 62" color="#FF4F00" loop={loop} delay={0.7} dashed width={2.8} />
-        <motion.circle r="4" fill="#FF4F00" animate={loop ? { cx: [76, 210, 344, 344, 76], cy: [64, 30, 62, 62, 64], opacity: [0, 1, 1, 0, 0] } : { cx: 344, cy: 62, opacity: 1 }} transition={loop ? { duration: 7.2, times: [0, 0.45, 0.72, 0.92, 1], repeat: Infinity, repeatDelay: 1, ease: "linear" } : { duration: 0 }} />
+        <AnimatedLine d="M76 64 Q210 18 344 62" color="var(--color-oraami-accent-1)" loop={loop} delay={0.7} dashed width={2.8} />
+        <motion.circle r="4" fill="var(--color-oraami-accent-1)" animate={loop ? { cx: [76, 210, 344, 344, 76], cy: [64, 30, 62, 62, 64], opacity: [0, 1, 1, 0, 0] } : { cx: 344, cy: 62, opacity: 1 }} transition={loop ? { duration: 7.2, times: [0, 0.45, 0.72, 0.92, 1], repeat: Infinity, repeatDelay: 1, ease: "linear" } : { duration: 0 }} />
       </svg>
       <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-xl border border-brand/20 bg-brand/5 px-3 py-2 text-center"><p className="text-[7px] uppercase tracking-[0.1em] text-brand">Account</p><p className="mt-0.5 text-[11px] font-medium text-ink">Northfield</p></div>
       {MAP_NODES.map((node, index) => (
@@ -287,10 +287,10 @@ function StakeholderMapChart({ play, reduce }: { play: boolean; reduce: boolean 
 }
 
 const ENGAGEMENT_LINES = [
-  { label: "Email opens", color: "#2563EB", d: "M22 196 C58 192 82 172 118 178 S166 142 202 150 S250 112 286 122 S342 80 396 92" },
-  { label: "LinkedIn", color: "#7157A8", d: "M22 208 C74 204 88 186 130 192 S182 168 222 174 S276 146 316 154 S360 128 396 134" },
-  { label: "Content", color: "#D97706", d: "M22 216 C84 212 106 198 146 202 S202 186 240 190 S288 166 326 170 S370 142 396 148" },
-  { label: "Replies", color: "#FF4F00", d: "M22 224 C120 222 158 214 210 212 S280 194 320 174 S366 126 396 116" },
+  { label: "Email opens", color: "var(--color-oraami-accent-27)", d: "M22 196 C58 192 82 172 118 178 S166 142 202 150 S250 112 286 122 S342 80 396 92" },
+  { label: "LinkedIn", color: "var(--color-oraami-accent-26)", d: "M22 208 C74 204 88 186 130 192 S182 168 222 174 S276 146 316 154 S360 128 396 134" },
+  { label: "Content", color: "var(--color-oraami-accent-28)", d: "M22 216 C84 212 106 198 146 202 S202 186 240 190 S288 166 326 170 S370 142 396 148" },
+  { label: "Replies", color: "var(--color-oraami-accent-1)", d: "M22 224 C120 222 158 214 210 212 S280 194 320 174 S366 126 396 116" },
 ]
 
 function SequenceTimelineChart({ play, reduce }: { play: boolean; reduce: boolean }) {
@@ -305,11 +305,11 @@ function SequenceTimelineChart({ play, reduce }: { play: boolean; reduce: boolea
             {[82, 146, 210, 276, 326, 396].map((x, index) => (
               <motion.g key={x} animate={loop ? { opacity: [0, 0, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.8, delay: index * 0.22, times: [0, 0.35, 0.55, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>
                 <line x1={x} x2={x} y1="34" y2="222" stroke="rgba(255,79,0,0.16)" strokeDasharray="3 4" />
-                <circle cx={x} cy={index === 5 ? 116 : 178 - index * 10} r="4" fill={index === 5 ? "#FF4F00" : "#FAF8F6"} stroke="#FF4F00" />
+                <circle cx={x} cy={index === 5 ? 116 : 178 - index * 10} r="4" fill={index === 5 ? "var(--color-oraami-accent-1)" : "var(--color-oraami-accent-24)"} stroke="var(--color-oraami-accent-1)" />
               </motion.g>
             ))}
-            <motion.text x="168" y="144" fontSize="8" fill="#7157A8" animate={loop ? { opacity: [0, 0.2, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.8, times: [0, 0.3, 0.46, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Active</motion.text>
-            <motion.text x="356" y="108" fontSize="8" fill="#FF4F00" animate={loop ? { opacity: [0, 0, 1, 1, 0], y: [3, 3, 0, 0, -2] } : { opacity: 1, y: 0 }} transition={loop ? { duration: 7.8, times: [0, 0.62, 0.76, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Reply</motion.text>
+            <motion.text x="168" y="144" fontSize="8" fill="var(--color-oraami-accent-26)" animate={loop ? { opacity: [0, 0.2, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.8, times: [0, 0.3, 0.46, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Active</motion.text>
+            <motion.text x="356" y="108" fontSize="8" fill="var(--color-oraami-accent-1)" animate={loop ? { opacity: [0, 0, 1, 1, 0], y: [3, 3, 0, 0, -2] } : { opacity: 1, y: 0 }} transition={loop ? { duration: 7.8, times: [0, 0.62, 0.76, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Reply</motion.text>
           </svg>
           <motion.div className="absolute right-4 top-4" animate={loop ? { opacity: [0, 0, 1, 1, 0], scale: [0.95, 0.95, 1, 1, 0.95] } : { opacity: 1, scale: 1 }} transition={loop ? { duration: 7.8, times: [0, 0.68, 0.78, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}><ChartTooltip title="Outcome" value="Meeting booked" /></motion.div>
         </div>
@@ -332,14 +332,14 @@ function AnalyticsDashboardChart({ play, reduce }: { play: boolean; reduce: bool
   return (
     <VisualizationFrame>
       <svg viewBox="0 0 404 180" className="h-full w-full" role="img" aria-label="Meeting rate current and previous period">
-        <defs><linearGradient id="analyticsAreaPro" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#FF4F00" stopOpacity="0.22" /><stop offset="100%" stopColor="#FF4F00" stopOpacity="0" /></linearGradient></defs>
+        <defs><linearGradient id="analyticsAreaPro" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="var(--color-oraami-accent-1)" stopOpacity="0.22" /><stop offset="100%" stopColor="var(--color-oraami-accent-1)" stopOpacity="0" /></linearGradient></defs>
         <ChartGrid width={404} height={180} />
         <motion.path d={current + " L386 172 L18 172 Z"} fill="url(#analyticsAreaPro)" animate={{ opacity: loop ? [0, 1, 1, 0] : 1 }} transition={loop ? { duration: 7.2, times: [0, 0.66, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }} />
         <AnimatedLine d={previous} color="rgba(113,87,168,0.55)" loop={loop} dashed width={1.8} />
-        <AnimatedLine d={current} color="#FF4F00" loop={loop} delay={0.12} width={3} />
-        {[[112,118],[198,94],[286,72],[386,42]].map(([x,y], index) => <motion.circle key={x} cx={x} cy={y} r="4" fill="#FF4F00" stroke="white" strokeWidth="2" animate={loop ? { opacity: [0, 0, 1, 1, 0], scale: [0.6, 0.6, 1, 1, 0.6] } : { opacity: 1, scale: 1 }} transition={loop ? { duration: 7.2, delay: index * 0.11, times: [0, 0.55, 0.68, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }} />)}
-        <motion.text x="202" y="84" fontSize="8" fill="#FF4F00" animate={loop ? { opacity: [0, 0.2, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.2, times: [0, 0.34, 0.48, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Growth</motion.text>
-        <motion.text x="338" y="36" fontSize="8" fill="#0F766E" animate={loop ? { opacity: [0, 0, 1, 1, 0], y: [3, 3, 0, 0, -2] } : { opacity: 1, y: 0 }} transition={loop ? { duration: 7.2, times: [0, 0.58, 0.7, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Top Account</motion.text>
+        <AnimatedLine d={current} color="var(--color-oraami-accent-1)" loop={loop} delay={0.12} width={3} />
+        {[[112,118],[198,94],[286,72],[386,42]].map(([x,y], index) => <motion.circle key={x} cx={x} cy={y} r="4" fill="var(--color-oraami-accent-1)" stroke="white" strokeWidth="2" animate={loop ? { opacity: [0, 0, 1, 1, 0], scale: [0.6, 0.6, 1, 1, 0.6] } : { opacity: 1, scale: 1 }} transition={loop ? { duration: 7.2, delay: index * 0.11, times: [0, 0.55, 0.68, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }} />)}
+        <motion.text x="202" y="84" fontSize="8" fill="var(--color-oraami-accent-1)" animate={loop ? { opacity: [0, 0.2, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.2, times: [0, 0.34, 0.48, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Growth</motion.text>
+        <motion.text x="338" y="36" fontSize="8" fill="var(--color-oraami-accent-25)" animate={loop ? { opacity: [0, 0, 1, 1, 0], y: [3, 3, 0, 0, -2] } : { opacity: 1, y: 0 }} transition={loop ? { duration: 7.2, times: [0, 0.58, 0.7, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Top Account</motion.text>
       </svg>
     </VisualizationFrame>
   )
@@ -440,12 +440,12 @@ function FeatureTab({
               boxShadow: "0 10px 22px -24px rgba(32,21,21,0.26)",
             }
       }
-      style={{ backgroundColor: active ? "#1E1A4D" : "#FAF8F6" }}
+      style={{ backgroundColor: active ? "rgba(255,79,0,0.08)" : "var(--color-oraami-accent-24)" }}
     >
       {active ? (
         <motion.span
           layoutId="features-active-tab"
-          className="absolute inset-0 rounded-2xl border border-brand/15 bg-[#1E1A4D]"
+          className="absolute inset-0 rounded-2xl border border-brand/20 bg-brand/[0.06]"
           transition={{ duration: reduce ? 0 : 0.42, ease }}
         />
       ) : null}
@@ -453,13 +453,13 @@ function FeatureTab({
       <span className="relative z-10 flex h-full min-w-0 flex-col items-start justify-center gap-4">
         <span
           className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border text-brand shadow-[0_10px_22px_-20px_rgba(32,21,21,0.42)] ${
-            active ? "border-white/10 bg-white/10" : "border-black/10 bg-white"
+            active ? "border-brand/20 bg-brand text-on-primary" : "border-black/10 bg-white"
           }`}
         >
           <feature.Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
         </span>
         <span
-          className={`block text-[14px] font-medium leading-[1.35] ${active ? "text-[#FAF8F6]" : "text-ink"}`}
+          className={`block text-[14px] font-medium leading-[1.35] ${active ? "text-heading" : "text-ink"}`}
           style={{
             display: "-webkit-box",
             WebkitBoxOrient: "vertical",
@@ -508,35 +508,13 @@ function FeatureDetails({ feature, reduce }: { feature: Feature; reduce: boolean
       animate="visible"
       exit="exit"
     >
-      <motion.div className="flex h-full flex-col justify-center py-4 lg:min-h-[560px] lg:py-8" variants={detailVariants}>
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-brand/15 bg-brand/5 text-brand">
-          <feature.Icon className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
-        </div>
-
-        <div className="mt-8 space-y-6">
+      <motion.div className="flex h-full flex-col justify-center py-4 lg:min-h-[560px] lg:-translate-y-29 lg:py-8" variants={detailVariants}>
+        <div className="space-y-6">
           <h3 className="max-w-[15ch] text-[32px] font-medium leading-[1.06] tracking-[-0.03em] text-heading sm:text-[38px] lg:text-[42px]">
             {feature.title}
           </h3>
           <p className="max-w-[36rem] text-[16px] leading-[1.78] text-muted sm:text-[17px]">{feature.desc}</p>
         </div>
-
-        <motion.div
-          className="mt-12 rounded-[24px] border border-black/10 bg-white px-5 py-5 shadow-[0_14px_32px_-30px_rgba(32,21,21,0.45)]"
-          variants={detailVariants}
-          initial={reduce ? false : { opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: reduce ? 0 : 0.34, delay: 0.18, ease }}
-        >
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.18em] text-faint">Outcome</p>
-              <p className="mt-2 text-[22px] font-medium tracking-[-0.02em] text-ink">{feature.metric} {feature.metricLabel}</p>
-            </div>
-            <div className="inline-flex rounded-full border border-brand/15 bg-brand/5 px-3 py-1.5 text-[12px] font-medium text-brand">
-              Quality-first motion
-            </div>
-          </div>
-        </motion.div>
       </motion.div>
 
       <motion.div
@@ -666,18 +644,18 @@ export default function Features() {
           initial={false}
           animate={entered ? "visible" : "hidden"}
           variants={listVariants}
-          className="relative mt-12 rounded-[28px] border border-black/10 bg-[#FAF8F6] p-3 shadow-[0_20px_55px_-40px_rgba(32,21,21,0.45)]"
+          className="relative mt-12 rounded-[28px] border border-black/10 bg-oraami-accent-24 p-3 shadow-[0_20px_55px_-40px_rgba(32,21,21,0.45)]"
           onKeyDown={handleKeyDown}
           onMouseEnter={() => setAutoplayPaused(true)}
           onMouseLeave={handleAutoplayResume}
         >
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 rounded-l-[28px] bg-gradient-to-r from-[#FAF8F6] to-transparent"
+            className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 rounded-l-[28px] bg-gradient-to-r from-oraami-accent-24 to-transparent"
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 rounded-r-[28px] bg-gradient-to-l from-[#FAF8F6] to-transparent"
+            className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 rounded-r-[28px] bg-gradient-to-l from-oraami-accent-24 to-transparent"
           />
           <div ref={tabListRef} className="flex flex-nowrap gap-3 overflow-x-auto overflow-y-hidden pb-2 pr-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:overflow-visible">
             {FEATURES.map((feature, index) => (
@@ -698,7 +676,7 @@ export default function Features() {
         </motion.div>
 
         <motion.div
-          className="mt-8 rounded-[32px] border border-black/10 bg-[#FAF8F6] p-4 shadow-[0_22px_60px_-42px_rgba(32,21,21,0.55)] sm:p-5 lg:p-6"
+          className="mt-8 rounded-[32px] border border-black/10 bg-oraami-accent-24 p-4 shadow-[0_22px_60px_-42px_rgba(32,21,21,0.55)] sm:p-5 lg:p-6"
           initial={reduce ? false : { opacity: 0, y: 16 }}
           animate={entered ? { opacity: 1, y: 0 } : undefined}
           transition={{ duration: reduce ? 0 : 0.55, ease }}

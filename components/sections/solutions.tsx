@@ -120,9 +120,9 @@ const cardVariants: Variants = {
 
 function IndustryIcon({ Icon }: { Icon: LucideIcon }) {
   return (
-    <div className="relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/8 shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_18px_40px_-28px_rgba(255,79,0,0.55)] transition-transform duration-300 ease-out group-hover:scale-[1.02]">
+    <div className="relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-oraami-accent-secondary/12 bg-oraami-accent-secondary/[0.04] shadow-[0_18px_40px_-28px_rgba(255,79,0,0.24)] transition-[transform,box-shadow,border-color,background-color] duration-300 ease-out group-hover:scale-[1.02] group-hover:border-brand/25 group-hover:bg-brand/[0.06] group-hover:shadow-[0_24px_48px_-30px_rgba(255,79,0,0.28)]">
       <span aria-hidden="true" className="absolute left-0 top-0 h-full w-[3px] bg-brand" />
-      <Icon className="relative h-6 w-6 text-brand transition-colors duration-300 ease-out group-hover:text-on-primary" strokeWidth={1.5} aria-hidden="true" />
+      <Icon className="relative h-6 w-6 text-brand" strokeWidth={1.5} aria-hidden="true" />
     </div>
   )
 }
@@ -136,18 +136,14 @@ function VizShell({ children, reduceMotion }: { children: ReactNode; reduceMotio
         animate={reduceMotion ? { opacity: 0.28 } : { opacity: [0.18, 0.34, 0.18], scale: [0.94, 1.06, 0.94] }}
         transition={reduceMotion ? { duration: 0 } : { duration: 6.4, repeat: Infinity, ease: "easeInOut" }}
       />
-      <div className="relative flex h-full items-center justify-center rounded-[18px] border border-white/8 bg-[#140f38]/88 px-4 py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] sm:px-5">
+      <div className="relative flex h-full items-center justify-center rounded-[18px] border border-white/8 bg-oraami-accent-secondary/92 px-4 py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] sm:px-5">
         {children}
       </div>
     </div>
   )
 }
 
-function TinyLabel({ children }: { children: ReactNode }) {
-  return <span className="rounded-full border border-white/10 bg-white/8 px-2 py-1 text-[10px] uppercase tracking-[0.12em] text-white/58">{children}</span>
-}
-
-function AnimatedConnector({ d, reduceMotion, color = "rgba(255,255,255,0.28)", width = 2 }: { d: string; reduceMotion: boolean; color?: string; width?: number }) {
+function AnimatedConnector({ d, reduceMotion, color = "rgba(255,255,255,0.28)", width = 2, dash = "6 8" }: { d: string; reduceMotion: boolean; color?: string; width?: number; dash?: string }) {
   return (
     <motion.path
       d={d}
@@ -155,26 +151,54 @@ function AnimatedConnector({ d, reduceMotion, color = "rgba(255,255,255,0.28)", 
       stroke={color}
       strokeWidth={width}
       strokeLinecap="round"
-      strokeDasharray="6 8"
-      animate={reduceMotion ? { pathLength: 1, opacity: 0.7 } : { pathLength: [0, 1, 1], opacity: [0.14, 0.9, 0.14] }}
+      strokeDasharray={dash}
+      animate={reduceMotion ? { pathLength: 1, opacity: 0.7 } : { pathLength: [0.08, 1, 1], opacity: [0.18, 0.92, 0.18] }}
       transition={reduceMotion ? { duration: 0 } : { duration: 6.2, repeat: Infinity, ease: "easeInOut" }}
     />
   )
 }
 
-function StageNode({ active, reduceMotion, label, x, y }: { active?: boolean; reduceMotion: boolean; label?: string; x: number; y: number }) {
+function MovingPulse({ reduceMotion, values, duration = 6, fill = "var(--color-oraami-accent-1)", radius = 6 }: { reduceMotion: boolean; values: { cx: number[]; cy: number[] }; duration?: number; fill?: string; radius?: number }) {
+  return (
+    <motion.circle
+      r={radius}
+      fill={fill}
+      animate={reduceMotion ? { cx: values.cx.at(-1), cy: values.cy.at(-1), opacity: 1 } : { cx: values.cx, cy: values.cy, opacity: [0, 1, 1, 0.15] }}
+      transition={reduceMotion ? { duration: 0 } : { duration, repeat: Infinity, ease: "easeInOut" }}
+    />
+  )
+}
+
+function PulseNode({ x, y, reduceMotion, active = false, size = 14 }: { x: number; y: number; reduceMotion: boolean; active?: boolean; size?: number }) {
   return (
     <g>
       <motion.circle
         cx={x}
         cy={y}
-        r={active ? 18 : 14}
-        fill={active ? "rgba(255,79,0,0.16)" : "rgba(255,255,255,0.05)"}
-        stroke={active ? "rgba(255,79,0,0.45)" : "rgba(255,255,255,0.16)"}
-        animate={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: active ? [0.65, 1, 0.65] : [0.36, 0.74, 0.36], scale: active ? [0.96, 1.04, 0.96] : 1 }}
-        transition={reduceMotion ? { duration: 0 } : { duration: 5.8, repeat: Infinity, ease: "easeInOut" }}
+        r={size}
+        fill={active ? "rgba(255,79,0,0.14)" : "rgba(255,255,255,0.06)"}
+        stroke={active ? "rgba(255,79,0,0.44)" : "rgba(255,255,255,0.18)"}
+        animate={reduceMotion ? { scale: 1, opacity: 1 } : { scale: active ? [0.95, 1.08, 0.95] : [1, 1.05, 1], opacity: active ? [0.66, 1, 0.66] : [0.42, 0.82, 0.42] }}
+        transition={reduceMotion ? { duration: 0 } : { duration: active ? 4.8 : 6, repeat: Infinity, ease: "easeInOut" }}
       />
-      {label ? <text x={x} y={y + 34} textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.54)">{label}</text> : null}
+      <circle cx={x} cy={y} r={active ? 4.5 : 3.5} fill={active ? "rgba(255,79,0,0.96)" : "rgba(255,255,255,0.72)"} />
+    </g>
+  )
+}
+
+function GlassPanel({ x, y, width, height, accent = false, children }: { x: number; y: number; width: number; height: number; accent?: boolean; children?: ReactNode }) {
+  return (
+    <g>
+      <rect
+        x={x}
+        y={y}
+        width={width}
+        height={height}
+        rx={16}
+        fill={accent ? "rgba(255,79,0,0.08)" : "rgba(255,255,255,0.04)"}
+        stroke={accent ? "rgba(255,79,0,0.26)" : "rgba(255,255,255,0.14)"}
+      />
+      {children}
     </g>
   )
 }
@@ -191,24 +215,25 @@ function IndustryVisualization({ industry, reduceMotion }: { industry: Industry;
 function SaaSVisualization({ reduceMotion }: { reduceMotion: boolean }) {
   return (
     <VizShell reduceMotion={reduceMotion}>
-      <div className="relative w-full max-w-[420px]">
-        <div className="mb-4 flex justify-center">
-          <TinyLabel>Journey</TinyLabel>
-        </div>
-        <svg viewBox="0 0 420 170" className="mx-auto h-[170px] w-full max-w-[420px]" aria-hidden="true">
-          <AnimatedConnector d="M34 92 C86 92 102 44 156 44 S238 44 284 92 S344 138 388 138" reduceMotion={reduceMotion} color="rgba(255,79,0,0.72)" width={2.5} />
-          <StageNode x={44} y={92} label="Research" reduceMotion={reduceMotion} />
-          <StageNode x={156} y={44} label="Match" reduceMotion={reduceMotion} />
-          <StageNode x={284} y={92} label="Qualified" active reduceMotion={reduceMotion} />
-          <StageNode x={388} y={138} label="Outreach" reduceMotion={reduceMotion} />
-          <motion.circle
-            r="7"
-            fill="#FF4F00"
-            animate={reduceMotion ? { cx: 388, cy: 138, opacity: 1 } : { cx: [44, 156, 284, 388], cy: [92, 44, 92, 138], opacity: [0, 1, 1, 1] }}
-            transition={reduceMotion ? { duration: 0 } : { duration: 6.2, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </svg>
-      </div>
+      <svg viewBox="0 0 420 180" className="mx-auto h-[180px] w-full max-w-[420px]" aria-hidden="true">
+        <GlassPanel x={46} y={34} width={132} height={56}>
+          <motion.rect x="62" y="52" width="58" height="8" rx="4" fill="rgba(255,255,255,0.16)" animate={reduceMotion ? { width: 58 } : { width: [36, 58, 44, 58] }} transition={{ duration: 5.4, repeat: Infinity, ease: "easeInOut" }} />
+          <motion.rect x="62" y="68" width="94" height="6" rx="3" fill="rgba(255,255,255,0.1)" animate={reduceMotion ? { opacity: 0.7 } : { opacity: [0.4, 0.9, 0.4] }} transition={{ duration: 4.6, repeat: Infinity, ease: "easeInOut" }} />
+        </GlassPanel>
+        <GlassPanel x={242} y={34} width={132} height={56}>
+          <motion.rect x="258" y="50" width="90" height="10" rx="5" fill="rgba(255,79,0,0.22)" animate={reduceMotion ? { scaleX: 1 } : { scaleX: [0.48, 1, 0.7, 1] }} style={{ originX: 0 }} transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut" }} />
+          <motion.circle cx="336" cy="69" r="10" fill="rgba(255,255,255,0.08)" animate={reduceMotion ? { r: 10 } : { r: [7, 10, 8, 10] }} transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }} />
+        </GlassPanel>
+        <GlassPanel x={106} y={112} width={208} height={42} accent>
+          <motion.rect x="126" y="126" width="40" height="8" rx="4" fill="rgba(255,255,255,0.16)" animate={reduceMotion ? { x: 126 } : { x: [126, 140, 126] }} transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }} />
+          <motion.rect x="182" y="126" width="56" height="8" rx="4" fill="rgba(255,79,0,0.84)" animate={reduceMotion ? { width: 56 } : { width: [28, 56, 42, 56] }} transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }} />
+          <motion.rect x="254" y="126" width="34" height="8" rx="4" fill="rgba(255,255,255,0.16)" animate={reduceMotion ? { x: 254 } : { x: [254, 240, 254] }} transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut" }} />
+        </GlassPanel>
+        <AnimatedConnector d="M178 62 C212 62 212 62 242 62" reduceMotion={reduceMotion} color="rgba(255,255,255,0.34)" width={2.2} dash="4 7" />
+        <AnimatedConnector d="M112 90 C134 112 158 124 200 132" reduceMotion={reduceMotion} color="rgba(255,79,0,0.66)" width={2.3} dash="5 6" />
+        <AnimatedConnector d="M308 90 C286 112 262 124 220 132" reduceMotion={reduceMotion} color="rgba(113,87,168,0.62)" width={2.3} dash="5 6" />
+        <MovingPulse reduceMotion={reduceMotion} values={{ cx: [112, 178, 242, 308, 286, 220], cy: [62, 62, 62, 62, 104, 132] }} duration={6.4} />
+      </svg>
     </VizShell>
   )
 }
@@ -216,28 +241,25 @@ function SaaSVisualization({ reduceMotion }: { reduceMotion: boolean }) {
 function AgenciesVisualization({ reduceMotion }: { reduceMotion: boolean }) {
   return (
     <VizShell reduceMotion={reduceMotion}>
-      <div className="relative w-full max-w-[420px]">
-        <div className="mb-4 flex flex-col items-center gap-2 text-center">
-          <TinyLabel>Best Fit</TinyLabel>
-          <p className="text-[12px] text-white/58">Prospect aligns to proof, then moves to proposal.</p>
-        </div>
-        <svg viewBox="0 0 420 170" className="mx-auto h-[170px] w-full max-w-[420px]" aria-hidden="true">
-          <AnimatedConnector d="M50 112 C118 112 126 54 210 54 S302 54 370 112" reduceMotion={reduceMotion} color="rgba(113,87,168,0.64)" width={2.2} />
-          <AnimatedConnector d="M210 54 C244 74 278 92 330 120" reduceMotion={reduceMotion} color="rgba(255,79,0,0.72)" width={2.2} />
-          <rect x="26" y="88" width="48" height="48" rx="16" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" />
-          <text x="50" y="117" textAnchor="middle" fontSize="9" fill="rgba(255,255,255,0.62)">Lead</text>
-          <rect x="186" y="30" width="48" height="48" rx="16" fill="rgba(255,79,0,0.12)" stroke="rgba(255,79,0,0.28)" />
-          <text x="210" y="59" textAnchor="middle" fontSize="9" fill="rgba(255,79,0,0.86)">Proof</text>
-          <rect x="324" y="96" width="48" height="48" rx="16" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" />
-          <text x="348" y="125" textAnchor="middle" fontSize="9" fill="rgba(255,255,255,0.62)">Scope</text>
-          <motion.circle
-            r="6"
-            fill="#FF4F00"
-            animate={reduceMotion ? { cx: 348, cy: 120, opacity: 1 } : { cx: [50, 210, 348], cy: [112, 54, 120], opacity: [0, 1, 1] }}
-            transition={reduceMotion ? { duration: 0 } : { duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </svg>
-      </div>
+      <svg viewBox="0 0 420 180" className="mx-auto h-[180px] w-full max-w-[420px]" aria-hidden="true">
+        <GlassPanel x={34} y={44} width={72} height={96}>
+          <motion.rect x="50" y="60" width="40" height="8" rx="4" fill="rgba(255,255,255,0.16)" animate={reduceMotion ? { y: 60 } : { y: [60, 72, 60] }} transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }} />
+          <motion.rect x="50" y="84" width="40" height="8" rx="4" fill="rgba(255,79,0,0.74)" animate={reduceMotion ? { width: 40 } : { width: [18, 40, 28, 40] }} transition={{ duration: 4.3, repeat: Infinity, ease: "easeInOut" }} />
+          <motion.rect x="50" y="108" width="40" height="8" rx="4" fill="rgba(255,255,255,0.16)" animate={reduceMotion ? { y: 108 } : { y: [108, 96, 108] }} transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }} />
+        </GlassPanel>
+        <GlassPanel x={174} y={30} width={72} height={120} accent>
+          <motion.rect x="190" y="48" width="40" height="10" rx="5" fill="rgba(255,79,0,0.82)" animate={reduceMotion ? { y: 48 } : { y: [48, 72, 96, 48] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }} />
+          <motion.rect x="190" y="72" width="40" height="10" rx="5" fill="rgba(255,255,255,0.12)" animate={reduceMotion ? { opacity: 0.7 } : { opacity: [0.25, 0.8, 0.25] }} transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }} />
+          <motion.rect x="190" y="96" width="40" height="10" rx="5" fill="rgba(255,255,255,0.12)" animate={reduceMotion ? { opacity: 0.7 } : { opacity: [0.7, 0.25, 0.7] }} transition={{ duration: 4.6, repeat: Infinity, ease: "easeInOut" }} />
+        </GlassPanel>
+        <GlassPanel x={314} y={54} width={72} height={86}>
+          <motion.circle cx="350" cy="84" r="15" fill="rgba(255,255,255,0.08)" animate={reduceMotion ? { scale: 1 } : { scale: [0.92, 1.08, 0.92] }} transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut" }} />
+          <motion.path d="M334 110 C346 120 360 120 370 106" fill="none" stroke="rgba(255,79,0,0.78)" strokeWidth="3" strokeLinecap="round" animate={reduceMotion ? { pathLength: 1 } : { pathLength: [0.2, 1, 1] }} transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }} />
+        </GlassPanel>
+        <AnimatedConnector d="M106 92 C130 92 146 92 174 92" reduceMotion={reduceMotion} color="rgba(255,255,255,0.3)" width={2.1} dash="4 8" />
+        <AnimatedConnector d="M246 92 C272 92 288 92 314 92" reduceMotion={reduceMotion} color="rgba(255,79,0,0.72)" width={2.3} dash="4 7" />
+        <MovingPulse reduceMotion={reduceMotion} values={{ cx: [106, 174, 246, 314, 350], cy: [92, 92, 92, 92, 92] }} duration={6.1} />
+      </svg>
     </VizShell>
   )
 }
@@ -245,23 +267,31 @@ function AgenciesVisualization({ reduceMotion }: { reduceMotion: boolean }) {
 function ConsultingVisualization({ reduceMotion }: { reduceMotion: boolean }) {
   return (
     <VizShell reduceMotion={reduceMotion}>
-      <div className="relative w-full max-w-[420px]">
-        <div className="mb-4 flex flex-col items-center gap-2 text-center">
-          <TinyLabel>Priority</TinyLabel>
-          <p className="text-[12px] text-white/58">One account links to the strongest stakeholder path.</p>
-        </div>
-        <svg viewBox="0 0 420 180" className="mx-auto h-[180px] w-full max-w-[420px]" aria-hidden="true">
-          <AnimatedConnector d="M210 90 C170 72 126 56 78 40" reduceMotion={reduceMotion} color="rgba(113,87,168,0.58)" />
-          <AnimatedConnector d="M210 90 C256 70 300 56 342 40" reduceMotion={reduceMotion} color="rgba(255,79,0,0.72)" width={2.4} />
-          <AnimatedConnector d="M210 90 C170 112 128 132 90 154" reduceMotion={reduceMotion} color="rgba(15,118,110,0.56)" />
-          <AnimatedConnector d="M210 90 C258 112 296 132 330 154" reduceMotion={reduceMotion} color="rgba(37,99,235,0.56)" />
-          <StageNode x={210} y={90} active reduceMotion={reduceMotion} label="Account" />
-          <StageNode x={70} y={36} reduceMotion={reduceMotion} label="Ops" />
-          <StageNode x={350} y={36} active reduceMotion={reduceMotion} label="Partner" />
-          <StageNode x={82} y={158} reduceMotion={reduceMotion} label="CFO" />
-          <StageNode x={338} y={158} reduceMotion={reduceMotion} label="Lead" />
-        </svg>
-      </div>
+      <svg viewBox="0 0 420 180" className="mx-auto h-[180px] w-full max-w-[420px]" aria-hidden="true">
+        <motion.circle cx="210" cy="90" r="42" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.12)" animate={reduceMotion ? { scale: 1 } : { scale: [0.96, 1.04, 0.96] }} transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut" }} />
+        <motion.circle cx="210" cy="90" r="26" fill="rgba(255,79,0,0.12)" stroke="rgba(255,79,0,0.34)" animate={reduceMotion ? { scale: 1 } : { scale: [0.92, 1.08, 0.92] }} transition={{ duration: 4.6, repeat: Infinity, ease: "easeInOut" }} />
+        <PulseNode x={210} y={90} active reduceMotion={reduceMotion} size={16} />
+        <PulseNode x={90} y={48} reduceMotion={reduceMotion} />
+        <PulseNode x={330} y={44} reduceMotion={reduceMotion} active />
+        <PulseNode x={78} y={140} reduceMotion={reduceMotion} />
+        <PulseNode x={332} y={138} reduceMotion={reduceMotion} />
+        <AnimatedConnector d="M210 90 C182 80 138 62 90 48" reduceMotion={reduceMotion} color="rgba(113,87,168,0.62)" width={2.2} dash="4 7" />
+        <AnimatedConnector d="M210 90 C242 78 286 58 330 44" reduceMotion={reduceMotion} color="rgba(255,79,0,0.72)" width={2.4} dash="4 7" />
+        <AnimatedConnector d="M210 90 C174 110 130 126 78 140" reduceMotion={reduceMotion} color="rgba(15,118,110,0.58)" width={2.1} dash="4 8" />
+        <AnimatedConnector d="M210 90 C246 108 286 124 332 138" reduceMotion={reduceMotion} color="rgba(59,130,246,0.56)" width={2.1} dash="4 8" />
+        <motion.circle
+          cx="210"
+          cy="90"
+          r="72"
+          fill="none"
+          stroke="rgba(255,255,255,0.1)"
+          strokeDasharray="2 10"
+          animate={reduceMotion ? { rotate: 0 } : { rotate: 360 }}
+          style={{ originX: "210px", originY: "90px" }}
+          transition={reduceMotion ? { duration: 0 } : { duration: 18, repeat: Infinity, ease: "linear" }}
+        />
+        <MovingPulse reduceMotion={reduceMotion} values={{ cx: [210, 330, 210, 78, 210], cy: [90, 44, 90, 140, 90] }} duration={7} />
+      </svg>
     </VizShell>
   )
 }
@@ -269,31 +299,23 @@ function ConsultingVisualization({ reduceMotion }: { reduceMotion: boolean }) {
 function ITServicesVisualization({ reduceMotion }: { reduceMotion: boolean }) {
   return (
     <VizShell reduceMotion={reduceMotion}>
-      <div className="relative w-full max-w-[420px]">
-        <div className="mb-4 flex flex-col items-center gap-2 text-center">
-          <TinyLabel>Signal</TinyLabel>
-          <p className="text-[12px] text-white/58">Technical signals collapse into one qualified opportunity.</p>
-        </div>
-        <svg viewBox="0 0 420 170" className="mx-auto h-[170px] w-full max-w-[420px]" aria-hidden="true">
-          <rect x="132" y="26" width="156" height="54" rx="20" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" />
-          <text x="210" y="58" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.64)">System</text>
-          <rect x="62" y="112" width="70" height="36" rx="14" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.14)" />
-          <text x="97" y="134" textAnchor="middle" fontSize="9" fill="rgba(255,255,255,0.6)">Stack</text>
-          <rect x="176" y="112" width="70" height="36" rx="14" fill="rgba(255,79,0,0.1)" stroke="rgba(255,79,0,0.28)" />
-          <text x="211" y="134" textAnchor="middle" fontSize="9" fill="rgba(255,79,0,0.84)">Signal</text>
-          <rect x="290" y="112" width="70" height="36" rx="14" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.14)" />
-          <text x="325" y="134" textAnchor="middle" fontSize="9" fill="rgba(255,255,255,0.6)">Route</text>
-          <AnimatedConnector d="M210 80 C172 96 148 106 98 112" reduceMotion={reduceMotion} />
-          <AnimatedConnector d="M210 80 C210 96 210 104 210 112" reduceMotion={reduceMotion} color="rgba(255,79,0,0.72)" width={2.4} />
-          <AnimatedConnector d="M210 80 C248 96 272 106 324 112" reduceMotion={reduceMotion} />
-          <motion.circle
-            r="6"
-            fill="#FF4F00"
-            animate={reduceMotion ? { cx: 210, cy: 112, opacity: 1 } : { cx: [210, 210], cy: [80, 112], opacity: [0, 1] }}
-            transition={reduceMotion ? { duration: 0 } : { duration: 5.8, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </svg>
-      </div>
+      <svg viewBox="0 0 420 180" className="mx-auto h-[180px] w-full max-w-[420px]" aria-hidden="true">
+        <GlassPanel x={44} y={92} width={84} height={56}>
+          <motion.rect x="62" y="108" width="48" height="6" rx="3" fill="rgba(255,255,255,0.16)" animate={reduceMotion ? { opacity: 0.8 } : { opacity: [0.3, 0.9, 0.3] }} transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }} />
+          <motion.rect x="62" y="122" width="48" height="6" rx="3" fill="rgba(255,255,255,0.12)" animate={reduceMotion ? { opacity: 0.7 } : { opacity: [0.7, 0.25, 0.7] }} transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }} />
+        </GlassPanel>
+        <GlassPanel x={292} y={92} width={84} height={56}>
+          <motion.rect x="310" y="108" width="48" height="6" rx="3" fill="rgba(255,255,255,0.16)" animate={reduceMotion ? { opacity: 0.8 } : { opacity: [0.35, 0.9, 0.35] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} />
+          <motion.rect x="310" y="122" width="48" height="6" rx="3" fill="rgba(255,255,255,0.12)" animate={reduceMotion ? { opacity: 0.7 } : { opacity: [0.7, 0.2, 0.7] }} transition={{ duration: 4.6, repeat: Infinity, ease: "easeInOut" }} />
+        </GlassPanel>
+        <motion.path d="M142 74 C170 44 252 44 278 74" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.14)" strokeWidth="2" />
+        <motion.path d="M150 74 H270" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="2" />
+        <motion.path d="M320 52 l14 16 h-8 v18 h-12 V68 h-8 Z" fill="rgba(255,79,0,0.12)" stroke="rgba(255,79,0,0.3)" strokeWidth="2" animate={reduceMotion ? { scale: 1 } : { scale: [0.94, 1.06, 0.94] }} style={{ originX: '320px', originY: '52px' }} transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }} />
+        <AnimatedConnector d="M128 118 C168 118 176 118 210 84" reduceMotion={reduceMotion} color="rgba(255,255,255,0.28)" width={2.2} dash="4 7" />
+        <AnimatedConnector d="M210 84 C246 118 258 118 292 118" reduceMotion={reduceMotion} color="rgba(113,87,168,0.56)" width={2.2} dash="4 7" />
+        <AnimatedConnector d="M210 84 C252 84 286 74 320 68" reduceMotion={reduceMotion} color="rgba(255,79,0,0.72)" width={2.4} dash="4 7" />
+        <MovingPulse reduceMotion={reduceMotion} values={{ cx: [86, 210, 334, 210, 334], cy: [118, 84, 68, 84, 118] }} duration={6.6} />
+      </svg>
     </VizShell>
   )
 }
@@ -301,25 +323,22 @@ function ITServicesVisualization({ reduceMotion }: { reduceMotion: boolean }) {
 function FinancialServicesVisualization({ reduceMotion }: { reduceMotion: boolean }) {
   return (
     <VizShell reduceMotion={reduceMotion}>
-      <div className="relative w-full max-w-[420px]">
-        <div className="mb-4 flex flex-col items-center gap-2 text-center">
-          <TinyLabel>Approved</TinyLabel>
-          <p className="text-[12px] text-white/58">The profile clears review and moves into approval.</p>
-        </div>
-        <svg viewBox="0 0 420 170" className="mx-auto h-[170px] w-full max-w-[420px]" aria-hidden="true">
-          <AnimatedConnector d="M54 86 C108 86 124 86 176 86" reduceMotion={reduceMotion} />
-          <AnimatedConnector d="M214 86 C262 86 276 86 332 86" reduceMotion={reduceMotion} color="rgba(255,79,0,0.72)" width={2.4} />
-          <StageNode x={44} y={86} label="Profile" reduceMotion={reduceMotion} />
-          <StageNode x={186} y={86} label="Review" active reduceMotion={reduceMotion} />
-          <StageNode x={346} y={86} label="Approve" reduceMotion={reduceMotion} />
-          <motion.circle
-            r="6"
-            fill="#FF4F00"
-            animate={reduceMotion ? { cx: 346, cy: 86, opacity: 1 } : { cx: [44, 186, 346], cy: [86, 86, 86], opacity: [0, 1, 1] }}
-            transition={reduceMotion ? { duration: 0 } : { duration: 6.1, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </svg>
-      </div>
+      <svg viewBox="0 0 420 180" className="mx-auto h-[180px] w-full max-w-[420px]" aria-hidden="true">
+        <GlassPanel x={42} y={62} width={82} height={58}>
+          <motion.rect x="58" y="80" width="50" height="8" rx="4" fill="rgba(255,255,255,0.16)" animate={reduceMotion ? { x: 58 } : { x: [58, 64, 58] }} transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }} />
+        </GlassPanel>
+        <GlassPanel x={168} y={44} width={92} height={94} accent>
+          <motion.path d="M190 112 L208 92 L224 104 L240 74" fill="none" stroke="rgba(255,79,0,0.86)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" animate={reduceMotion ? { pathLength: 1 } : { pathLength: [0.2, 1, 1] }} transition={{ duration: 5.4, repeat: Infinity, ease: "easeInOut" }} />
+          <motion.rect x="188" y="64" width="52" height="8" rx="4" fill="rgba(255,255,255,0.16)" animate={reduceMotion ? { width: 52 } : { width: [24, 52, 40, 52] }} transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }} />
+        </GlassPanel>
+        <GlassPanel x={296} y={62} width={82} height={58}>
+          <motion.path d="M320 88 l10 10 18-22" fill="none" stroke="rgba(255,255,255,0.82)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" animate={reduceMotion ? { pathLength: 1 } : { pathLength: [0.2, 1, 1] }} transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }} />
+        </GlassPanel>
+        <motion.path d="M308 32 l16 18 h-10 v20 h-12 V50 h-10 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.18)" strokeWidth="2" animate={reduceMotion ? { y: 0 } : { y: [0, -4, 0] }} transition={{ duration: 4.6, repeat: Infinity, ease: "easeInOut" }} />
+        <AnimatedConnector d="M124 92 C144 92 150 92 168 92" reduceMotion={reduceMotion} color="rgba(255,255,255,0.3)" width={2.1} dash="4 7" />
+        <AnimatedConnector d="M260 92 C278 92 282 92 296 92" reduceMotion={reduceMotion} color="rgba(255,79,0,0.72)" width={2.4} dash="4 7" />
+        <MovingPulse reduceMotion={reduceMotion} values={{ cx: [84, 214, 336], cy: [92, 92, 92] }} duration={5.8} />
+      </svg>
     </VizShell>
   )
 }
@@ -327,28 +346,23 @@ function FinancialServicesVisualization({ reduceMotion }: { reduceMotion: boolea
 function HealthcareVisualization({ reduceMotion }: { reduceMotion: boolean }) {
   return (
     <VizShell reduceMotion={reduceMotion}>
-      <div className="relative w-full max-w-[420px]">
-        <div className="mb-4 flex flex-col items-center gap-2 text-center">
-          <TinyLabel>Booked</TinyLabel>
-          <p className="text-[12px] text-white/58">A reviewed message flows into a booked meeting.</p>
-        </div>
-        <svg viewBox="0 0 420 170" className="mx-auto h-[170px] w-full max-w-[420px]" aria-hidden="true">
-          <rect x="40" y="58" width="74" height="54" rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" />
-          <text x="77" y="89" textAnchor="middle" fontSize="9" fill="rgba(255,255,255,0.62)">Org</text>
-          <rect x="176" y="38" width="68" height="44" rx="16" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" />
-          <text x="210" y="64" textAnchor="middle" fontSize="9" fill="rgba(255,255,255,0.62)">Review</text>
-          <rect x="310" y="98" width="70" height="42" rx="16" fill="rgba(255,79,0,0.1)" stroke="rgba(255,79,0,0.28)" />
-          <text x="345" y="123" textAnchor="middle" fontSize="9" fill="rgba(255,79,0,0.84)">Meet</text>
-          <AnimatedConnector d="M114 86 C148 86 158 60 176 60" reduceMotion={reduceMotion} />
-          <AnimatedConnector d="M244 60 C274 70 292 90 310 118" reduceMotion={reduceMotion} color="rgba(255,79,0,0.72)" width={2.3} />
-          <motion.circle
-            r="6"
-            fill="#FF4F00"
-            animate={reduceMotion ? { cx: 344, cy: 118, opacity: 1 } : { cx: [114, 176, 344], cy: [86, 60, 118], opacity: [0, 1, 1] }}
-            transition={reduceMotion ? { duration: 0 } : { duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </svg>
-      </div>
+      <svg viewBox="0 0 420 180" className="mx-auto h-[180px] w-full max-w-[420px]" aria-hidden="true">
+        <GlassPanel x={40} y={58} width={92} height={72}>
+          <motion.rect x="58" y="76" width="56" height="8" rx="4" fill="rgba(255,255,255,0.16)" animate={reduceMotion ? { width: 56 } : { width: [24, 56, 40, 56] }} transition={{ duration: 4.6, repeat: Infinity, ease: "easeInOut" }} />
+          <motion.rect x="58" y="94" width="42" height="6" rx="3" fill="rgba(255,255,255,0.12)" animate={reduceMotion ? { opacity: 0.8 } : { opacity: [0.3, 0.9, 0.3] }} transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }} />
+        </GlassPanel>
+        <GlassPanel x={164} y={40} width={100} height={104} accent>
+          <motion.path d="M214 62 v58 M185 91 h58" fill="none" stroke="rgba(255,79,0,0.78)" strokeWidth="5" strokeLinecap="round" animate={reduceMotion ? { scale: 1 } : { scale: [0.92, 1.04, 0.92] }} style={{ originX: '214px', originY: '91px' }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }} />
+          <motion.circle cx="214" cy="91" r="30" fill="none" stroke="rgba(255,255,255,0.12)" strokeDasharray="4 8" animate={reduceMotion ? { rotate: 0 } : { rotate: 360 }} style={{ originX: '214px', originY: '91px' }} transition={{ duration: 14, repeat: Infinity, ease: "linear" }} />
+        </GlassPanel>
+        <GlassPanel x={296} y={72} width={84} height={52}>
+          <motion.circle cx="322" cy="98" r="4" fill="rgba(255,79,0,0.9)" animate={reduceMotion ? { cx: 322 } : { cx: [322, 354, 322] }} transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut" }} />
+          <motion.rect x="314" y="108" width="48" height="6" rx="3" fill="rgba(255,255,255,0.14)" animate={reduceMotion ? { opacity: 0.8 } : { opacity: [0.25, 0.8, 0.25] }} transition={{ duration: 4.1, repeat: Infinity, ease: "easeInOut" }} />
+        </GlassPanel>
+        <AnimatedConnector d="M132 94 C148 94 154 92 164 92" reduceMotion={reduceMotion} color="rgba(255,255,255,0.32)" width={2.1} dash="4 7" />
+        <AnimatedConnector d="M264 92 C278 92 284 96 296 98" reduceMotion={reduceMotion} color="rgba(255,79,0,0.72)" width={2.3} dash="4 7" />
+        <MovingPulse reduceMotion={reduceMotion} values={{ cx: [132, 214, 296, 338], cy: [94, 92, 98, 98] }} duration={6.2} />
+      </svg>
     </VizShell>
   )
 }
@@ -361,20 +375,20 @@ function IndustryCardBody({ industry, reduceMotion }: { industry: Industry; redu
           <IndustryIcon Icon={industry.Icon} />
           <div className="min-w-0 pt-0.5">
             <div className="h-1 w-8 rounded-full bg-brand/80" aria-hidden="true" />
-            <h3 className="mt-3 text-[18px] font-semibold uppercase leading-snug tracking-[0.08em] text-[#FCFCFA] sm:text-[20px]">
+            <h3 className="mt-3 text-[18px] font-semibold uppercase leading-snug tracking-[0.08em] text-heading sm:text-[20px]">
               {industry.name}
             </h3>
           </div>
         </div>
 
-        <div className="mt-6 hidden h-px w-14 bg-white/12 lg:block" aria-hidden="true" />
+        <div className="mt-6 hidden h-px w-14 bg-brand/14 lg:block" aria-hidden="true" />
 
-        <p className="mt-5 max-w-sm text-[15px] leading-[1.7] text-[#FCFCFA]/72 sm:text-[15.5px] lg:mt-0">
+        <p className="mt-5 max-w-sm text-[15px] leading-[1.7] text-muted sm:text-[15.5px] lg:mt-0">
           {industry.description}
         </p>
       </div>
 
-      <div className="h-px w-full bg-white/12 lg:h-auto lg:w-px lg:self-stretch" aria-hidden="true" />
+      <div className="h-px w-full bg-black/10 lg:h-auto lg:w-px lg:self-stretch" aria-hidden="true" />
 
       <div className="flex-1 lg:min-h-[224px]">
         <IndustryVisualization industry={industry} reduceMotion={reduceMotion} />
@@ -425,7 +439,7 @@ function StackCard({
       {!isLast && (
         <motion.div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-20 rounded-[22px] bg-[#1E1A4D]"
+          className="pointer-events-none absolute inset-0 z-20 rounded-[22px] bg-canvas-soft"
           style={{ opacity: coverOpacity }}
         />
       )}
@@ -443,7 +457,7 @@ function StaticIndustryCard({ industry }: { industry: Industry }) {
       animate="visible"
       variants={cardVariants}
       transition={{ duration: 0.27, ease }}
-      className="group relative flex min-h-[240px] w-full flex-col overflow-hidden rounded-[22px] border border-white/14 bg-[#1E1A4D] p-8 shadow-[0_24px_70px_-42px_rgba(8,8,27,0.42)] ring-1 ring-white/5 transition-all duration-300 ease-out hover:border-brand/30 hover:shadow-[0_30px_80px_-46px_rgba(8,8,27,0.48)] sm:p-9 lg:min-h-[248px] lg:p-10"
+      className="group relative flex min-h-[240px] w-full flex-col overflow-hidden rounded-[22px] border border-black/10 bg-white p-8 shadow-[0_24px_70px_-42px_rgba(32,21,21,0.18)] ring-1 ring-black/5 transition-all duration-300 ease-out hover:border-brand/30 hover:shadow-[0_30px_80px_-46px_rgba(255,79,0,0.18)] sm:p-9 lg:min-h-[248px] lg:p-10"
     >
       <IndustryCardBody industry={industry} reduceMotion={reduceMotion} />
     </motion.div>
@@ -500,10 +514,10 @@ export default function Solutions() {
                   animate={animationState}
                   variants={cardVariants}
                   whileHover={reduceMotion ? undefined : { y: -3 }}
-                  className="group relative flex min-h-[240px] w-full flex-col overflow-hidden rounded-[22px] border border-white/14 bg-[#1E1A4D] p-8 shadow-[0_24px_70px_-42px_rgba(8,8,27,0.42)] ring-1 ring-white/5 transition-all duration-300 ease-out hover:border-brand/30 hover:shadow-[0_30px_80px_-46px_rgba(8,8,27,0.48)] sm:p-9 lg:min-h-[248px] lg:p-10"
+                  className="group relative flex min-h-[240px] w-full flex-col overflow-hidden rounded-[22px] border border-black/10 bg-white p-8 shadow-[0_24px_70px_-42px_rgba(32,21,21,0.18)] ring-1 ring-black/5 transition-all duration-300 ease-out hover:border-brand/30 hover:shadow-[0_30px_80px_-46px_rgba(255,79,0,0.18)] sm:p-9 lg:min-h-[248px] lg:p-10"
                 >
-                  <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(255,79,0,0.10),transparent_28%)] opacity-70" />
-                  <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/10" />
+                  <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(255,79,0,0.08),transparent_28%)] opacity-80" />
+                  <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-brand/14" />
                   <div className="relative h-full">
                     <IndustryCardBody industry={industry} reduceMotion={reduceMotion} />
                   </div>

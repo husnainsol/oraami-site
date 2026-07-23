@@ -12,7 +12,7 @@ const REVIEWS: Review[] = [
     name: "Priya Natarajan",
     role: "Head of Revenue, Solstice Cloud",
     quote:
-      "Oraami capped our list at the 50 accounts that actually mattered. Reply rates tripled because every email felt genuinely researched — not blasted.",
+      "Oraami capped our list at the 50 accounts that actually mattered. Reply rates tripled because every email felt genuinely researched not blasted.",
     initials: "PN",
   },
   {
@@ -40,8 +40,8 @@ const REVIEWS: Review[] = [
 
 const FEATURED_QUOTE_LINES = [
   "Oraami capped our list at the 50 accounts that actually mattered.",
-  "Reply rates tripled because every email felt genuinely researched",
-  "— not blasted.",
+  "Reply rates tripled because every email felt genuinely researched not blasted",
+ 
 ]
 
 const easeOut = [0.22, 1, 0.36, 1] as const
@@ -79,7 +79,7 @@ function Monogram({ initials, dark }: { initials: string; dark?: boolean }) {
     <span
       className={cn(
         "flex h-11 w-11 shrink-0 items-center justify-center border text-[13px]",
-        dark ? "border-white/20 bg-[#FCFCFA]/6 text-[#FCFCFA]" : "border-black/15 bg-[#FCFCFA] text-ink"
+        dark ? "border-white/20 bg-canvas/6 text-canvas" : "border-black/15 bg-canvas text-ink"
       )}
     >
       {initials}
@@ -100,7 +100,7 @@ function TestimonialCard({
 }) {
   return (
     <motion.figure
-      className="group flex h-full flex-col rounded-xl border border-white/14 bg-[#1E1A4D] p-8 text-[#FCFCFA] transition-colors duration-300 hover:border-white/20 hover:shadow-[0_24px_50px_-28px_rgba(20,10,0,0.18)] sm:p-9"
+      className="group flex h-full flex-col rounded-xl border border-black/10 bg-white p-8 text-ink transition-colors duration-300 hover:border-brand/20 hover:shadow-[0_24px_50px_-28px_rgba(20,10,0,0.12)] sm:p-9"
       initial={reduce ? false : { opacity: 0, y: 35 }}
       animate={entered ? { opacity: 1, y: 0 } : undefined}
       whileHover={reduce ? undefined : { y: -5, scale: 1.01 }}
@@ -108,7 +108,7 @@ function TestimonialCard({
     >
       <AnimatedStars reveal={entered} delay={delay + 0.14} reduce={reduce} />
       <motion.blockquote
-        className="mt-5 flex-1 text-[16px] leading-relaxed text-[#FCFCFA]/68"
+        className="mt-5 flex-1 text-[16px] leading-relaxed text-muted"
         initial={reduce ? false : { opacity: 0, y: 10 }}
         animate={entered ? { opacity: 1, y: 0 } : undefined}
         whileHover={reduce ? undefined : { y: -2 }}
@@ -118,7 +118,7 @@ function TestimonialCard({
       </motion.blockquote>
       <div className="mt-auto pt-5">
         <motion.span
-          className="mb-5 block h-px w-full origin-left bg-white/10"
+          className="mb-5 block h-px w-full origin-left bg-brand/12"
           initial={reduce ? false : { scaleX: 0 }}
           animate={entered ? { scaleX: 1 } : undefined}
           whileHover={reduce ? undefined : { scaleX: 1.04 }}
@@ -131,11 +131,11 @@ function TestimonialCard({
             whileHover={reduce ? undefined : { rotate: 2 }}
             transition={{ duration: reduce ? 0 : 0.3, delay: delay + 0.34, ease: easeOut }}
           >
-            <Monogram initials={review.initials} dark />
+            <Monogram initials={review.initials} />
           </motion.div>
           <div className="min-w-0">
             <motion.p
-              className="text-[14px] font-medium text-[#FCFCFA]"
+              className="text-[14px] font-medium text-ink"
               initial={reduce ? false : { opacity: 0, x: -10 }}
               animate={entered ? { opacity: 1, x: 0 } : undefined}
               whileHover={reduce ? undefined : { x: 3 }}
@@ -144,7 +144,7 @@ function TestimonialCard({
               {review.name}
             </motion.p>
             <motion.p
-              className="text-[12px] text-[#FCFCFA]/42"
+              className="text-[12px] text-faint"
               initial={reduce ? false : { opacity: 0, y: 8 }}
               animate={entered ? { opacity: 1, y: 0 } : undefined}
               transition={{ duration: reduce ? 0 : 0.3, delay: delay + 0.42, ease: easeOut }}
@@ -182,7 +182,7 @@ export default function Testimonials() {
   }, [entered, reduce])
 
   return (
-    <section ref={sectionRef} id="testimonials" className="relative w-full border-b border-black/10 bg-[#FAF8F6] text-ink">
+    <section ref={sectionRef} id="testimonials" className="relative w-full border-b border-black/10 bg-canvas text-ink">
       <div className="site-container py-20">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
           <motion.div
@@ -214,7 +214,7 @@ export default function Testimonials() {
               animate={entered ? { opacity: 1, y: 0 } : undefined}
               transition={{ duration: reduce ? 0 : 0.55, delay: 0.26, ease: easeOut }}
             >
-              Revenue teams that traded spray-and-pray for quality-first prospecting — and the results that followed.
+              Revenue teams that traded spray-and-pray for quality-first prospecting and the results that followed.
             </motion.p>
           </motion.div>
 
@@ -241,7 +241,7 @@ export default function Testimonials() {
         </div>
 
         <motion.figure
-          className="relative mt-14 overflow-hidden border border-black/10 bg-white p-8 text-ink sm:p-10 lg:p-11"
+          className="relative mt-14 overflow-hidden rounded-[28px] border border-brand/12 bg-gradient-to-br from-brand/[0.06] via-white to-canvas-alt p-8 text-ink shadow-[0_24px_60px_-42px_rgba(255,79,0,0.22)] sm:p-10 lg:p-11"
           initial={reduce ? false : { opacity: 0, y: 30, scale: 0.96 }}
           animate={entered ? { opacity: 1, y: 0, scale: 1 } : undefined}
           whileHover={reduce ? undefined : { y: -5, scale: 1.01 }}

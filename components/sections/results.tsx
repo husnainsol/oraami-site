@@ -29,7 +29,7 @@ const RESULTS: Result[] = [
 
 export default function Results() {
   return (
-    <section className="relative w-full border-b border-black/10 bg-[#FAF8F6] text-ink">
+    <section className="relative w-full border-b border-black/10 bg-oraami-accent-24 text-ink">
       <div className="site-container py-20">
 
         <div className="max-w-2xl">

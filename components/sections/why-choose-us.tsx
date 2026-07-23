@@ -49,9 +49,9 @@ function Connector({ path, viewBox, active, reduce }: { path: string; viewBox: s
       <defs>
         <filter id={`journey-glow-${suffix}`} x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="8" /></filter>
         <linearGradient id={`journey-line-${suffix}`} x1="0" x2="1">
-          <stop offset="0" stopColor="#E53935" stopOpacity="0.35" />
-          <stop offset="0.48" stopColor="#E53935" />
-          <stop offset="1" stopColor="#C82926" stopOpacity="0.7" />
+          <stop offset="0" stopColor="var(--color-oraami-accent-21)" stopOpacity="0.35" />
+          <stop offset="0.48" stopColor="var(--color-oraami-accent-21)" />
+          <stop offset="1" stopColor="var(--color-oraami-accent-22)" stopOpacity="0.7" />
         </linearGradient>
       </defs>
       <path ref={pathRef} d={path} fill="none" stroke="rgba(24,22,20,0.08)" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
@@ -67,8 +67,8 @@ function Connector({ path, viewBox, active, reduce }: { path: string; viewBox: s
         transition={{ duration: reduce ? 0 : 5.35, delay: reduce ? 0 : 0.72, ease: "linear" }}
       />
       {!reduce && <>
-        <motion.circle cx={cx} cy={cy} r="16" fill="#E53935" opacity="0" filter={`url(#journey-glow-${suffix})`} initial={{ opacity: 0 }} animate={active ? { opacity: [0, 0.42, 0.42, 0] } : undefined} transition={{ duration: 5.5, delay: 0.65, times: [0, 0.08, 0.86, 1], ease: "easeInOut" }} />
-        <motion.circle cx={cx} cy={cy} r="5" fill="#FFFFFF" stroke="#E53935" strokeWidth="2" vectorEffect="non-scaling-stroke" initial={{ opacity: 0 }} animate={active ? { opacity: [0, 1, 1, 0] } : undefined} transition={{ duration: 5.5, delay: 0.65, times: [0, 0.06, 0.9, 1], ease: "easeInOut" }} />
+        <motion.circle cx={cx} cy={cy} r="16" fill="var(--color-oraami-accent-21)" opacity="0" filter={`url(#journey-glow-${suffix})`} initial={{ opacity: 0 }} animate={active ? { opacity: [0, 0.42, 0.42, 0] } : undefined} transition={{ duration: 5.5, delay: 0.65, times: [0, 0.08, 0.86, 1], ease: "easeInOut" }} />
+        <motion.circle cx={cx} cy={cy} r="5" fill="var(--color-oraami-accent-23)" stroke="var(--color-oraami-accent-21)" strokeWidth="2" vectorEffect="non-scaling-stroke" initial={{ opacity: 0 }} animate={active ? { opacity: [0, 1, 1, 0] } : undefined} transition={{ duration: 5.5, delay: 0.65, times: [0, 0.06, 0.9, 1], ease: "easeInOut" }} />
       </>}
     </svg>
   )
@@ -86,8 +86,8 @@ function JourneyStep({ value, index, active, reduce, mobile = false }: { value: 
   return (
     <motion.article
       className={mobile
-        ? "absolute left-[25%] right-1 rounded-2xl border border-white/14 bg-[#1E1A4D] px-5 pb-5 pt-12 shadow-[0_8px_30px_rgba(43,28,21,0.025)]"
-        : "absolute w-[22.5%] rounded-2xl border border-white/14 bg-[#1E1A4D] px-6 pb-6 pt-11 shadow-[0_8px_30px_rgba(43,28,21,0.025)] backdrop-blur-[2px] lg:px-7 lg:pb-7"}
+        ? "absolute left-[25%] right-1 rounded-2xl border border-brand/16 bg-white px-5 pb-5 pt-12 shadow-[0_16px_40px_-34px_rgba(43,28,21,0.16)]"
+        : "absolute w-[22.5%] rounded-2xl border border-brand/16 bg-white px-6 pb-6 pt-11 shadow-[0_16px_40px_-34px_rgba(43,28,21,0.16)] backdrop-blur-[2px] lg:px-7 lg:pb-7"}
       style={mobile ? { top: `${index * 25 + 5}%` } : { left: `${index * 25 + 1.25}%`, top: index % 2 === 0 ? "20%" : "49%" }}
       variants={variants}
       initial="hidden"
@@ -96,7 +96,7 @@ function JourneyStep({ value, index, active, reduce, mobile = false }: { value: 
     >
       <motion.span
         aria-hidden="true"
-        className="pointer-events-none absolute -right-2 -top-10 -z-10 select-none text-[84px] font-medium leading-none tracking-[-0.08em] text-[#FCFCFA]/6"
+        className="pointer-events-none absolute -right-2 -top-10 -z-10 select-none text-[84px] font-medium leading-none tracking-[-0.08em] text-brand/10"
         initial={{ opacity: 0, scale: reduce ? 1 : 0.9 }}
         animate={active ? { opacity: 0.032, scale: 1 } : undefined}
         variants={{ hover: { opacity: 0.055 } }}
@@ -110,7 +110,7 @@ function JourneyStep({ value, index, active, reduce, mobile = false }: { value: 
         variants={{ hover: { scale: 1.08 } }}
         transition={{ duration: reduce ? 0 : 0.72, delay: reduce ? 0 : delay, times: [0, 0.48, 0.72, 1], ease }}
       >
-        <motion.div className="relative flex h-14 w-14 items-center justify-center rounded-full border border-brand/25 bg-[#FCFCFA] text-brand shadow-[0_8px_24px_rgba(229,57,53,0.12)]" variants={{ hover: { backgroundColor: "#E53935", color: "#FFFFFF", borderColor: "#E53935" } }} transition={{ duration: reduce ? 0 : 0.28, ease }}>
+        <motion.div className="relative flex h-14 w-14 items-center justify-center rounded-full border border-brand/25 bg-brand/[0.08] text-brand shadow-[0_8px_24px_rgba(229,57,53,0.12)]" variants={{ hover: { backgroundColor: "var(--color-brand)", color: "var(--color-on-primary)", borderColor: "var(--color-brand)" } }} transition={{ duration: reduce ? 0 : 0.28, ease }}>
           <motion.span aria-hidden="true" className="absolute inset-[-6px] rounded-full border border-brand/20" initial={{ opacity: 0, scale: 0.8 }} animate={active && !reduce ? { opacity: [0, 0.65, 0], scale: [0.82, 1.25, 1.4] } : { opacity: 0 }} transition={{ duration: 1.1, delay, ease: "easeOut" }} />
           <motion.span initial={{ opacity: 0 }} animate={active ? { opacity: 1 } : undefined} transition={{ duration: reduce ? 0 : 0.35, delay: reduce ? 0 : delay + 0.18 }}>
             <Icon className="h-5 w-5" strokeWidth={1.6} aria-hidden="true" />
@@ -119,8 +119,8 @@ function JourneyStep({ value, index, active, reduce, mobile = false }: { value: 
       </motion.div>
 
       <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-brand">{value.n} {value.label}</span>
-      <h3 className="mt-3 text-[18px] font-medium leading-tight tracking-[-0.025em] text-[#FCFCFA] lg:text-[20px]">{value.title}</h3>
-      <p className="mt-3 text-[13px] leading-[1.7] text-[#FCFCFA]/68 lg:text-[14px]">{value.desc}</p>
+      <h3 className="mt-3 text-[18px] font-medium leading-tight tracking-[-0.025em] text-ink lg:text-[20px]">{value.title}</h3>
+      <p className="mt-3 text-[13px] leading-[1.7] text-muted lg:text-[14px]">{value.desc}</p>
     </motion.article>
   )
 }
@@ -131,7 +131,7 @@ export default function WhyChooseUs() {
   const inView = useInView(sectionRef, { once: true, amount: 0.18 })
 
   return (
-    <section ref={sectionRef} className="relative w-full overflow-hidden border-b border-black/10 bg-[#FCFCFA] text-ink">
+    <section ref={sectionRef} className="relative w-full overflow-hidden border-b border-black/10 bg-canvas text-ink">
       <div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-[38%] h-80 w-[70%] -translate-x-1/2 rounded-full bg-brand/[0.025] blur-3xl" />
       <div className="site-container relative py-20 sm:py-24 lg:py-28">
         <motion.div className="mx-auto max-w-2xl text-center" initial={{ opacity: 0, y: reduce ? 0 : 22 }} animate={inView ? { opacity: 1, y: 0 } : undefined} transition={{ duration: reduce ? 0 : 0.7, ease }}>

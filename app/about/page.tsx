@@ -126,12 +126,12 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="w-full bg-[#1E1A4D] text-white">
+      <section className="w-full border-y border-black/10 bg-canvas-alt text-ink">
         <div className="site-container py-16 lg:py-20">
           <div className="grid grid-cols-2 gap-x-8 gap-y-10 lg:grid-cols-4">
             {STATS.map((s) => (
-              <div key={s.label} className="border-t-2 border-white/80 pt-6">
-                <p className="text-[clamp(2.5rem,4.5vw,3.75rem)] font-medium leading-none tracking-tight text-white">{s.stat}</p>
+              <div key={s.label} className="rounded-xl border border-brand/15 bg-white px-5 py-6 shadow-[0_16px_36px_-30px_rgba(32,21,21,0.18)]">
+                <p className="text-[clamp(2.5rem,4.5vw,3.75rem)] font-medium leading-none tracking-tight text-heading">{s.stat}</p>
                 <p className="mt-4 text-[12px] uppercase tracking-widest text-brand">{s.label}</p>
               </div>
             ))}

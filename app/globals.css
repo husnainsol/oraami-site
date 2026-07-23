@@ -30,6 +30,42 @@
   --color-console: #1a1310;
 
   --color-outline: #939084;
+  --color-oraami-accent-secondary: #1e1a4d;
+
+  --color-oraami-accent-1: #ff4f00;
+  --color-oraami-accent-2: #e64700;
+  --color-oraami-accent-3: #ff7a33;
+  --color-oraami-accent-4: #c98a6a;
+  --color-oraami-accent-5: #fffefb;
+  --color-oraami-accent-6: #201515;
+  --color-oraami-accent-7: #2f2a26;
+  --color-oraami-accent-8: #36342e;
+  --color-oraami-accent-9: #605d52;
+  --color-oraami-accent-10: #939084;
+  --color-oraami-accent-11: #c5c0b1;
+  --color-oraami-accent-12: #fcfcfa;
+  --color-oraami-accent-13: #f8f4f0;
+  --color-oraami-accent-14: #1a1310;
+  --color-oraami-accent-15: #08090b;
+  --color-oraami-accent-16: #ff5702;
+  --color-oraami-accent-17: #ff5a1f;
+  --color-oraami-accent-18: #ff8918;
+  --color-oraami-accent-19: #f3f3f1;
+  --color-oraami-accent-20: #a0a3ad;
+  --color-oraami-accent-21: #e53935;
+  --color-oraami-accent-22: #c82926;
+  --color-oraami-accent-23: #ffffff;
+  --color-oraami-accent-24: #faf8f6;
+  --color-oraami-accent-25: #0f766e;
+  --color-oraami-accent-26: #7157a8;
+  --color-oraami-accent-27: #2563eb;
+  --color-oraami-accent-28: #d97706;
+  --color-oraami-accent-29: #140f38;
+  --color-oraami-accent-30: #b8aaa2;
+  --color-oraami-accent-31: #c5b8b0;
+  --color-oraami-accent-32: #8f8179;
+  --color-oraami-accent-33: #9f8d83;
+  --color-oraami-accent-34: #ff6a29;
 }
 
 html {
