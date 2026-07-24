@@ -104,7 +104,7 @@ function TestimonialCard({
       initial={reduce ? false : { opacity: 0, y: 35 }}
       animate={entered ? { opacity: 1, y: 0 } : undefined}
       whileHover={reduce ? undefined : { y: -5, scale: 1.01 }}
-      transition={{ duration: reduce ? 0 : 0.55, delay, ease: easeOut }}
+      transition={{ duration: reduce ? 0 : 0.42, delay, ease: easeOut }}
     >
       <AnimatedStars reveal={entered} delay={delay + 0.14} reduce={reduce} />
       <motion.blockquote
@@ -112,7 +112,7 @@ function TestimonialCard({
         initial={reduce ? false : { opacity: 0, y: 10 }}
         animate={entered ? { opacity: 1, y: 0 } : undefined}
         whileHover={reduce ? undefined : { y: -2 }}
-        transition={{ duration: reduce ? 0 : 0.35, delay: delay + 0.16, ease: easeOut }}
+        transition={{ duration: reduce ? 0 : 0.28, delay: delay + 0.12, ease: easeOut }}
       >
         “{review.quote}”
       </motion.blockquote>
@@ -122,14 +122,14 @@ function TestimonialCard({
           initial={reduce ? false : { scaleX: 0 }}
           animate={entered ? { scaleX: 1 } : undefined}
           whileHover={reduce ? undefined : { scaleX: 1.04 }}
-          transition={{ duration: reduce ? 0 : 0.45, delay: delay + 0.26, ease: easeOut }}
+          transition={{ duration: reduce ? 0 : 0.32, delay: delay + 0.2, ease: easeOut }}
         />
         <figcaption className="flex items-center gap-3">
           <motion.div
             initial={reduce ? false : { opacity: 0, rotate: 0 }}
             animate={entered ? { opacity: 1, rotate: 0 } : undefined}
             whileHover={reduce ? undefined : { rotate: 2 }}
-            transition={{ duration: reduce ? 0 : 0.3, delay: delay + 0.34, ease: easeOut }}
+            transition={{ duration: reduce ? 0 : 0.26, delay: delay + 0.26, ease: easeOut }}
           >
             <Monogram initials={review.initials} />
           </motion.div>
@@ -139,7 +139,7 @@ function TestimonialCard({
               initial={reduce ? false : { opacity: 0, x: -10 }}
               animate={entered ? { opacity: 1, x: 0 } : undefined}
               whileHover={reduce ? undefined : { x: 3 }}
-              transition={{ duration: reduce ? 0 : 0.3, delay: delay + 0.36, ease: easeOut }}
+              transition={{ duration: reduce ? 0 : 0.26, delay: delay + 0.3, ease: easeOut }}
             >
               {review.name}
             </motion.p>
@@ -147,7 +147,7 @@ function TestimonialCard({
               className="text-[12px] text-faint"
               initial={reduce ? false : { opacity: 0, y: 8 }}
               animate={entered ? { opacity: 1, y: 0 } : undefined}
-              transition={{ duration: reduce ? 0 : 0.3, delay: delay + 0.42, ease: easeOut }}
+              transition={{ duration: reduce ? 0 : 0.26, delay: delay + 0.36, ease: easeOut }}
             >
               {review.role}
             </motion.p>
@@ -189,13 +189,13 @@ export default function Testimonials() {
             className="max-w-2xl"
             initial={reduce ? false : { opacity: 0, y: 18 }}
             animate={entered ? { opacity: 1, y: 0 } : undefined}
-            transition={{ duration: reduce ? 0 : 0.55, delay: 0.02, ease: easeOut }}
+            transition={{ duration: reduce ? 0 : 0.42, delay: 0.02, ease: easeOut }}
           >
             <motion.div
               className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-faint"
               initial={reduce ? false : { opacity: 0, y: 14 }}
               animate={entered ? { opacity: 1, y: 0 } : undefined}
-              transition={{ duration: reduce ? 0 : 0.45, delay: 0.02, ease: easeOut }}
+              transition={{ duration: reduce ? 0 : 0.34, delay: 0.02, ease: easeOut }}
             >
               <span className="h-1.5 w-1.5 bg-brand" />
               Testimonials
@@ -204,7 +204,7 @@ export default function Testimonials() {
               className="mt-5 text-[32px] font-medium leading-[1.05] tracking-[-0.03em] text-heading sm:text-[40px] lg:text-[44px]"
               initial={reduce ? false : { opacity: 0, y: 18 }}
               animate={entered ? { opacity: 1, y: 0 } : undefined}
-              transition={{ duration: reduce ? 0 : 0.55, delay: 0.14, ease: easeOut }}
+              transition={{ duration: reduce ? 0 : 0.42, delay: 0.12, ease: easeOut }}
             >
               What clients say
             </motion.h2>
@@ -212,7 +212,7 @@ export default function Testimonials() {
               className="mt-6 max-w-xl text-[17px] leading-relaxed text-muted"
               initial={reduce ? false : { opacity: 0, y: 16 }}
               animate={entered ? { opacity: 1, y: 0 } : undefined}
-              transition={{ duration: reduce ? 0 : 0.55, delay: 0.26, ease: easeOut }}
+              transition={{ duration: reduce ? 0 : 0.42, delay: 0.22, ease: easeOut }}
             >
               Revenue teams that traded spray-and-pray for quality-first prospecting and the results that followed.
             </motion.p>
@@ -222,18 +222,18 @@ export default function Testimonials() {
             className="shrink-0 justify-self-start lg:justify-self-end lg:text-right"
             initial={reduce ? false : { opacity: 0, y: 18 }}
             animate={entered ? { opacity: 1, y: 0 } : undefined}
-            transition={{ duration: reduce ? 0 : 0.55, delay: 0.36, ease: easeOut }}
+            transition={{ duration: reduce ? 0 : 0.42, delay: 0.32, ease: easeOut }}
           >
             <motion.p className="flex items-baseline gap-1 text-[52px] font-medium leading-none tracking-tight text-heading lg:justify-end">
               <span>{rating.toFixed(1)}</span>
               <span className="text-lg text-faint">/5</span>
             </motion.p>
-            <AnimatedStars className="mt-3 lg:justify-end" reveal={entered} delay={0.9} reduce={reduce} />
+            <AnimatedStars className="mt-3 lg:justify-end" reveal={entered} delay={0.48} reduce={reduce} />
             <motion.p
               className="mt-3 text-[12px] uppercase tracking-wider text-faint"
               initial={reduce ? false : { opacity: 0, y: 8 }}
               animate={entered ? { opacity: 1, y: 0 } : undefined}
-              transition={{ duration: reduce ? 0 : 0.35, delay: 1.3, ease: easeOut }}
+              transition={{ duration: reduce ? 0 : 0.26, delay: 0.62, ease: easeOut }}
             >
               Based on 200+ revenue teams
             </motion.p>
@@ -245,7 +245,7 @@ export default function Testimonials() {
           initial={reduce ? false : { opacity: 0, y: 30, scale: 0.96 }}
           animate={entered ? { opacity: 1, y: 0, scale: 1 } : undefined}
           whileHover={reduce ? undefined : { y: -5, scale: 1.01 }}
-          transition={{ duration: reduce ? 0 : 0.65, delay: 1.55, ease: easeOut }}
+          transition={{ duration: reduce ? 0 : 0.42, delay: 0.84, ease: easeOut }}
         >
           <motion.span
             aria-hidden="true"
@@ -253,7 +253,7 @@ export default function Testimonials() {
             initial={reduce ? false : { opacity: 0, x: 18, y: 8 }}
             animate={entered ? { opacity: 1, x: 0, y: 0 } : undefined}
             whileHover={reduce ? undefined : { x: 10, y: -4, opacity: 1 }}
-            transition={{ duration: reduce ? 0 : 0.8, delay: 1.72, ease: easeOut }}
+            transition={{ duration: reduce ? 0 : 0.45, delay: 1.0, ease: easeOut }}
           >
             &rdquo;
           </motion.span>
@@ -264,7 +264,7 @@ export default function Testimonials() {
             initial={reduce ? false : { scaleY: 0 }}
             animate={entered ? { scaleY: 1 } : undefined}
             whileHover={reduce ? undefined : { scaleY: 1.06 }}
-            transition={{ duration: reduce ? 0 : 0.7, delay: 1.7, ease: easeOut }}
+            transition={{ duration: reduce ? 0 : 0.42, delay: 0.98, ease: easeOut }}
           />
 
           <div className="relative pl-6 sm:pl-8">
@@ -272,9 +272,9 @@ export default function Testimonials() {
               initial={reduce ? false : { opacity: 0, scale: 0.94 }}
               animate={entered ? { opacity: 1, scale: 1 } : undefined}
               whileHover={reduce ? undefined : { scale: 1.03 }}
-              transition={{ duration: reduce ? 0 : 0.35, delay: 1.82, ease: easeOut }}
+              transition={{ duration: reduce ? 0 : 0.28, delay: 1.08, ease: easeOut }}
             >
-              <AnimatedStars reveal={entered} delay={1.86} reduce={reduce} />
+              <AnimatedStars reveal={entered} delay={1.16} reduce={reduce} />
             </motion.div>
 
             <blockquote className="mt-6 max-w-[40ch] text-[22px] font-medium leading-[1.42] tracking-tight text-ink sm:text-[26px] lg:text-[28px]">
@@ -284,7 +284,7 @@ export default function Testimonials() {
                   className="block"
                   initial={reduce ? false : { opacity: 0, y: 12 }}
                   animate={entered ? { opacity: 1, y: 0 } : undefined}
-                  transition={{ duration: reduce ? 0 : 0.45, delay: 2.05 + index * 0.16, ease: easeOut }}
+                  transition={{ duration: reduce ? 0 : 0.32, delay: 1.28 + index * 0.12, ease: easeOut }}
                 >
                   {line}
                 </motion.span>
@@ -295,7 +295,7 @@ export default function Testimonials() {
               className="mt-8 flex items-center gap-4"
               initial={reduce ? false : { opacity: 0, x: -18 }}
               animate={entered ? { opacity: 1, x: 0 } : undefined}
-              transition={{ duration: reduce ? 0 : 0.45, delay: 2.56, ease: easeOut }}
+              transition={{ duration: reduce ? 0 : 0.32, delay: 1.82, ease: easeOut }}
             >
               <Monogram initials={featured.initials} />
               <div>
@@ -311,7 +311,7 @@ export default function Testimonials() {
             <TestimonialCard
               key={review.name}
               review={review}
-              delay={3.1 + index * 0.18}
+              delay={1.26 + index * 0.18}
               reduce={reduce}
               entered={entered}
             />

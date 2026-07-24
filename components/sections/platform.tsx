@@ -1,51 +1,15 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { Mail, Network, Search, Target } from "lucide-react"
 
-function IconDefine() {
-  return (
-    <svg width="44" height="44" viewBox="0 0 46 46" fill="none" aria-hidden="true">
-      <path d="M6 12h34v22H6z" className="stroke-outline" strokeWidth="1.5" />
-      <path d="M6 12l17 12 17-12" className="stroke-outline" strokeWidth="1.5" />
-      <rect x="18" y="17" width="10" height="10" className="fill-brand" />
-    </svg>
-  )
-}
-function IconResearch() {
-  return (
-    <svg width="44" height="44" viewBox="0 0 46 46" fill="none" aria-hidden="true">
-      <circle cx="19" cy="19" r="12" className="stroke-outline" strokeWidth="1.5" />
-      <path d="M28 28l10 10" className="stroke-outline" strokeWidth="1.5" strokeLinecap="round" />
-      <rect x="13" y="13" width="12" height="12" className="fill-brand" />
-    </svg>
-  )
-}
-function IconMatch() {
-  return (
-    <svg width="52" height="44" viewBox="0 0 56 48" fill="none" aria-hidden="true">
-      <path d="M8 12h12l3 4h15v18H8z" className="stroke-outline" strokeWidth="1.5" />
-      <rect x="16" y="20" width="12" height="10" className="fill-brand" />
-      <circle cx="35" cy="18" r="1.4" className="fill-outline" />
-      <circle cx="35" cy="24" r="1.4" className="fill-outline" />
-    </svg>
-  )
-}
-function IconEngage() {
-  return (
-    <svg width="52" height="44" viewBox="0 0 56 48" fill="none" aria-hidden="true">
-      <path d="M8 23L38 9l-6 30-9-11z" className="stroke-outline" strokeWidth="1.5" strokeLinejoin="round" />
-      <rect x="16" y="18" width="10" height="10" className="fill-brand" />
-    </svg>
-  )
-}
-
-type Step = { n: string; label: string; title: string; desc: string; Icon: () => React.JSX.Element }
+type Step = { n: string; label: string; title: string; desc: string; Icon: React.ComponentType<{ className?: string; strokeWidth?: number }>} 
 
 const STEPS: Step[] = [
-  { n: "01", label: "Target", Icon: IconDefine, title: "Define your ICP", desc: "We learn who you sell to and cap each ICP at 50 high-fit accounts worth pursuing." },
-  { n: "02", label: "Research", Icon: IconResearch, title: "Research every lead", desc: "5–10 minutes of deep AI research on each prospect and their full buying committee." },
-  { n: "03", label: "Match", Icon: IconMatch, title: "Match & personalise", desc: "We match your case studies and proof, then craft a trust-building sequence per account." },
-  { n: "04", label: "Engage", Icon: IconEngage, title: "Engage & build trust", desc: "8–12 personalised emails over 6–12 weeks that turn cold leads into warm relationships." },
+  { n: "01", label: "Target", Icon: Target, title: "Define your ICP", desc: "We learn who you sell to and cap each ICP at 50 high-fit accounts worth pursuing." },
+  { n: "02", label: "Research", Icon: Search, title: "Research every lead", desc: "5–10 minutes of deep AI research on each prospect and their full buying committee." },
+  { n: "03", label: "Match", Icon: Network, title: "Match & personalise", desc: "We match your case studies and proof, then craft a trust-building sequence per account." },
+  { n: "04", label: "Engage", Icon: Mail, title: "Engage & build trust", desc: "8–12 personalised emails over 6–12 weeks that turn cold leads into warm relationships." },
 ]
 
 type ConnectorArrowsProps = { segment: number; signal: string | null }
@@ -186,7 +150,7 @@ export default function Platform() {
 
                 <div className="process-content mt-10">
                   <span className={"process-icon process-icon--" + (i + 1)}>
-                    <Icon />
+                    <Icon className="h-5 w-5 text-brand" strokeWidth={1.75} />
                   </span>
                   <p className="mt-7 text-[11px] uppercase tracking-widest text-brand">{s.label}</p>
                   <h3 className="mt-3 text-[20px] font-medium tracking-tight text-ink">{s.title}</h3>

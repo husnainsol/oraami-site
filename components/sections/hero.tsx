@@ -5,7 +5,6 @@ import { motion, useReducedMotion } from "framer-motion"
 import HeroChat from "./hero-chat"
 import TrustBar from "./trustbar"
 import { Button } from "@/components/ui/button"
-import CountUp from "@/components/ui/count-up"
 
 type StatProps = {
   icon: typeof Target
@@ -17,7 +16,7 @@ type StatProps = {
 
 function Stat({ icon: Icon, value, suffix = "", phrase, label }: StatProps) {
   return (
-    <article className="group flex h-full min-h-[98px] items-start gap-4 rounded-2xl border border-black/[0.08] bg-canvas px-5 py-5 shadow-[0_10px_30px_-24px_rgba(32,21,21,0.35)] transition-[border-color,box-shadow] duration-200 hover:border-black/[0.12] hover:shadow-[0_16px_34px_-24px_rgba(32,21,21,0.42)] sm:px-6">
+    <article className="flex h-full min-h-[98px] items-start gap-4 rounded-2xl border border-black/[0.08] bg-canvas px-5 py-5 shadow-[0_10px_30px_-24px_rgba(32,21,21,0.35)] sm:px-6">
       <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand/[0.08] text-brand">
         <Icon className="h-4 w-4" aria-hidden="true" />
       </span>
@@ -25,8 +24,8 @@ function Stat({ icon: Icon, value, suffix = "", phrase, label }: StatProps) {
         <p className="text-[16px] font-medium leading-snug text-ink">
           {value != null ? (
             <span className="text-[20px] font-semibold tracking-[-0.02em]">
-              <CountUp end={value} suffix={suffix} duration={1400} />
-            </span>
+              {value}{suffix}
+</span>
           ) : (
             <span className="text-[18px] font-semibold tracking-[-0.02em]">{phrase}</span>
           )}
@@ -66,7 +65,7 @@ export default function Hero() {
             </h1>
 
             <p className="hero-rise mt-5 max-w-[32rem] text-[17px] leading-[1.7] text-muted" style={{ animationDelay: "0.12s" }}>
-              Oraami's AI reads your website, learns who you sell to, and surfaces the accounts most likely to convert — just ask.
+              Oraami&apos;s AI reads your website, learns who you sell to, and surfaces the accounts most likely to convert — just ask.
             </p>
 
             <div className="hero-rise mt-7 flex flex-wrap gap-3.5" style={{ animationDelay: "0.18s" }}>

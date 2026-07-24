@@ -1,16 +1,16 @@
 "use client"
 
 import { animate, motion, useInView, useMotionValue, useReducedMotion, type Variants } from "framer-motion"
-import { Gem, Handshake, Search, Target } from "lucide-react"
+import { BarChart3, Mail, Network, Search, Target } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import { useEffect, useRef } from "react"
 
 type Value = { n: string; label: string; Icon: LucideIcon; title: string; desc: string }
 const VALUES: Value[] = [
-  { n: "01", label: "QUALITY", Icon: Gem, title: "Quality over volume", desc: "We cap every ICP at 50 high-fit accounts, so your team works the leads that convert — never a bloated list." },
+  { n: "01", label: "QUALITY", Icon: BarChart3, title: "Quality over volume", desc: "We cap every ICP at 50 high-fit accounts, so your team works the leads that convert — never a bloated list." },
   { n: "02", label: "ICP", Icon: Target, title: "Built around your ICP", desc: "Oraami learns exactly who you sell to and shapes every play around your ideal customer, not a generic template." },
   { n: "03", label: "RESEARCH", Icon: Search, title: "Deep research, every lead", desc: "5–10 minutes of autonomous AI research on each prospect and their full buying committee before a word is sent." },
-  { n: "04", label: "TRUST", Icon: Handshake, title: "Trust that compounds", desc: "8–12 personalised touches over 6–12 weeks turn cold accounts into warm relationships that keep paying off." },
+  { n: "04", label: "TRUST", Icon: Mail, title: "Trust that compounds", desc: "8–12 personalised touches over 6–12 weeks turn cold accounts into warm relationships that keep paying off." },
 ]
 const DESKTOP_PATH = "M 67 117 C 178 117, 246 288, 367 288 S 546 117, 667 117 S 846 288, 967 288"
 const MOBILE_PATH = "M 57 94 C 57 170, 75 240, 57 364 S 39 560, 57 634 S 75 830, 57 904"
@@ -113,7 +113,7 @@ function JourneyStep({ value, index, active, reduce, mobile = false }: { value: 
         <motion.div className="relative flex h-14 w-14 items-center justify-center rounded-full border border-brand/25 bg-brand/[0.08] text-brand shadow-[0_8px_24px_rgba(229,57,53,0.12)]" variants={{ hover: { backgroundColor: "var(--color-brand)", color: "var(--color-on-primary)", borderColor: "var(--color-brand)" } }} transition={{ duration: reduce ? 0 : 0.28, ease }}>
           <motion.span aria-hidden="true" className="absolute inset-[-6px] rounded-full border border-brand/20" initial={{ opacity: 0, scale: 0.8 }} animate={active && !reduce ? { opacity: [0, 0.65, 0], scale: [0.82, 1.25, 1.4] } : { opacity: 0 }} transition={{ duration: 1.1, delay, ease: "easeOut" }} />
           <motion.span initial={{ opacity: 0 }} animate={active ? { opacity: 1 } : undefined} transition={{ duration: reduce ? 0 : 0.35, delay: reduce ? 0 : delay + 0.18 }}>
-            <Icon className="h-5 w-5" strokeWidth={1.6} aria-hidden="true" />
+            <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
           </motion.span>
         </motion.div>
       </motion.div>

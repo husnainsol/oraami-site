@@ -259,29 +259,139 @@ function DeepResearchChart({ play, reduce }: { play: boolean; reduce: boolean })
 }
 
 const MAP_NODES = [
-  { role: "Champion", name: "Sales Director", x: 76, y: 64, color: "var(--color-oraami-accent-25)" },
-  { role: "Decision maker", name: "VP Revenue", x: 344, y: 62, color: "var(--color-oraami-accent-1)" },
-  { role: "Influencer", name: "RevOps Lead", x: 62, y: 196, color: "var(--color-oraami-accent-26)" },
-  { role: "Technical", name: "IT Director", x: 344, y: 196, color: "var(--color-oraami-accent-27)" },
-  { role: "Finance", name: "CFO", x: 372, y: 128, color: "var(--color-oraami-accent-28)" },
-]
+  { role: "Champion", name: "RevOps Lead", team: "Ops", x: 86, y: 70, color: "var(--color-oraami-accent-26)", score: "92" },
+  { role: "Decision", name: "VP Revenue", team: "Exec", x: 334, y: 62, color: "var(--color-oraami-accent-1)", score: "96" },
+  { role: "Finance", name: "CFO", team: "Budget", x: 360, y: 126, color: "var(--color-oraami-accent-28)", score: "84" },
+  { role: "Security", name: "IT Director", team: "Risk", x: 320, y: 194, color: "var(--color-oraami-accent-27)", score: "76" },
+  { role: "User", name: "Sales Manager", team: "Team", x: 108, y: 190, color: "var(--color-oraami-accent-25)", score: "79" },
+] as const
+
+const PRIMARY_ROUTE = [
+  [86, 70],
+  [210, 126],
+  [334, 62],
+  [360, 126],
+] as const
 
 function StakeholderMapChart({ play, reduce }: { play: boolean; reduce: boolean }) {
   const loop = play && !reduce
   return (
     <VisualizationFrame>
-      <svg viewBox="0 0 420 250" className="absolute inset-0 h-full w-full" aria-hidden="true">
+      <div className="relative h-full overflow-hidden rounded-[20px] border border-black/8 bg-[radial-gradient(circle_at_50%_44%,rgba(255,79,0,0.08),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.98),rgba(247,242,238,0.94))]">
+        <svg viewBox="0 0 420 250" className="absolute inset-0 h-full w-full" aria-hidden="true">
+          <defs>
+            <linearGradient id="stakeholder-route" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="var(--color-oraami-accent-26)" />
+              <stop offset="55%" stopColor="var(--color-oraami-accent-1)" />
+              <stop offset="100%" stopColor="var(--color-oraami-accent-28)" />
+            </linearGradient>
+            <filter id="stakeholder-glow" x="-200%" y="-200%" width="400%" height="400%">
+              <feGaussianBlur stdDeviation="10" />
+            </filter>
+          </defs>
+
+          {[56, 84, 112].map((radius, index) => (
+            <motion.circle
+              key={radius}
+              cx="210"
+              cy="126"
+              r={radius}
+              fill="none"
+              stroke="rgba(32,21,21,0.06)"
+              strokeDasharray={index === 1 ? "3 8" : "2 10"}
+              animate={loop ? { opacity: [0.16, 0.38, 0.16], scale: [0.985, 1.02, 0.985] } : { opacity: 0.24, scale: 1 }}
+              style={{ transformOrigin: "210px 126px" }}
+              transition={loop ? { duration: 4.8 + index * 0.5, delay: index * 0.16, repeat: Infinity, ease: "easeInOut" } : { duration: 0 }}
+            />
+          ))}
+
+          {MAP_NODES.map((node, index) => {
+            const controlX = 210 + (node.x > 210 ? 34 : -34)
+            const controlY = node.y > 126 ? node.y - 34 : node.y + 34
+            return (
+              <motion.path
+                key={node.role}
+                d={"M210 126 Q" + controlX + " " + controlY + " " + node.x + " " + node.y}
+                fill="none"
+                stroke={node.color}
+                strokeWidth={index < 2 ? 2.2 : 1.7}
+                strokeOpacity={index < 2 ? 0.34 : 0.18}
+                strokeDasharray={index < 2 ? undefined : "4 7"}
+                animate={loop ? { pathLength: [0.18, 1, 1], opacity: [0.12, index < 2 ? 0.6 : 0.34, 0.12] } : { pathLength: 1, opacity: index < 2 ? 0.32 : 0.18 }}
+                transition={loop ? { duration: 6.8, delay: index * 0.1, times: [0, 0.62, 1], repeat: Infinity, repeatDelay: 0.8, ease: demoEase } : { duration: 0 }}
+              />
+            )
+          })}
+
+          <AnimatedLine d="M86 70 C128 88 166 104 210 126 S294 90 334 62 S350 94 360 126" color="url(#stakeholder-route)" loop={loop} width={3.2} />
+
+          {!reduce && (
+            <>
+              <motion.circle
+                r="18"
+                fill="var(--color-oraami-accent-1)"
+                opacity="0"
+                filter="url(#stakeholder-glow)"
+                animate={loop ? { cx: PRIMARY_ROUTE.map(([x]) => x), cy: PRIMARY_ROUTE.map(([, y]) => y), opacity: [0, 0.35, 0.4, 0] } : { cx: 360, cy: 126, opacity: 0 }}
+                transition={loop ? { duration: 6.8, times: [0, 0.36, 0.78, 1], repeat: Infinity, repeatDelay: 0.8, ease: "easeInOut" } : { duration: 0 }}
+              />
+              <motion.circle
+                r="5"
+                fill="white"
+                stroke="var(--color-oraami-accent-1)"
+                strokeWidth="2"
+                animate={loop ? { cx: PRIMARY_ROUTE.map(([x]) => x), cy: PRIMARY_ROUTE.map(([, y]) => y), opacity: [0, 1, 1, 0] } : { cx: 360, cy: 126, opacity: 1 }}
+                transition={loop ? { duration: 6.8, times: [0, 0.36, 0.78, 1], repeat: Infinity, repeatDelay: 0.8, ease: "easeInOut" } : { duration: 0 }}
+              />
+            </>
+          )}
+
+          {MAP_NODES.map((node, index) => (
+            <motion.g
+              key={node.name + "-dot"}
+              animate={loop ? { opacity: [0.42, 1, 0.42], scale: [0.92, 1.06, 0.92] } : { opacity: 1, scale: 1 }}
+              style={{ transformOrigin: node.x + "px " + node.y + "px" }}
+              transition={loop ? { duration: 3.6 + index * 0.24, delay: index * 0.14, repeat: Infinity, ease: "easeInOut" } : { duration: 0 }}
+            >
+              <circle cx={node.x} cy={node.y} r="11" fill="white" stroke={node.color} strokeWidth="2" />
+              <circle cx={node.x} cy={node.y} r="4" fill={node.color} />
+            </motion.g>
+          ))}
+        </svg>
+
+        <div className="absolute left-1/2 top-1/2 z-20 w-[132px] -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-brand/18 bg-white/96 px-3 py-3 text-center shadow-[0_16px_34px_-24px_rgba(32,21,21,0.32)] backdrop-blur-sm">
+          <p className="text-[7px] uppercase tracking-[0.16em] text-brand">Target Account</p>
+          <p className="mt-1 text-[12px] font-semibold text-ink">Northfield</p>
+          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-black/6">
+            <motion.div className="h-full rounded-full bg-brand" animate={{ scaleX: loop ? [0.2, 0.92, 0.92, 0.2] : 0.92 }} style={{ transformOrigin: "0% 50%" }} transition={loop ? { duration: 6.8, times: [0, 0.42, 0.78, 1], repeat: Infinity, repeatDelay: 0.8, ease: "easeInOut" } : { duration: 0 }} />
+          </div>
+          <p className="mt-2 text-[8px] text-muted">6 mapped stakeholders</p>
+        </div>
+
         {MAP_NODES.map((node, index) => (
-          <motion.path key={node.role} d={"M210 128 Q" + (210 + (node.x - 210) * 0.35) + " " + (node.y + 18) + " " + node.x + " " + node.y} fill="none" stroke={node.color} strokeOpacity={index < 2 ? 0.82 : 0.28} strokeWidth={index < 2 ? 2.5 : 1.2 + index * 0.22} animate={{ pathLength: loop ? [0, 1, 1, 0] : 1 }} transition={loop ? { duration: 7.2, delay: index * 0.13, times: [0, 0.58, 0.92, 1], repeat: Infinity, repeatDelay: 1, ease: demoEase } : { duration: 0 }} />
+          <motion.div
+            key={node.role}
+            className="absolute z-10 w-[104px] -translate-x-1/2 -translate-y-1/2 rounded-xl border bg-white/96 px-2.5 py-2 shadow-[0_12px_28px_-22px_rgba(32,21,21,0.42)] backdrop-blur-sm"
+            style={{ left: (node.x / 420) * 100 + "%", top: (node.y / 250) * 100 + "%", borderColor: node.color + "30" }}
+            animate={loop ? { opacity: [0.66, 1, 0.92], y: [6, 0, 2], scale: [0.96, 1, 0.985] } : { opacity: 1, y: 0, scale: 1 }}
+            transition={loop ? { duration: 4.6, delay: index * 0.12, repeat: Infinity, ease: "easeInOut" } : { duration: 0 }}
+          >
+            <div className="flex items-center justify-between gap-2">
+              <p className="truncate text-[7px] uppercase tracking-[0.08em]" style={{ color: node.color }}>{node.role}</p>
+              <span className="rounded-full px-1.5 py-0.5 text-[7px] font-medium" style={{ backgroundColor: node.color + "14", color: node.color }}>{node.score}</span>
+            </div>
+            <p className="mt-1 truncate text-[9px] font-semibold text-ink">{node.name}</p>
+            <p className="mt-0.5 text-[7px] text-muted">{node.team}</p>
+          </motion.div>
         ))}
-        <AnimatedLine d="M76 64 Q210 18 344 62" color="var(--color-oraami-accent-1)" loop={loop} delay={0.7} dashed width={2.8} />
-        <motion.circle r="4" fill="var(--color-oraami-accent-1)" animate={loop ? { cx: [76, 210, 344, 344, 76], cy: [64, 30, 62, 62, 64], opacity: [0, 1, 1, 0, 0] } : { cx: 344, cy: 62, opacity: 1 }} transition={loop ? { duration: 7.2, times: [0, 0.45, 0.72, 0.92, 1], repeat: Infinity, repeatDelay: 1, ease: "linear" } : { duration: 0 }} />
-      </svg>
-      <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-xl border border-brand/20 bg-brand/5 px-3 py-2 text-center"><p className="text-[7px] uppercase tracking-[0.1em] text-brand">Account</p><p className="mt-0.5 text-[11px] font-medium text-ink">Northfield</p></div>
-      {MAP_NODES.map((node, index) => (
-        <motion.div key={node.role} className="absolute z-10 w-[90px] -translate-x-1/2 -translate-y-1/2 rounded-lg border bg-white px-2 py-1.5 shadow-[0_10px_24px_-22px_rgba(32,21,21,0.48)]" style={{ left: (node.x / 420) * 100 + "%", top: (node.y / 250) * 100 + "%", borderColor: node.color + "33" }} animate={loop ? { opacity: [0, 1, 1, 0], scale: [0.86, 1, 1.03, 0.9] } : { opacity: 1, scale: 1 }} transition={loop ? { duration: 7.2, delay: index * 0.13, times: [0, 0.22, 0.84, 1], repeat: Infinity, repeatDelay: 1, ease: demoEase } : { duration: 0 }}><p className="truncate text-[7px] uppercase tracking-[0.08em]" style={{ color: node.color }}>{node.role}</p><p className="truncate text-[9px] font-medium text-ink">{node.name}</p></motion.div>
-      ))}
-      <motion.div className="absolute bottom-5 left-1/2 z-20 -translate-x-1/2 rounded-full border border-brand/20 bg-white px-3 py-1 text-[8px] font-medium text-brand" animate={loop ? { opacity: [0, 0, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.2, times: [0, 0.58, 0.7, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Best path: Champion -&gt; VP Revenue</motion.div>
+
+        <motion.div className="absolute right-4 top-4 z-20" animate={loop ? { opacity: [0, 0.2, 1, 1, 0], y: [4, 4, 0, 0, -2] } : { opacity: 1, y: 0 }} transition={loop ? { duration: 6.8, times: [0, 0.22, 0.42, 0.82, 1], repeat: Infinity, repeatDelay: 0.8 } : { duration: 0 }}>
+          <ChartTooltip title="Best path" value="RevOps -> VP Revenue -> CFO" />
+        </motion.div>
+        <motion.div className="absolute bottom-4 left-4 z-20" animate={loop ? { opacity: [0, 0, 1, 1, 0], x: [-2, -2, 0, 0, 2] } : { opacity: 1, x: 0 }} transition={loop ? { duration: 6.8, times: [0, 0.48, 0.64, 0.82, 1], repeat: Infinity, repeatDelay: 0.8 } : { duration: 0 }}>
+          <ChartTooltip title="Committee" value="5 active roles qualified" />
+        </motion.div>
+      </div>
     </VisualizationFrame>
   )
 }
