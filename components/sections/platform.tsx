@@ -25,10 +25,11 @@ function ConnectorArrows({ segment, signal }: ConnectorArrowsProps) {
 
 export default function Platform() {
   const sectionRef = useRef<HTMLElement>(null)
-  const [started, setStarted] = useState(false)
-  const [activeStep, setActiveStep] = useState(-1)
-  const [beamStep, setBeamStep] = useState(0)
-  const [revealedStep, setRevealedStep] = useState(-1)
+  const reducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  const [started, setStarted] = useState(reducedMotion)
+  const [activeStep, setActiveStep] = useState(reducedMotion ? 3 : -1)
+  const [beamStep, setBeamStep] = useState(reducedMotion ? 3 : 0)
+  const [revealedStep, setRevealedStep] = useState(reducedMotion ? 3 : -1)
   const [arrowSignal, setArrowSignal] = useState<string | null>(null)
   const [isResetting, setIsResetting] = useState(false)
 
@@ -36,14 +37,7 @@ export default function Platform() {
     const section = sectionRef.current
     if (!section) return
 
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
-    if (reducedMotion.matches) {
-      setStarted(true)
-      setBeamStep(3)
-      setActiveStep(3)
-      setRevealedStep(3)
-      return
-    }
+    if (reducedMotion) return
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -57,7 +51,7 @@ export default function Platform() {
 
     observer.observe(section)
     return () => observer.disconnect()
-  }, [])
+  }, [reducedMotion])
 
   useEffect(() => {
     if (!started || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return

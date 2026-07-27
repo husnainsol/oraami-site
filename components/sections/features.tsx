@@ -555,7 +555,7 @@ function FeatureTab({
       {active ? (
         <motion.span
           layoutId="features-active-tab"
-          className="absolute inset-0 rounded-2xl border border-brand/20 bg-brand/[0.06]"
+          className="absolute inset-0 rounded-2xl border border-brand/20 bg-brand/[0.04]"
           transition={{ duration: reduce ? 0 : 0.42, ease }}
         />
       ) : null}
@@ -583,7 +583,7 @@ function FeatureTab({
 
       <motion.span
         aria-hidden="true"
-        className={`absolute inset-x-4 bottom-0 h-0.5 overflow-hidden rounded-full ${active ? "bg-brand/20" : "bg-transparent"}`}
+        className={`absolute inset-x-4 bottom-0 h-0.5 overflow-hidden rounded-full ${active ? "bg-brand/10" : "bg-transparent"}`}
         layoutId="features-active-underline"
         transition={{ duration: reduce ? 0 : 0.32, ease }}
       >

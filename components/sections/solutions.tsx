@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, type ReactNode } from "react"
+import { Fragment, useRef, type ReactNode } from "react"
 import { ArrowRight } from "lucide-react"
 import {
   motion,
@@ -160,6 +160,15 @@ function SceneConnector({ d, reduceMotion, start = 0.08, end = 0.34, accent = fa
   )
 }
 
+function MiniArrow({ x, y, rotate = 0 }: { x: number; y: number; rotate?: number }) {
+  return (
+    <g transform={'translate(' + x + ' ' + y + ') rotate(' + rotate.toFixed(1) + ')'}>
+      <path d="M-6 0 h8" fill="none" stroke="rgba(255,79,0,0.9)" strokeWidth="1.6" strokeLinecap="round" />
+      <path d="M0 -4 l6 4 -6 4" fill="none" stroke="rgba(255,79,0,0.9)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </g>
+  )
+}
+
 function SceneNode({ x, y, label, active = false, muted = false }: { x: number; y: number; label?: string; active?: boolean; muted?: boolean }) {
   return (
     <g opacity={muted ? 0.48 : 1}>
@@ -204,61 +213,218 @@ function IndustryVisualization({ industry, reduceMotion }: { industry: Industry;
 }
 
 function SaaSVisualization({ reduceMotion }: { reduceMotion: boolean }) {
-  const accountDots = [
-    { y: 54, exitY: 38 },
-    { y: 78, exitY: 78 },
-    { y: 102, exitY: 118 },
-    { y: 126, exitY: 142 },
-  ]
+  const loop = !reduceMotion
+
+  const signalX = [34, 82, 140, 204, 272, 334, 394]
+  const signalY = [94, 94, 94, 94, 94, 94, 94]
 
   return (
     <VizShell reduceMotion={reduceMotion}>
       <svg viewBox="0 0 420 180" className="mx-auto h-[180px] w-full max-w-[420px]" aria-hidden="true">
-        <text x="28" y="28" fill={MUTED} fontSize="8" letterSpacing="1.2">TARGET ACCOUNTS</text>
-        <path d="M130 43 h78 l-22 34 v32 l-34 16 V77 Z" fill={PANEL} stroke={BORDER} strokeWidth="1.5" />
-        <text x="169" y="65" fill={WHITE} fontSize="9" textAnchor="middle">Product Fit</text>
-        <path d="M158 83 h22 M161 91 h16 M165 99 h8" stroke={ORANGE} strokeWidth="2" strokeLinecap="round" />
-        <SceneCard x={282} y={50} width={108} height={78} accent>
-          <text x="298" y="70" fill={MUTED} fontSize="8">QUALIFIED PIPELINE</text>
-          <rect x="298" y="82" width="75" height="29" rx="7" fill={PANEL} stroke={BORDER} />
-          <circle cx="311" cy="96.5" r="6" fill={ORANGE_SOFT} stroke={ORANGE} />
-          <path d="M308 96 l2.5 2.5 5-6" fill="none" stroke={ORANGE} strokeWidth="1.7" strokeLinecap="round" />
-          <path d="M323 92 h35 M323 100 h24" stroke={MUTED} strokeWidth="2" strokeLinecap="round" />
-        </SceneCard>
-        <SceneConnector d="M186 93 C230 93 248 89 282 89" reduceMotion={reduceMotion} start={0.38} end={0.58} accent />
-        {accountDots.map((dot, index) => {
-          const qualified = index === 1
-          return (
-            <motion.circle
-              key={dot.y}
-              cx="34"
-              cy={dot.y}
-              r={qualified ? 6 : 5}
-              fill={qualified ? ORANGE : WHITE}
-              animate={
-                reduceMotion
-                  ? qualified
-                    ? { cx: 311, cy: 96.5, opacity: 1 }
-                    : { cx: 150, cy: dot.exitY, opacity: 0.16 }
-                  : qualified
-                    ? { cx: [34, 34, 166, 166, 311, 311], cy: [dot.y, dot.y, 91, 91, 96.5, 96.5], opacity: [0, 1, 1, 1, 1, 1] }
-                    : { cx: [34, 34, 154, 154, 154], cy: [dot.y, dot.y, 91, 91, dot.exitY], opacity: [0, 0.8, 0.8, 0.8, 0.12] }
-              }
-              transition={
-                reduceMotion
-                  ? { duration: 0 }
-                  : {
-                      duration: STORY_DURATION,
-                      repeat: Infinity,
-                      times: qualified ? [0, 0.11, 0.3, 0.42, 0.68, 1] : [0, 0.08 + index * 0.03, 0.3, 0.4, 1],
-                      ease: "easeInOut",
-                    }
-              }
-            />
-          )
-        })}
-        <motion.g animate={reduceMotion ? { opacity: 1 } : { opacity: [0, 0, 1, 1] }} transition={reduceMotion ? { duration: 0 } : { duration: STORY_DURATION, repeat: Infinity, times: [0, 0.66, 0.75, 1] }}>
-          <CheckMark x={365} y={116} />
+        <defs>
+          <linearGradient id="saas-track" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="rgba(255,255,255,0.10)" />
+            <stop offset="50%" stopColor="rgba(255,79,0,0.98)" />
+            <stop offset="100%" stopColor="rgba(255,255,255,0.12)" />
+          </linearGradient>
+          <filter id="saas-glow" x="-200%" y="-200%" width="400%" height="400%">
+            <feGaussianBlur stdDeviation="7" />
+          </filter>
+          <marker id="saas-arrow" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto" markerUnits="strokeWidth">
+            <path d="M0 0 L8 4 L0 8 Z" fill="rgba(255,79,0,0.9)" />
+          </marker>
+        </defs>
+
+        <text x="20" y="20" fill="rgba(255,255,255,0.56)" fontSize="8" letterSpacing="1.2">VISITORS → CUSTOMER JOURNEY</text>
+
+        <motion.path
+          d="M26 94 H394"
+          fill="none"
+          stroke="rgba(255,255,255,0.16)"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
+        <motion.path
+          d="M26 94 H394"
+          fill="none"
+          stroke="url(#saas-track)"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          strokeDasharray="7 10"
+          initial={false}
+          animate={loop ? { pathLength: [0, 1, 1, 0], opacity: [0.15, 1, 1, 0.15] } : { pathLength: 1, opacity: 1 }}
+          transition={loop ? { duration: 4.2, repeat: Infinity, ease: 'easeInOut' } : { duration: 0 }}
+        />
+
+        {[82, 140, 204, 272, 334].map((x) => (
+          <path
+            key={x}
+            d={"M" + (x - 19) + " 94 H" + (x + 19)}
+            fill="none"
+            stroke="rgba(255,79,0,0.24)"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            markerEnd="url(#saas-arrow)"
+          />
+        ))}
+
+        <motion.circle
+          r="4.2"
+          fill="rgba(255,79,0,0.96)"
+          filter="url(#saas-glow)"
+          animate={loop ? { cx: signalX, cy: signalY, opacity: [0, 1, 1, 1, 1, 1, 0] } : { cx: 394, cy: 94, opacity: 1 }}
+          transition={loop ? { duration: 4.2, repeat: Infinity, ease: 'easeInOut' } : { duration: 0 }}
+        />
+
+        <motion.g
+          animate={loop ? { x: [0, 3, 0], opacity: [0.88, 1, 0.88] } : { x: 0, opacity: 1 }}
+          transition={loop ? { duration: 3.2, repeat: Infinity, ease: 'easeInOut' } : { duration: 0 }}
+          style={{ transformOrigin: '34px 94px' }}
+        >
+          <circle cx="34" cy="94" r="16" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.14)" strokeWidth="1.5" />
+          <circle cx="28" cy="91" r="4.2" fill="rgba(255,255,255,0.9)" />
+          <circle cx="34" cy="88.5" r="4.7" fill="rgba(255,79,0,0.12)" stroke="rgba(255,79,0,0.96)" />
+          <circle cx="40" cy="91" r="4.2" fill="rgba(255,255,255,0.9)" />
+          <path d="M24 106 C26 98 42 98 44 106" fill="none" stroke="rgba(255,255,255,0.82)" strokeWidth="1.6" strokeLinecap="round" />
+        </motion.g>
+        <motion.text x="34" y="133" textAnchor="middle" fill="rgba(255,255,255,0.72)" fontSize="8"
+          animate={loop ? { opacity: [0.55, 1, 0.55], y: [0, -1, 0] } : { opacity: 1, y: 0 }}
+          transition={loop ? { duration: 3.4, repeat: Infinity, ease: 'easeInOut' } : { duration: 0 }}>
+          Users
+        </motion.text>
+
+        <motion.g
+          animate={loop ? { x: [0, 2, 0], opacity: [0.78, 1, 0.78] } : { x: 0, opacity: 1 }}
+          transition={loop ? { duration: 3.3, repeat: Infinity, ease: 'easeInOut', delay: 0.12 } : { duration: 0 }}
+        >
+          <rect x="66" y="68" width="34" height="28" rx="9" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.14)" strokeWidth="1.4" />
+          <path d="M74 79 h18 M74 86 h12" stroke="rgba(255,255,255,0.72)" strokeWidth="1.7" strokeLinecap="round" />
+          <rect x="74" y="73" width="12" height="8" rx="3" fill="rgba(255,79,0,0.12)" stroke="rgba(255,79,0,0.96)" strokeWidth="1.2" />
+        </motion.g>
+        <motion.text x="83" y="133" textAnchor="middle" fill="rgba(255,255,255,0.72)" fontSize="8"
+          animate={loop ? { opacity: [0.55, 1, 0.55], y: [0, -1, 0] } : { opacity: 1, y: 0 }}
+          transition={loop ? { duration: 3.4, repeat: Infinity, ease: 'easeInOut', delay: 0.15 } : { duration: 0 }}>
+          Capture
+        </motion.text>
+
+        <motion.g
+          animate={loop ? { x: [0, 3, 0], y: [0, -1, 0], opacity: [0.84, 1, 0.84] } : { x: 0, y: 0, opacity: 1 }}
+          transition={loop ? { duration: 3.1, repeat: Infinity, ease: 'easeInOut', delay: 0.25 } : { duration: 0 }}
+          style={{ transformOrigin: '140px 94px' }}
+        >
+          <circle cx="140" cy="94" r="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.14)" strokeWidth="1.5" />
+          <ellipse cx="140" cy="90" rx="10" ry="4" fill="none" stroke="rgba(255,79,0,0.96)" strokeWidth="1.3" />
+          <path d="M130 88 v14 c0 2 4 4 10 4 s10-2 10-4 V88" fill="none" stroke="rgba(255,255,255,0.72)" strokeWidth="1.4" />
+          <circle cx="140" cy="94" r="3.2" fill="rgba(255,79,0,0.95)" />
+          <motion.circle
+            cx="140"
+            cy="94"
+            r="24"
+            fill="none"
+            stroke="rgba(255,79,0,0.24)"
+            strokeWidth="1.1"
+            animate={loop ? { opacity: [0.18, 0.72, 0.18], scale: [0.92, 1.06, 0.92] } : { opacity: 0.35, scale: 1 }}
+            transition={loop ? { duration: 2.9, repeat: Infinity, ease: 'easeInOut' } : { duration: 0 }}
+            style={{ transformOrigin: '140px 94px' }}
+          />
+        </motion.g>
+        <motion.text x="140" y="133" textAnchor="middle" fill="rgba(255,255,255,0.72)" fontSize="8"
+          animate={loop ? { opacity: [0.55, 1, 0.55], y: [0, -1, 0] } : { opacity: 1, y: 0 }}
+          transition={loop ? { duration: 3.4, repeat: Infinity, ease: 'easeInOut', delay: 0.22 } : { duration: 0 }}>
+          AI
+        </motion.text>
+
+        <motion.g
+          animate={loop ? { opacity: [0.55, 1, 0.55], scale: [0.96, 1, 0.96] } : { opacity: 1, scale: 1 }}
+          transition={loop ? { duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 0.45 } : { duration: 0 }}
+          style={{ transformOrigin: '204px 94px' }}
+        >
+          <circle cx="204" cy="94" r="19" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.14)" strokeWidth="1.5" />
+          <ellipse cx="204" cy="90" rx="10" ry="4" fill="none" stroke="rgba(255,79,0,0.96)" strokeWidth="1.3" />
+          <path d="M194 88 v14 c0 2 4 4 10 4 s10-2 10-4 V88" fill="none" stroke="rgba(255,255,255,0.72)" strokeWidth="1.4" />
+          <circle cx="204" cy="94" r="3.2" fill="rgba(255,79,0,0.95)" />
+          <motion.path
+            d="M204 70 A24 24 0 0 1 228 94"
+            fill="none"
+            stroke="rgba(255,79,0,0.26)"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+            animate={loop ? { rotate: 360 } : { rotate: 0 }}
+            style={{ transformOrigin: '204px 94px' }}
+            transition={loop ? { duration: 3.1, repeat: Infinity, ease: 'linear' } : { duration: 0 }}
+          />
+        </motion.g>
+        <motion.text x="204" y="133" textAnchor="middle" fill="rgba(255,255,255,0.72)" fontSize="8"
+          animate={loop ? { opacity: [0.55, 1, 0.55], y: [0, -1, 0] } : { opacity: 1, y: 0 }}
+          transition={loop ? { duration: 3.4, repeat: Infinity, ease: 'easeInOut', delay: 0.38 } : { duration: 0 }}>
+          Lead
+        </motion.text>
+
+        <motion.g
+          animate={loop ? { rotate: 360 } : { rotate: 0 }}
+          style={{ transformOrigin: '272px 94px' }}
+          transition={loop ? { duration: 4.1, repeat: Infinity, ease: 'linear' } : { duration: 0 }}
+        >
+          <circle cx="272" cy="94" r="19" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.14)" strokeWidth="1.5" />
+          <path d="M272 85 v18 M263 94 h18 M265.5 87.5 l13 13 M278.5 87.5 l-13 13" stroke="rgba(255,79,0,0.96)" strokeWidth="1.35" strokeLinecap="round" />
+        </motion.g>
+        <motion.g
+          animate={loop ? { opacity: [0, 1, 1, 0], x: [0, 0, 8, 0] } : { opacity: 1, x: 0 }}
+          transition={loop ? { duration: 3.6, repeat: Infinity, ease: 'easeInOut' } : { duration: 0 }}
+        >
+          <rect x="262" y="78" width="16" height="12" rx="4" fill="rgba(255,79,0,0.12)" stroke="rgba(255,79,0,0.96)" strokeWidth="1.1" />
+          <path d="M264 81 l4 3 6-6" fill="none" stroke="rgba(255,255,255,0.82)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+        </motion.g>
+        <motion.text x="272" y="133" textAnchor="middle" fill="rgba(255,255,255,0.72)" fontSize="8"
+          animate={loop ? { opacity: [0.55, 1, 0.55], y: [0, -1, 0] } : { opacity: 1, y: 0 }}
+          transition={loop ? { duration: 3.4, repeat: Infinity, ease: 'easeInOut', delay: 0.55 } : { duration: 0 }}>
+          CRM
+        </motion.text>
+
+        <motion.g
+          animate={loop ? { opacity: [0.56, 1, 0.56], y: [0, -1, 0] } : { opacity: 1, y: 0 }}
+          transition={loop ? { duration: 3.2, repeat: Infinity, ease: 'easeInOut', delay: 0.72 } : { duration: 0 }}
+        >
+          <circle cx="334" cy="94" r="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.14)" strokeWidth="1.5" />
+          <path d="M326 94 h16 M330 87 l-4 7 4 7 M338 87 l4 7-4 7" fill="none" stroke="rgba(255,255,255,0.76)" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M323 106 h22" stroke="rgba(255,255,255,0.22)" strokeWidth="1.4" strokeLinecap="round" />
+          <path d="M340 86 h10 v10" fill="none" stroke="rgba(255,79,0,0.96)" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+        </motion.g>
+        <motion.text x="334" y="133" textAnchor="middle" fill="rgba(255,255,255,0.72)" fontSize="8"
+          animate={loop ? { opacity: [0.55, 1, 0.55], y: [0, -1, 0] } : { opacity: 1, y: 0 }}
+          transition={loop ? { duration: 3.4, repeat: Infinity, ease: 'easeInOut', delay: 0.68 } : { duration: 0 }}>
+          Auto
+        </motion.text>
+
+        <motion.g
+          animate={loop ? { opacity: [0.52, 1, 0.52], scale: [0.96, 1, 0.96] } : { opacity: 1, scale: 1 }}
+          transition={loop ? { duration: 3.4, repeat: Infinity, ease: 'easeInOut', delay: 0.9 } : { duration: 0 }}
+        >
+          <circle cx="394" cy="94" r="18" fill="rgba(255,79,0,0.12)" stroke="rgba(255,79,0,0.96)" strokeWidth="1.5" />
+          <path d="M386 95 l5 5 9-10" fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M390 86 v-6 M400 88 l4-4" stroke="rgba(255,255,255,0.76)" strokeWidth="1.2" strokeLinecap="round" />
+        </motion.g>
+        <motion.text x="394" y="133" textAnchor="middle" fill="rgba(255,255,255,0.72)" fontSize="8"
+          animate={loop ? { opacity: [0.55, 1, 0.55], y: [0, -1, 0] } : { opacity: 1, y: 0 }}
+          transition={loop ? { duration: 3.4, repeat: Infinity, ease: 'easeInOut', delay: 0.84 } : { duration: 0 }}>
+          Grow
+        </motion.text>
+
+        <motion.g
+          animate={loop ? { opacity: [0, 1, 0], scale: [0.9, 1, 1.1] } : { opacity: 1, scale: 1 }}
+          transition={loop ? { duration: 4.2, repeat: Infinity, ease: 'easeInOut' } : { duration: 0 }}
+          style={{ transformOrigin: '334px 66px' }}
+        >
+          <circle cx="334" cy="66" r="10" fill="rgba(255,79,0,0.12)" stroke="rgba(255,79,0,0.96)" strokeWidth="1.2" />
+          <path d="M330 66 l3 3 6-7" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+        </motion.g>
+
+        <motion.g
+          animate={loop ? { opacity: [0, 1, 1, 0], y: [4, 0, -1, -4] } : { opacity: 1, y: 0 }}
+          transition={loop ? { duration: 4.2, repeat: Infinity, ease: 'easeInOut', delay: 0.72 } : { duration: 0 }}
+        >
+          <rect x="300" y="24" width="56" height="16" rx="8" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" />
+          <path d="M310 32 h12 M328 32 h16" stroke="rgba(255,255,255,0.72)" strokeWidth="1.4" strokeLinecap="round" />
         </motion.g>
       </svg>
     </VizShell>
@@ -271,8 +437,9 @@ function AgenciesVisualization({ reduceMotion }: { reduceMotion: boolean }) {
       <svg viewBox="0 0 420 180" className="mx-auto h-[180px] w-full max-w-[420px]" aria-hidden="true">
         <text x="30" y="24" fill={MUTED} fontSize="8" letterSpacing="1.2">CAMPAIGN WORKSPACE</text>
         <DocumentGlyph x={42} y={55} />
-        <text x="58" y="112" fill={WHITE} fontSize="8" textAnchor="middle">Client brief</text>
+        <text x="58" y="112" fill={WHITE} fontSize="8" textAnchor="middle">Brief</text>
         <path d="M58 121 h42" stroke={ORANGE} strokeWidth="2" strokeLinecap="round" />
+        <MiniArrow x={100} y={121} rotate={0} />
         {[44, 82, 120].map((y, index) => (
           <g key={y}>
             <SceneCard x={155 + (index === 1 ? 8 : 0)} y={y} width={100} height={28} accent={index === 1}>
@@ -280,6 +447,8 @@ function AgenciesVisualization({ reduceMotion }: { reduceMotion: boolean }) {
               <path d={"M" + (180 + (index === 1 ? 8 : 0)) + " " + (y + 10) + " h44 M" + (180 + (index === 1 ? 8 : 0)) + " " + (y + 17) + " h29"} stroke={index === 1 ? WHITE : MUTED} strokeWidth="2" strokeLinecap="round" />
             </SceneCard>
             <SceneConnector d={"M74 77 C112 " + (77 + index * 9) + " 125 " + (y + 14) + " " + (155 + (index === 1 ? 8 : 0)) + " " + (y + 14)} reduceMotion={reduceMotion} start={0.08 + index * 0.08} end={0.26 + index * 0.08} accent={index === 1} dashed />
+            <MiniArrow x={150 + (index === 1 ? 8 : 0)} y={y + 14} rotate={0} />
+            <text x="205" y={y + 41} fill="rgba(255,255,255,0.7)" fontSize="8" textAnchor="middle">{index === 0 ? "Research" : index === 1 ? "Match" : "Offer"}</text>
           </g>
         ))}
         <SceneCard x={315} y={54} width={76} height={78}>
@@ -287,6 +456,7 @@ function AgenciesVisualization({ reduceMotion }: { reduceMotion: boolean }) {
           <rect x="330" y="95" width="46" height="21" rx="6" fill={ORANGE_SOFT} stroke="rgba(255,79,0,0.38)" />
           <path d="M340 101 v9 M335.5 105.5 h9" stroke={ORANGE} strokeWidth="1.6" strokeLinecap="round" />
           <text x="351" y="109" fill={WHITE} fontSize="7.5">Proposal</text>
+        <text x="351" y="148" fill="rgba(255,255,255,0.7)" fontSize="8" textAnchor="middle">Close</text>
         </SceneCard>
         <motion.g
           animate={reduceMotion ? { x: 152, y: -3, opacity: 1 } : { x: [0, 0, 18, 152, 152], y: [0, 0, -3, -3, -3], opacity: [0, 1, 1, 1, 1] }}
@@ -296,6 +466,7 @@ function AgenciesVisualization({ reduceMotion }: { reduceMotion: boolean }) {
           <circle cx="176" cy="96" r="5" fill={ORANGE} />
           <path d="M187 92 h20 M187 99 h14" stroke={WHITE} strokeWidth="2" strokeLinecap="round" />
         </motion.g>
+        <text x="190" y="123" fill="rgba(255,255,255,0.7)" fontSize="8" textAnchor="middle">Deal</text>
       </svg>
     </VizShell>
   )
@@ -313,13 +484,16 @@ function ConsultingVisualization({ reduceMotion }: { reduceMotion: boolean }) {
     <VizShell reduceMotion={reduceMotion}>
       <svg viewBox="0 0 420 180" className="mx-auto h-[180px] w-full max-w-[420px]" aria-hidden="true">
         <text x="210" y="17" fill={MUTED} fontSize="8" letterSpacing="1.2" textAnchor="middle">STAKEHOLDER MAP</text>
-        {stakeholders.map((stakeholder) => (
-          <SceneConnector key={stakeholder.role} d={"M210 90 L" + stakeholder.x + " " + stakeholder.y} reduceMotion={reduceMotion} start={stakeholder.start} end={stakeholder.end} />
+                        {stakeholders.map((stakeholder) => (
+          <Fragment key={stakeholder.role}>
+            <SceneConnector d={"M210 90 L" + stakeholder.x + " " + stakeholder.y} reduceMotion={reduceMotion} start={stakeholder.start} end={stakeholder.end} />
+            <MiniArrow x={stakeholder.x - (stakeholder.x > 210 ? 12 : -12)} y={stakeholder.y} rotate={Math.atan2(stakeholder.y - 90, stakeholder.x - 210) * 180 / Math.PI} />
+          </Fragment>
         ))}
         <circle cx="210" cy="90" r="34" fill={PANEL} stroke="rgba(255,79,0,0.44)" strokeWidth="1.5" />
         <circle cx="210" cy="90" r="23" fill={ORANGE_SOFT} stroke="rgba(255,79,0,0.28)" />
         <path d="M199 92 h22 M202 85 h16 M204 99 h12" stroke={ORANGE} strokeWidth="2" strokeLinecap="round" />
-        <text x="210" y="136" fill={WHITE} fontSize="8" textAnchor="middle">Growth initiative</text>
+        <text x="210" y="136" fill={WHITE} fontSize="8" textAnchor="middle">Map</text>
         {stakeholders.map((stakeholder) => (
           <motion.g
             key={stakeholder.role}
@@ -327,7 +501,7 @@ function ConsultingVisualization({ reduceMotion }: { reduceMotion: boolean }) {
             transition={reduceMotion ? { duration: 0 } : { duration: STORY_DURATION, repeat: Infinity, times: stakeholder.active, ease: "easeInOut" }}
             style={{ transformOrigin: stakeholder.x + "px " + stakeholder.y + "px" }}
           >
-            <SceneNode x={stakeholder.x} y={stakeholder.y} label={stakeholder.role} active />
+            <SceneNode x={stakeholder.x} y={stakeholder.y} label={stakeholder.role === "Operations" ? "Ops" : stakeholder.role === "Executive" ? "Exec" : stakeholder.role === "Finance" ? "Fin" : "Tech"} active />
           </motion.g>
         ))}
         <motion.circle
@@ -372,6 +546,7 @@ function ITServicesVisualization({ reduceMotion }: { reduceMotion: boolean }) {
           animate={reduceMotion ? { opacity: 0 } : { opacity: [1, 1, 1, 0, 0] }}
           transition={reduceMotion ? { duration: 0 } : { duration: STORY_DURATION, repeat: Infinity, times: [0, 0.38, 0.55, 0.66, 1] }}
         />
+        <MiniArrow x={190} y={90} rotate={0} />
         <motion.g
           animate={reduceMotion ? { x: 320, opacity: 0.38 } : { x: [0, 0, 320, 320], opacity: [0, 0.75, 0.75, 0] }}
           transition={reduceMotion ? { duration: 0 } : { duration: STORY_DURATION, repeat: Infinity, times: [0, 0.1, 0.5, 0.64], ease: "easeInOut" }}
@@ -379,11 +554,15 @@ function ITServicesVisualization({ reduceMotion }: { reduceMotion: boolean }) {
           <rect x="38" y="37" width="2" height="105" rx="1" fill={WHITE} />
           <rect x="42" y="43" width="5" height="93" rx="2.5" fill="rgba(255,255,255,0.1)" />
         </motion.g>
+        <text x="85" y="145" fill="rgba(255,255,255,0.7)" fontSize="8" textAnchor="middle">Source</text>
+        <text x="323" y="145" fill="rgba(255,255,255,0.7)" fontSize="8" textAnchor="middle">Target</text>
         <motion.g animate={reduceMotion ? { opacity: 1 } : { opacity: [0, 0, 1, 1] }} transition={reduceMotion ? { duration: 0 } : { duration: STORY_DURATION, repeat: Infinity, times: [0, 0.43, 0.54, 1] }}>
           <circle cx="323" cy="89" r="14" fill={ORANGE_SOFT} stroke={ORANGE} strokeWidth="1.5" />
           <path d="M323 81 v9 M323 96 v1" stroke={ORANGE} strokeWidth="2.4" strokeLinecap="round" />
         </motion.g>
+        <text x="323" y="111" fill="rgba(255,255,255,0.7)" fontSize="8" textAnchor="middle">Scan</text>
         <SceneConnector d="M142 90 H278" reduceMotion={reduceMotion} start={0.58} end={0.75} accent />
+        <MiniArrow x={255} y={90} rotate={0} />
         <motion.g animate={reduceMotion ? { opacity: 1 } : { opacity: [0, 0, 1, 1] }} transition={reduceMotion ? { duration: 0 } : { duration: STORY_DURATION, repeat: Infinity, times: [0, 0.72, 0.82, 1] }}>
           <circle cx="210" cy="116" r="13" fill={ORANGE_SOFT} stroke={ORANGE} />
           <CheckMark x={204} y={116} />
@@ -406,10 +585,11 @@ function FinancialServicesVisualization({ reduceMotion }: { reduceMotion: boolea
         <path d="M48 52 C49 47 59 47 60 52" fill="none" stroke={WHITE} strokeWidth="1.4" />
         <path d="M151 44 L190 58 V87 C190 111 175 126 151 136 C127 126 112 111 112 87 V58 Z" fill={ORANGE_SOFT} stroke="rgba(255,79,0,0.46)" strokeWidth="1.7" />
         <path d="M140 84 l8 8 17-21" fill="none" stroke={ORANGE} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-        <text x="151" y="111" fill={WHITE} fontSize="8" textAnchor="middle">Compliance</text>
+        <text x="151" y="111" fill={WHITE} fontSize="8" textAnchor="middle">Review</text>
         <SceneConnector d="M70 80 C88 80 95 80 112 80" reduceMotion={reduceMotion} start={0.05} end={0.2} />
+        <MiniArrow x={108} y={80} rotate={0} />
         <SceneCard x={216} y={42} width={102} height={88}>
-          <text x="230" y="58" fill={WHITE} fontSize="8">REVIEW CHECKLIST</text>
+          <text x="230" y="58" fill={WHITE} fontSize="8">Checklist</text>
           {reviewRows.map((y, index) => (
             <g key={y}>
               <rect x="230" y={y} width="10" height="10" rx="3" fill={ORANGE_SOFT} stroke="rgba(255,79,0,0.4)" />
@@ -421,6 +601,7 @@ function FinancialServicesVisualization({ reduceMotion }: { reduceMotion: boolea
           ))}
         </SceneCard>
         <path d="M341 68 v55 h54 V68" fill="none" stroke={BORDER} strokeWidth="1.7" strokeLinecap="round" />
+        <MiniArrow x={341} y={95} rotate={0} />
         <path d="M347 115 h42" stroke={MUTED} strokeWidth="2" strokeLinecap="round" />
         <text x="368" y="137" fill={MUTED} fontSize="8" textAnchor="middle">Handoff</text>
         <motion.g
@@ -430,8 +611,10 @@ function FinancialServicesVisualization({ reduceMotion }: { reduceMotion: boolea
           <rect x="274" y="53" width="42" height="29" rx="6" fill={ORANGE_SOFT} stroke={ORANGE} />
           <path d="M284 64 h22 M284 70 h14" stroke={WHITE} strokeWidth="1.8" strokeLinecap="round" />
         </motion.g>
+        <text x="295" y="92" fill="rgba(255,255,255,0.7)" fontSize="8" textAnchor="middle">Send</text>
         <motion.g animate={reduceMotion ? { opacity: 1 } : { opacity: [0, 0, 1, 1] }} transition={reduceMotion ? { duration: 0 } : { duration: STORY_DURATION, repeat: Infinity, times: [0, 0.77, 0.85, 1] }}>
           <StatusPill x={337} y={36} label="Verified" />
+          <MiniArrow x={333} y={45} rotate={0} />
         </motion.g>
       </svg>
     </VizShell>
@@ -446,11 +629,14 @@ function HealthcareVisualization({ reduceMotion }: { reduceMotion: boolean }) {
         <path d="M38 69 h79 v65 H38 Z M51 69 V52 h53 v17" fill={PANEL} stroke={BORDER} strokeWidth="1.5" strokeLinejoin="round" />
         <path d="M69 52 V39 h17 v13 M77.5 42 v7 M74 45.5 h7" fill="none" stroke={ORANGE} strokeWidth="2" strokeLinecap="round" />
         {[50, 68, 86, 104].map((x) => <rect key={x} x={x} y="82" width="10" height="11" rx="2" fill="rgba(255,255,255,0.11)" />)}
-        <text x="77" y="119" fill={WHITE} fontSize="8" textAnchor="middle">Care network</text>
+        <text x="77" y="119" fill={WHITE} fontSize="8" textAnchor="middle">Network</text>
         <path d="M117 102 C147 102 150 50 186 50 M117 102 C150 102 154 90 199 90 M117 102 C150 102 156 134 186 134" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="1.5" strokeLinecap="round" />
-        <SceneNode x={199} y={90} label="Clinical lead" active />
+        <MiniArrow x={178} y={52} rotate={-40} />
+        <MiniArrow x={180} y={90} rotate={0} />
+        <MiniArrow x={178} y={132} rotate={40} />
+        <SceneNode x={199} y={90} label="Lead" active />
         <SceneNode x={186} y={50} label="Admin" muted />
-        <SceneNode x={186} y={134} label="Procurement" muted />
+        <SceneNode x={186} y={134} label="Buy" muted />
         <motion.circle
           cx="199"
           cy="90"
@@ -463,6 +649,7 @@ function HealthcareVisualization({ reduceMotion }: { reduceMotion: boolean }) {
           style={{ transformOrigin: "199px 90px" }}
         />
         <SceneConnector d="M212 90 C246 90 270 90 302 90" reduceMotion={reduceMotion} start={0.42} end={0.66} accent />
+        <MiniArrow x={296} y={90} rotate={0} />
         <motion.g
           animate={reduceMotion ? { x: 103, opacity: 1 } : { x: [0, 0, 103, 103], opacity: [0, 1, 1, 1] }}
           transition={reduceMotion ? { duration: 0 } : { duration: STORY_DURATION, repeat: Infinity, times: [0, 0.44, 0.67, 1], ease: "easeInOut" }}
@@ -472,7 +659,7 @@ function HealthcareVisualization({ reduceMotion }: { reduceMotion: boolean }) {
         <SceneCard x={302} y={58} width={84} height={66} accent>
           <circle cx="344" cy="79" r="12" fill={PANEL} stroke={BORDER} />
           <path d="M338 81 C339 74 349 74 350 81 M344 70 a4 4 0 1 1 0 8" fill="none" stroke={WHITE} strokeWidth="1.5" />
-          <text x="344" y="108" fill={WHITE} fontSize="8" textAnchor="middle">Decision-maker</text>
+          <text x="344" y="108" fill={WHITE} fontSize="8" textAnchor="middle">Decision</text>
         </SceneCard>
         <motion.g animate={reduceMotion ? { opacity: 1 } : { opacity: [0, 0, 1, 1] }} transition={reduceMotion ? { duration: 0 } : { duration: STORY_DURATION, repeat: Infinity, times: [0, 0.62, 0.72, 1] }}>
           <rect x="252" y="108" width="28" height="24" rx="7" fill={ORANGE_SOFT} stroke={ORANGE} />

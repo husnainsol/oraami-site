@@ -1,7 +1,7 @@
 "use client"
 
 import { animate, motion, useInView, useMotionValue, useReducedMotion, type Variants } from "framer-motion"
-import { BarChart3, Mail, Network, Search, Target } from "lucide-react"
+import { BarChart3, Mail, Search, Target } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import { useEffect, useRef } from "react"
 
