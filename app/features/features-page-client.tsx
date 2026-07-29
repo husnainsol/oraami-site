@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState, type HTMLAttributes, type ReactNode } from "react"
+import { useEffect, useRef, useState, useSyncExternalStore, type HTMLAttributes, type ReactNode } from "react"
 import type { LucideIcon } from "lucide-react"
 import {
   ArrowRight,
@@ -15,8 +15,9 @@ import {
   Search,
   Sparkles,
   Target,
+  TrendingUp,
 } from "lucide-react"
-import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll } from "framer-motion"
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion"
 import CountUp from "@/components/ui/count-up"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -174,8 +175,6 @@ const STAKEHOLDERS = [
   { role: "Technical", note: "Technical evaluator" },
 ] as const
 
-const PROOF_TAGS = ["Industry match", "Company-size match", "Problem match", "Use-case relevance", "Proof strength"] as const
-
 const SEQUENCE_STEPS = [
   ["Week 1", "Context intro"],
   ["Week 2", "Relevant proof"],
@@ -193,6 +192,22 @@ const DASHBOARD_METRICS = [
   ["Meetings booked", "9"],
   ["Pipeline created", "$420k"],
 ] as const
+
+const JOURNEY_INSIGHTS: Record<FeatureId, {
+  metrics: readonly [readonly [string, string], readonly [string, string], readonly [string, string]]
+  title: string
+  reasons: readonly string[]
+  action: string
+}> = {
+  icp: { metrics: [["Verified accounts", "3,247"], ["High outreach priority", "842"], ["Average ICP fit", "76%"]], title: "Why Northfield is a strong fit", reasons: ["Strong industry and size alignment", "High growth signals", "Active hiring in GTM roles", "Relevant technology stack"], action: "Explore account" },
+  research: { metrics: [["Fields enriched", "24"], ["Sources verified", "8"], ["Research depth", "92%"]], title: "Research ready for personalisation", reasons: ["Current priorities identified", "Decision context is verified", "Technology stack mapped", "Two likely pain points found"], action: "Open dossier" },
+  signals: { metrics: [["Signals this week", "17"], ["Priority accounts", "38"], ["Signal confidence", "92%"]], title: "Why priority moved to High", reasons: ["New funding announced", "GTM hiring increased 34%", "VP Sales joined this month", "North America launch detected"], action: "Review signals" },
+  stakeholders: { metrics: [["Stakeholders", "6"], ["Influence coverage", "84%"], ["Suggested order", "1–6"]], title: "A clear route into the account", reasons: ["Founder is the likely champion", "Head of Sales owns the decision", "Technical evaluator identified", "Finance joins after validation"], action: "View stakeholder map" },
+  proof: { metrics: [["Case studies", "46"], ["Top match", "91%"], ["Proof strength", "High"]], title: "Why this case study wins", reasons: ["Same B2B software category", "Comparable company size", "Matching pipeline challenge", "Strong measurable outcome"], action: "Use this proof" },
+  sequence: { metrics: [["Active sequences", "128"], ["Open rate", "64%"], ["Positive replies", "18%"]], title: "Why this sequence feels human", reasons: ["Each touch adds new value", "Relevant proof arrives in week 3", "No generic repeated follow-ups", "Reply pauses remaining steps"], action: "Review sequence" },
+  quality: { metrics: [["Messages reviewed", "1,420"], ["Approval rate", "89%"], ["Average score", "91"]], title: "Why this message is ready", reasons: ["Specific to the account context", "Proof supports the main claim", "Tone is direct and respectful", "Timing matches an active signal"], action: "Open message" },
+  reporting: { metrics: [["Meetings booked", "29"], ["Positive replies", "64"], ["Pipeline generated", "$420k"]], title: "What is driving performance", reasons: ["High-fit accounts reply 2.4× more", "Signal-led outreach leads results", "Case-study touches lift meetings", "Reply trend is up this month"], action: "View report" },
+}
 
 function useSentinelIndex(count: number, reduceMotion: boolean): SentinelHook {
   const refs = useRef<(HTMLDivElement | null)[]>([])
@@ -231,6 +246,19 @@ function useSentinelIndex(count: number, reduceMotion: boolean): SentinelHook {
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
+const subscribeToReducedMotion = (onChange: () => void) => {
+  const media = window.matchMedia("(prefers-reduced-motion: reduce)")
+  media.addEventListener("change", onChange)
+  return () => media.removeEventListener("change", onChange)
+}
+
+const getReducedMotionSnapshot = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches
+const getReducedMotionServerSnapshot = () => false
+
+function useHydratedReducedMotion() {
+  return useSyncExternalStore(subscribeToReducedMotion, getReducedMotionSnapshot, getReducedMotionServerSnapshot)
+}
+
 function Panel({ children, className, ...props }: PanelProps) {
   return (
     <div
@@ -259,7 +287,7 @@ function Pill({ children, active = false, className }: PillProps) {
 function ScoreRing({ value }: { value: number }) {
   return (
     <div className="relative flex items-center justify-center">
-      <div className="h-32 w-32 rounded-full bg-[conic-gradient(var(--brand)_0deg,var(--brand)_calc(var(--score)*1%),rgba(23,34,63,0.10)_calc(var(--score)*1%),rgba(23,34,63,0.10)_360deg)] [--score:0.94]" style={{ background: `conic-gradient(#ff5c2b ${value * 3.6}deg, rgba(23,34,63,0.10) ${value * 3.6}deg)` }}>
+      <div className="h-32 w-32 rounded-full bg-[conic-gradient(var(--brand)_0deg,var(--brand)_calc(var(--score)*1%),rgba(30,26,77,0.10)_calc(var(--score)*1%),rgba(30,26,77,0.10)_360deg)] [--score:0.94]" style={{ background: `conic-gradient(var(--color-brand) ${value * 3.6}deg, rgba(30,26,77,0.10) ${value * 3.6}deg)` }}>
         <div className="m-[12px] flex h-[calc(100%-24px)] w-[calc(100%-24px)] flex-col items-center justify-center rounded-full border border-black/10 bg-white">
           <span className="text-[11px] uppercase tracking-[0.18em] text-muted">ICP fit</span>
           <span className="mt-1 text-[34px] font-medium tracking-[-0.04em] text-heading">
@@ -293,14 +321,14 @@ function SectionIntro({ eyebrow, title, description }: { eyebrow: string; title:
 function MiniMetric({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl border border-black/10 bg-canvas-soft px-3 py-2.5">
-      <p className="text-[11px] uppercase tracking-[0.16em] text-muted">{label}</p>
+      <p className="text-[11px] uppercase tracking-[0.16em] text-white/55">{label}</p>
       <p className="mt-1 text-[14px] font-medium text-heading">{value}</p>
     </div>
   )
 }
 
 function HeroResearchFlow() {
-  const reduceMotion = useReducedMotion() ?? false
+  const reduceMotion = useHydratedReducedMotion()
   const stages = [
     { label: "Account fit", value: "94%", icon: Target },
     { label: "Buying signal", value: "Detected", icon: Radar },
@@ -319,7 +347,7 @@ function HeroResearchFlow() {
       <Panel className="relative overflow-hidden p-3 sm:p-4">
         <div className="flex items-center justify-between border-b border-black/10 px-2 pb-3">
           <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#102045] text-white">
+            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-oraami-accent-secondary text-white">
               <Sparkles className="h-4 w-4" aria-hidden="true" />
             </span>
             <div>
@@ -330,7 +358,7 @@ function HeroResearchFlow() {
           <Pill active>Researching</Pill>
         </div>
 
-        <div className="relative mt-3 overflow-hidden rounded-[24px] border border-white/10 bg-[#102045] p-4 text-white sm:p-5">
+        <div className="relative mt-3 overflow-hidden rounded-[24px] border border-white/10 bg-oraami-accent-secondary p-4 text-white sm:p-5">
           <div
             aria-hidden
             className="pointer-events-none absolute inset-0 opacity-40"
@@ -390,7 +418,7 @@ function HeroResearchFlow() {
 }
 
 function FeatureVisual({ feature }: { feature: Feature }) {
-  const reduceMotion = useReducedMotion() ?? false
+  const reduceMotion = useHydratedReducedMotion()
 
   return (
     <AnimatePresence mode="popLayout" initial={false}>
@@ -405,14 +433,14 @@ function FeatureVisual({ feature }: { feature: Feature }) {
         {!reduceMotion && (
           <motion.div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-y-0 left-0 z-20 w-[22%] bg-[linear-gradient(90deg,transparent,rgba(255,92,43,0.07),transparent)]"
+            className="pointer-events-none absolute inset-y-0 left-0 z-20 w-[22%] bg-[linear-gradient(90deg,transparent,rgba(255,79,0,0.07),transparent)]"
             initial={{ left: "-25%", opacity: 0 }}
             animate={{ left: "110%", opacity: [0, 1, 0] }}
             transition={{ duration: 0.95, ease: EASE }}
           />
         )}
         {feature.id === "icp" && (
-          <Panel className="h-full p-4 sm:p-5">
+          <Panel className="flex h-full flex-col p-3">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-[11px] uppercase tracking-[0.18em] text-muted">{feature.n} / {feature.title}</p>
@@ -420,8 +448,8 @@ function FeatureVisual({ feature }: { feature: Feature }) {
               </div>
               <Pill active>{feature.accent}</Pill>
             </div>
-            <div className="mt-5 grid gap-4 xl:grid-cols-[0.96fr_1.04fr]">
-              <div className="space-y-3">
+            <div className="mt-4 grid min-h-0 flex-1 gap-3 xl:grid-cols-[0.96fr_1.04fr]">
+              <div className="flex min-h-0 flex-col justify-between gap-3">
                 {ICP_COMPANIES.map((company, index) => (
                   <motion.article
                     key={company.name}
@@ -429,7 +457,7 @@ function FeatureVisual({ feature }: { feature: Feature }) {
                     animate={index === 0 ? { y: 0, opacity: 1 } : { y: 0, opacity: 0.66 }}
                     className={cn(
                       "rounded-[22px] border p-4 transition-shadow",
-                      index === 0 ? "border-brand/25 bg-brand/[0.04] shadow-[0_12px_28px_-18px_rgba(255,92,43,0.35)]" : "border-black/10 bg-white",
+                      index === 0 ? "border-brand/25 bg-brand/[0.04] shadow-[0_12px_28px_-18px_rgba(255,79,0,0.35)]" : "border-black/10 bg-white",
                     )}
                   >
                     <div className="flex items-start justify-between gap-3">
@@ -439,13 +467,13 @@ function FeatureVisual({ feature }: { feature: Feature }) {
                       </div>
                       <span className="rounded-full bg-brand/10 px-2.5 py-1 text-[11px] font-medium text-brand">{company.fit}%</span>
                     </div>
-                    <div className="mt-3 h-1.5 rounded-full bg-black/10">
+                    <div className="mt-3 h-1.5 rounded-full bg-white/10">
                       <div className="h-full rounded-full bg-brand" style={{ width: `${company.fit}%` }} />
                     </div>
                   </motion.article>
                 ))}
               </div>
-              <div className="flex flex-col justify-between rounded-[24px] border border-black/10 bg-[#102045] p-5 text-white">
+              <div className="flex flex-col justify-between rounded-[24px] border border-black/10 bg-oraami-accent-secondary p-5 text-white">
                 <div className="flex items-center justify-between">
                   <Pill active className="border-white/10 bg-white/10 text-white">Verified account data</Pill>
                   <Pill className="border-white/10 bg-white/5 text-white/75">High outreach priority</Pill>
@@ -465,7 +493,7 @@ function FeatureVisual({ feature }: { feature: Feature }) {
         )}
 
         {feature.id === "research" && (
-          <Panel className="h-full overflow-hidden p-4 sm:p-5">
+          <Panel className="flex h-full flex-col overflow-hidden p-3">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-[11px] uppercase tracking-[0.18em] text-muted">{feature.n} / {feature.title}</p>
@@ -473,7 +501,7 @@ function FeatureVisual({ feature }: { feature: Feature }) {
               </div>
               <Pill active>{feature.accent}</Pill>
             </div>
-            <div className="mt-5 grid gap-4 lg:grid-cols-[1.02fr_0.98fr]">
+            <div className="mt-4 grid min-h-0 flex-1 gap-3 lg:grid-cols-[1.02fr_0.98fr]">
               <div className="rounded-[24px] border border-black/10 bg-canvas-soft p-4">
                 <div className="flex items-center gap-3 rounded-[20px] border border-black/10 bg-white p-4">
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand/10 text-brand">
@@ -484,7 +512,7 @@ function FeatureVisual({ feature }: { feature: Feature }) {
                     <p className="text-[13px] text-muted">Research panel with verified enrichment</p>
                   </div>
                 </div>
-                <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                <div className="mt-4 grid min-h-0 flex-1 gap-3 sm:grid-cols-2">
                   {RESEARCH_ROWS.map(([label, value]) => (
                     <div key={label} className="rounded-2xl border border-black/10 bg-white px-3 py-3.5">
                       <p className="text-[11px] uppercase tracking-[0.16em] text-muted">{label}</p>
@@ -493,7 +521,7 @@ function FeatureVisual({ feature }: { feature: Feature }) {
                   ))}
                 </div>
               </div>
-              <div className="rounded-[24px] border border-black/10 bg-[#172a52] p-4 text-white">
+              <div className="rounded-[24px] border border-black/10 bg-oraami-accent-secondary p-4 text-white">
                 <p className="text-[11px] uppercase tracking-[0.18em] text-white/60">What Oraami adds</p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {[
@@ -523,7 +551,7 @@ function FeatureVisual({ feature }: { feature: Feature }) {
         )}
 
         {feature.id === "signals" && (
-          <Panel className="h-full p-4 sm:p-5">
+          <Panel className="flex h-full flex-col p-3">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-[11px] uppercase tracking-[0.18em] text-muted">{feature.n} / {feature.title}</p>
@@ -531,12 +559,12 @@ function FeatureVisual({ feature }: { feature: Feature }) {
               </div>
               <Pill active>{feature.accent}</Pill>
             </div>
-            <div className="mt-5 grid gap-4 lg:grid-cols-[0.95fr_1.05fr]">
-              <div className="rounded-[24px] border border-black/10 bg-[#102045] p-4 text-white">
+            <div className="mt-4 grid min-h-0 flex-1 gap-3 lg:grid-cols-[0.95fr_1.05fr]">
+              <div className="rounded-[22px] border border-black/10 bg-oraami-accent-secondary p-3 text-white">
                 <p className="text-[11px] uppercase tracking-[0.18em] text-white/55">Signal timeline</p>
-                <div className="mt-4 space-y-3">
+                <div className="mt-3 space-y-2">
                   {SIGNAL_EVENTS.map(([label, value], index) => (
-                    <div key={label} className={cn("flex items-center gap-3 rounded-2xl border px-3 py-3", index === 2 ? "border-brand/20 bg-brand/10" : "border-white/10 bg-white/[0.05]")}>
+                    <div key={label} className={cn("flex items-center gap-3 rounded-2xl border px-3 py-2", index === 2 ? "border-brand/20 bg-brand/10" : "border-white/10 bg-white/[0.05]")}>
                       <span className={cn("h-2.5 w-2.5 rounded-full", index === 2 ? "bg-brand" : "bg-white/20")} />
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center justify-between gap-3">
@@ -557,7 +585,7 @@ function FeatureVisual({ feature }: { feature: Feature }) {
                 <div className="rounded-[20px] border border-black/10 bg-white p-4">
                   <p className="text-[11px] uppercase tracking-[0.18em] text-muted">Recommended action</p>
                   <p className="mt-2 text-[15px] font-medium text-heading">Personalised outreach</p>
-                  <div className="mt-3 grid grid-cols-2 gap-3">
+                  <div className="mt-2 grid grid-cols-2 gap-2">
                     <MiniMetric label="Relevance" value="High" />
                     <MiniMetric label="Recency" value="2 days ago" />
                     <MiniMetric label="Confidence" value="92%" />
@@ -570,7 +598,7 @@ function FeatureVisual({ feature }: { feature: Feature }) {
         )}
 
         {feature.id === "stakeholders" && (
-          <Panel className="h-full p-4 sm:p-5">
+          <Panel className="flex h-full flex-col p-3">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-[11px] uppercase tracking-[0.18em] text-muted">{feature.n} / {feature.title}</p>
@@ -578,115 +606,34 @@ function FeatureVisual({ feature }: { feature: Feature }) {
               </div>
               <Pill active>{feature.accent}</Pill>
             </div>
-            <div className="mt-5 grid gap-4 xl:grid-cols-[1.05fr_0.95fr]">
-              <div className="relative min-h-[24rem] overflow-hidden rounded-[24px] border border-black/10 bg-[#f6f1ea] p-4">
-                <svg aria-hidden="true" viewBox="0 0 640 420" className="pointer-events-none absolute inset-0 h-full w-full">
-                  <motion.path
-                    d="M320 210 L160 120"
-                    stroke="rgba(255,92,43,0.42)"
-                    strokeWidth="2"
-                    fill="none"
-                    initial={reduceMotion ? { pathLength: 1 } : { pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 0.6, ease: EASE }}
-                  />
-                  <motion.path
-                    d="M320 210 L460 104"
-                    stroke="rgba(255,92,43,0.42)"
-                    strokeWidth="2"
-                    fill="none"
-                    initial={reduceMotion ? { pathLength: 1 } : { pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 0.7, ease: EASE, delay: 0.05 }}
-                  />
-                  <motion.path
-                    d="M320 210 L138 236"
-                    stroke="rgba(255,92,43,0.42)"
-                    strokeWidth="2"
-                    fill="none"
-                    initial={reduceMotion ? { pathLength: 1 } : { pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 0.7, ease: EASE, delay: 0.1 }}
-                  />
-                  <motion.path
-                    d="M320 210 L486 242"
-                    stroke="rgba(255,92,43,0.42)"
-                    strokeWidth="2"
-                    fill="none"
-                    initial={reduceMotion ? { pathLength: 1 } : { pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 0.7, ease: EASE, delay: 0.12 }}
-                  />
-                  <motion.path
-                    d="M320 210 L186 326"
-                    stroke="rgba(255,92,43,0.42)"
-                    strokeWidth="2"
-                    fill="none"
-                    initial={reduceMotion ? { pathLength: 1 } : { pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 0.7, ease: EASE, delay: 0.18 }}
-                  />
-                  <motion.path
-                    d="M320 210 L438 334"
-                    stroke="rgba(255,92,43,0.42)"
-                    strokeWidth="2"
-                    fill="none"
-                    initial={reduceMotion ? { pathLength: 1 } : { pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 0.7, ease: EASE, delay: 0.2 }}
-                  />
+            <div className="mt-3 grid min-h-0 flex-1 gap-3 min-[1180px]:grid-cols-[1.18fr_0.82fr]">
+              <div className="relative h-full min-h-0 overflow-hidden rounded-[22px] border border-black/10 bg-canvas-soft">
+                <svg aria-hidden="true" viewBox="0 0 600 340" preserveAspectRatio="none" className="pointer-events-none absolute inset-0 h-full w-full">
+                  {["M300 170 L90 65", "M300 170 L510 65", "M300 170 L84 170", "M300 170 L516 170", "M300 170 L130 285", "M300 170 L470 285"].map((path, index) => (
+                    <motion.path key={path} d={path} stroke={index < 2 ? "rgba(255,79,0,0.5)" : "rgba(30,26,77,0.2)"} strokeWidth="2" fill="none" initial={reduceMotion ? { pathLength: 1 } : { pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.65, delay: index * 0.07, ease: EASE }} />
+                  ))}
                 </svg>
-
-                <div className="relative mx-auto mt-16 flex h-28 w-28 items-center justify-center rounded-full border border-brand/20 bg-[#102045] text-white shadow-[0_18px_44px_-28px_rgba(16,32,69,0.6)]">
-                  <div className="text-center">
-                    <p className="text-[11px] uppercase tracking-[0.18em] text-white/55">Account</p>
-                    <p className="mt-1 text-[16px] font-medium">Northfield</p>
-                  </div>
+                <div className="absolute left-1/2 top-1/2 z-10 flex h-[72px] w-[112px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-[18px] border border-brand/30 bg-oraami-accent-secondary text-center text-white shadow-[0_18px_38px_-22px_rgba(30,26,77,0.65)]">
+                  <p className="text-[8px] uppercase tracking-[0.16em] text-white/50">Target account</p><p className="mt-1 text-[13px] font-medium">Northfield</p>
                 </div>
-
                 {[
-                  { left: 160, top: 120, stakeholder: STAKEHOLDERS[0] },
-                  { left: 460, top: 104, stakeholder: STAKEHOLDERS[1] },
-                  { left: 138, top: 236, stakeholder: STAKEHOLDERS[2] },
-                  { left: 486, top: 242, stakeholder: STAKEHOLDERS[3] },
-                  { left: 186, top: 326, stakeholder: STAKEHOLDERS[4] },
-                  { left: 438, top: 334, stakeholder: STAKEHOLDERS[5] },
-                ].map(({ left, top, stakeholder }, index) => (
-                  <motion.div
-                    key={stakeholder.role}
-                    className={cn(
-                      "absolute w-[134px] -translate-x-1/2 -translate-y-1/2 rounded-2xl border px-3 py-2 shadow-[0_12px_26px_-22px_rgba(34,18,12,0.35)]",
-                      index === 0 ? "border-brand/25 bg-brand/10 text-heading" : "border-black/10 bg-white text-ink",
-                    )}
-                    style={{ left: `${left}px`, top: `${top}px` }}
-                    initial={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.92, y: 8 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    transition={{ duration: 0.35, delay: 0.08 * index, ease: EASE }}
-                  >
-                    <p className="text-[12px] font-medium leading-tight">{stakeholder.role}</p>
-                    <p className="mt-0.5 text-[11px] text-muted">{stakeholder.note}</p>
+                  { x: "15%", y: "19%", stakeholder: STAKEHOLDERS[0] }, { x: "85%", y: "19%", stakeholder: STAKEHOLDERS[1] },
+                  { x: "14%", y: "50%", stakeholder: STAKEHOLDERS[2] }, { x: "86%", y: "50%", stakeholder: STAKEHOLDERS[3] },
+                  { x: "22%", y: "84%", stakeholder: STAKEHOLDERS[4] }, { x: "78%", y: "84%", stakeholder: STAKEHOLDERS[5] },
+                ].map(({ x, y, stakeholder }, index) => (
+                  <motion.div key={stakeholder.role} style={{ left: x, top: y }} initial={reduceMotion ? false : { opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.38, delay: 0.1 + index * 0.07, ease: EASE }} className={cn("absolute z-10 w-[88px] -translate-x-1/2 -translate-y-1/2 rounded-[13px] border bg-white px-2 py-2 text-center shadow-[0_12px_24px_-18px_rgba(30,26,77,0.55)]", index < 2 ? "border-brand/30" : "border-black/10")}>
+                    <p className="truncate text-[9px] font-medium text-heading">{stakeholder.role}</p><p className={cn("mt-0.5 truncate text-[7px]", index < 2 ? "text-brand" : "text-muted")}>{stakeholder.note}</p>
                   </motion.div>
                 ))}
               </div>
-              <div className="space-y-3 rounded-[24px] border border-black/10 bg-[#102045] p-4 text-white">
-                <div className="rounded-[20px] border border-white/10 bg-white/[0.06] p-4">
-                  <p className="text-[11px] uppercase tracking-[0.18em] text-white/55">Role quality</p>
-                  <div className="mt-4 grid grid-cols-2 gap-3">
-                    <MiniMetric label="Champion" value="Founder" />
-                    <MiniMetric label="Decision-maker" value="Head of Sales" />
-                    <MiniMetric label="Evaluator" value="Technical" />
-                    <MiniMetric label="Priority" value="High" />
-                  </div>
+              <div className="flex h-full min-h-0 flex-col gap-2 rounded-[22px] border border-black/10 bg-oraami-accent-secondary p-3 text-white">
+                <div className="rounded-[16px] border border-white/10 bg-white/[0.06] p-3">
+                  <p className="text-[9px] uppercase tracking-[0.15em] text-white/50">Role quality</p>
+                  <div className="mt-2 grid grid-cols-2 gap-1.5">{[["Champion", "Founder"], ["Decision-maker", "Head of Sales"], ["Evaluator", "Technical"], ["Coverage", "84%"]].map(([label, value]) => <div key={label} className="rounded-xl bg-white/[0.055] px-2 py-1.5"><p className="text-[7px] uppercase tracking-[0.1em] text-white/40">{label}</p><p className="mt-0.5 truncate text-[9px] font-medium text-white/80">{value}</p></div>)}</div>
                 </div>
-                <div className="rounded-[20px] border border-white/10 bg-white/[0.06] p-4">
-                  <p className="text-[11px] uppercase tracking-[0.18em] text-white/55">Suggested order</p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {STAKEHOLDERS.map((stakeholder) => (
-                      <Pill key={stakeholder.role} active className="border-white/10 bg-white/10 text-white">
-                        {stakeholder.role}
-                      </Pill>
-                    ))}
-                  </div>
+                <div className="flex-1 rounded-[16px] border border-white/10 bg-white/[0.06] p-3">
+                  <p className="text-[9px] uppercase tracking-[0.15em] text-white/50">Suggested outreach order</p>
+                  <div className="mt-2 space-y-1">{["Founder", "Head of Sales", "Technical", "Operations"].map((role, index) => <div key={role} className="flex items-center gap-2 rounded-xl bg-white/[0.055] px-2 py-1.5"><span className="flex h-5 w-5 items-center justify-center rounded-md bg-brand/15 text-[8px] font-semibold text-brand">{index + 1}</span><span className="text-[9px] text-white/75">{role}</span></div>)}</div>
                 </div>
               </div>
             </div>
@@ -694,7 +641,7 @@ function FeatureVisual({ feature }: { feature: Feature }) {
         )}
 
         {feature.id === "proof" && (
-          <Panel className="h-full p-4 sm:p-5">
+          <Panel className="flex h-full flex-col p-3">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-[11px] uppercase tracking-[0.18em] text-muted">{feature.n} / {feature.title}</p>
@@ -702,57 +649,29 @@ function FeatureVisual({ feature }: { feature: Feature }) {
               </div>
               <Pill active>{feature.accent}</Pill>
             </div>
-            <div className="mt-5 grid gap-4 lg:grid-cols-[0.98fr_1.02fr]">
-              <div className="rounded-[24px] border border-black/10 bg-canvas-soft p-4">
-                <p className="text-[11px] uppercase tracking-[0.18em] text-muted">Prospect context</p>
-                <div className="mt-4 space-y-3 rounded-[20px] border border-black/10 bg-white p-4">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-brand/10 text-brand">
-                      <Sparkles className="h-5 w-5" aria-hidden="true" />
-                    </div>
-                    <div>
-                      <p className="text-[15px] font-medium text-heading">Pain points highlighted</p>
-                      <p className="text-[13px] text-muted">Pipeline quality, relevance and timing</p>
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {PROOF_TAGS.map((tag) => (
-                      <Pill key={tag} active className="bg-brand/10 text-brand">
-                        {tag}
-                      </Pill>
-                    ))}
-                  </div>
+            <div className="mt-3 grid min-h-0 flex-1 gap-3 lg:grid-cols-[0.82fr_1.18fr]">
+              <div className="h-full rounded-[20px] border border-black/10 bg-canvas-soft p-3">
+                <p className="text-[9px] uppercase tracking-[0.15em] text-muted">Prospect context</p>
+                <div className="mt-3 rounded-[16px] border border-brand/20 bg-white p-3">
+                  <div className="flex items-center gap-2.5"><span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand/10 text-brand"><Building2 className="h-4 w-4" /></span><div><p className="text-[13px] font-medium text-heading">Northfield</p><p className="text-[9px] text-muted">B2B software · 146 employees</p></div></div>
+                  <p className="mt-3 text-[10px] leading-relaxed text-muted">Needs a more reliable outbound pipeline without adding manual research.</p>
                 </div>
+                <div className="mt-3 grid grid-cols-2 gap-2">{["Industry match", "Problem match", "Company-size match", "Proof strength"].map((tag) => <span key={tag} className="rounded-xl border border-black/[0.07] bg-white px-2 py-2 text-center text-[8px] font-medium text-muted">{tag}</span>)}</div>
               </div>
-              <div className="space-y-3 rounded-[24px] border border-black/10 bg-[#102045] p-4 text-white">
-                <div className="rounded-[20px] border border-white/10 bg-white/[0.06] p-4">
-                  <p className="text-[11px] uppercase tracking-[0.18em] text-white/55">Matching proof</p>
-                  <div className="mt-4 rounded-[18px] border border-brand/20 bg-brand/10 p-4 text-white">
-                    <p className="text-[15px] font-medium">Case study: Northfield expansion</p>
-                    <p className="mt-1 text-[13px] text-white/70">Same use case, similar size, cleaner pipeline.</p>
-                  </div>
-                  <div className="mt-3 grid grid-cols-2 gap-3">
-                    <MiniMetric label="Match score" value="91%" />
-                    <MiniMetric label="Proof strength" value="High" />
-                  </div>
+              <div className="h-full rounded-[20px] border border-black/10 bg-oraami-accent-secondary p-3 text-white">
+                <div className="flex items-center justify-between"><p className="text-[9px] uppercase tracking-[0.15em] text-white/50">Recommended case studies</p><span className="text-[8px] text-white/35">Ranked by relevance</span></div>
+                <div className="mt-3 rounded-[15px] border border-brand/35 bg-brand/10 p-3">
+                  <div className="flex items-center gap-2.5"><span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand text-white"><FileCheck2 className="h-4 w-4" /></span><div className="min-w-0 flex-1"><p className="text-[12px] font-medium">Flowbase pipeline expansion</p><p className="text-[9px] text-white/55">B2B software · Same problem</p></div><span className="text-[17px] font-medium text-brand">91%</span></div>
+                  <div className="mt-3 grid grid-cols-4 gap-1.5">{[["Industry", "98"], ["Problem", "94"], ["Size", "86"], ["Proof", "91"]].map(([label, value]) => <div key={label} className="rounded-lg bg-white/[0.06] px-1 py-1.5 text-center"><p className="text-[7px] text-white/35">{label}</p><p className="text-[9px] font-medium text-white/75">{value}</p></div>)}</div>
                 </div>
-                <div className="rounded-[20px] border border-white/10 bg-white/[0.06] p-4">
-                  <p className="text-[11px] uppercase tracking-[0.18em] text-white/55">Relevant tags</p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {PROOF_TAGS.map((tag) => (
-                      <Pill key={tag} className="border-white/10 bg-white/10 text-white">
-                        {tag}
-                      </Pill>
-                    ))}
-                  </div>
-                </div>
+                <div className="mt-2 space-y-2">{[["Arc Systems", "Enterprise SaaS · Growth", "78%"], ["Nimble Labs", "Services · Sales efficiency", "66%"]].map(([name, context, score]) => <div key={name} className="flex items-center gap-2 rounded-[13px] border border-white/[0.08] bg-white/[0.04] px-3 py-2"><FileCheck2 className="h-3.5 w-3.5 text-white/35" /><span className="min-w-0 flex-1"><span className="block text-[9px] font-medium text-white/70">{name}</span><span className="block truncate text-[7px] text-white/35">{context}</span></span><span className="text-[10px] text-white/50">{score}</span></div>)}</div>
               </div>
             </div>
           </Panel>
         )}
 
         {feature.id === "sequence" && (
-          <Panel className="h-full p-4 sm:p-5">
+          <Panel className="flex h-full flex-col p-3">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-[11px] uppercase tracking-[0.18em] text-muted">{feature.n} / {feature.title}</p>
@@ -760,14 +679,14 @@ function FeatureVisual({ feature }: { feature: Feature }) {
               </div>
               <Pill active>{feature.accent}</Pill>
             </div>
-            <div className="mt-5 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
-              <div className="rounded-[24px] border border-black/10 bg-[#102045] p-4 text-white">
+            <div className="mt-4 grid min-h-0 flex-1 gap-3 lg:grid-cols-[0.9fr_1.1fr]">
+              <div className="rounded-[22px] border border-black/10 bg-oraami-accent-secondary p-3 text-white">
                 <p className="text-[11px] uppercase tracking-[0.18em] text-white/55">Cadence</p>
-                <div className="mt-4 space-y-3">
+                <div className="mt-3 space-y-2">
                   {SEQUENCE_STEPS.map(([week, label], index) => (
-                    <div key={week} className={cn("rounded-2xl border px-3 py-3", index === 1 ? "border-brand/20 bg-brand/10" : "border-white/10 bg-white/[0.05]")}>
-                      <p className="text-[12px] uppercase tracking-[0.16em] text-white/55">{week}</p>
-                      <p className="mt-1 text-[14px] font-medium text-white">{label}</p>
+                    <div key={week} className={cn("rounded-2xl border px-3 py-2", index === 1 ? "border-brand/20 bg-brand/10" : "border-white/10 bg-white/[0.05]")}>
+                      <p className="text-[9px] uppercase tracking-[0.14em] text-white/55">{week}</p>
+                      <p className="mt-0.5 text-[11px] font-medium text-white">{label}</p>
                     </div>
                   ))}
                 </div>
@@ -794,7 +713,7 @@ function FeatureVisual({ feature }: { feature: Feature }) {
         )}
 
         {feature.id === "quality" && (
-          <Panel className="h-full p-4 sm:p-5">
+          <Panel className="flex h-full flex-col p-3">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-[11px] uppercase tracking-[0.18em] text-muted">{feature.n} / {feature.title}</p>
@@ -802,8 +721,8 @@ function FeatureVisual({ feature }: { feature: Feature }) {
               </div>
               <Pill active>{feature.accent}</Pill>
             </div>
-            <div className="mt-5 grid gap-4 lg:grid-cols-[0.94fr_1.06fr]">
-              <div className="rounded-[24px] border border-black/10 bg-[#102045] p-4 text-white">
+            <div className="mt-4 grid min-h-0 flex-1 gap-3 lg:grid-cols-[0.94fr_1.06fr]">
+              <div className="rounded-[22px] border border-black/10 bg-oraami-accent-secondary p-3 text-white">
                 <p className="text-[11px] uppercase tracking-[0.18em] text-white/55">Quality score</p>
                 <div className="mt-4 flex justify-center">
                   <div className="relative flex h-32 w-32 items-center justify-center rounded-full border border-white/10 bg-white/[0.06]">
@@ -813,13 +732,13 @@ function FeatureVisual({ feature }: { feature: Feature }) {
                     </div>
                   </div>
                 </div>
-                <div className="mt-4 rounded-[20px] border border-white/10 bg-white/[0.06] p-4">
+                <div className="mt-4 rounded-[16px] border border-white/10 bg-white/[0.06] p-3">
                   <p className="text-[13px] text-white/75">Approved</p>
                 </div>
               </div>
-              <div className="space-y-3 rounded-[24px] border border-black/10 bg-canvas-soft p-4">
+              <div className="grid grid-cols-2 content-start gap-2 rounded-[24px] border border-black/10 bg-canvas-soft p-3">
                 {QUALITY_CHECKS.map((check, index) => (
-                  <div key={check} className="rounded-[20px] border border-black/10 bg-white p-4">
+                  <div key={check} className="rounded-[16px] border border-black/10 bg-white p-3">
                     <div className="flex items-center justify-between gap-3">
                       <div className="flex items-center gap-3">
                         <span className={cn("flex h-9 w-9 items-center justify-center rounded-xl", "bg-brand/10 text-brand")}>
@@ -840,7 +759,7 @@ function FeatureVisual({ feature }: { feature: Feature }) {
         )}
 
         {feature.id === "reporting" && (
-          <Panel className="h-full p-4 sm:p-5">
+          <Panel className="flex h-full flex-col p-3">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-[11px] uppercase tracking-[0.18em] text-muted">{feature.n} / {feature.title}</p>
@@ -848,8 +767,8 @@ function FeatureVisual({ feature }: { feature: Feature }) {
               </div>
               <Pill active>{feature.accent}</Pill>
             </div>
-            <div className="mt-5 grid gap-4 lg:grid-cols-[1fr_0.96fr]">
-              <div className="rounded-[24px] border border-black/10 bg-[#102045] p-4 text-white">
+            <div className="mt-4 grid min-h-0 flex-1 gap-3 lg:grid-cols-[1fr_0.96fr]">
+              <div className="rounded-[22px] border border-black/10 bg-oraami-accent-secondary p-3 text-white">
                 <p className="text-[11px] uppercase tracking-[0.18em] text-white/55">Dashboard</p>
                 <div className="mt-4 grid grid-cols-2 gap-3">
                   {DASHBOARD_METRICS.map(([label, value]) => (
@@ -864,8 +783,8 @@ function FeatureVisual({ feature }: { feature: Feature }) {
                 <div className="rounded-[20px] border border-black/10 bg-white p-4">
                   <p className="text-[11px] uppercase tracking-[0.18em] text-muted">Trend line</p>
                   <svg viewBox="0 0 240 120" className="mt-3 h-28 w-full" aria-hidden="true">
-                    <path d="M12 92 C 44 84, 62 78, 84 74 S 126 54, 154 42 S 198 28, 228 20" fill="none" stroke="rgba(255,92,43,0.75)" strokeWidth="3" strokeLinecap="round" />
-                    <path d="M12 92 C 44 84, 62 78, 84 74 S 126 54, 154 42 S 198 28, 228 20" fill="none" stroke="rgba(16,32,69,0.12)" strokeWidth="10" strokeLinecap="round" />
+                    <path d="M12 92 C 44 84, 62 78, 84 74 S 126 54, 154 42 S 198 28, 228 20" fill="none" stroke="rgba(255,79,0,0.75)" strokeWidth="3" strokeLinecap="round" />
+                    <path d="M12 92 C 44 84, 62 78, 84 74 S 126 54, 154 42 S 198 28, 228 20" fill="none" stroke="rgba(30,26,77,0.12)" strokeWidth="10" strokeLinecap="round" />
                   </svg>
                 </div>
                 <div className="rounded-[20px] border border-black/10 bg-white p-4">
@@ -887,13 +806,41 @@ function FeatureVisual({ feature }: { feature: Feature }) {
   )
 }
 
+function JourneyInsights({ feature, reduceMotion }: { feature: Feature; reduceMotion: boolean }) {
+  const content = JOURNEY_INSIGHTS[feature.id]
+  return (
+    <Panel className="flex h-[clamp(470px,64svh,600px)] flex-col p-3.5">
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div key={feature.id} initial={reduceMotion ? false : { opacity: 0, y: 9 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -7 }} transition={{ duration: reduceMotion ? 0 : 0.48, ease: EASE }} className="flex h-full flex-col">
+          <div className="space-y-2">
+            {content.metrics.map(([label, value], index) => (
+              <motion.div key={label} initial={reduceMotion ? false : { opacity: 0, x: 8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * 0.07, duration: 0.4 }} className="flex min-h-[58px] items-center gap-3 rounded-[14px] border border-black/[0.07] bg-canvas-soft/70 px-3 py-2.5">
+                <span className={cn("flex h-8 w-8 shrink-0 items-center justify-center rounded-[11px] text-white", index === 1 ? "bg-brand" : "bg-oraami-accent-secondary")}>
+                  {index === 0 ? <CheckCircle2 className="h-4 w-4" /> : index === 1 ? <Target className="h-4 w-4" /> : <TrendingUp className="h-4 w-4" />}
+                </span>
+                <span className="min-w-0 flex-1"><span className="block text-[9px] uppercase leading-tight tracking-[0.1em] text-faint">{label}</span><span className="mt-0.5 block text-[18px] font-medium leading-none text-heading">{value}</span></span>
+              </motion.div>
+            ))}
+          </div>
+          <div className="my-3 h-px bg-black/[0.07]" />
+          <h3 className="text-[14px] font-medium leading-snug text-heading">{content.title}</h3>
+          <ul className="mt-2.5 space-y-2">
+            {content.reasons.map((reason) => <li key={reason} className="flex items-start gap-2.5 text-[10px] leading-[1.4] text-muted"><span className="mt-0.5 flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border border-brand/25 text-brand"><CheckCircle2 className="h-2.5 w-2.5" /></span>{reason}</li>)}
+          </ul>
+          <button type="button" className="mt-auto flex w-full items-center justify-between rounded-[12px] border border-brand/25 bg-brand/[0.045] px-3.5 py-2.5 text-left text-[11px] font-medium text-brand outline-none transition-colors hover:bg-brand/[0.09] focus-visible:ring-2 focus-visible:ring-brand">{content.action}<ArrowRight className="h-3.5 w-3.5" /></button>
+        </motion.div>
+      </AnimatePresence>
+    </Panel>
+  )
+}
+
 function HeroFeatures() {
-  const reduceMotion = useReducedMotion() ?? false
+  const reduceMotion = useHydratedReducedMotion()
   return (
     <section className="relative w-full overflow-hidden border-b border-black/10 bg-canvas">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,92,43,0.07),transparent_30%),radial-gradient(circle_at_78%_18%,rgba(16,32,69,0.08),transparent_32%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,79,0,0.07),transparent_30%),radial-gradient(circle_at_78%_18%,rgba(30,26,77,0.08),transparent_32%)]"
       />
       <div
         aria-hidden
@@ -941,7 +888,7 @@ function HeroFeatures() {
 }
 
 function JourneySection() {
-  const reduceMotion = useReducedMotion() ?? false
+  const reduceMotion = useHydratedReducedMotion()
   const trackRef = useRef<HTMLDivElement>(null)
   const [desktop, setDesktop] = useState(false)
   const [desktopActive, setDesktopActive] = useState(0)
@@ -952,12 +899,13 @@ function JourneySection() {
   })
 
   useEffect(() => {
-    const query = window.matchMedia("(min-width: 1024px)")
+    const query = window.matchMedia("(min-width: 1180px)")
     const update = () => setDesktop(query.matches && !reduceMotion)
     update()
     query.addEventListener("change", update)
     return () => query.removeEventListener("change", update)
   }, [reduceMotion])
+
 
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
     if (!desktop) return
@@ -966,7 +914,7 @@ function JourneySection() {
 
   const active = desktop ? desktopActive : mobileActive
   const activeFeature = FEATURES[active] ?? FEATURES[0]
-  const windowStart = Math.min(Math.max(active - 2, 0), FEATURES.length - 4)
+  const windowStart = active < 4 ? 0 : 4
 
   const selectFeature = (index: number) => {
     if (!desktop || !trackRef.current) {
@@ -984,9 +932,9 @@ function JourneySection() {
 
   const featureBar = (
     <div className="rounded-[24px] border border-black/10 bg-white/80 p-2 shadow-[0_20px_50px_-38px_rgba(32,21,21,0.4)] backdrop-blur-sm">
-      <div className="overflow-x-auto [scrollbar-width:none] lg:overflow-hidden [&::-webkit-scrollbar]:hidden">
+      <div className="overflow-x-auto [scrollbar-width:none] min-[1180px]:overflow-hidden [&::-webkit-scrollbar]:hidden">
         <motion.div
-          className="flex min-w-max gap-2 lg:w-[200%] lg:min-w-0"
+          className="flex min-w-max gap-2 min-[1180px]:w-[200%] min-[1180px]:min-w-0"
           animate={desktop ? { x: `-${windowStart * 12.5}%` } : { x: 0 }}
           transition={{ duration: 0.65, ease: EASE }}
         >
@@ -998,13 +946,23 @@ function JourneySection() {
                 key={feature.id}
                 type="button"
                 onClick={() => selectFeature(index)}
+                onKeyDown={(event) => {
+                  if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return
+                  event.preventDefault()
+                  if (event.key === 'Home') selectFeature(0)
+                  else if (event.key === 'End') selectFeature(FEATURES.length - 1)
+                  else selectFeature((index + (event.key === 'ArrowRight' ? 1 : -1) + FEATURES.length) % FEATURES.length)
+                }}
+                role="tab"
+                aria-selected={activeTab}
+                aria-controls={"journey-panel-" + feature.id}
+                tabIndex={activeTab ? 0 : -1}
                 className={cn(
-                  "group flex min-h-[62px] w-[13rem] shrink-0 items-center gap-2.5 rounded-[17px] border px-3 py-2.5 text-left transition-[border-color,background-color,color,box-shadow] duration-300 lg:w-[calc(12.5%_-_0.4375rem)]",
+                  "group flex min-h-[62px] w-[13rem] shrink-0 items-center gap-2.5 rounded-[17px] border px-3 py-2.5 text-left outline-none transition-[border-color,background-color,color,box-shadow] duration-300 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 min-[1180px]:w-[calc(12.5%_-_0.4375rem)]",
                   activeTab
-                    ? "border-brand/25 bg-brand/[0.055] text-heading shadow-[0_12px_28px_-24px_rgba(255,92,43,0.7)]"
+                    ? "border-brand/25 bg-brand/[0.055] text-heading shadow-[0_12px_28px_-24px_rgba(255,79,0,0.7)]"
                     : "border-transparent bg-canvas-soft/80 text-muted hover:border-black/10 hover:bg-white",
                 )}
-                aria-pressed={activeTab}
               >
                 <span className={cn("flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border transition-colors", activeTab ? "border-brand/15 bg-brand/10 text-brand" : "border-black/10 bg-white text-muted")}>
                   <Icon className="h-4 w-4" aria-hidden="true" />
@@ -1018,44 +976,47 @@ function JourneySection() {
           })}
         </motion.div>
       </div>
-      <div className="mx-1 mt-2 h-1 overflow-hidden rounded-full bg-black/[0.07]">
-        <motion.div
-          className="h-full rounded-full bg-brand"
-          animate={{ width: `${((active + 1) / FEATURES.length) * 100}%` }}
-          transition={{ duration: 0.55, ease: EASE }}
-        />
+      <div className="mx-1 mt-2.5 flex items-center gap-3">
+        <div className="h-[4px] min-w-0 flex-1 overflow-hidden rounded-full bg-black/[0.08]">
+          <motion.div className="h-full origin-left rounded-full bg-brand" style={{ scaleX: desktop ? scrollYProgress : (active + 1) / FEATURES.length }} />
+        </div>
+        <span className="shrink-0 text-[10px] font-semibold tracking-[0.12em] text-muted">{String(active + 1).padStart(2, "0")} / 08</span>
+        <motion.div animate={{ opacity: active === 0 ? 1 : 0.42 }} className="hidden shrink-0 items-center gap-1.5 text-[8px] uppercase tracking-[0.11em] text-faint xl:flex">
+          <span className="flex h-5 w-3.5 items-start justify-center rounded-full border border-black/20 p-[3px]"><motion.span className="h-1 w-1 rounded-full bg-brand" animate={reduceMotion || active === FEATURES.length - 1 ? undefined : { y: [0, 6, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }} /></span>
+          {active === FEATURES.length - 1 ? "Journey complete" : "Scroll to reveal next capability"}
+        </motion.div>
       </div>
     </div>
   )
 
+  const stackIndexes = [
+    active,
+    ...FEATURES.map((_, index) => index).filter((index) => index > active),
+    ...FEATURES.map((_, index) => index).filter((index) => index < active).reverse(),
+  ].slice(0, 3)
+
   const stackCards = (
-    <div className="relative h-[310px] sm:h-[330px] lg:h-[390px]">
-      <AnimatePresence initial={false} mode="popLayout">
-        <motion.article
-          key={activeFeature.id}
-          initial={reduceMotion ? false : { opacity: 0, y: 34, scale: 0.975, filter: "blur(5px)" }}
-          animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-          exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -18, scale: 0.965, filter: "blur(4px)" }}
-          transition={{ duration: reduceMotion ? 0 : 0.58, ease: EASE }}
-          className="absolute inset-x-0 top-7 overflow-hidden rounded-[26px] border border-black/10 bg-white p-5 shadow-[0_26px_64px_-42px_rgba(32,21,21,0.32)] sm:p-6"
-        >
-          <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px bg-brand/25" />
-          <div className="flex items-start justify-between gap-4">
-            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#102045] text-white">
-              <activeFeature.icon className="h-5 w-5" aria-hidden="true" />
-            </span>
-            <span className="text-[11px] uppercase tracking-[0.18em] text-brand">{activeFeature.n} / 08</span>
-          </div>
-          <p className="mt-6 text-[12px] uppercase tracking-[0.17em] text-faint">{activeFeature.title}</p>
-          <h3 className="mt-2 text-[23px] font-medium leading-tight tracking-[-0.02em] text-heading">{activeFeature.moment}</h3>
-          <p className="mt-3 max-w-[28rem] text-[14px] leading-relaxed text-muted">{activeFeature.detail}</p>
-          <div className="mt-5 flex flex-wrap gap-2">
-            {activeFeature.tags.map((tag, tagIndex) => (
-              <Pill key={tag} active={tagIndex === 0}>{tag}</Pill>
-            ))}
-          </div>
-        </motion.article>
-      </AnimatePresence>
+    <div className="relative h-[clamp(470px,64svh,600px)] overflow-hidden">
+      {stackIndexes.map((index, depth) => {
+        const feature = FEATURES[index]
+        const Icon = feature.icon
+        return (
+          <motion.article
+            key={feature.id}
+            layout="position"
+            initial={false}
+            animate={{ y: depth * 24, x: depth * 12, scale: 1 - depth * 0.04, opacity: depth === 0 ? 1 : depth === 1 ? 0.72 : 0.58, zIndex: 10 - depth }}
+            transition={{ duration: reduceMotion ? 0 : 0.67, ease: EASE }}
+            className={cn("absolute inset-x-0 top-0 min-h-[314px] overflow-hidden rounded-[21px] border bg-white p-5 shadow-[0_26px_58px_-34px_rgba(32,21,21,0.55)]", depth === 0 ? "border-brand/30" : "border-black/10")}
+          >
+            <div className="flex items-start justify-between"><span className="flex h-10 w-10 items-center justify-center rounded-[14px] border border-brand/15 bg-brand/[0.07] text-brand"><Icon className="h-[18px] w-[18px]" aria-hidden="true" /></span><span className="text-[10px] font-semibold tracking-[0.14em] text-brand">{feature.n}</span></div>
+            <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.14em] text-brand">{feature.title}</p>
+            <h3 className="mt-2 text-[22px] font-medium leading-[1.1] tracking-[-0.025em] text-heading">{feature.moment}</h3>
+            <p className="mt-3 text-[12px] leading-[1.55] text-muted">{feature.detail}</p>
+            <div className="mt-4 flex flex-wrap gap-1.5">{feature.tags.map((tag, tagIndex) => <Pill key={tag} active={tagIndex === 0} className="px-2.5 py-1 text-[9px]">{tag}</Pill>)}</div>
+          </motion.article>
+        )
+      })}
     </div>
   )
 
@@ -1063,27 +1024,37 @@ function JourneySection() {
     <section id="journey" className="relative w-full overflow-clip border-b border-black/10 bg-canvas text-ink">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_0%,rgba(255,92,43,0.05),transparent_26%),radial-gradient(circle_at_80%_15%,rgba(16,32,69,0.05),transparent_28%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_0%,rgba(255,79,0,0.05),transparent_26%),radial-gradient(circle_at_80%_15%,rgba(30,26,77,0.05),transparent_28%)]"
       />
-      <div className="site-container relative pt-14 sm:pt-16 lg:pt-20">
+      <div className="site-container relative pt-14 sm:pt-16 lg:hidden">
         <SectionIntro
           eyebrow="FEATURE JOURNEY"
-          title="From first signal to qualified conversation."
-          description="Follow one account through Oraami's connected research engine."
+          title="Oraami in action"
+          description="Scroll through the capabilities that help revenue teams find the right accounts, understand their context, and reach them at the right time."
         />
       </div>
 
-      <div id="journey-stage" ref={trackRef} className={cn("relative", desktop ? "h-[360vh]" : "h-auto")}>
-        <div className={cn("site-container relative", desktop && "sticky top-16 flex min-h-[calc(100vh-4rem)] flex-col justify-center py-5")}>
+      <div id="journey-stage" ref={trackRef} className={cn("relative", desktop ? "h-[330vh]" : "h-auto")}>
+        <div style={desktop ? { maxWidth: "90rem" } : undefined} className={cn("site-container relative", desktop && "sticky top-16 flex h-[calc(100svh-4rem)] min-h-[640px] flex-col justify-center py-3")}>
           <div className={cn(desktop ? "w-full" : "py-10 sm:py-12")}>
-            {featureBar}
+            {desktop ? (
+              <div className="grid grid-cols-[250px_minmax(0,1fr)] items-end gap-4 xl:grid-cols-[270px_minmax(0,1fr)]">
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-brand">Feature journey</p>
+                  <h2 className="mt-2 text-[31px] font-medium leading-none tracking-[-0.03em] text-heading">Oraami in action</h2>
+                  <p className="mt-3 max-w-[260px] text-[12px] leading-[1.55] text-muted">Scroll through the capabilities that help revenue teams find the right accounts, understand their context, and reach them at the right time.</p>
+                </div>
+                <div>
+                  {featureBar}
+                </div>
+              </div>
+            ) : featureBar}
 
             {desktop ? (
-              <div className="mt-6 grid items-center gap-7 lg:grid-cols-[0.72fr_1.28fr] xl:grid-cols-[0.68fr_1.32fr]">
+              <div className="mt-3 grid items-start gap-4 grid-cols-[250px_minmax(0,1fr)_250px] xl:grid-cols-[270px_minmax(0,1fr)_270px]">
                 {stackCards}
-                <div className="min-w-0 lg:min-h-[520px] xl:min-h-[540px]">
-                  <FeatureVisual feature={activeFeature} />
-                </div>
+                <div id={"journey-panel-" + activeFeature.id} role="tabpanel" className="min-w-0 h-[clamp(470px,64svh,600px)]"><FeatureVisual feature={activeFeature} /></div>
+                <JourneyInsights feature={activeFeature} reduceMotion={reduceMotion} />
               </div>
             ) : (
               <div className="mt-7 space-y-12">
@@ -1093,7 +1064,7 @@ function JourneySection() {
                     <div key={feature.id} id={`journey-feature-${feature.id}`} ref={register(index)} data-index={index} className="scroll-mt-28">
                       <article className="rounded-[24px] border border-black/10 bg-white p-5 shadow-[0_22px_54px_-40px_rgba(32,21,21,0.3)]">
                         <div className="flex items-start justify-between gap-4">
-                          <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#102045] text-white">
+                          <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-oraami-accent-secondary text-white">
                             <Icon className="h-4 w-4" aria-hidden="true" />
                           </span>
                           <Pill active>{feature.accent}</Pill>
@@ -1102,9 +1073,10 @@ function JourneySection() {
                         <h3 className="mt-2 text-[22px] font-medium leading-tight text-heading">{feature.moment}</h3>
                         <p className="mt-2 text-[14px] leading-relaxed text-muted">{feature.detail}</p>
                       </article>
-                      <div className="mt-4">
+                      <div id={"journey-panel-" + feature.id} role="tabpanel" className="mt-4">
                         <FeatureVisual feature={feature} />
                       </div>
+                      <div className="mt-4"><JourneyInsights feature={feature} reduceMotion={reduceMotion} /></div>
                     </div>
                   )
                 })}
