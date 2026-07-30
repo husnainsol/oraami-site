@@ -57,11 +57,11 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
-        scrolled || open ? "border-b border-black/[0.07] bg-canvas/85 backdrop-blur-md" : "border-b border-transparent"
+      className={`fixed left-1/2 top-3 z-50 w-[calc(100%-2rem)] max-w-[76rem] -translate-x-1/2 overflow-hidden rounded-2xl border transition-colors duration-300 sm:top-4 sm:w-[calc(100%-4rem)] ${
+        scrolled || open ? "border-black/[0.07] bg-canvas/85 shadow-sm backdrop-blur-md" : "border-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-[1240px] items-center justify-between px-6 py-4 sm:px-10 lg:px-12">
+      <div className="site-container flex items-center justify-between py-4">
         <NavLink
           href={onHome ? "#hero" : "/"}
           className="flex items-center gap-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
@@ -75,8 +75,8 @@ export default function Navbar() {
             <NavLink
               key={link.href}
               href={to(link.href)}
-              className={`text-[14px] font-medium transition-colors hover:text-ink ${
-                isActive(link.href) ? "text-ink" : "text-muted"
+              className={`relative text-[14px] font-medium transition-colors hover:text-brand ${
+                isActive(link.href) ? "text-brand" : "text-muted"
               }`}
             >
               {link.label}
@@ -106,7 +106,7 @@ export default function Navbar() {
         <nav
           id="nav-menu"
           aria-label="Primary"
-          className="mx-auto max-w-[1240px] px-6 pb-5 sm:px-10 lg:hidden"
+          className="site-container pb-5 lg:hidden"
         >
           <div className="flex flex-col rounded-2xl border border-black/[0.08] bg-canvas-soft p-3">
             {NAV_LINKS.map((link) => (
@@ -114,7 +114,7 @@ export default function Navbar() {
                 key={link.href}
                 href={to(link.href)}
                 onClick={() => setOpen(false)}
-                className="rounded-xl px-3 py-3 text-[15px] font-medium text-ink transition-colors hover:bg-black/[0.04]"
+                className={`rounded-xl px-3 py-3 text-[15px] font-medium transition-colors ${isActive(link.href) ? "bg-brand/8 text-brand" : "text-ink hover:bg-black/[0.04] hover:text-brand"}`}
               >
                 {link.label}
               </NavLink>

@@ -1,23 +1,27 @@
-type Result = { stat: string; label: string; desc: string }
+type Result = { start: number; end?: number; suffix?: string; label: string; desc: string }
 
 const RESULTS: Result[] = [
   {
-    stat: "3×",
+    start: 3,
+    suffix: "×",
     label: "Higher reply rates",
     desc: "Personalised, deeply-researched outreach that prospects actually reply to.",
   },
   {
-    stat: "50",
+    start: 50,
     label: "Leads per ICP",
     desc: "A laser-focused list of the accounts most worth pursuing — nothing more.",
   },
   {
-    stat: "30+",
+    start: 30,
+    suffix: "+",
     label: "Hours saved weekly",
     desc: "Reps stop researching by hand and focus on the meetings that close.",
   },
   {
-    stat: "6–12wk",
+    start: 6,
+    end: 12,
+    suffix: "wk",
     label: "Trust sequences",
     desc: "Relationships built over weeks of considered touches, not one-shot blasts.",
   },
@@ -25,8 +29,8 @@ const RESULTS: Result[] = [
 
 export default function Results() {
   return (
-    <section className="relative w-full border-b border-black/10 bg-canvas-alt text-ink">
-      <div className="mx-auto max-w-[1240px] px-6 py-20 sm:px-10 lg:px-12 lg:py-20">
+    <section className="relative w-full border-b border-black/10 bg-oraami-accent-24 text-ink">
+      <div className="site-container py-20">
 
         <div className="max-w-2xl">
           <div className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-faint">
@@ -43,9 +47,9 @@ export default function Results() {
 
         <div className="mt-16 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
           {RESULTS.map((r) => (
-            <div key={r.stat} className="border-t-2 border-ink pt-7">
-              <p className="text-[clamp(3.25rem,6vw,5rem)] font-medium leading-none tracking-tight text-ink">
-                {r.stat}
+            <div key={r.label} className="border-t-2 border-black/10 pt-7">
+              <p className="text-[clamp(3.25rem,6vw,5rem)] font-medium leading-none tracking-tight text-heading">
+                {r.end != null ? `${r.start}–${r.end}${r.suffix ?? ""}` : `${r.start}${r.suffix ?? ""}`}
               </p>
               <p className="mt-6 text-[12px] uppercase tracking-widest text-brand">{r.label}</p>
               <p className="mt-3 max-w-[15rem] text-[15px] leading-relaxed text-muted">{r.desc}</p>
