@@ -1089,11 +1089,70 @@ function JourneySection() {
   )
 }
 
+
+const FEATURE_COPY_BLOCKS = [
+  {
+    title: "Research that starts from fit",
+    body: "Oraami keeps teams focused on accounts that match your ICP, show useful context, and have a clear reason to reach out now.",
+  },
+  {
+    title: "Signals translated into action",
+    body: "Funding, hiring, launches, leadership changes, and buying-group context become practical next steps for sales outreach.",
+  },
+  {
+    title: "Outreach built to earn trust",
+    body: "Each sequence uses verified research, relevant proof, and quality checks so messages feel specific, timely, and considered.",
+  },
+] as const
+
+function FeatureTextSection() {
+  const reduceMotion = useHydratedReducedMotion()
+
+  return (
+    <section className="relative w-full overflow-hidden border-b border-black/10 bg-white text-ink">
+      <div className="site-container py-16 sm:py-20 lg:py-24">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-start">
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.45 }}
+            transition={{ duration: reduceMotion ? 0 : 1.5, ease: EASE }}
+            className="max-w-xl"
+          >
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand">Feature depth</p>
+            <h2 className="mt-3 text-balance text-[32px] font-medium leading-[1.05] tracking-[-0.025em] text-heading sm:text-[42px]">Built for precise, useful prospecting</h2>
+            <p className="mt-5 text-[16px] leading-relaxed text-muted">
+              The feature set is designed around the full motion from account selection to a message your team can confidently send.
+            </p>
+          </motion.div>
+
+          <div className="grid gap-8 border-t border-black/10 pt-8 sm:grid-cols-3 lg:gap-10">
+            {FEATURE_COPY_BLOCKS.map((item, index) => (
+              <motion.div
+                key={item.title}
+                initial={reduceMotion ? false : { opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.45 }}
+                transition={{ duration: reduceMotion ? 0 : 1.5, delay: reduceMotion ? 0 : index * 0.09, ease: EASE }}
+              >
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand">0{index + 1}</p>
+                <h3 className="mt-3 text-[22px] font-medium leading-tight tracking-[-0.015em] text-heading">{item.title}</h3>
+                <p className="mt-4 text-[15px] leading-relaxed text-muted">{item.body}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default function FeaturesPageClient() {
   return (
     <>
       <HeroFeatures />
       <JourneySection />
+      <FeatureTextSection />
     </>
   )
 }
