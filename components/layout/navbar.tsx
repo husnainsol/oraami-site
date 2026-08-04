@@ -69,26 +69,25 @@ function NavbarShell({ pathname }: { pathname: string }) {
       initial={reduceMotion ? false : "hidden"}
       animate="visible"
       variants={fadeInDown}
-      className="fixed inset-x-[20px] top-[12px] z-50"
+      className="fixed inset-x-[20px] top-[12px] z-50 lg:inset-x-auto lg:left-1/2 lg:top-[30px] lg:w-[2000px] lg:max-w-[1770px] lg:-translate-x-1/2"
     >
-      <div className="rounded-[20px] border border-black/[0.08] bg-white shadow-[0_8px_22px_-18px_rgba(32,21,21,0.22)] backdrop-blur-md">
-        <div className="grid h-[72px] grid-cols-[1fr_auto_1fr] items-center px-6 lg:px-8">
+      <div className="rounded-none bg-white shadow-none backdrop-blur-0">
+        <div className="grid h-[72px] grid-cols-[1fr_auto_1fr] items-center px-6 lg:h-[40px] lg:px-4">
           <div className="flex items-center justify-start">
             <NavLink
               href={onHome ? "#hero" : "/"}
               className="flex items-center gap-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
             >
-              <Image src="/O.svg" alt="Oraami" width={28} height={28} className="h-7 w-7" />
-              <span className="text-[15px] font-semibold uppercase tracking-[0.16em] text-ink">Oraami</span>
+              <Image src="/icon1.svg" alt="Oraami" width={99} height={38} className="h-[42px] w-auto ml-20" />
             </NavLink>
           </div>
 
-          <nav className="hidden items-center justify-center gap-7 lg:flex" aria-label="Primary">
+          <nav className="hidden items-center justify-center gap-7 lg:flex gap-8" aria-label="Primary" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, \"SF Pro Display\", \"SF Pro Text\", system-ui, sans-serif" }}>
             {NAV_LINKS.map((link) => (
               <NavLink
                 key={link.href}
                 href={to(link.href)}
-                className="text-[14px] font-medium text-ink/80 transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
+                className="text-[16px] font-normal text-ink/80 transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
               >
                 {link.label}
               </NavLink>
@@ -101,7 +100,7 @@ function NavbarShell({ pathname }: { pathname: string }) {
               variant="primary"
               size="md"
               icon={ArrowRight}
-              className="hidden h-[44px] px-[20px] text-[14px] shadow-none transition-transform hover:-translate-y-px lg:inline-flex"
+              className="hidden h-10 px-[18px] text-[14px] shadow-none transition-transform hover:-translate-y-px lg:inline-flex mr-22"
             >
               Book a Call
             </Button>

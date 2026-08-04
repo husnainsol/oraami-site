@@ -132,10 +132,15 @@ const demoEase = [0.22, 1, 0.36, 1] as const
 
 function VisualizationFrame({ children }: { children: ReactNode }) {
   return (
-    <div className="relative h-[520px] overflow-hidden rounded-[28px] border border-black/10 bg-oraami-accent-24 p-4 shadow-[0_24px_60px_-38px_rgba(32,21,21,0.5)] sm:h-[540px] sm:p-5 lg:h-[560px] lg:p-6">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:linear-gradient(to_right,rgba(32,21,21,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(32,21,21,0.12)_1px,transparent_1px)] [background-size:72px_72px]" />
-      <div className="relative h-full overflow-hidden rounded-[22px] border border-black/10 bg-white p-3 sm:p-4">{children}</div>
-    </div>
+   <div className="relative h-[320px] w-full max-w-[420px] overflow-hidden rounded-[28px]  bg-oraami-accent-secondary p-3 shadow-[0_10px_24px_-20px_rgba(32,21,21,0.24)] sm:h-[340px] sm:p-4 lg:h-[360px] lg:p-5 ml-70">
+  <div
+    aria-hidden="true"
+    className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:linear-gradient(to_right,rgba(32,21,21,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(32,21,21,0.12)_1px,transparent_1px)] [background-size:72px_72px]"
+  />
+  <div className="relative h-full overflow-hidden rounded-[22px] bg-white p-3 sm:p-4">
+    {children}
+  </div>
+</div>
   )
 }
 
@@ -266,13 +271,6 @@ const MAP_NODES = [
   { role: "User", name: "Sales Manager", team: "Team", x: 108, y: 190, color: "var(--color-oraami-accent-25)", score: "79" },
 ] as const
 
-const PRIMARY_ROUTE = [
-  [86, 70],
-  [210, 126],
-  [334, 62],
-  [360, 126],
-] as const
-
 function StakeholderMapChart({ play, reduce }: { play: boolean; reduce: boolean }) {
   const loop = play && !reduce
   return (
@@ -285,9 +283,6 @@ function StakeholderMapChart({ play, reduce }: { play: boolean; reduce: boolean 
               <stop offset="55%" stopColor="var(--color-oraami-accent-1)" />
               <stop offset="100%" stopColor="var(--color-oraami-accent-28)" />
             </linearGradient>
-            <filter id="stakeholder-glow" x="-200%" y="-200%" width="400%" height="400%">
-              <feGaussianBlur stdDeviation="10" />
-            </filter>
           </defs>
 
           {[56, 84, 112].map((radius, index) => (
@@ -325,27 +320,6 @@ function StakeholderMapChart({ play, reduce }: { play: boolean; reduce: boolean 
 
           <AnimatedLine d="M86 70 C128 88 166 104 210 126 S294 90 334 62 S350 94 360 126" color="url(#stakeholder-route)" loop={loop} width={3.2} />
 
-          {!reduce && (
-            <>
-              <motion.circle
-                r="18"
-                fill="var(--color-oraami-accent-1)"
-                opacity="0"
-                filter="url(#stakeholder-glow)"
-                animate={loop ? { cx: PRIMARY_ROUTE.map(([x]) => x), cy: PRIMARY_ROUTE.map(([, y]) => y), opacity: [0, 0.35, 0.4, 0] } : { cx: 360, cy: 126, opacity: 0 }}
-                transition={loop ? { duration: 6.8, times: [0, 0.36, 0.78, 1], repeat: Infinity, repeatDelay: 0.8, ease: "easeInOut" } : { duration: 0 }}
-              />
-              <motion.circle
-                r="5"
-                fill="white"
-                stroke="var(--color-oraami-accent-1)"
-                strokeWidth="2"
-                animate={loop ? { cx: PRIMARY_ROUTE.map(([x]) => x), cy: PRIMARY_ROUTE.map(([, y]) => y), opacity: [0, 1, 1, 0] } : { cx: 360, cy: 126, opacity: 1 }}
-                transition={loop ? { duration: 6.8, times: [0, 0.36, 0.78, 1], repeat: Infinity, repeatDelay: 0.8, ease: "easeInOut" } : { duration: 0 }}
-              />
-            </>
-          )}
-
           {MAP_NODES.map((node, index) => (
             <motion.g
               key={node.name + "-dot"}
@@ -358,15 +332,6 @@ function StakeholderMapChart({ play, reduce }: { play: boolean; reduce: boolean 
             </motion.g>
           ))}
         </svg>
-
-        <div className="absolute left-1/2 top-1/2 z-20 w-[132px] -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-brand/18 bg-white/96 px-3 py-3 text-center shadow-[0_16px_34px_-24px_rgba(32,21,21,0.32)] backdrop-blur-sm">
-          <p className="text-[7px] uppercase tracking-[0.16em] text-brand">Target Account</p>
-          <p className="mt-1 text-[12px] font-semibold text-ink">Northfield</p>
-          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-black/6">
-            <motion.div className="h-full rounded-full bg-brand" animate={{ scaleX: loop ? [0.2, 0.92, 0.92, 0.2] : 0.92 }} style={{ transformOrigin: "0% 50%" }} transition={loop ? { duration: 6.8, times: [0, 0.42, 0.78, 1], repeat: Infinity, repeatDelay: 0.8, ease: "easeInOut" } : { duration: 0 }} />
-          </div>
-          <p className="mt-2 text-[8px] text-muted">6 mapped stakeholders</p>
-        </div>
 
         {MAP_NODES.map((node, index) => (
           <motion.div
@@ -538,24 +503,14 @@ function FeatureTab({
       }}
       whileHover={reduce ? undefined : { y: -2 }}
       whileTap={reduce ? undefined : { scale: 0.99 }}
-      className="group relative flex h-[140px] w-full flex-col justify-between overflow-hidden rounded-2xl border px-4 py-4 text-left transition-[transform,box-shadow,border-color,background-color] duration-200"
-      animate={
-        active
-          ? {
-              borderColor: "rgba(255,79,0,0.26)",
-              boxShadow: "0 18px 36px -28px rgba(32,21,21,0.42)",
-            }
-          : {
-              borderColor: "rgba(32,21,21,0.10)",
-              boxShadow: "0 10px 22px -24px rgba(32,21,21,0.26)",
-            }
-      }
-      style={{ backgroundColor: active ? "rgba(255,79,0,0.08)" : "var(--color-oraami-accent-24)" }}
+      className="group relative flex h-[115px] w-full flex-col justify-between overflow-hidden rounded-2xl border-0 px-4 py-4 text-left transition-[transform,box-shadow,border-color,background-color] duration-200"
+      animate={{}}
+      style={{ backgroundColor: active ? "rgba(255,79,0,0.08)" : "#F2F2F2" }}
     >
       {active ? (
         <motion.span
           layoutId="features-active-tab"
-          className="absolute inset-0 rounded-2xl border border-brand/20 bg-brand/[0.04]"
+          className="absolute inset-0 rounded-2xl bg-brand/[0.04]"
           transition={{ duration: reduce ? 0 : 0.42, ease }}
         />
       ) : null}
@@ -618,12 +573,19 @@ function FeatureDetails({ feature, reduce }: { feature: Feature; reduce: boolean
       animate="visible"
       exit="exit"
     >
-      <motion.div className="flex h-full flex-col justify-center py-4 lg:min-h-[560px] lg:-translate-y-29 lg:py-8" variants={detailVariants}>
-        <div className="space-y-6">
-          <h3 className="max-w-[15ch] text-[32px] font-medium leading-[1.06] tracking-[-0.03em] text-heading sm:text-[38px] lg:text-[42px]">
+      <motion.div
+        className="flex h-full flex-col justify-center py-4 lg:min-h-[560px] lg:-translate-y-29 lg:py-8"
+        variants={detailVariants}
+        style={{
+          fontFamily:
+            '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+        }}
+      >
+        <div className="space-y-6 pl-4 lg:pl-7">
+          <h3 className="max-w-[20ch] text-[32px] font-semibold leading-[1.08] tracking-[-0.03em] text-heading">
             {feature.title}
           </h3>
-          <p className="max-w-[36rem] text-[16px] leading-[1.78] text-muted sm:text-[17px]">{feature.desc}</p>
+          <p className="max-w-[28rem] text-[18px] leading-[1.55] text-muted">{feature.desc}</p>
         </div>
       </motion.div>
 
@@ -728,22 +690,28 @@ export default function Features() {
   }
 
   return (
-    <section ref={sectionRef} id="features" className="relative w-full overflow-hidden border-b border-black/10 bg-canvas text-ink">
+    <section ref={sectionRef} id="features" className="relative w-full overflow-hidden border-b border-black/10 bg-[#FFFFFF] text-ink">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(255,79,0,0.04),transparent_30%),radial-gradient(circle_at_80%_20%,rgba(255,79,0,0.03),transparent_28%)]"
       />
 
-      <div className="site-container relative py-20 sm:py-24">
-        <motion.div initial={reduce ? false : "hidden"} animate={entered ? "visible" : "hidden"} variants={listVariants} className="max-w-2xl">
-          <motion.div variants={fadeUp} className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.18em] text-faint">
-            <span className="h-1.5 w-1.5 bg-brand" />
-            What we automate
-          </motion.div>
-          <motion.h2 variants={fadeUp} className="mt-4 text-[32px] font-medium leading-[1.05] tracking-[-0.02em] text-heading sm:text-[40px] lg:text-[44px]">
+      <div className="relative mx-auto max-w-[1580px] px-5 py-20 sm:px-6 sm:py-24 lg:px-0">
+        <motion.div
+          initial={reduce ? false : "hidden"}
+          animate={entered ? "visible" : "hidden"}
+          variants={listVariants}
+          className="max-w-2xl"
+          style={{
+            fontFamily:
+              '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+          }}
+        >
+          
+          <motion.h2 variants={fadeUp} className="mt-4 text-[32px] font-semibold leading-[1.1] tracking-[-0.02em] text-heading">
             What Oraami automates
           </motion.h2>
-          <motion.p variants={fadeUp} className="mt-5 max-w-xl text-[17px] leading-relaxed text-muted">
+          <motion.p variants={fadeUp} className="mt-5 max-w-xl text-[18px] leading-[1.55] text-muted">
             From ICP definition to trust-building sequences, the full quality-first BDR motion is handled end to end.
           </motion.p>
         </motion.div>
@@ -754,7 +722,7 @@ export default function Features() {
           initial={false}
           animate={entered ? "visible" : "hidden"}
           variants={listVariants}
-          className="relative mt-12 rounded-[28px] border border-black/10 bg-oraami-accent-24 p-3 shadow-[0_20px_55px_-40px_rgba(32,21,21,0.45)]"
+          className="relative mt-12 rounded-[12px] border border-black/5 bg-[#FFFFF] p-4 pt-5"
           onKeyDown={handleKeyDown}
           onMouseEnter={() => setAutoplayPaused(true)}
           onMouseLeave={handleAutoplayResume}
@@ -786,7 +754,7 @@ export default function Features() {
         </motion.div>
 
         <motion.div
-          className="mt-8 rounded-[32px] border border-black/10 bg-oraami-accent-24 p-4 shadow-[0_22px_60px_-42px_rgba(32,21,21,0.55)] sm:p-5 lg:p-6"
+          className="mt-8 h-[407px] rounded-[32px] border border-white/100 bg-[#FFFFF] p-4 shadow-[0_4px_20px_0_rgba(0,0,0,0.08)] sm:p-5 lg:p-6"
           initial={reduce ? false : { opacity: 0, y: 16 }}
           animate={entered ? { opacity: 1, y: 0 } : undefined}
           transition={{ duration: reduce ? 0 : 0.55, ease }}
@@ -800,13 +768,13 @@ export default function Features() {
           initial={reduce ? false : { opacity: 0, y: 14 }}
           animate={entered ? { opacity: 1, y: 0 } : undefined}
           transition={{ duration: reduce ? 0 : 0.48, delay: 0.18, ease }}
-          className="mt-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center"
+          className="mt-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center sm:gap-6"
         >
           <p className="text-[15px] leading-relaxed text-muted">
             Multi-tenant security and more, built into the same quality-first motion.
           </p>
-          <Button href="#platform" variant="secondary" icon={ArrowRight} className="shrink-0">
-            Explore all features
+          <Button href="#platform" variant="outline" size="md" icon={ArrowRight} className="shrink-0 border-brand bg-white text-ink hover:border-brand-hover hover:bg-white">
+            Explore all Features
           </Button>
         </motion.div>
       </div>

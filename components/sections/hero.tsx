@@ -40,10 +40,22 @@ export default function Hero() {
       >
         <div className="relative px-5 pb-0 pt-7 sm:px-7 sm:pt-9 lg:px-16 lg:pt-16 xl:px-20 xl:pt-16">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,0.56fr)_minmax(0,0.44fr)] lg:items-center lg:gap-16">
-            <motion.div variants={itemVariants} className="max-w-[570px] lg:ml-20">
-              <span className="inline-flex h-8 items-center rounded-full border border-[#ff4f00]/30 bg-white/[0.03] px-3.5 text-[12px] font-medium uppercase tracking-[0.17em] text-[#ff9a73]">
-                ✦ AI-Powered Lead Intelligence Platform
-              </span>
+            <motion.div variants={itemVariants} className="max-w-[570px] lg:ml-21">
+              <span
+              className="inline-flex h-8 items-center rounded-full px-3.5 text-[12px] font-medium tracking-[0.17em] text-[#FFFFF] gap-2"
+            style={{
+    border: "1px solid transparent",
+    backgroundImage:
+      "linear-gradient(rgba(30,20,50,0.6), rgba(30,20,50,0.6)), linear-gradient(to right, #bb4003, #0740aa)",
+    backgroundOrigin: "border-box",
+    backgroundClip: "padding-box, border-box",
+  }}
+>
+  <img src="/star.svg" alt="logo" 
+  
+  />
+   AI-Powered Lead Intelligence Platform
+</span>
 
               <h1 className="mt-8 max-w-[565px] text-balance text-[clamp(3.35rem,4.4vw,3.75rem)] font-bold leading-[1] tracking-[-0.03em] text-[#f4efe9]">
                 <span className="block lg:whitespace-nowrap">
@@ -80,8 +92,8 @@ export default function Hero() {
               </p>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="hidden max-w-[420px] lg:flex lg:justify-self-end lg:self-center">
-              <p className="max-w-[420px] text-left text-[17px] leading-[1.5] text-white/72">
+            <motion.div variants={itemVariants} className="hidden max-w-[487px] lg:flex lg:justify-self-start lg:self-center lg:ml-12 xl:ml-36">
+              <p className="max-w-[487px] text-left text-[17px] leading-[1.5] text-white/72">
                 {HERO_COPY}
               </p>
             </motion.div>
