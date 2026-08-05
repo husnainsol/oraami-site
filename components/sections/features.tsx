@@ -690,7 +690,7 @@ export default function Features() {
   }
 
   return (
-    <section ref={sectionRef} id="features" className="relative w-full overflow-hidden border-b border-black/10 bg-[#FFFFFF] text-ink">
+    <section ref={sectionRef} id="features" className="relative w-full overflow-hidden bg-[#FFFFFF] text-ink">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(255,79,0,0.04),transparent_30%),radial-gradient(circle_at_80%_20%,rgba(255,79,0,0.03),transparent_28%)]"

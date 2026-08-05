@@ -78,7 +78,7 @@ function NavbarShell({ pathname }: { pathname: string }) {
               href={onHome ? "#hero" : "/"}
               className="flex items-center gap-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
             >
-              <Image src="/icon1.svg" alt="Oraami" width={99} height={38} className="h-[42px] w-auto ml-20" />
+              <Image src="/icon1.svg" alt="Oraami" width={99} height={38} className="h-[42px] w-auto ml-23" />
             </NavLink>
           </div>
 

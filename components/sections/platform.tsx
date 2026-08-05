@@ -100,8 +100,8 @@ export default function Platform() {
   }, [started])
 
   return (
-    <section ref={sectionRef} id="platform" className="relative w-full border-b border-black/10 bg-canvas text-ink">
-      <div className="site-container py-20">
+    <section ref={sectionRef} id="platform" className="relative w-full bg-canvas text-ink">
+      <div className="mx-auto w-full max-w-[1780px] px-6 py-20 sm:px-8 lg:px-12 ml-30">
 
         <div className="max-w-2xl">
           <div className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-faint">
