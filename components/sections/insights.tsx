@@ -109,7 +109,7 @@ function ArticleVisual({ article }: { article: Article }) {
 
 function ArticleCard({ article }: { article: Article }) {
   return (
-    <article className="flex h-full w-full flex-col overflow-hidden rounded-[10px] border border-brand bg-white">
+    <article className="flex h-full w-full min-w-0 flex-col overflow-hidden rounded-[10px] border border-brand bg-white">
       <ArticleVisual article={article} />
 
       <div className="flex flex-1 flex-col px-4 pb-4 pt-4">
@@ -135,7 +135,7 @@ function ArticleCard({ article }: { article: Article }) {
 
 function InsightsIntroCard() {
   return (
-    <article className="flex h-full flex-col justify-center rounded-[10px] border border-brand bg-white px-4 py-6 shadow-[0_1px_2px_rgba(15,23,42,0.04)] lg:min-h-[204px]">
+    <article className="flex h-full min-w-0 flex-col justify-center rounded-[10px] border border-brand bg-white px-4 py-6 shadow-[0_1px_2px_rgba(15,23,42,0.04)] lg:min-h-[204px]">
       <h3 className="text-[26px] font-semibold leading-[1.15] tracking-[-0.03em] text-[#101828]">
         Our Insights
       </h3>

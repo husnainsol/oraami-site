@@ -66,12 +66,12 @@ export default function Footer() {
       </div>
 
       <div className="grid gap-10 pb-14 pt-8 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr] lg:gap-8">
-        <div className="pl-1 sm:pl-2">
+        <div className="min-w-0 pl-1 sm:pl-0">
           <Link href="/" aria-label="Oraami home" className="inline-flex items-center gap-3">
             <Image src="/O.svg" alt="" width={28} height={28} className="h-7 w-7" />
             <span className="text-[16px] font-bold uppercase tracking-[0.08em] text-white">Oraami</span>
           </Link>
-          <p className="mt-5 max-w-[18rem] text-[14px] leading-[1.9] text-white/42">
+          <p className="mt-5 max-w-[18rem] break-words text-[14px] leading-[1.9] text-white/42">
             The quality-first AI BDR for teams that want better-fit accounts, stronger outreach, and more booked meetings.
           </p>
           <div className="mt-7 flex items-center gap-4 text-white/85">
@@ -90,13 +90,13 @@ export default function Footer() {
           </div>
           <div className="mt-6 ">
             <p className="text-[12px] text-white/35">Write to us</p>
-            <a href="mailto:hello@oraami.com" className="mt-1 block text-[14px] font-medium text-white transition-colors hover:text-brand">
+            <a href="mailto:hello@oraami.com" className="mt-1 block break-words text-[14px] font-medium text-white transition-colors hover:text-brand">
               hello@oraami.com
             </a>
           </div>
         </div>
 
-        <div>
+        <div className="min-w-0">
           <p className="text-[12px] font-semibold text-white">Useful Links</p>
           <ul className="mt-5 space-y-3.5 text-[14px] text-white/42">
             {[...footerLinks.Product, ...footerLinks.Company].slice(0, 6).map((link) => (
@@ -111,7 +111,7 @@ export default function Footer() {
 
       </div>
 
-      <div className="mt-8 pt-10 pb-5 text-[12px] text-white/32 sm:flex sm:items-center sm:justify-between pl-1 sm:pl-2">
+      <div className="mt-8 pt-10 pb-5 text-[12px] text-white/32 sm:flex sm:items-center sm:justify-between pl-1 sm:pl-0">
         <p>© {new Date().getFullYear()} Oraami. All rights reserved.</p>
         <div className="mt-3 flex items-center gap-4 sm:mt-0">
           <Link href="/privacy" className="transition-colors hover:text-white">Privacy</Link>

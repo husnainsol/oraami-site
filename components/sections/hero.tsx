@@ -39,9 +39,9 @@ export default function Hero() {
           variants={containerVariants}
           className="relative overflow-hidden rounded-t-[14px] bg-oraami-accent-secondary"
         >
-          <div className="relative px-3 pb-0 pt-6 sm:px-5 sm:pt-8 lg:px-4 lg:pt-12 xl:px-0 xl:pt-12">
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,0.54fr)_minmax(0,0.46fr)] lg:items-center lg:gap-12">
-              <motion.div variants={itemVariants} className="max-w-[570px]">
+          <div className="relative min-w-0 px-3 pb-0 pt-6 sm:px-5 sm:pt-8 lg:px-4 lg:pt-12 xl:px-0 xl:pt-12">
+            <div className="grid min-w-0 gap-10 lg:grid-cols-[minmax(0,0.54fr)_minmax(0,0.46fr)] lg:items-center lg:gap-12">
+              <motion.div variants={itemVariants} className="min-w-0 max-w-[570px]">
                 <span
                   className="inline-flex h-8 items-center gap-2 rounded-full px-3.5 text-[12px] font-medium tracking-[0.17em] text-white"
                   style={{
@@ -91,7 +91,7 @@ export default function Hero() {
                 </p>
               </motion.div>
 
-              <motion.div variants={itemVariants} className="hidden max-w-[540px] lg:block lg:justify-self-end lg:self-center">
+              <motion.div variants={itemVariants} className="hidden min-w-0 max-w-[540px] lg:block lg:justify-self-end lg:self-center">
                 <p className="max-w-[487px] text-left text-[16px] leading-[1.6] text-white/72 sm:text-[17px]">
                   {HERO_COPY}
                 </p>
