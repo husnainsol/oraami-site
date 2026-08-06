@@ -56,31 +56,35 @@ function NavbarShell({ pathname }: { pathname: string }) {
   }, [open])
 
   return (
-    <header className="fixed inset-x-0 top-0 z-[100] w-full bg-white">
-      <div className="mx-auto max-w-[1540px] px-5 sm:px-6 xl:px-0">
-        <nav className="relative flex h-[64px] w-full items-center justify-between md:h-[72px]">
-          <div className="flex items-center justify-start pl-6 lg:pl-4 xl:pl-0">
+    <header className="fixed inset-x-0 top-0 z-[100] w-full border-b border-black/5 bg-white/96 backdrop-blur supports-[backdrop-filter]:bg-white/88">
+      <div className="mx-auto max-w-[1540px] px-4 sm:px-6 xl:px-0">
+        <div className="relative flex h-[60px] w-full items-center justify-between sm:h-[64px] md:h-[72px]">
+          <div className="flex min-w-0 items-center justify-start pl-1 sm:pl-2 lg:pl-0">
             <NavLink
               href={onHome ? "#hero" : "/"}
               className="flex items-center gap-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
             >
-              <Image src="/icon1.svg" alt="Oraami" width={99} height={38} className="h-[38px] w-auto object-contain" />
+              <Image src="/icon1.svg" alt="Oraami" width={99} height={38} className="h-[34px] w-auto object-contain sm:h-[38px]" />
             </NavLink>
           </div>
 
-          <nav className="hidden items-center justify-center gap-8 lg:flex" aria-label="Primary" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, \"SF Pro Display\", \"SF Pro Text\", system-ui, sans-serif" }}>
+          <nav
+            className="hidden items-center justify-center gap-6 lg:flex xl:gap-8"
+            aria-label="Primary"
+            style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
+          >
             {NAV_LINKS.map((link) => (
               <NavLink
                 key={link.href}
                 href={to(link.href)}
-                className="text-[16px] font-normal text-ink/80 transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
+                className="text-[15px] font-normal text-ink/80 transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 xl:text-[16px]"
               >
                 {link.label}
               </NavLink>
             ))}
           </nav>
 
-          <div className="flex items-center justify-end gap-3 pr-6 lg:pr-4 xl:pr-0">
+          <div className="flex items-center justify-end gap-2 sm:gap-3 pr-1 sm:pr-2 lg:pr-0">
             <Button
               href="/contact"
               variant="primary"
@@ -97,7 +101,7 @@ function NavbarShell({ pathname }: { pathname: string }) {
               aria-expanded={open}
               aria-controls="nav-menu"
               aria-label={open ? "Close menu" : "Open menu"}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-black/10 bg-white text-ink transition-colors hover:border-black/20 hover:bg-canvas-soft lg:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-black/10 bg-white text-ink transition-colors hover:border-black/20 hover:bg-canvas-soft sm:h-11 sm:w-11 lg:hidden"
             >
               {open ? <X className="h-5 w-5" aria-hidden="true" /> : <Menu className="h-5 w-5" aria-hidden="true" />}
             </button>
@@ -112,36 +116,38 @@ function NavbarShell({ pathname }: { pathname: string }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -6 }}
                 transition={{ duration: 0.22, ease: [0.2, 0.8, 0.2, 1] as const }}
-                className="absolute left-0 top-full w-full pt-3 lg:hidden"
+                className="fixed inset-x-0 top-[60px] z-[101] px-4 pb-4 sm:top-[64px] sm:px-6 md:top-[72px] xl:px-0 lg:hidden"
               >
-                <div className="rounded-[20px] border border-black/[0.08] bg-white p-3 shadow-[0_12px_28px_-22px_rgba(32,21,21,0.24)]">
-                  <nav className="flex flex-col" aria-label="Primary mobile">
-                    {NAV_LINKS.map((link) => (
-                      <NavLink
-                        key={link.href}
-                        href={to(link.href)}
+                <div className="mx-auto max-w-[1540px]">
+                  <div className="overflow-hidden rounded-[20px] border border-black/[0.08] bg-white shadow-[0_12px_28px_-22px_rgba(32,21,21,0.24)]">
+                    <nav className="grid gap-2 p-3 sm:grid-cols-2" aria-label="Primary mobile">
+                      {NAV_LINKS.map((link) => (
+                        <NavLink
+                          key={link.href}
+                          href={to(link.href)}
+                          onClick={() => setOpen(false)}
+                          className="rounded-xl px-3 py-3 text-[15px] font-medium text-ink transition-colors hover:bg-canvas-soft hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
+                        >
+                          {link.label}
+                        </NavLink>
+                      ))}
+                      <Button
+                        href="/contact"
+                        variant="primary"
+                        fullWidth
+                        icon={ArrowRight}
+                        className="mt-2 h-11 px-5 text-[14px] sm:col-span-2"
                         onClick={() => setOpen(false)}
-                        className="rounded-xl px-3 py-3 text-[15px] font-medium text-ink transition-colors hover:bg-canvas-soft hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
                       >
-                        {link.label}
-                      </NavLink>
-                    ))}
-                    <Button
-                      href="/contact"
-                      variant="primary"
-                      fullWidth
-                      icon={ArrowRight}
-                      className="mt-2 h-11 px-5 text-[14px]"
-                      onClick={() => setOpen(false)}
-                    >
-                      Book a Call
-                    </Button>
-                  </nav>
+                        Book a Call
+                      </Button>
+                    </nav>
+                  </div>
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
-        </nav>
+        </div>
       </div>
     </header>
   )

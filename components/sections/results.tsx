@@ -44,11 +44,11 @@ export default function Results() {
           </p>
         </div>
 
-        <div className="mt-12 grid gap-5 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-5 xl:grid-cols-4">
           {RESULTS.map((r) => (
             <div
               key={r.label}
-              className="result-card flex h-full min-h-[208px] min-w-0 flex-col rounded-[18px] bg-[rgba(75,31,109,0.2)] px-5 py-5 shadow-[0_10px_24px_-20px_rgba(0,0,0,0.65)] sm:px-6 sm:py-6"
+              className="result-card flex h-full min-h-[186px] min-w-0 flex-col rounded-[18px] bg-[rgba(75,31,109,0.2)] px-5 py-5 shadow-[0_10px_24px_-20px_rgba(0,0,0,0.65)] sm:min-h-[200px] sm:px-6 sm:py-6 lg:min-h-[208px] lg:px-7 lg:py-7"
             >
               <p className="text-[clamp(2.75rem,10vw,4.6rem)] font-semibold leading-none tracking-[-0.04em] text-white/95">
                 {r.end != null
@@ -56,11 +56,11 @@ export default function Results() {
                   : `${r.start}${r.suffix ?? ""}`}
               </p>
 
-              <p className="mt-4 text-[12px] font-medium uppercase tracking-[0.18em] text-brand">
+              <p className="mt-4 text-[12px] font-medium uppercase tracking-[0.18em] text-brand sm:mt-5">
                 {r.label}
               </p>
 
-              <p className="mt-3 max-w-[17rem] text-[14px] leading-[1.6] text-white/66">
+              <p className="mt-3 max-w-none text-[14px] leading-[1.6] text-white/66 sm:max-w-[17rem] lg:max-w-[18rem]">
                 {r.desc}
               </p>
             </div>
