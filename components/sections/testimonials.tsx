@@ -166,7 +166,7 @@ export default function Testimonials() {
             <motion.div
               key={index}
               variants={itemVariants}
-              className="relative aspect-[433/431] min-w-0 overflow-hidden rounded-[16px] border border-brand/25"
+              className="relative aspect-[433/431] min-w-0 overflow-hidden rounded-[16px]"
             >
               <TestimonialSvgCard
                 src={WHITE_TESTIMONIAL_SRC}
