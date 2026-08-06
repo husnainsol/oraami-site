@@ -58,7 +58,7 @@ function NavbarShell({ pathname }: { pathname: string }) {
   return (
     <header className="fixed inset-x-0 top-0 z-[100] w-full bg-white">
       <div className="mx-auto max-w-[1540px] px-5 sm:px-6 xl:px-0">
-        <nav className="relative flex h-[72px] w-full items-center justify-between">
+        <nav className="relative flex h-[64px] w-full items-center justify-between md:h-[72px]">
           <div className="flex items-center justify-start pl-6 lg:pl-4 xl:pl-0">
             <NavLink
               href={onHome ? "#hero" : "/"}

@@ -77,7 +77,7 @@ export default function Testimonials() {
     <section
       ref={sectionRef}
       id="testimonials"
-      className="w-full bg-[#FFFFF] text-[#101828]"
+      className="w-full bg-white text-[#101828]"
     >
       <div className="mx-auto max-w-[1540px] px-5 pb-[64px] pt-[48px] sm:px-6 xl:px-0">
         <motion.div
@@ -89,11 +89,11 @@ export default function Testimonials() {
             ease: easeOut,
           }}
         >
-          <h2 className="text-[30px] font-semibold leading-[1.1] tracking-[-0.035em] text-[#101828]">
+          <h2 className="text-[28px] font-semibold leading-[1.1] tracking-[-0.035em] text-[#101828] sm:text-[34px] lg:text-[40px]">
             What clients say
           </h2>
 
-          <p className="mt-4 max-w-[560px] text-[16px] leading-[1.55] text-[#667085]">
+          <p className="mt-4 max-w-[560px] text-[15px] leading-[1.55] text-[#667085] sm:text-[16px]">
             Revenue teams that traded spray-and-pray for quality-first
             prospecting and the results that followed.
           </p>
@@ -113,7 +113,7 @@ export default function Testimonials() {
               src={FEATURED_TESTIMONIAL_SRC}
               alt="Featured client testimonial"
               sizes="(min-width: 1540px) 1021px, 66vw"
-              imageClassName="scale-x-[1.13] scale-y-[1.02]"
+              imageClassName=""
             />
           </motion.div>
 
@@ -125,7 +125,7 @@ export default function Testimonials() {
               src={WHITE_TESTIMONIAL_SRC}
               alt="Client testimonial one"
               sizes="(min-width: 1540px) 501px, 33vw"
-              imageClassName="scale-x-[1.22] scale-y-[1.09]"
+              imageClassName=""
             />
           </motion.div>
 
@@ -139,7 +139,7 @@ export default function Testimonials() {
                 src={WHITE_TESTIMONIAL_SRC}
                 alt={`Client testimonial ${index + 2}`}
                 sizes="(min-width: 1540px) 501px, 33vw"
-                imageClassName="scale-x-[1.22] scale-y-[1.09]"
+                imageClassName=""
               />
             </motion.div>
           ))}
@@ -159,7 +159,7 @@ export default function Testimonials() {
               src={FEATURED_TESTIMONIAL_SRC}
               alt="Featured client testimonial"
               sizes="100vw"
-              imageClassName="scale-x-[1.13] scale-y-[1.02]"
+              imageClassName=""
             />
           </motion.div>
 
@@ -173,7 +173,7 @@ export default function Testimonials() {
                 src={WHITE_TESTIMONIAL_SRC}
                 alt={`Client testimonial ${index + 1}`}
                 sizes="(min-width: 768px) 50vw, 100vw"
-                imageClassName="scale-x-[1.22] scale-y-[1.09]"
+                imageClassName=""
               />
             </motion.div>
           ))}

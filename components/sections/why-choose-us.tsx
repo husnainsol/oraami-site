@@ -33,7 +33,7 @@ const PRINCIPLES: Principle[] = [
     title: "Built around your ICP",
     desc: "Oraami learns exactly who you sell to and shapes every play around your ideal customer, not a generic template.",
     image: "/p2.svg",
-    alt: "ICP illustration",
+    alt: "Built around your ICP",
   },
   {
     n: "03",
@@ -64,7 +64,10 @@ const sectionVariants: Variants = {
 }
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 16 },
+  hidden: {
+    opacity: 0,
+    y: 16,
+  },
   visible: {
     opacity: 1,
     y: 0,
@@ -121,7 +124,7 @@ function WhiteImageCard({ principle }: { principle: Principle }) {
           fill
           unoptimized
           sizes="(min-width: 1280px) 480px, (min-width: 768px) 50vw, 100vw"
-          className="object-cover object-center"
+          className="object-contain object-center"
         />
       </div>
 
@@ -139,17 +142,15 @@ function WhiteImageCard({ principle }: { principle: Principle }) {
 
 function NotchCard({ principle }: { principle: Principle }) {
   return (
-    <article className="relative h-full w-full overflow-hidden rounded-[20px] bg-white/10">
-      <div className="relative aspect-[433/431] w-full lg:h-full lg:aspect-auto">
-        <Image
-          src={principle.image}
-          alt={principle.alt}
-          fill
-          unoptimized
-          sizes="(min-width: 1280px) 500px, (min-width: 768px) 50vw, 100vw"
-          className="object-contain object-center"
-        />
-      </div>
+    <article className="relative h-full w-full overflow-hidden">
+      <Image
+        src="/p2.svg"
+        alt={principle.alt}
+        fill
+        unoptimized
+        sizes="(min-width: 1280px) 500px, (min-width: 640px) 50vw, 100vw"
+        className="block object-contain object-center"
+      />
     </article>
   )
 }
@@ -166,7 +167,7 @@ function ResearchCard({ principle }: { principle: Principle }) {
         />
       </div>
 
-      <div className="relative mt-5 aspect-[334/185] w-full shrink-0 overflow-hidden rounded-[8px] bg-[#fbfbf8] sm:mt-0 sm:w-[132px] sm:aspect-auto sm:self-stretch xl:w-[144px]">
+      <div className="relative mt-5 aspect-[334/185] w-full shrink-0 overflow-hidden rounded-[8px] bg-[#fbfbf8] sm:mt-0 sm:aspect-auto sm:w-[132px] sm:self-stretch xl:w-[144px]">
         <Image
           src={principle.image}
           alt={principle.alt}
@@ -201,17 +202,26 @@ function WhyChooseUsDesktop({ active }: { active: boolean }) {
       variants={sectionVariants}
       initial="hidden"
       animate={active ? "visible" : "hidden"}
-      className="hidden min-h-[470px] grid-cols-3 items-start gap-[18px] lg:grid"
+      className="hidden grid-cols-3 items-start gap-[18px] lg:grid"
     >
-      <motion.div variants={itemVariants} className="h-[450px] min-w-0">
+      <motion.div
+        variants={itemVariants}
+        className="h-[450px] min-w-0"
+      >
         <WhiteImageCard principle={PRINCIPLES[0]} />
       </motion.div>
 
-      <motion.div variants={itemVariants} className="h-[470px] min-w-0">
+      <motion.div
+        variants={itemVariants}
+        className="h-[470px] min-w-0"
+      >
         <NotchCard principle={PRINCIPLES[1]} />
       </motion.div>
 
-      <motion.div variants={itemVariants} className="grid h-[450px] min-w-0 grid-rows-2 gap-[18px]">
+      <motion.div
+        variants={itemVariants}
+        className="grid h-[450px] min-w-0 grid-rows-2 gap-[18px]"
+      >
         <ResearchCard principle={PRINCIPLES[2]} />
         <TrustCard principle={PRINCIPLES[3]} />
       </motion.div>
@@ -231,15 +241,24 @@ function WhyChooseUsResponsive({ active }: { active: boolean }) {
         <WhiteImageCard principle={PRINCIPLES[0]} />
       </motion.div>
 
-      <motion.div variants={itemVariants} className="min-w-0">
+      <motion.div
+        variants={itemVariants}
+        className="relative aspect-[433/431] min-w-0 overflow-hidden"
+      >
         <NotchCard principle={PRINCIPLES[1]} />
       </motion.div>
 
-      <motion.div variants={itemVariants} className="min-h-[220px] min-w-0">
+      <motion.div
+        variants={itemVariants}
+        className="min-h-[220px] min-w-0"
+      >
         <ResearchCard principle={PRINCIPLES[2]} />
       </motion.div>
 
-      <motion.div variants={itemVariants} className="min-h-[220px] min-w-0">
+      <motion.div
+        variants={itemVariants}
+        className="min-h-[220px] min-w-0"
+      >
         <TrustCard principle={PRINCIPLES[3]} />
       </motion.div>
     </motion.div>
@@ -256,8 +275,11 @@ export default function WhyChooseUs() {
   })
 
   return (
-    <section ref={sectionRef} className="w-full bg-[#F6F6F6] text-ink">
-      <div className="mx-auto max-w-[1540px] px-5 pb-16 pt-10 sm:px-6 sm:pb-20 xl:px-0 lg:pb-[106px]">
+    <section
+      ref={sectionRef}
+      className="w-full bg-[#F6F6F6] text-ink"
+    >
+      <div className="mx-auto max-w-[1540px] px-5 pb-16 pt-10 sm:px-6 sm:pb-20 lg:pb-[106px] min-[1604px]:px-0">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : undefined}

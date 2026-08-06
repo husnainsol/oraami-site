@@ -101,7 +101,7 @@ export default function Platform() {
 
   return (
     <section ref={sectionRef} id="platform" className="relative w-full bg-canvas text-ink">
-      <div className="mx-auto max-w-[1540px] px-5 py-16 sm:px-6 sm:py-20 xl:px-0 lg:py-24">
+      <div className="mx-auto max-w-[1540px] px-5 py-5 sm:px-6 sm:py-14 xl:px-0 lg:py-5">
         <div className="max-w-2xl">
           <div className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-faint">
             <span className="h-1.5 w-1.5 bg-brand" />
@@ -115,7 +115,7 @@ export default function Platform() {
           </p>
         </div>
 
-        <div className={"process-flow relative mt-16 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4 " + (isResetting ? "is-resetting" : "")}>
+        <div className={"process-flow relative mt-12 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4 " + (isResetting ? "is-resetting" : "")}>
           {STEPS.map((s, i) => {
             const { Icon } = s
             const isActive = activeStep === i

@@ -722,7 +722,7 @@ export default function Features() {
           initial={false}
           animate={entered ? "visible" : "hidden"}
           variants={listVariants}
-          className="relative mt-12 rounded-[12px] border border-black/5 bg-[#FFFFF] p-4 pt-5"
+          className="relative mt-12 rounded-[12px] border border-black/5 bg-white p-4 pt-5"
           onKeyDown={handleKeyDown}
           onMouseEnter={() => setAutoplayPaused(true)}
           onMouseLeave={handleAutoplayResume}
@@ -754,7 +754,7 @@ export default function Features() {
         </motion.div>
 
         <motion.div
-          className="mt-8 h-[407px] rounded-[32px] border border-white/100 bg-[#FFFFF] p-4 shadow-[0_4px_20px_0_rgba(0,0,0,0.08)] sm:p-5 lg:p-6"
+          className="mt-8 h-auto rounded-[32px] border border-white/100 bg-white p-4 shadow-[0_4px_20px_0_rgba(0,0,0,0.08)] sm:p-5 lg:h-[407px] lg:p-6"
           initial={reduce ? false : { opacity: 0, y: 16 }}
           animate={entered ? { opacity: 1, y: 0 } : undefined}
           transition={{ duration: reduce ? 0 : 0.55, ease }}
