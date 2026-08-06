@@ -59,7 +59,7 @@ function TestimonialSvgCard({
       fill
       unoptimized
       sizes={sizes}
-      className={`block origin-center object-fill ${imageClassName}`}
+      className={`block origin-center object-contain ${imageClassName}`}
     />
   )
 }
@@ -80,7 +80,6 @@ export default function Testimonials() {
       className="w-full bg-[#FFFFF] text-[#101828]"
     >
       <div className="mx-auto max-w-[1540px] px-5 pb-[64px] pt-[48px] sm:px-6 xl:px-0">
-        {/* Heading */}
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 18 }}
           animate={inView ? { opacity: 1, y: 0 } : undefined}
@@ -100,17 +99,15 @@ export default function Testimonials() {
           </p>
         </motion.div>
 
-        {/* Desktop */}
         <motion.div
           variants={containerVariants}
           initial={reduceMotion ? false : "hidden"}
           animate={reduceMotion ? undefined : inView ? "visible" : "hidden"}
           className="mt-[38px] hidden grid-cols-3 gap-[18px] lg:grid"
         >
-          {/* Featured card: approximately 1021px × 340px */}
           <motion.div
             variants={itemVariants}
-            className="relative col-span-2 h-[340px] min-w-0 overflow-hidden rounded-[16px]"
+            className="relative col-span-2 aspect-[821/305] min-w-0 overflow-hidden rounded-[16px] lg:h-[340px] lg:aspect-auto"
           >
             <TestimonialSvgCard
               src={FEATURED_TESTIMONIAL_SRC}
@@ -120,10 +117,9 @@ export default function Testimonials() {
             />
           </motion.div>
 
-          {/* Top-right card */}
           <motion.div
             variants={itemVariants}
-            className="relative h-[340px] min-w-0 overflow-hidden rounded-[16px] border border-brand/25"
+            className="relative aspect-[433/431] min-w-0 overflow-hidden rounded-[16px]  lg:h-[340px] lg:aspect-auto"
           >
             <TestimonialSvgCard
               src={WHITE_TESTIMONIAL_SRC}
@@ -133,12 +129,11 @@ export default function Testimonials() {
             />
           </motion.div>
 
-          {/* Bottom three cards */}
           {Array.from({ length: 3 }).map((_, index) => (
             <motion.div
               key={index}
               variants={itemVariants}
-              className="relative aspect-[501/340] overflow-hidden rounded-[16px] border border-brand/25"
+              className="relative aspect-[433/431] overflow-hidden rounded-[16px] "
             >
               <TestimonialSvgCard
                 src={WHITE_TESTIMONIAL_SRC}
@@ -150,7 +145,6 @@ export default function Testimonials() {
           ))}
         </motion.div>
 
-        {/* Tablet and mobile */}
         <motion.div
           variants={containerVariants}
           initial={reduceMotion ? false : "hidden"}
@@ -159,7 +153,7 @@ export default function Testimonials() {
         >
           <motion.div
             variants={itemVariants}
-            className="relative aspect-[1021/340] overflow-hidden rounded-[16px] md:col-span-2"
+            className="relative aspect-[821/305] overflow-hidden rounded-[16px] md:col-span-2"
           >
             <TestimonialSvgCard
               src={FEATURED_TESTIMONIAL_SRC}
@@ -173,7 +167,7 @@ export default function Testimonials() {
             <motion.div
               key={index}
               variants={itemVariants}
-              className="relative aspect-[501/340] overflow-hidden rounded-[16px]"
+              className="relative aspect-[433/431] overflow-hidden rounded-[16px] border border-brand/25"
             >
               <TestimonialSvgCard
                 src={WHITE_TESTIMONIAL_SRC}

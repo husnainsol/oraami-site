@@ -1,9 +1,9 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, type ComponentType } from "react"
 import { Mail, Network, Search, Target } from "lucide-react"
 
-type Step = { n: string; label: string; title: string; desc: string; Icon: React.ComponentType<{ className?: string; strokeWidth?: number }>} 
+type Step = { n: string; label: string; title: string; desc: string; Icon: ComponentType<{ className?: string; strokeWidth?: number }>}
 
 const STEPS: Step[] = [
   { n: "01", label: "Target", Icon: Target, title: "Define your ICP", desc: "We learn who you sell to and cap each ICP at 50 high-fit accounts worth pursuing." },
@@ -101,8 +101,7 @@ export default function Platform() {
 
   return (
     <section ref={sectionRef} id="platform" className="relative w-full bg-canvas text-ink">
-      <div className="mx-auto w-full max-w-[1780px] px-6 py-20 sm:px-8 lg:px-12 ml-30">
-
+      <div className="mx-auto max-w-[1540px] px-5 py-16 sm:px-6 sm:py-20 xl:px-0 lg:py-24">
         <div className="max-w-2xl">
           <div className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-faint">
             <span className="h-1.5 w-1.5 bg-brand" />
@@ -117,13 +116,12 @@ export default function Platform() {
         </div>
 
         <div className={"process-flow relative mt-16 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4 " + (isResetting ? "is-resetting" : "")}>
-
           {STEPS.map((s, i) => {
             const { Icon } = s
             const isActive = activeStep === i
             const isRevealed = revealedStep >= i
             return (
-              <div key={s.n} className={"process-step relative " + (isActive ? "is-active " : "") + (isRevealed ? "is-revealed" : "")}>
+              <div key={s.n} className={"process-step relative " + (isActive ? "is-active " : "") + (isRevealed ? "is-revealed" : "") }>
                 {i < STEPS.length - 1 && (
                   <>
                     <span aria-hidden className={"process-mobile-track sm:hidden " + (beamStep > i ? "is-travelled" : "")}>
