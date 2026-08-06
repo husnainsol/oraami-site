@@ -39,9 +39,9 @@ export default function Hero() {
           variants={containerVariants}
           className="relative overflow-hidden rounded-t-[14px] bg-oraami-accent-secondary"
         >
-          <div className="relative px-4 pb-0 pt-6 sm:px-6 sm:pt-8 lg:px-4 lg:pt-12 xl:px-0 xl:pt-12">
+          <div className="relative px-3 pb-0 pt-6 sm:px-5 sm:pt-8 lg:px-4 lg:pt-12 xl:px-0 xl:pt-12">
             <div className="grid gap-10 lg:grid-cols-[minmax(0,0.54fr)_minmax(0,0.46fr)] lg:items-center lg:gap-12">
-              <motion.div variants={itemVariants} className="max-w-[570px] lg:translate-x-[47px]">
+              <motion.div variants={itemVariants} className="max-w-[570px]">
                 <span
                   className="inline-flex h-8 items-center gap-2 rounded-full px-3.5 text-[12px] font-medium tracking-[0.17em] text-white"
                   style={{
@@ -56,7 +56,7 @@ export default function Hero() {
                   AI-Powered Lead Intelligence Platform
                 </span>
 
-                <h1 className="mt-6 max-w-[565px] text-balance text-[clamp(2.55rem,10vw,3.75rem)] font-bold leading-[1] tracking-[-0.03em] text-[#f4efe9] sm:text-[clamp(3rem,6vw,3.75rem)]">
+                <h1 className="mt-6 max-w-[565px] text-balance text-[clamp(2.25rem,8.5vw,3.75rem)] font-bold leading-[1] tracking-[-0.03em] text-[#f4efe9] sm:text-[clamp(2.8rem,6vw,3.75rem)]">
                   <span className="block lg:whitespace-nowrap">
                     Identify Customers <span className="text-[#ff4f00]">Most</span>
                   </span>
@@ -99,7 +99,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <motion.div variants={itemVariants} className="relative mt-8 px-0 pb-0 sm:mt-10 lg:mt-12">
+          <motion.div variants={itemVariants} className="relative -mx-[4px] mt-8 px-0 pb-0 sm:-mx-[6px] sm:mt-10 lg:-mx-0 lg:mt-12">
             <div className="pointer-events-none absolute inset-x-[30%] top-[-10px] h-20 rounded-full bg-[#ff4f00]/8 blur-2xl sm:inset-x-[36%]" />
             <div className="relative w-full overflow-hidden rounded-t-[14px] bg-oraami-accent-secondary">
               <Image

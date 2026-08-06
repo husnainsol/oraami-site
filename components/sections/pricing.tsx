@@ -71,7 +71,7 @@ export default function Pricing() {
             <h2 className="mt-5 text-[32px] font-medium leading-[1.05] tracking-[-0.03em] text-heading sm:text-[40px] lg:text-[44px]">
               Simple, transparent pricing
             </h2>
-            <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-muted">
+            <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-muted sm:text-[17px]">
               Pick the plan that matches your pipeline goals — every tier includes deep research and trust-building sequences.
             </p>
           </div>
@@ -99,14 +99,14 @@ export default function Pricing() {
           </div>
         </div>
 
-        <div className="mt-16 grid gap-4 lg:grid-cols-3">
+        <div className="mt-16 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {TIERS.map((t) => {
             const { Icon } = t
             return (
               <div
                 key={t.name}
                 className={cn(
-                  "relative flex flex-col rounded-[22px] p-8",
+                  "relative flex flex-col rounded-[22px] p-6 sm:p-8",
                   t.popular
                     ? "border border-brand/30 bg-brand/[0.06] shadow-[0_40px_90px_-50px_rgba(255,90,31,0.28)] lg:-my-3 lg:py-11"
                     : "border border-black/10 bg-white shadow-[0_18px_40px_-34px_rgba(32,21,21,0.14)]"
@@ -126,7 +126,7 @@ export default function Pricing() {
                 </div>
 
                 <div className="mt-8 flex items-baseline gap-1">
-                  <span className="text-[56px] font-medium leading-none tracking-tight text-heading">${annual ? t.annual : t.monthly}</span>
+                  <span className="text-[clamp(2.75rem,8vw,4rem)] font-medium leading-none tracking-tight text-heading sm:text-[56px]">${annual ? t.annual : t.monthly}</span>
                   <span className="text-[13px] text-faint">/ mo</span>
                 </div>
                 <p className="mt-2 text-[11px] uppercase tracking-wider text-faint">
@@ -166,7 +166,7 @@ export default function Pricing() {
           })}
         </div>
 
-        <p className="mt-8 text-center text-[12px] uppercase tracking-wider text-faint">
+        <p className="mt-8 text-center text-[11px] uppercase tracking-wider text-faint">
           No setup fees · Cancel anytime · 14-day quality guarantee
         </p>
       </div>

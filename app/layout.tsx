@@ -111,7 +111,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-canvas">
+      <body className="min-h-full flex w-full max-w-full flex-col bg-canvas">
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[10000] focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-white"
@@ -123,7 +123,7 @@ export default function RootLayout({
           <style>{`[style*="opacity:0"],[style*="opacity: 0"]{opacity:1!important;transform:none!important}`}</style>
         </noscript>
         <Navbar />
-        <div id="main-content" className="pt-[72px]">{children}</div>
+        <div id="main-content" className="pt-[64px] md:pt-[72px]">{children}</div>
         <Footer />
       </body>
     </html>
