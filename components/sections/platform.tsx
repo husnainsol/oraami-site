@@ -122,20 +122,27 @@ export default function Platform() {
             const isRevealed = revealedStep >= i
             return (
               <div key={s.n} className={"process-step relative min-w-0 " + (isActive ? "is-active " : "") + (isRevealed ? "is-revealed" : "") }>
-                <div className="sm:hidden rounded-[18px] border border-black/8 bg-white px-4 py-5 shadow-[0_10px_24px_-20px_rgba(32,21,21,0.18)]">
-                  <div className="flex items-start gap-4">
-                    <span className="process-number flex h-10 shrink-0 items-center rounded-md border border-black/20 bg-oraami-accent-secondary px-3 text-[14px] text-oraami-accent-24">
-                      <span className="text-brand">.</span>
-                      {s.n}
+                <div className="relative sm:hidden pl-12">
+                  {i < STEPS.length - 1 && (
+                    <span aria-hidden className={"process-mobile-track " + (beamStep > i ? "is-travelled" : "")}>
+                      <ConnectorArrows segment={i} signal={arrowSignal} />
                     </span>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-3">
-                        <span className={"process-icon process-icon--" + (i + 1)}>
-                          <Icon className="h-5 w-5 text-brand" strokeWidth={1.75} />
-                        </span>
-                        <p className="text-[11px] uppercase tracking-widest text-brand">{s.label}</p>
-                      </div>
-                      <h3 className="mt-4 text-[19px] font-medium tracking-tight text-ink">{s.title}</h3>
+                  )}
+
+                  <div className="pb-1">
+                    <div className="flex items-center justify-between">
+                      <span className="process-number flex h-10 items-center rounded-md border border-black/20 bg-oraami-accent-secondary px-3 text-[14px] text-oraami-accent-24">
+                        <span className="text-brand">.</span>
+                        {s.n}
+                      </span>
+                    </div>
+
+                    <div className="process-content mt-7">
+                      <span className={"process-icon process-icon--" + (i + 1)}>
+                        <Icon className="h-5 w-5 text-brand" strokeWidth={1.75} />
+                      </span>
+                      <p className="mt-6 text-[11px] uppercase tracking-widest text-brand">{s.label}</p>
+                      <h3 className="mt-3 text-[19px] font-medium tracking-tight text-ink">{s.title}</h3>
                       <p className="mt-3 text-[14px] leading-relaxed text-muted">{s.desc}</p>
                     </div>
                   </div>
