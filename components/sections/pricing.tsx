@@ -106,7 +106,7 @@ export default function Pricing() {
               <div
                 key={t.name}
                 className={cn(
-                  "relative flex flex-col rounded-[22px] p-6 sm:p-8",
+                  "relative flex min-w-0 flex-col rounded-[22px] p-6 sm:p-8",
                   t.popular
                     ? "border border-brand/30 bg-brand/[0.06] shadow-[0_40px_90px_-50px_rgba(255,90,31,0.28)] lg:-my-3 lg:py-11"
                     : "border border-black/10 bg-white shadow-[0_18px_40px_-34px_rgba(32,21,21,0.14)]"

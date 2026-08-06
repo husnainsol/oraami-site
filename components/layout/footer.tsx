@@ -65,13 +65,13 @@ export default function Footer() {
         </Link>
       </div>
 
-      <div className="grid gap-10 pb-14 pt-8 sm:grid-cols-2 lg:grid-cols-[1.15fr_0.95fr_0.95fr_1fr] lg:gap-8">
-        <div>
+      <div className="grid gap-10 pb-14 pt-8 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr] lg:gap-8">
+        <div className="min-w-0 pl-1 sm:pl-0">
           <Link href="/" aria-label="Oraami home" className="inline-flex items-center gap-3">
             <Image src="/O.svg" alt="" width={28} height={28} className="h-7 w-7" />
             <span className="text-[16px] font-bold uppercase tracking-[0.08em] text-white">Oraami</span>
           </Link>
-          <p className="mt-5 max-w-[18rem] text-[14px] leading-[1.9] text-white/42">
+          <p className="mt-5 max-w-[18rem] break-words text-[14px] leading-[1.9] text-white/42">
             The quality-first AI BDR for teams that want better-fit accounts, stronger outreach, and more booked meetings.
           </p>
           <div className="mt-7 flex items-center gap-4 text-white/85">
@@ -88,15 +88,15 @@ export default function Footer() {
               </a>
             ))}
           </div>
-          <div className="mt-6">
+          <div className="mt-6 ">
             <p className="text-[12px] text-white/35">Write to us</p>
-            <a href="mailto:hello@oraami.com" className="mt-1 block text-[14px] font-medium text-white transition-colors hover:text-brand">
+            <a href="mailto:hello@oraami.com" className="mt-1 block break-words text-[14px] font-medium text-white transition-colors hover:text-brand">
               hello@oraami.com
             </a>
           </div>
         </div>
 
-        <div>
+        <div className="min-w-0">
           <p className="text-[12px] font-semibold text-white">Useful Links</p>
           <ul className="mt-5 space-y-3.5 text-[14px] text-white/42">
             {[...footerLinks.Product, ...footerLinks.Company].slice(0, 6).map((link) => (
@@ -109,41 +109,9 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div>
-          <p className="text-[12px] font-semibold text-white">Our Services</p>
-          <ul className="mt-5 space-y-3.5 text-[14px] text-white/42">
-            <li>ICP research and targeting</li>
-            <li>Deep lead research</li>
-            <li>Buying committee mapping</li>
-            <li>Trust-building sequences</li>
-            <li>Quality scoring and routing</li>
-            <li>Pipeline reporting</li>
-          </ul>
-        </div>
-
-        <div>
-          <p className="text-[12px] font-semibold text-white">Newsletter</p>
-          <p className="mt-5 max-w-[18rem] text-[14px] leading-[1.8] text-white/42">
-            Subscribe for product updates, outreach insights, and new ideas on quality-first prospecting.
-          </p>
-          <form className="mt-6" action="mailto:hello@oraami.com" method="post" encType="text/plain">
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              className="h-11 w-full border border-white/20 bg-transparent px-4 text-[14px] text-white outline-none placeholder:text-white/30"
-            />
-            <button
-              type="submit"
-              className="mt-3 inline-flex h-11 w-full items-center justify-center border border-brand/60 bg-brand text-[13px] font-medium text-white transition-colors hover:bg-brand-hover"
-            >
-              Subscribe
-            </button>
-          </form>
-        </div>
       </div>
 
-      <div className="mt-8 pt-10 pb-5 text-[12px] text-white/32 sm:flex sm:items-center sm:justify-between">
+      <div className="mt-8 pt-10 pb-5 text-[12px] text-white/32 sm:flex sm:items-center sm:justify-between pl-1 sm:pl-0">
         <p>© {new Date().getFullYear()} Oraami. All rights reserved.</p>
         <div className="mt-3 flex items-center gap-4 sm:mt-0">
           <Link href="/privacy" className="transition-colors hover:text-white">Privacy</Link>

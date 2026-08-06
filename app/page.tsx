@@ -6,6 +6,7 @@ import Results from "@/components/sections/results"
 import Solutions from "@/components/sections/solutions"
 import WhyChooseUs from "@/components/sections/why-choose-us"
 import Testimonials from "@/components/sections/testimonials"
+import Insights from "@/components/sections/insights"
 import Pricing from "@/components/sections/pricing"
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
       <Solutions />
       <WhyChooseUs />
       <Testimonials />
+      <Insights />
       <Pricing />
     </main>
   )

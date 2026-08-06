@@ -48,7 +48,7 @@ export default function Results() {
           {RESULTS.map((r) => (
             <div
               key={r.label}
-              className="result-card flex h-full min-h-[208px] flex-col rounded-[18px] bg-[rgba(75,31,109,0.2)] px-5 py-5 shadow-[0_10px_24px_-20px_rgba(0,0,0,0.65)] sm:px-6 sm:py-6"
+              className="result-card flex h-full min-h-[208px] min-w-0 flex-col rounded-[18px] bg-[rgba(75,31,109,0.2)] px-5 py-5 shadow-[0_10px_24px_-20px_rgba(0,0,0,0.65)] sm:px-6 sm:py-6"
             >
               <p className="text-[clamp(2.75rem,10vw,4.6rem)] font-semibold leading-none tracking-[-0.04em] text-white/95">
                 {r.end != null
