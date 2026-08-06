@@ -64,10 +64,7 @@ const sectionVariants: Variants = {
 }
 
 const itemVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 16,
-  },
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
@@ -116,8 +113,8 @@ function CopyBlock({
 
 function WhiteImageCard({ principle }: { principle: Principle }) {
   return (
-    <article className="flex h-full w-full flex-col overflow-hidden rounded-[12px] bg-white p-6 shadow-[0_1px_2px_rgba(15,23,42,0.06),0_12px_24px_-18px_rgba(15,23,42,0.16)]">
-      <div className="relative h-[215px] w-full shrink-0 overflow-hidden rounded-[10px] bg-[#f8f8f6]">
+    <article className="flex h-full w-full flex-col overflow-hidden rounded-[12px] bg-white p-5 shadow-[0_1px_2px_rgba(15,23,42,0.06),0_12px_24px_-18px_rgba(15,23,42,0.16)] sm:p-6">
+      <div className="relative aspect-[334/185] w-full shrink-0 overflow-hidden rounded-[10px] bg-[#f8f8f6]">
         <Image
           src={principle.image}
           alt={principle.alt}
@@ -142,23 +139,25 @@ function WhiteImageCard({ principle }: { principle: Principle }) {
 
 function NotchCard({ principle }: { principle: Principle }) {
   return (
-    <article className="relative h-full w-full overflow-hidden rounded-[20px]">
-      <Image
-        src={principle.image}
-        alt={principle.alt}
-        fill
-        unoptimized
-        sizes="(min-width: 1280px) 500px, (min-width: 768px) 50vw, 100vw"
-        className="block object-fill"
-      />
+    <article className="relative h-full w-full overflow-hidden rounded-[20px] bg-white/10">
+      <div className="relative aspect-[433/431] w-full lg:h-full lg:aspect-auto">
+        <Image
+          src={principle.image}
+          alt={principle.alt}
+          fill
+          unoptimized
+          sizes="(min-width: 1280px) 500px, (min-width: 768px) 50vw, 100vw"
+          className="object-contain object-center"
+        />
+      </div>
     </article>
   )
 }
 
 function ResearchCard({ principle }: { principle: Principle }) {
   return (
-    <article className="flex h-full w-full items-stretch overflow-hidden rounded-[12px] bg-white p-5 shadow-[0_1px_2px_rgba(15,23,42,0.06),0_10px_22px_-18px_rgba(15,23,42,0.14)]">
-      <div className="min-w-0 flex-1 pr-4">
+    <article className="flex h-full w-full flex-col overflow-hidden rounded-[12px] bg-white p-5 shadow-[0_1px_2px_rgba(15,23,42,0.06),0_10px_22px_-18px_rgba(15,23,42,0.14)] sm:flex-row sm:items-stretch">
+      <div className="min-w-0 flex-1 pr-0 sm:pr-4">
         <CopyBlock
           n={principle.n}
           label={principle.label}
@@ -167,13 +166,13 @@ function ResearchCard({ principle }: { principle: Principle }) {
         />
       </div>
 
-      <div className="relative w-[132px] shrink-0 overflow-hidden rounded-[8px] bg-[#fbfbf8] xl:w-[144px]">
+      <div className="relative mt-5 aspect-[334/185] w-full shrink-0 overflow-hidden rounded-[8px] bg-[#fbfbf8] sm:mt-0 sm:w-[132px] sm:aspect-auto sm:self-stretch xl:w-[144px]">
         <Image
           src={principle.image}
           alt={principle.alt}
           fill
           unoptimized
-          sizes="144px"
+          sizes="(min-width: 1280px) 144px, (min-width: 640px) 132px, 100vw"
           className="object-contain object-center"
         />
       </div>
@@ -183,7 +182,7 @@ function ResearchCard({ principle }: { principle: Principle }) {
 
 function TrustCard({ principle }: { principle: Principle }) {
   return (
-    <article className="h-full w-full overflow-hidden rounded-[12px] border border-[#ff5702] bg-white p-5 shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
+    <article className="h-full w-full overflow-hidden rounded-[12px] border border-[#ff5702] bg-white p-5 shadow-[0_1px_2px_rgba(15,23,42,0.04)] sm:p-6">
       <div className="max-w-[270px]">
         <CopyBlock
           n={principle.n}
@@ -204,24 +203,15 @@ function WhyChooseUsDesktop({ active }: { active: boolean }) {
       animate={active ? "visible" : "hidden"}
       className="hidden min-h-[470px] grid-cols-3 items-start gap-[18px] lg:grid"
     >
-      <motion.div
-        variants={itemVariants}
-        className="h-[450px] min-w-0"
-      >
+      <motion.div variants={itemVariants} className="h-[450px] min-w-0">
         <WhiteImageCard principle={PRINCIPLES[0]} />
       </motion.div>
 
-      <motion.div
-        variants={itemVariants}
-        className="h-[470px] min-w-0"
-      >
+      <motion.div variants={itemVariants} className="h-[470px] min-w-0">
         <NotchCard principle={PRINCIPLES[1]} />
       </motion.div>
 
-      <motion.div
-        variants={itemVariants}
-        className="grid h-[450px] min-w-0 grid-rows-2 gap-[18px]"
-      >
+      <motion.div variants={itemVariants} className="grid h-[450px] min-w-0 grid-rows-2 gap-[18px]">
         <ResearchCard principle={PRINCIPLES[2]} />
         <TrustCard principle={PRINCIPLES[3]} />
       </motion.div>
@@ -235,33 +225,21 @@ function WhyChooseUsResponsive({ active }: { active: boolean }) {
       variants={sectionVariants}
       initial="hidden"
       animate={active ? "visible" : "hidden"}
-      className="grid gap-[18px] md:grid-cols-2 lg:hidden"
+      className="grid gap-[18px] sm:grid-cols-2 lg:hidden"
     >
-      <motion.div
-        variants={itemVariants}
-        className="h-[450px] min-w-0"
-      >
+      <motion.div variants={itemVariants} className="min-w-0">
         <WhiteImageCard principle={PRINCIPLES[0]} />
       </motion.div>
 
-      <motion.div
-        variants={itemVariants}
-        className="h-[450px] min-w-0"
-      >
+      <motion.div variants={itemVariants} className="min-w-0">
         <NotchCard principle={PRINCIPLES[1]} />
       </motion.div>
 
-      <motion.div
-        variants={itemVariants}
-        className="min-h-[220px] min-w-0"
-      >
+      <motion.div variants={itemVariants} className="min-h-[220px] min-w-0">
         <ResearchCard principle={PRINCIPLES[2]} />
       </motion.div>
 
-      <motion.div
-        variants={itemVariants}
-        className="min-h-[220px] min-w-0"
-      >
+      <motion.div variants={itemVariants} className="min-h-[220px] min-w-0">
         <TrustCard principle={PRINCIPLES[3]} />
       </motion.div>
     </motion.div>
@@ -278,11 +256,8 @@ export default function WhyChooseUs() {
   })
 
   return (
-    <section
-      ref={sectionRef}
-      className="w-full bg-[#F6F6F6] text-ink"
-    >
-      <div className="mx-auto max-w-[1540px] px-5 pb-[106px] pt-10 sm:px-6 xl:px-0">
+    <section ref={sectionRef} className="w-full bg-[#F6F6F6] text-ink">
+      <div className="mx-auto max-w-[1540px] px-5 pb-16 pt-10 sm:px-6 sm:pb-20 xl:px-0 lg:pb-[106px]">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : undefined}

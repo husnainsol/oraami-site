@@ -8,7 +8,7 @@ const METRICS = [
 export default function AutomationStats() {
   return (
     <section className="w-full bg-canvas text-ink">
-      <div className="mx-auto max-w-[1580px] px-5 pt-15 sm:px-6 sm:pt-12 lg:px-0 lg:pt-22">
+      <div className="mx-auto max-w-[1540px] px-5 pt-12 sm:px-6 sm:pt-14 xl:px-0 lg:pt-20">
         <div className="flex flex-wrap gap-x-10 gap-y-10 lg:flex-nowrap lg:justify-between">
           {METRICS.map((metric) => (
             <div key={metric.label} className="min-w-0 shrink-0">

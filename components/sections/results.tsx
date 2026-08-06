@@ -30,8 +30,7 @@ const RESULTS: Result[] = [
 export default function Results() {
   return (
     <section className="relative w-full border-b border-white/10 bg-oraami-accent-secondary text-white">
-      <div className="mx-auto w-full max-w-[1580px] px-6 py-20 sm:px-8 lg:px-12 ml-29">
-
+      <div className="mx-auto max-w-[1540px] px-5 py-16 sm:px-6 sm:py-20 xl:px-0">
         <div className="max-w-2xl">
           <div className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-white/45">
             <span className="h-1.5 w-1.5 bg-brand" />
@@ -45,28 +44,28 @@ export default function Results() {
           </p>
         </div>
 
-       <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-  {RESULTS.map((r) => (
-    <div
-      key={r.label}
-      className="result-card flex h-full min-h-[208px] flex-col rounded-[18px] bg-[rgba(75,31,109,0.2)] px-5 py-5 shadow-[0_10px_24px_-20px_rgba(0,0,0,0.65)] sm:px-6 sm:py-6"
-    >
-      <p className="text-[clamp(3rem,5.1vw,4.6rem)] font-semibold leading-none tracking-[-0.04em] text-white/95">
-        {r.end != null
-          ? `${r.start}–${r.end}${r.suffix ?? ""}`
-          : `${r.start}${r.suffix ?? ""}`}
-      </p>
+        <div className="mt-12 grid gap-5 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
+          {RESULTS.map((r) => (
+            <div
+              key={r.label}
+              className="result-card flex h-full min-h-[208px] flex-col rounded-[18px] bg-[rgba(75,31,109,0.2)] px-5 py-5 shadow-[0_10px_24px_-20px_rgba(0,0,0,0.65)] sm:px-6 sm:py-6"
+            >
+              <p className="text-[clamp(2.75rem,10vw,4.6rem)] font-semibold leading-none tracking-[-0.04em] text-white/95">
+                {r.end != null
+                  ? `${r.start}–${r.end}${r.suffix ?? ""}`
+                  : `${r.start}${r.suffix ?? ""}`}
+              </p>
 
-      <p className="mt-4 text-[12px] font-medium uppercase tracking-[0.18em] text-brand">
-        {r.label}
-      </p>
+              <p className="mt-4 text-[12px] font-medium uppercase tracking-[0.18em] text-brand">
+                {r.label}
+              </p>
 
-      <p className="mt-3 max-w-[17rem] text-[14px] leading-[1.6] text-white/66">
-        {r.desc}
-      </p>
-    </div>
-  ))}
-</div>
+              <p className="mt-3 max-w-[17rem] text-[14px] leading-[1.6] text-white/66">
+                {r.desc}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )
