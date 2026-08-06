@@ -43,14 +43,12 @@ type TestimonialSvgCardProps = {
   src: string
   alt: string
   sizes: string
-  imageClassName?: string
 }
 
 function TestimonialSvgCard({
   src,
   alt,
   sizes,
-  imageClassName = "",
 }: TestimonialSvgCardProps) {
   return (
     <Image
@@ -59,7 +57,7 @@ function TestimonialSvgCard({
       fill
       unoptimized
       sizes={sizes}
-      className={`block origin-center object-contain ${imageClassName}`}
+      className="block object-fill"
     />
   )
 }
@@ -79,7 +77,7 @@ export default function Testimonials() {
       id="testimonials"
       className="w-full bg-white text-[#101828]"
     >
-      <div className="mx-auto max-w-[1540px] px-5 pb-[64px] pt-[48px] sm:px-6 xl:px-0">
+      <div className="mx-auto w-full max-w-[1540px] px-5 pb-[64px] pt-[48px] sm:px-6 lg:px-8 min-[1604px]:px-0">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 18 }}
           animate={inView ? { opacity: 1, y: 0 } : undefined}
@@ -99,67 +97,68 @@ export default function Testimonials() {
           </p>
         </motion.div>
 
+        {/* Desktop layout */}
         <motion.div
           variants={containerVariants}
           initial={reduceMotion ? false : "hidden"}
           animate={reduceMotion ? undefined : inView ? "visible" : "hidden"}
-          className="mt-[38px] hidden grid-cols-3 gap-[18px] lg:grid"
+          className="mt-[38px] hidden grid-cols-3 grid-rows-[360px_360px] gap-[8px] lg:grid"
         >
+          {/* Featured purple card */}
           <motion.div
             variants={itemVariants}
-            className="relative col-span-2 aspect-[821/305] min-w-0 overflow-hidden rounded-[16px] lg:h-[340px] lg:aspect-auto"
+            className="relative col-span-2 h-full min-w-0 overflow-hidden rounded-[16px]"
           >
             <TestimonialSvgCard
               src={FEATURED_TESTIMONIAL_SRC}
               alt="Featured client testimonial"
-              sizes="(min-width: 1540px) 1021px, 66vw"
-              imageClassName=""
+              sizes="(min-width: 1604px) 1024px, 66vw"
             />
           </motion.div>
 
+          {/* Top-right card */}
           <motion.div
             variants={itemVariants}
-            className="relative aspect-[433/431] min-w-0 overflow-hidden rounded-[16px]  lg:h-[340px] lg:aspect-auto"
+            className="relative h-full min-w-0 overflow-hidden rounded-[16px]"
           >
             <TestimonialSvgCard
               src={WHITE_TESTIMONIAL_SRC}
               alt="Client testimonial one"
-              sizes="(min-width: 1540px) 501px, 33vw"
-              imageClassName=""
+              sizes="(min-width: 1604px) 508px, 33vw"
             />
           </motion.div>
 
+          {/* Bottom cards */}
           {Array.from({ length: 3 }).map((_, index) => (
             <motion.div
               key={index}
               variants={itemVariants}
-              className="relative aspect-[433/431] overflow-hidden rounded-[16px] "
+              className="relative h-full min-w-0 overflow-hidden rounded-[16px]"
             >
               <TestimonialSvgCard
                 src={WHITE_TESTIMONIAL_SRC}
                 alt={`Client testimonial ${index + 2}`}
-                sizes="(min-width: 1540px) 501px, 33vw"
-                imageClassName=""
+                sizes="(min-width: 1604px) 508px, 33vw"
               />
             </motion.div>
           ))}
         </motion.div>
 
+        {/* Tablet and mobile layout */}
         <motion.div
           variants={containerVariants}
           initial={reduceMotion ? false : "hidden"}
           animate={reduceMotion ? undefined : inView ? "visible" : "hidden"}
-          className="mt-[38px] grid gap-4 md:grid-cols-2 lg:hidden"
+          className="mt-[32px] grid gap-3 md:grid-cols-2 lg:hidden"
         >
           <motion.div
             variants={itemVariants}
-            className="relative aspect-[821/305] overflow-hidden rounded-[16px] md:col-span-2"
+            className="relative aspect-[821/305] min-w-0 overflow-hidden rounded-[16px] md:col-span-2"
           >
             <TestimonialSvgCard
               src={FEATURED_TESTIMONIAL_SRC}
               alt="Featured client testimonial"
               sizes="100vw"
-              imageClassName=""
             />
           </motion.div>
 
@@ -167,13 +166,12 @@ export default function Testimonials() {
             <motion.div
               key={index}
               variants={itemVariants}
-              className="relative aspect-[433/431] overflow-hidden rounded-[16px] border border-brand/25"
+              className="relative aspect-[433/431] min-w-0 overflow-hidden rounded-[16px] border border-brand/25"
             >
               <TestimonialSvgCard
                 src={WHITE_TESTIMONIAL_SRC}
                 alt={`Client testimonial ${index + 1}`}
                 sizes="(min-width: 768px) 50vw, 100vw"
-                imageClassName=""
               />
             </motion.div>
           ))}
