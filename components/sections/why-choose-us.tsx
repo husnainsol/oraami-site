@@ -1,152 +1,304 @@
 "use client"
 
-import { animate, motion, useInView, useMotionValue, useReducedMotion, type Variants } from "framer-motion"
-import { BarChart3, Mail, Search, Target } from "lucide-react"
-import type { LucideIcon } from "lucide-react"
-import { useEffect, useRef } from "react"
+import Image from "next/image"
+import {
+  motion,
+  useInView,
+  useReducedMotion,
+  type Variants,
+} from "framer-motion"
+import { useRef } from "react"
 
-type Value = { n: string; label: string; Icon: LucideIcon; title: string; desc: string }
-const VALUES: Value[] = [
-  { n: "01", label: "QUALITY", Icon: BarChart3, title: "Quality over volume", desc: "We cap every ICP at 50 high-fit accounts, so your team works the leads that convert — never a bloated list." },
-  { n: "02", label: "ICP", Icon: Target, title: "Built around your ICP", desc: "Oraami learns exactly who you sell to and shapes every play around your ideal customer, not a generic template." },
-  { n: "03", label: "RESEARCH", Icon: Search, title: "Deep research, every lead", desc: "5–10 minutes of autonomous AI research on each prospect and their full buying committee before a word is sent." },
-  { n: "04", label: "TRUST", Icon: Mail, title: "Trust that compounds", desc: "8–12 personalised touches over 6–12 weeks turn cold accounts into warm relationships that keep paying off." },
+type Principle = {
+  n: string
+  label: string
+  title: string
+  desc: string
+  image: string
+  alt: string
+}
+
+const PRINCIPLES: Principle[] = [
+  {
+    n: "01",
+    label: "QUALITY",
+    title: "Quality over volume",
+    desc: "We cap every ICP at 50 high-fit accounts, so your team works the leads that convert — never a bloated list.",
+    image: "/p1.1.svg",
+    alt: "Quality illustration",
+  },
+  {
+    n: "02",
+    label: "ICP",
+    title: "Built around your ICP",
+    desc: "Oraami learns exactly who you sell to and shapes every play around your ideal customer, not a generic template.",
+    image: "/p2.svg",
+    alt: "ICP illustration",
+  },
+  {
+    n: "03",
+    label: "RESEARCH",
+    title: "Deep research, every lead",
+    desc: "5–10 minutes of autonomous AI research on each prospect and their full buying committee before a word is sent.",
+    image: "/p3.svg",
+    alt: "Research illustration",
+  },
+  {
+    n: "04",
+    label: "TRUST",
+    title: "Trust that compounds",
+    desc: "8–12 personalised touches over 6–12 weeks turn cold accounts into warm relationships that keep paying off.",
+    image: "/p4.svg",
+    alt: "Trust illustration",
+  },
 ]
-const DESKTOP_PATH = "M 67 117 C 178 117, 246 288, 367 288 S 546 117, 667 117 S 846 288, 967 288"
-const MOBILE_PATH = "M 57 94 C 57 170, 75 240, 57 364 S 39 560, 57 634 S 75 830, 57 904"
-const ease = [0.22, 1, 0.36, 1] as const
 
-function Connector({ path, viewBox, active, reduce }: { path: string; viewBox: string; active: boolean; reduce: boolean }) {
-  const pathRef = useRef<SVGPathElement>(null)
-  const cx = useMotionValue(0)
-  const cy = useMotionValue(0)
-  const wide = viewBox.startsWith("0 0 1200")
-  const suffix = wide ? "wide" : "mobile"
+const sectionVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.06,
+    },
+  },
+}
 
-  useEffect(() => {
-    const line = pathRef.current
-    if (!line) return
-    const first = line.getPointAtLength(0)
-    cx.set(first.x)
-    cy.set(first.y)
-    if (!active || reduce) return
-    const length = line.getTotalLength()
-    const controls = animate(0, 1, {
-      duration: 5.35,
-      delay: 0.72,
-      ease: "linear",
-      onUpdate: (progress) => {
-        const point = line.getPointAtLength(length * progress)
-        cx.set(point.x)
-        cy.set(point.y)
-      },
-    })
-    return () => controls.stop()
-  }, [active, cx, cy, path, reduce])
+const itemVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 16,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.52,
+      ease: [0.22, 1, 0.36, 1] as const,
+    },
+  },
+}
 
+function CopyBlock({
+  n,
+  label,
+  title,
+  desc,
+  dark = false,
+}: Pick<Principle, "n" | "label" | "title" | "desc"> & {
+  dark?: boolean
+}) {
   return (
-    <svg aria-hidden="true" className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" viewBox={viewBox} preserveAspectRatio="none">
-      <defs>
-        <filter id={`journey-glow-${suffix}`} x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="8" /></filter>
-        <linearGradient id={`journey-line-${suffix}`} x1="0" x2="1">
-          <stop offset="0" stopColor="var(--color-oraami-accent-21)" stopOpacity="0.35" />
-          <stop offset="0.48" stopColor="var(--color-oraami-accent-21)" />
-          <stop offset="1" stopColor="var(--color-oraami-accent-22)" stopOpacity="0.7" />
-        </linearGradient>
-      </defs>
-      <path ref={pathRef} d={path} fill="none" stroke="rgba(24,22,20,0.08)" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
-      <motion.path
-        d={path}
-        fill="none"
-        stroke={`url(#journey-line-${suffix})`}
-        strokeLinecap="round"
-        strokeWidth="2"
-        vectorEffect="non-scaling-stroke"
-        initial={{ pathLength: reduce ? 1 : 0 }}
-        animate={active ? { pathLength: 1 } : undefined}
-        transition={{ duration: reduce ? 0 : 5.35, delay: reduce ? 0 : 0.72, ease: "linear" }}
-      />
-      {!reduce && <>
-        <motion.circle cx={cx} cy={cy} r="16" fill="var(--color-oraami-accent-21)" opacity="0" filter={`url(#journey-glow-${suffix})`} initial={{ opacity: 0 }} animate={active ? { opacity: [0, 0.42, 0.42, 0] } : undefined} transition={{ duration: 5.5, delay: 0.65, times: [0, 0.08, 0.86, 1], ease: "easeInOut" }} />
-        <motion.circle cx={cx} cy={cy} r="5" fill="var(--color-oraami-accent-23)" stroke="var(--color-oraami-accent-21)" strokeWidth="2" vectorEffect="non-scaling-stroke" initial={{ opacity: 0 }} animate={active ? { opacity: [0, 1, 1, 0] } : undefined} transition={{ duration: 5.5, delay: 0.65, times: [0, 0.06, 0.9, 1], ease: "easeInOut" }} />
-      </>}
-    </svg>
+    <div className={dark ? "text-white" : "text-[#101828]"}>
+      <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-brand sm:text-[12px]">
+        {n} {label}
+      </p>
+
+      <h3
+        className={[
+          "mt-3 text-[16px] font-semibold leading-[1.2] tracking-[-0.02em] sm:text-[17px]",
+          dark ? "text-white" : "text-[#101828]",
+        ].join(" ")}
+      >
+        {title}
+      </h3>
+
+      <p
+        className={[
+          "mt-3 text-[12px] leading-[1.65] sm:text-[13px]",
+          dark ? "text-white/72" : "text-[#667085]",
+        ].join(" ")}
+      >
+        {desc}
+      </p>
+    </div>
   )
 }
 
-function JourneyStep({ value, index, active, reduce, mobile = false }: { value: Value; index: number; active: boolean; reduce: boolean; mobile?: boolean }) {
-  const { Icon } = value
-  const delay = 0.72 + index * 1.68
-  const variants: Variants = {
-    hidden: { opacity: 0, y: reduce ? 0 : 18 },
-    visible: { opacity: 1, y: 0, transition: { duration: reduce ? 0 : 0.55, delay: reduce ? 0 : delay + 0.16, ease } },
-    hover: { opacity: 1, y: reduce ? 0 : -5, borderColor: "rgba(28,25,23,0.17)", boxShadow: "0 18px 42px rgba(43,28,21,0.08)", transition: { duration: reduce ? 0 : 0.28, ease } },
-  }
-
+function WhiteImageCard({ principle }: { principle: Principle }) {
   return (
-    <motion.article
-      className={mobile
-        ? "absolute left-[25%] right-1 rounded-2xl border border-brand/16 bg-white px-5 pb-5 pt-12 shadow-[0_16px_40px_-34px_rgba(43,28,21,0.16)]"
-        : "absolute w-[22.5%] rounded-2xl border border-brand/16 bg-white px-6 pb-6 pt-11 shadow-[0_16px_40px_-34px_rgba(43,28,21,0.16)] backdrop-blur-[2px] lg:px-7 lg:pb-7"}
-      style={mobile ? { top: `${index * 25 + 5}%` } : { left: `${index * 25 + 1.25}%`, top: index % 2 === 0 ? "20%" : "49%" }}
-      variants={variants}
+    <article className="flex h-full w-full flex-col overflow-hidden rounded-[12px] bg-white p-6 shadow-[0_1px_2px_rgba(15,23,42,0.06),0_12px_24px_-18px_rgba(15,23,42,0.16)]">
+      <div className="relative h-[215px] w-full shrink-0 overflow-hidden rounded-[10px] bg-[#f8f8f6]">
+        <Image
+          src={principle.image}
+          alt={principle.alt}
+          fill
+          unoptimized
+          sizes="(min-width: 1280px) 480px, (min-width: 768px) 50vw, 100vw"
+          className="object-cover object-center"
+        />
+      </div>
+
+      <div className="mt-5 min-w-0 flex-1">
+        <CopyBlock
+          n={principle.n}
+          label={principle.label}
+          title={principle.title}
+          desc={principle.desc}
+        />
+      </div>
+    </article>
+  )
+}
+
+function NotchCard({ principle }: { principle: Principle }) {
+  return (
+    <article className="relative h-full w-full overflow-hidden rounded-[20px]">
+      <Image
+        src={principle.image}
+        alt={principle.alt}
+        fill
+        unoptimized
+        sizes="(min-width: 1280px) 500px, (min-width: 768px) 50vw, 100vw"
+        className="block object-fill"
+      />
+    </article>
+  )
+}
+
+function ResearchCard({ principle }: { principle: Principle }) {
+  return (
+    <article className="flex h-full w-full items-stretch overflow-hidden rounded-[12px] bg-white p-5 shadow-[0_1px_2px_rgba(15,23,42,0.06),0_10px_22px_-18px_rgba(15,23,42,0.14)]">
+      <div className="min-w-0 flex-1 pr-4">
+        <CopyBlock
+          n={principle.n}
+          label={principle.label}
+          title={principle.title}
+          desc={principle.desc}
+        />
+      </div>
+
+      <div className="relative w-[132px] shrink-0 overflow-hidden rounded-[8px] bg-[#fbfbf8] xl:w-[144px]">
+        <Image
+          src={principle.image}
+          alt={principle.alt}
+          fill
+          unoptimized
+          sizes="144px"
+          className="object-contain object-center"
+        />
+      </div>
+    </article>
+  )
+}
+
+function TrustCard({ principle }: { principle: Principle }) {
+  return (
+    <article className="h-full w-full overflow-hidden rounded-[12px] border border-[#ff5702] bg-white p-5 shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
+      <div className="max-w-[270px]">
+        <CopyBlock
+          n={principle.n}
+          label={principle.label}
+          title={principle.title}
+          desc={principle.desc}
+        />
+      </div>
+    </article>
+  )
+}
+
+function WhyChooseUsDesktop({ active }: { active: boolean }) {
+  return (
+    <motion.div
+      variants={sectionVariants}
       initial="hidden"
       animate={active ? "visible" : "hidden"}
-      whileHover="hover"
+      className="hidden min-h-[470px] grid-cols-3 items-start gap-[18px] lg:grid"
     >
-      <motion.span
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-2 -top-10 -z-10 select-none text-[84px] font-medium leading-none tracking-[-0.08em] text-brand/10"
-        initial={{ opacity: 0, scale: reduce ? 1 : 0.9 }}
-        animate={active ? { opacity: 0.032, scale: 1 } : undefined}
-        variants={{ hover: { opacity: 0.055 } }}
-        transition={{ duration: reduce ? 0 : 0.6, delay: reduce ? 0 : delay + 0.05, ease }}
-      >{value.n}</motion.span>
-
       <motion.div
-        className={mobile ? "absolute -left-[23%] top-3" : "absolute left-6 top-[-29px] lg:left-7"}
-        initial={{ opacity: 0, scale: reduce ? 1 : 0.45 }}
-        animate={active ? { opacity: 1, scale: [0.45, 1.14, 0.96, 1], y: [0, 0, -3, 0] } : undefined}
-        variants={{ hover: { scale: 1.08 } }}
-        transition={{ duration: reduce ? 0 : 0.72, delay: reduce ? 0 : delay, times: [0, 0.48, 0.72, 1], ease }}
+        variants={itemVariants}
+        className="h-[450px] min-w-0"
       >
-        <motion.div className="relative flex h-14 w-14 items-center justify-center rounded-full border border-brand/25 bg-brand/[0.08] text-brand shadow-[0_8px_24px_rgba(229,57,53,0.12)]" variants={{ hover: { backgroundColor: "var(--color-brand)", color: "var(--color-on-primary)", borderColor: "var(--color-brand)" } }} transition={{ duration: reduce ? 0 : 0.28, ease }}>
-          <motion.span aria-hidden="true" className="absolute inset-[-6px] rounded-full border border-brand/20" initial={{ opacity: 0, scale: 0.8 }} animate={active && !reduce ? { opacity: [0, 0.65, 0], scale: [0.82, 1.25, 1.4] } : { opacity: 0 }} transition={{ duration: 1.1, delay, ease: "easeOut" }} />
-          <motion.span initial={{ opacity: 0 }} animate={active ? { opacity: 1 } : undefined} transition={{ duration: reduce ? 0 : 0.35, delay: reduce ? 0 : delay + 0.18 }}>
-            <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
-          </motion.span>
-        </motion.div>
+        <WhiteImageCard principle={PRINCIPLES[0]} />
       </motion.div>
 
-      <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-brand">{value.n} {value.label}</span>
-      <h3 className="mt-3 text-[18px] font-medium leading-tight tracking-[-0.025em] text-ink lg:text-[20px]">{value.title}</h3>
-      <p className="mt-3 text-[13px] leading-[1.7] text-muted lg:text-[14px]">{value.desc}</p>
-    </motion.article>
+      <motion.div
+        variants={itemVariants}
+        className="h-[470px] min-w-0"
+      >
+        <NotchCard principle={PRINCIPLES[1]} />
+      </motion.div>
+
+      <motion.div
+        variants={itemVariants}
+        className="grid h-[450px] min-w-0 grid-rows-2 gap-[18px]"
+      >
+        <ResearchCard principle={PRINCIPLES[2]} />
+        <TrustCard principle={PRINCIPLES[3]} />
+      </motion.div>
+    </motion.div>
+  )
+}
+
+function WhyChooseUsResponsive({ active }: { active: boolean }) {
+  return (
+    <motion.div
+      variants={sectionVariants}
+      initial="hidden"
+      animate={active ? "visible" : "hidden"}
+      className="grid gap-[18px] md:grid-cols-2 lg:hidden"
+    >
+      <motion.div
+        variants={itemVariants}
+        className="h-[450px] min-w-0"
+      >
+        <WhiteImageCard principle={PRINCIPLES[0]} />
+      </motion.div>
+
+      <motion.div
+        variants={itemVariants}
+        className="h-[450px] min-w-0"
+      >
+        <NotchCard principle={PRINCIPLES[1]} />
+      </motion.div>
+
+      <motion.div
+        variants={itemVariants}
+        className="min-h-[220px] min-w-0"
+      >
+        <ResearchCard principle={PRINCIPLES[2]} />
+      </motion.div>
+
+      <motion.div
+        variants={itemVariants}
+        className="min-h-[220px] min-w-0"
+      >
+        <TrustCard principle={PRINCIPLES[3]} />
+      </motion.div>
+    </motion.div>
   )
 }
 
 export default function WhyChooseUs() {
-  const reduce = Boolean(useReducedMotion())
+  const reduceMotion = Boolean(useReducedMotion())
   const sectionRef = useRef<HTMLElement>(null)
-  const inView = useInView(sectionRef, { once: true, amount: 0.18 })
+
+  const inView = useInView(sectionRef, {
+    once: true,
+    amount: 0.22,
+  })
 
   return (
-    <section ref={sectionRef} className="relative w-full overflow-hidden border-b border-black/10 bg-canvas text-ink">
-      <div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-[38%] h-80 w-[70%] -translate-x-1/2 rounded-full bg-brand/[0.025] blur-3xl" />
-      <div className="site-container relative py-20 sm:py-24 lg:py-28">
-        <motion.div className="mx-auto max-w-2xl text-center" initial={{ opacity: 0, y: reduce ? 0 : 22 }} animate={inView ? { opacity: 1, y: 0 } : undefined} transition={{ duration: reduce ? 0 : 0.7, ease }}>
-          <div className="inline-flex items-center gap-2.5 text-[11px] font-medium uppercase tracking-[0.24em] text-faint"><span className="h-1.5 w-1.5 bg-brand" />Why Oraami</div>
-          <h2 className="mt-5 text-[34px] font-medium leading-[1.02] tracking-[-0.035em] text-heading sm:text-[42px] lg:text-[48px]">Why choose us</h2>
-          <p className="mx-auto mt-6 max-w-xl text-[16px] leading-[1.75] text-muted sm:text-[17px]">Four principles that make Oraami a quality-first BDR — we measure booked meetings, not send volume.</p>
+    <section
+      ref={sectionRef}
+      className="w-full bg-[#F6F6F6] text-ink"
+    >
+      <div className="mx-auto max-w-[1540px] px-5 pb-[106px] pt-10 sm:px-6 xl:px-0">
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : undefined}
+          transition={{
+            duration: reduceMotion ? 0 : 0.5,
+            ease: [0.22, 1, 0.36, 1] as const,
+          }}
+        >
+          <h2 className="text-[24px] font-semibold leading-[1.08] tracking-[-0.03em] text-[#101828]">
+            Why Choose Oraami
+          </h2>
         </motion.div>
 
-        <div className="relative mt-14 hidden h-[590px] sm:block lg:mt-16">
-          <Connector path={DESKTOP_PATH} viewBox="0 0 1200 590" active={inView} reduce={reduce} />
-          {VALUES.map((value, index) => <JourneyStep key={value.n} value={value} index={index} active={inView} reduce={reduce} />)}
-        </div>
-        <div className="relative mx-auto mt-12 h-[1080px] max-w-md sm:hidden">
-          <Connector path={MOBILE_PATH} viewBox="0 0 360 1080" active={inView} reduce={reduce} />
-          {VALUES.map((value, index) => <JourneyStep key={value.n} value={value} index={index} active={inView} reduce={reduce} mobile />)}
+        <div className="mt-[30px]">
+          <WhyChooseUsDesktop active={inView} />
+          <WhyChooseUsResponsive active={inView} />
         </div>
       </div>
     </section>

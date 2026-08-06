@@ -1,148 +1,121 @@
 "use client"
 
-import { ArrowDown, ArrowRight, Database, ScanSearch, Target } from "lucide-react"
+import Image from "next/image"
+import { ArrowRight } from "lucide-react"
 import { motion, useReducedMotion } from "framer-motion"
-import HeroChat from "./hero-chat"
-import TrustBar from "./trustbar"
 import { Button } from "@/components/ui/button"
 
-type StatProps = {
-  icon: typeof Target
-  value?: number
-  suffix?: string
-  phrase: string
-  label: string
+const HERO_COPY =
+  "Oraami analyzes your website, understands your product and audience, and surfaces the leads that match your ideal customer profile — automatically."
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.04,
+    },
+  },
 }
 
-function Stat({ icon: Icon, value, suffix = "", phrase, label }: StatProps) {
-  return (
-    <article className="flex h-full min-h-[98px] items-start gap-4 rounded-2xl border border-black/[0.08] bg-canvas px-5 py-5 shadow-[0_10px_30px_-24px_rgba(32,21,21,0.35)] sm:px-6">
-      <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand/[0.08] text-brand">
-        <Icon className="h-4 w-4" aria-hidden="true" />
-      </span>
-      <div>
-        <p className="text-[16px] font-medium leading-snug text-ink">
-          {value != null ? (
-            <span className="text-[20px] font-semibold tracking-[-0.02em]">
-              {value}{suffix}
-</span>
-          ) : (
-            <span className="text-[18px] font-semibold tracking-[-0.02em]">{phrase}</span>
-          )}
-          {value != null && <span> {phrase}</span>}
-        </p>
-        <p className="mt-1 text-[13px] leading-relaxed text-muted">{label}</p>
-      </div>
-    </article>
-  )
+const itemVariants = {
+  hidden: { opacity: 0, y: 14 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: [0.2, 0.8, 0.2, 1] as const },
+  },
 }
 
 export default function Hero() {
   const reduceMotion = useReducedMotion()
+
   return (
-    <section id="hero" className="relative w-full overflow-hidden bg-canvas text-ink">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-[42%]"
-        style={{
-          backgroundImage: "radial-gradient(circle, rgba(40,20,20,0.10) 1px, transparent 1.7px)",
-          backgroundSize: "10px 10px",
-          maskImage: "linear-gradient(to top, black 0%, transparent 80%)",
-          WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 80%)",
-        }}
-      />
+    <section id="hero" className="relative w-full overflow-x-clip bg-canvas px-[20px] pt-[82px] text-white sm:pt-[90px] lg:pt-[98px]">
+      <motion.div
+        initial={reduceMotion ? false : "hidden"}
+        animate="visible"
+        variants={containerVariants}
+        className="relative overflow-hidden rounded-[30px] bg-oraami-accent-secondary"
+      >
+        <div className="relative px-5 pb-0 pt-7 sm:px-7 sm:pt-9 lg:px-16 lg:pt-16 xl:px-20 xl:pt-16">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,0.56fr)_minmax(0,0.44fr)] lg:items-center lg:gap-16">
+            <motion.div variants={itemVariants} className="max-w-[570px] lg:ml-21">
+              <span
+              className="inline-flex h-8 items-center rounded-full px-3.5 text-[12px] font-medium tracking-[0.17em] text-[#FFFFF] gap-2"
+            style={{
+    border: "1px solid transparent",
+    backgroundImage:
+      "linear-gradient(rgba(30,20,50,0.6), rgba(30,20,50,0.6)), linear-gradient(to right, #bb4003, #0740aa)",
+    backgroundOrigin: "border-box",
+    backgroundClip: "padding-box, border-box",
+  }}
+>
+  <img src="/star.svg" alt="logo" 
+  
+  />
+   AI-Powered Lead Intelligence Platform
+</span>
 
-      <div className="relative z-10 pb-7 pt-28 sm:pt-32 lg:pb-5 lg:pt-30">
-        <div className="site-container grid max-w-[74rem] items-center gap-14 lg:grid-cols-[0.94fr_1.06fr] lg:gap-12 xl:gap-16">
-          <div className="max-w-[34rem] lg:pb-1">
-            <h1
-              className="hero-rise mt-4 text-balance text-[44px] font-medium leading-[1.02] tracking-[-0.025em] text-ink sm:text-[56px] lg:text-[60px] xl:text-[64px]"
-              style={{ animationDelay: "0.06s" }}
-            >
-              Find customers
-              <br />
-              ready to buy
-            </h1>
+              <h1 className="mt-8 max-w-[565px] text-balance text-[clamp(3.35rem,4.4vw,3.75rem)] font-bold leading-[1] tracking-[-0.03em] text-[#f4efe9]">
+                <span className="block lg:whitespace-nowrap">
+                  Identify Customers <span className="text-[#ff4f00]">Most</span>
+                </span>
+                <span className="block lg:whitespace-nowrap">
+                  <span className="text-[#ff4f00]">Likely</span> to Convert
+                </span>
+              </h1>
 
-            <p className="hero-rise mt-5 max-w-[32rem] text-[17px] leading-[1.7] text-muted" style={{ animationDelay: "0.12s" }}>
-              Oraami&apos;s AI reads your website, learns who you sell to, and surfaces the accounts most likely to convert — just ask.
-            </p>
-
-            <div className="hero-rise mt-7 flex flex-wrap gap-3.5" style={{ animationDelay: "0.18s" }}>
-              <Button
-                href="/contact"
-                variant="primary"
-                size="lg"
-                icon={ArrowRight}
-                className="h-[54px] px-7 shadow-[0_12px_30px_-14px_rgba(255,79,0,0.8)] transition-[color,background-color,box-shadow,transform] hover:-translate-y-0.5 hover:shadow-[0_16px_34px_-14px_rgba(255,79,0,0.9)] active:translate-y-0"
-              >
-                Start free
-              </Button>
-              <Button
-                href="#features"
-                variant="outline"
-                size="lg"
-                className="h-[54px] px-7 transition-[color,background-color,border-color,transform] hover:-translate-y-0.5 active:translate-y-0"
-              >
-                How it works
-              </Button>
-            </div>
-
-            <div className="hero-rise mt-7" style={{ animationDelay: "0.22s" }}>
-              <TrustBar />
-            </div>
-          </div>
-
-          <div className="hero-rise relative mx-auto w-full max-w-[42rem] lg:max-w-none" style={{ animationDelay: "0.2s" }}>
-            <div className="mb-3 hidden items-center justify-between px-1 text-[11px] uppercase tracking-[0.14em] text-muted lg:flex">
-              <span>Live analysis engine</span>
-              <span className="flex items-center gap-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" style={{ animation: "hubPulse 1.5s ease-in-out infinite" }} />
-                Real-time
-              </span>
-            </div>
-
-            <div className="relative">
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute -inset-8 rounded-[3rem] opacity-70 blur-2xl"
-                style={{ background: "radial-gradient(circle at 50% 55%, rgba(255,122,51,0.16), transparent 68%)" }}
-              />
-
-              <div className="relative z-10 drop-shadow-[0_34px_55px_rgba(60,30,20,0.14)]">
-                <HeroChat />
+              <div className="mt-11 flex flex-wrap gap-3 sm:flex-nowrap">
+                <Button
+                  href="/contact"
+                  variant="primary"
+                  size="lg"
+                  icon={ArrowRight}
+                  className="h-12 border border-[#ff4f00] bg-[#ff4f00] px-5 text-[15px] text-white shadow-[0_16px_34px_-20px_rgba(255,79,0,0.65)] transition-transform hover:-translate-y-0.5 hover:bg-[#ff5b12] active:translate-y-0"
+                >
+                  Get Started for Free
+                </Button>
+                <Button
+                  href="#features"
+                  variant="outline"
+                  size="lg"
+                  icon={ArrowRight}
+                  className="h-12 border border-[#ff4f00]/60 bg-transparent px-5 text-[15px] text-white transition-transform hover:-translate-y-0.5 hover:border-[#ff4f00] hover:bg-white/[0.04] active:translate-y-0"
+                >
+                  Explore Features
+                </Button>
               </div>
 
-            </div>
+              <p className="mt-6 max-w-[31rem] text-[17px] leading-[1.55] text-white/72 lg:hidden">
+                {HERO_COPY}
+              </p>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="hidden max-w-[487px] lg:flex lg:justify-self-start lg:self-center lg:ml-12 xl:ml-36">
+              <p className="max-w-[487px] text-left text-[17px] leading-[1.5] text-white/72">
+                {HERO_COPY}
+              </p>
+            </motion.div>
           </div>
         </div>
-      </div>
 
-      <div className="relative z-10 hidden h-12 items-center justify-center lg:flex">
-        <motion.a
-          href="#features"
-          className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.15em] text-faint transition-colors hover:text-ink focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
-          animate={reduceMotion ? undefined : { y: [0, 4, 0] }}
-          transition={{ duration: 2.4, ease: "easeInOut", repeat: Infinity }}
-        >
-          Scroll to explore
-          <ArrowDown className="h-3.5 w-3.5" aria-hidden="true" />
-        </motion.a>
-      </div>
-
-      <div className="relative z-10 pb-5">
-        <div className="site-container grid max-w-[68rem] grid-cols-1 gap-3 sm:grid-cols-3">
-          <div>
-            <Stat icon={Target} value={89} suffix="%" phrase="ICP match accuracy" label="on every account we surface" />
+        <motion.div variants={itemVariants} className="relative mt-16 px-5 pb-0 sm:px-7 lg:px-16 xl:px-20">
+          <div className="pointer-events-none absolute inset-x-[36%] top-[-10px] h-20 rounded-full bg-[#ff4f00]/8 blur-2xl sm:inset-x-[40%]" />
+          <div className="relative w-full overflow-hidden rounded-t-[30px] bg-oraami-accent-secondary">
+            <Image
+              src="/h1.svg"
+              alt="Oraami product dashboard preview"
+              width={1368}
+              height={643}
+              priority
+              unoptimized
+              sizes="(max-width: 1024px) 100vw, 1368px"
+              className="block h-[800px] w-full"
+            />
           </div>
-          <div>
-            <Stat icon={Database} value={200} suffix="M+" phrase="verified contacts" label="enriched and kept current" />
-          </div>
-          <div>
-            <Stat icon={ScanSearch} phrase="Website to qualified lead" label="in a single automated motion" />
-          </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   )
 }

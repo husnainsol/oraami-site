@@ -1,4 +1,5 @@
 import Hero from "@/components/sections/hero"
+import AutomationStats from "@/components/sections/automation-stats"
 import Features from "@/components/sections/features"
 import Platform from "@/components/sections/platform"
 import Results from "@/components/sections/results"
@@ -11,6 +12,7 @@ export default function Home() {
   return (
     <main>
       <Hero />
+      <AutomationStats />
       <Features />
       <Platform />
       <Results />
