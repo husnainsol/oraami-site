@@ -20,8 +20,8 @@ export default function Home() {
       <Solutions />
       <WhyChooseUs />
       <Testimonials />
-      <Insights />
       <Pricing />
+      <Insights />
     </main>
   )
 }
