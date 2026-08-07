@@ -279,7 +279,7 @@ export default function WhyChooseUs() {
       ref={sectionRef}
       className="w-full bg-[#F6F6F6] text-ink"
     >
-      <div className="mx-auto max-w-[1540px] px-5 pb-16 pt-10 sm:px-6 sm:pb-20 lg:pb-[106px] min-[1604px]:px-0">
+      <div className="mx-auto w-full max-w-[1540px] px-4 sm:px-6 xl:px-0 pb-16 pt-10 sm:pb-20 lg:pb-[106px]">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : undefined}

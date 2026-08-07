@@ -59,15 +59,11 @@ export default function Pricing() {
 
   return (
     <section id="pricing" className="relative w-full overflow-hidden border-b border-black/10 bg-canvas text-ink">
-      <div className="site-container py-20">
+      <div className="mx-auto w-full max-w-[1540px] px-4 sm:px-6 xl:px-0 py-20">
 
         <div className="flex flex-col justify-between gap-10 lg:flex-row lg:items-end">
           <div className="max-w-2xl">
             <div aria-hidden="true" className="pointer-events-none absolute right-0 top-10 h-40 w-40 rounded-full bg-brand/[0.08] blur-3xl" />
-            <div className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-faint">
-              <span className="h-1.5 w-1.5 bg-brand" />
-              Pricing
-            </div>
             <h2 className="mt-5 text-[32px] font-medium leading-[1.05] tracking-[-0.03em] text-heading sm:text-[40px] lg:text-[44px]">
               Simple, transparent pricing
             </h2>
@@ -93,9 +89,6 @@ export default function Pricing() {
                 Monthly
               </button>
             </div>
-            <p className="mt-3 text-[11px] uppercase tracking-wider text-brand lg:text-right">
-              Save ~2 months on annual
-            </p>
           </div>
         </div>
 

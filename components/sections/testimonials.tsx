@@ -48,7 +48,7 @@ export default function Testimonials() {
       id="testimonials"
       className="w-full bg-white text-[#101828]"
     >
-      <div className="mx-auto w-full max-w-[1540px] px-5 pb-[40px] pt-[48px] sm:px-6 sm:pb-[48px] sm:pt-[52px] lg:px-8 lg:pb-[56px] lg:pt-[56px] min-[1604px]:px-0">
+      <div className="mx-auto w-full max-w-[1540px] px-4 sm:px-6 xl:px-0 pb-[40px] pt-[48px] sm:pb-[48px] sm:pt-[52px] lg:pb-[56px] lg:pt-[56px]">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 18 }}
           animate={inView ? { opacity: 1, y: 0 } : undefined}

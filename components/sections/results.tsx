@@ -30,7 +30,7 @@ const RESULTS: Result[] = [
 export default function Results() {
   return (
     <section className="relative w-full border-b border-white/10 bg-oraami-accent-secondary text-white">
-      <div className="mx-auto max-w-[1540px] px-5 py-16 sm:px-6 sm:py-20 xl:px-0">
+      <div className="mx-auto w-full max-w-[1540px] px-4 sm:px-6 xl:px-0 py-16 sm:py-20">
         <div className="max-w-2xl">
           <div className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-white/45">
             <span className="h-1.5 w-1.5 bg-brand" />

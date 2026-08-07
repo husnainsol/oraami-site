@@ -31,19 +31,17 @@ export default function Hero() {
   const reduceMotion = useReducedMotion()
 
   return (
-    <section id="hero" className="relative mx-[15px] w-[calc(100%-30px)] overflow-hidden rounded-t-[30px] bg-oraami-accent-secondary px-0 pt-4 text-white md:pt-6">
-      <div className="site-container">
+    <section id="hero" className="relative w-full overflow-hidden rounded-t-[30px] bg-oraami-accent-secondary px-0 pt-4 text-white md:pt-6">
+      <div className="mx-auto w-full max-w-[1540px] px-4 sm:px-6 xl:px-0">
         <motion.div
           initial={reduceMotion ? false : "hidden"}
           animate="visible"
           variants={containerVariants}
-          className="relative overflow-hidden rounded-t-[14px] bg-oraami-accent-secondary"
+          className="relative w-full overflow-hidden rounded-t-[14px] bg-oraami-accent-secondary"
         >
-          <div className="relative min-w-0 px-3 pb-0 pt-6 sm:px-5 sm:pt-8 lg:px-4 lg:pt-12 xl:px-0 xl:pt-12">
+          <div className="relative min-w-0 pb-0 pt-6 sm:pt-8 lg:pt-12 xl:pt-12">
             <div className="grid min-w-0 gap-10 lg:grid-cols-[minmax(0,0.54fr)_minmax(0,0.46fr)] lg:items-center lg:gap-12">
               <motion.div variants={itemVariants} className="min-w-0 max-w-[570px]">
-                
-
                 <h1 className="mt-6 max-w-[565px] text-balance text-[clamp(2.25rem,8.5vw,3.75rem)] font-bold leading-[1] tracking-[-0.03em] text-[#f4efe9] sm:text-[clamp(2.8rem,6vw,3.75rem)]">
                   <span className="block lg:whitespace-nowrap">
                     Identify Customers <span className="text-[#ff4f00]">Most</span>
@@ -87,7 +85,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <motion.div variants={itemVariants} className="relative -mx-[4px] mt-8 px-0 pb-0 sm:-mx-[6px] sm:mt-10 lg:-mx-0 lg:mt-12">
+          <motion.div variants={itemVariants} className="relative mt-8 px-0 pb-0 sm:mt-10 lg:mt-12">
             <div className="pointer-events-none absolute inset-x-[30%] top-[-10px] h-20 rounded-full bg-[#ff4f00]/8 blur-2xl sm:inset-x-[36%]" />
             <div className="relative w-full overflow-hidden rounded-t-[14px] bg-oraami-accent-secondary">
               <Image
@@ -97,8 +95,8 @@ export default function Hero() {
                 height={643}
                 priority
                 unoptimized
-                sizes="(max-width: 1024px) 100vw, 1368px"
-                className="block h-auto w-full"
+                sizes="(max-width: 1536px) 100vw, 1540px"
+                className="block h-auto w-full scale-x-[1.04] origin-center"
               />
             </div>
           </motion.div>

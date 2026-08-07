@@ -410,12 +410,8 @@ export default function Solutions() {
     <section ref={sectionRef} className="relative w-full overflow-clip border-b border-black/10 bg-canvas text-ink">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_55%_58%,rgba(255,79,0,0.025),transparent_42%)]" />
 
-      <div className="site-container relative py-20">
+      <div className="mx-auto w-full max-w-[1540px] px-4 sm:px-6 xl:px-0 relative py-20">
         <motion.div initial={reduceMotion ? false : "hidden"} animate={animationState} variants={fadeUp} className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-faint">
-            <span className="h-1.5 w-1.5 bg-brand" />
-            Industries
-          </div>
           <h2 className="mt-5 text-[32px] font-medium leading-[1.05] tracking-[-0.03em] text-heading sm:text-[40px] lg:text-[44px]">
             Solutions by industry
           </h2>

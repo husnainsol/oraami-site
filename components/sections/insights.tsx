@@ -164,7 +164,7 @@ export default function Insights() {
       ref={sectionRef}
       className="w-full bg-oraami-secondary text-[#101828]"
     >
-      <div className="mx-auto w-full max-w-[1540px] px-5 py-[72px] sm:px-6 sm:py-[80px] lg:px-8 lg:py-[96px] min-[1604px]:px-0">
+      <div className="mx-auto w-full max-w-[1540px] px-4 sm:px-6 xl:px-0 py-[72px] sm:py-[80px] lg:py-[96px]">
         <motion.div
           variants={containerVariants}
           initial={reduceMotion ? false : "hidden"}

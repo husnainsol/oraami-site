@@ -696,7 +696,7 @@ export default function Features() {
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(255,79,0,0.04),transparent_30%),radial-gradient(circle_at_80%_20%,rgba(255,79,0,0.03),transparent_28%)]"
       />
 
-      <div className="relative mx-auto max-w-[1580px] px-5 py-20 sm:px-6 sm:py-24 lg:px-0">
+      <div className="mx-auto w-full max-w-[1540px] px-4 sm:px-6 xl:px-0 relative py-20 sm:py-24">
         <motion.div
           initial={reduce ? false : "hidden"}
           animate={entered ? "visible" : "hidden"}
