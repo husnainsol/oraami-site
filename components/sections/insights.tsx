@@ -92,7 +92,9 @@ function ArticleVisual({ article }: { article: Article }) {
   return (
     <div
       className={`relative w-full shrink-0 overflow-hidden rounded-t-[10px] ${
-        article.tall ? "h-[335px]" : "h-[206px]"
+        article.tall
+          ? "aspect-[400/335] md:aspect-auto md:h-[335px]"
+          : "aspect-[400/206] md:aspect-auto md:h-[206px]"
       }`}
     >
       <Image
@@ -109,7 +111,7 @@ function ArticleVisual({ article }: { article: Article }) {
 
 function ArticleCard({ article }: { article: Article }) {
   return (
-    <article className="flex h-full w-full min-w-0 flex-col overflow-hidden rounded-[10px] border border-brand bg-white">
+    <article className="flex h-full w-full min-w-0 flex-col overflow-hidden rounded-[10px] bg-white shadow-[0_1px_2px_rgba(15,23,42,0.04)] lg:border lg:border-brand">
       <ArticleVisual article={article} />
 
       <div className="flex flex-1 flex-col px-4 pb-4 pt-4">

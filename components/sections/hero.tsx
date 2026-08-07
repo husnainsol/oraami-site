@@ -42,19 +42,7 @@ export default function Hero() {
           <div className="relative min-w-0 px-3 pb-0 pt-6 sm:px-5 sm:pt-8 lg:px-4 lg:pt-12 xl:px-0 xl:pt-12">
             <div className="grid min-w-0 gap-10 lg:grid-cols-[minmax(0,0.54fr)_minmax(0,0.46fr)] lg:items-center lg:gap-12">
               <motion.div variants={itemVariants} className="min-w-0 max-w-[570px]">
-                <span
-                  className="inline-flex h-8 items-center gap-2 rounded-full px-3.5 text-[12px] font-medium tracking-[0.17em] text-white"
-                  style={{
-                    border: "1px solid transparent",
-                    backgroundImage:
-                      "linear-gradient(rgba(30,20,50,0.6), rgba(30,20,50,0.6)), linear-gradient(to right, #bb4003, #0740aa)",
-                    backgroundOrigin: "border-box",
-                    backgroundClip: "padding-box, border-box",
-                  }}
-                >
-                  <Image src="/star.svg" alt="" aria-hidden="true" width={16} height={16} className="h-4 w-4" />
-                  AI-Powered Lead Intelligence Platform
-                </span>
+                
 
                 <h1 className="mt-6 max-w-[565px] text-balance text-[clamp(2.25rem,8.5vw,3.75rem)] font-bold leading-[1] tracking-[-0.03em] text-[#f4efe9] sm:text-[clamp(2.8rem,6vw,3.75rem)]">
                   <span className="block lg:whitespace-nowrap">

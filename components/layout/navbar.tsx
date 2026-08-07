@@ -116,7 +116,7 @@ function NavbarShell({ pathname }: { pathname: string }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -6 }}
                 transition={{ duration: 0.22, ease: [0.2, 0.8, 0.2, 1] as const }}
-                className="fixed inset-x-0 top-[60px] z-[101] px-4 pb-4 sm:top-[64px] sm:px-6 md:top-[72px] xl:px-0 lg:hidden"
+                className="fixed inset-x-0 top-[60px] z-[101] max-h-[calc(100dvh-60px)] overflow-y-auto px-4 pb-4 sm:top-[64px] sm:max-h-[calc(100dvh-64px)] sm:px-6 md:top-[72px] md:max-h-[calc(100dvh-72px)] xl:px-0 lg:hidden"
               >
                 <div className="mx-auto max-w-[1540px]">
                   <div className="overflow-hidden rounded-[20px] border border-black/[0.08] bg-white shadow-[0_12px_28px_-22px_rgba(32,21,21,0.24)]">

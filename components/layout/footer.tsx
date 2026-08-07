@@ -3,18 +3,26 @@ import Link from "next/link"
 import { Mail } from "lucide-react"
 import type { ComponentProps } from "react"
 
-const footerLinks = {
-  Product: [
+type FooterLink = {
+  name: string
+  href?: string
+}
+
+const footerLinks: Record<string, FooterLink[]> = {
+  Company: [
     { name: "Features", href: "/features" },
     { name: "Platform", href: "/platform" },
     { name: "Pricing", href: "/#pricing" },
-    { name: "Security", href: "/#security" },
-  ],
-  Company: [
     { name: "About", href: "/about" },
+  ],
+  Resources: [
+    { name: "Docs" },
     { name: "Blog", href: "/blog" },
-    { name: "Testimonials", href: "/#testimonials" },
-    { name: "Contact", href: "/contact" },
+  ],
+  Security: [
+    { name: "Security", href: "/#security" },
+    { name: "Privacy", href: "/privacy" },
+    { name: "Terms", href: "/terms" },
   ],
   Legal: [
     { name: "Privacy Policy", href: "/privacy" },
@@ -59,13 +67,13 @@ export default function Footer() {
 
         <Link
           href="/contact"
-          className="mt-6 inline-flex h-12 items-center justify-center rounded-none border border-white/15 bg-oraami-accent-secondary px-6 text-[12px] font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:bg-[#140f38] lg:mt-0"
+          className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-none border border-white/15 bg-oraami-accent-secondary px-6 text-[12px] font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:bg-[#140f38] sm:w-auto lg:mt-0"
         >
           Book a call
         </Link>
       </div>
 
-      <div className="grid gap-10 pb-14 pt-8 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr] lg:gap-8">
+      <div className="grid gap-10 pb-14 pt-8 sm:grid-cols-2 lg:grid-cols-[1.2fr_1.8fr] lg:gap-8">
         <div className="min-w-0 pl-1 sm:pl-0">
           <Link href="/" aria-label="Oraami home" className="inline-flex items-center gap-3">
             <Image src="/O.svg" alt="" width={28} height={28} className="h-7 w-7" />
@@ -79,8 +87,8 @@ export default function Footer() {
               <a
                 key={label}
                 href={href}
-                target="_blank"
-                rel="noopener noreferrer"
+                target={href.startsWith("mailto:") ? undefined : "_blank"}
+                rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
                 aria-label={label}
                 className="transition-colors hover:text-brand"
               >
@@ -96,27 +104,29 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="min-w-0">
-          <p className="text-[12px] font-semibold text-white">Useful Links</p>
-          <ul className="mt-5 space-y-3.5 text-[14px] text-white/42">
-            {[...footerLinks.Product, ...footerLinks.Company].slice(0, 6).map((link) => (
-              <li key={link.name}>
-                <Link href={link.href} className="transition-colors hover:text-white">
-                  {link.name}
-                </Link>
-              </li>
+        <div className="grid min-w-0 grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+          {Object.entries(footerLinks)
+            .filter(([heading]) => heading !== "Legal")
+            .map(([heading, links]) => (
+              <div key={heading} className="min-w-0 pl-1 sm:pl-0">
+                <p className="text-[12px] font-semibold text-white">{heading}</p>
+                <ul className="mt-5 space-y-3.5 text-[14px] text-white/42">
+                  {links.map((link) => (
+                    <li key={link.name}>
+                      {link.href ? (
+                        <Link href={link.href} className="transition-colors hover:text-white">
+                          {link.name}
+                        </Link>
+                      ) : (
+                        <span className="cursor-default text-white/28">{link.name}</span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
         </div>
 
-      </div>
-
-      <div className="mt-8 pt-10 pb-5 text-[12px] text-white/32 sm:flex sm:items-center sm:justify-between pl-1 sm:pl-0">
-        <p>© {new Date().getFullYear()} Oraami. All rights reserved.</p>
-        <div className="mt-3 flex items-center gap-4 sm:mt-0">
-          <Link href="/privacy" className="transition-colors hover:text-white">Privacy</Link>
-          <Link href="/terms" className="transition-colors hover:text-white">Terms</Link>
-        </div>
       </div>
     </footer>
   )
