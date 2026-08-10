@@ -4,10 +4,10 @@ import Image from "next/image"
 import {
   motion,
   useInView,
-  useReducedMotion,
   type Variants,
 } from "framer-motion"
 import { useRef } from "react"
+import { useReducedMotionPreference } from "@/components/ui/use-reduced-motion-preference"
 
 type Principle = {
   n: string
@@ -24,8 +24,8 @@ const PRINCIPLES: Principle[] = [
     label: "QUALITY",
     title: "Quality over volume",
     desc: "We cap every ICP at 50 high-fit accounts, so your team works the leads that convert — never a bloated list.",
-    image: "/p1.1.svg",
-    alt: "Quality illustration",
+    image: "/images/principles/quality-over-volume-v2.png",
+    alt: "One carefully selected high-value account isolated from a larger prospect pool",
   },
   {
     n: "02",
@@ -40,8 +40,8 @@ const PRINCIPLES: Principle[] = [
     label: "RESEARCH",
     title: "Deep research, every lead",
     desc: "5–10 minutes of autonomous AI research on each prospect and their full buying committee before a word is sent.",
-    image: "/p3.svg",
-    alt: "Research illustration",
+    image: "/images/principles/deep-lead-research-v2.png",
+    alt: "A precision research lens revealing layered evidence around a selected account",
   },
   {
     n: "04",
@@ -89,13 +89,13 @@ function CopyBlock({
 }) {
   return (
     <div className={dark ? "text-white" : "text-[#101828]"}>
-      <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-brand sm:text-[12px]">
+      <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-brand">
         {n} {label}
       </p>
 
       <h3
         className={[
-          "mt-3 text-[16px] font-semibold leading-[1.2] tracking-[-0.02em] sm:text-[17px]",
+          "landing-card-title mt-2.5",
           dark ? "text-white" : "text-[#101828]",
         ].join(" ")}
       >
@@ -104,7 +104,7 @@ function CopyBlock({
 
       <p
         className={[
-          "mt-3 text-[12px] leading-[1.65] sm:text-[13px]",
+          "landing-card-description mt-2.5",
           dark ? "text-white/72" : "text-[#667085]",
         ].join(" ")}
       >
@@ -116,19 +116,18 @@ function CopyBlock({
 
 function WhiteImageCard({ principle }: { principle: Principle }) {
   return (
-    <article className="flex h-full w-full flex-col overflow-hidden rounded-[12px] bg-white p-5 shadow-[0_1px_2px_rgba(15,23,42,0.06),0_12px_24px_-18px_rgba(15,23,42,0.16)] sm:p-6">
-      <div className="relative aspect-[334/185] w-full shrink-0 overflow-hidden rounded-[10px] bg-[#f8f8f6]">
+    <article className="flex h-full w-full flex-col overflow-hidden rounded-[15px] border border-black/[0.05] bg-white p-4 shadow-[0_16px_40px_-36px_rgba(15,23,42,0.26)]">
+      <div className="relative aspect-[16/8] w-full shrink-0 overflow-hidden rounded-[11px] bg-[#f8f8f6]">
         <Image
           src={principle.image}
           alt={principle.alt}
           fill
-          unoptimized
           sizes="(min-width: 1280px) 480px, (min-width: 768px) 50vw, 100vw"
-          className="object-contain object-center"
+          className="object-cover object-center"
         />
       </div>
 
-      <div className="mt-5 min-w-0 flex-1">
+      <div className="mt-4 min-w-0 flex-1">
         <CopyBlock
           n={principle.n}
           label={principle.label}
@@ -157,7 +156,7 @@ function NotchCard({ principle }: { principle: Principle }) {
 
 function ResearchCard({ principle }: { principle: Principle }) {
   return (
-    <article className="flex h-full w-full flex-col overflow-hidden rounded-[12px] bg-white p-5 shadow-[0_1px_2px_rgba(15,23,42,0.06),0_10px_22px_-18px_rgba(15,23,42,0.14)] sm:flex-row sm:items-stretch">
+    <article className="flex h-full w-full flex-col overflow-hidden rounded-[15px] border border-black/[0.05] bg-white p-4 shadow-[0_14px_36px_-34px_rgba(15,23,42,0.24)] sm:flex-row sm:items-stretch">
       <div className="min-w-0 flex-1 pr-0 sm:pr-4">
         <CopyBlock
           n={principle.n}
@@ -167,14 +166,13 @@ function ResearchCard({ principle }: { principle: Principle }) {
         />
       </div>
 
-      <div className="relative mt-5 aspect-[334/185] w-full shrink-0 overflow-hidden rounded-[8px] bg-[#fbfbf8] sm:mt-0 sm:aspect-auto sm:w-[132px] sm:self-stretch xl:w-[144px]">
+      <div className="relative mt-4 aspect-[16/8] w-full shrink-0 overflow-hidden rounded-[10px] bg-[#fbfbf8] sm:mt-0 sm:aspect-auto sm:w-[124px] sm:self-stretch xl:w-[136px]">
         <Image
           src={principle.image}
           alt={principle.alt}
           fill
-          unoptimized
-          sizes="(min-width: 1280px) 144px, (min-width: 640px) 132px, 100vw"
-          className="object-contain object-center"
+          sizes="(min-width: 1280px) 152px, (min-width: 640px) 138px, 100vw"
+          className="object-cover object-center"
         />
       </div>
     </article>
@@ -183,7 +181,7 @@ function ResearchCard({ principle }: { principle: Principle }) {
 
 function TrustCard({ principle }: { principle: Principle }) {
   return (
-    <article className="h-full w-full overflow-hidden rounded-[12px] border border-[#ff5702] bg-white p-5 shadow-[0_1px_2px_rgba(15,23,42,0.04)] sm:p-6">
+    <article className="h-full w-full overflow-hidden rounded-[15px] border border-brand/35 bg-white p-4 shadow-[0_12px_30px_-30px_rgba(255,79,0,0.3)]">
       <div className="max-w-[270px]">
         <CopyBlock
           n={principle.n}
@@ -202,25 +200,25 @@ function WhyChooseUsDesktop({ active }: { active: boolean }) {
       variants={sectionVariants}
       initial="hidden"
       animate={active ? "visible" : "hidden"}
-      className="hidden grid-cols-3 items-start gap-[18px] lg:grid"
+      className="hidden grid-cols-3 items-start gap-3 lg:grid"
     >
       <motion.div
         variants={itemVariants}
-        className="h-[450px] min-w-0"
+        className="h-[340px] min-w-0"
       >
         <WhiteImageCard principle={PRINCIPLES[0]} />
       </motion.div>
 
       <motion.div
         variants={itemVariants}
-        className="h-[470px] min-w-0"
+        className="h-[350px] min-w-0"
       >
         <NotchCard principle={PRINCIPLES[1]} />
       </motion.div>
 
       <motion.div
         variants={itemVariants}
-        className="grid h-[450px] min-w-0 grid-rows-2 gap-[18px]"
+        className="grid h-[340px] min-w-0 grid-rows-2 gap-3"
       >
         <ResearchCard principle={PRINCIPLES[2]} />
         <TrustCard principle={PRINCIPLES[3]} />
@@ -235,7 +233,7 @@ function WhyChooseUsResponsive({ active }: { active: boolean }) {
       variants={sectionVariants}
       initial="hidden"
       animate={active ? "visible" : "hidden"}
-      className="grid gap-[18px] sm:grid-cols-2 lg:hidden"
+      className="grid gap-3 sm:grid-cols-2 lg:hidden"
     >
       <motion.div variants={itemVariants} className="min-w-0">
         <WhiteImageCard principle={PRINCIPLES[0]} />
@@ -243,21 +241,21 @@ function WhyChooseUsResponsive({ active }: { active: boolean }) {
 
       <motion.div
         variants={itemVariants}
-        className="relative aspect-[433/431] min-w-0 overflow-hidden"
+        className="relative aspect-[433/360] min-w-0 overflow-hidden"
       >
         <NotchCard principle={PRINCIPLES[1]} />
       </motion.div>
 
       <motion.div
         variants={itemVariants}
-        className="min-h-[220px] min-w-0"
+        className="min-h-[180px] min-w-0"
       >
         <ResearchCard principle={PRINCIPLES[2]} />
       </motion.div>
 
       <motion.div
         variants={itemVariants}
-        className="min-h-[220px] min-w-0"
+        className="min-h-[180px] min-w-0"
       >
         <TrustCard principle={PRINCIPLES[3]} />
       </motion.div>
@@ -266,7 +264,7 @@ function WhyChooseUsResponsive({ active }: { active: boolean }) {
 }
 
 export default function WhyChooseUs() {
-  const reduceMotion = Boolean(useReducedMotion())
+  const reduceMotion = useReducedMotionPreference()
   const sectionRef = useRef<HTMLElement>(null)
 
   const inView = useInView(sectionRef, {
@@ -277,9 +275,9 @@ export default function WhyChooseUs() {
   return (
     <section
       ref={sectionRef}
-      className="w-full bg-[#F6F6F6] text-ink"
+      className="w-full bg-white text-ink"
     >
-      <div className="mx-auto max-w-[1540px] px-5 pb-16 pt-10 sm:px-6 sm:pb-20 lg:pb-[106px] min-[1604px]:px-0">
+      <div className="landing-container py-12 sm:py-14 lg:py-16">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : undefined}
@@ -288,12 +286,12 @@ export default function WhyChooseUs() {
             ease: [0.22, 1, 0.36, 1] as const,
           }}
         >
-          <h2 className="text-[24px] font-semibold leading-[1.08] tracking-[-0.03em] text-[#101828]">
+          <h2 className="landing-section-title">
             Why Choose Oraami
           </h2>
         </motion.div>
 
-        <div className="mt-[30px]">
+        <div className="mt-8">
           <WhyChooseUsDesktop active={inView} />
           <WhyChooseUsResponsive active={inView} />
         </div>

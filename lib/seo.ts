@@ -150,12 +150,6 @@ export function createMeta(options: CreateMetaOptions): CreateMetaResult {
       operatingSystem: "Web",
       description,
       url,
-      offers: {
-        "@type": "Offer",
-        price: "0",
-        priceCurrency: "USD",
-        description: "Free trial",
-      },
       author: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
     });
   }
@@ -215,13 +209,6 @@ export function softwareAppJsonLd() {
       "AI quality scoring on every lead and message",
       "Analytics & reporting across every ICP in real time",
     ],
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
-      description: "Free trial",
-      availability: "https://schema.org/InStock",
-    },
     author: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
   };
 }

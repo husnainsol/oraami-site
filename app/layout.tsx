@@ -123,7 +123,7 @@ export default function RootLayout({
           <style>{`[style*="opacity:0"],[style*="opacity: 0"]{opacity:1!important;transform:none!important}`}</style>
         </noscript>
         <Navbar />
-        <div id="main-content" className="pt-[64px] md:pt-[72px]">{children}</div>
+        <div id="main-content" className="pt-[72px] lg:pt-[64px]">{children}</div>
         <Footer />
       </body>
     </html>

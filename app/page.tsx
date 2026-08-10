@@ -1,5 +1,4 @@
 import Hero from "@/components/sections/hero"
-import AutomationStats from "@/components/sections/automation-stats"
 import Features from "@/components/sections/features"
 import Platform from "@/components/sections/platform"
 import Results from "@/components/sections/results"
@@ -11,9 +10,8 @@ import Pricing from "@/components/sections/pricing"
 
 export default function Home() {
   return (
-    <main>
+    <main className="flex flex-col gap-3 bg-canvas sm:gap-4">
       <Hero />
-      <AutomationStats />
       <Features />
       <Platform />
       <Results />

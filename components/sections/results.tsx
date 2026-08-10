@@ -29,38 +29,34 @@ const RESULTS: Result[] = [
 
 export default function Results() {
   return (
-    <section className="relative w-full border-b border-white/10 bg-oraami-accent-secondary text-white">
-      <div className="mx-auto max-w-[1540px] px-5 py-16 sm:px-6 sm:py-20 xl:px-0">
+    <section className="relative w-full bg-oraami-accent-secondary text-white">
+      <div className="landing-container py-12 sm:py-14 lg:py-16">
         <div className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-white/45">
-            <span className="h-1.5 w-1.5 bg-brand" />
-            Results
-          </div>
-          <h2 className="mt-5 text-[32px] font-medium leading-[1.05] tracking-[-0.03em] text-white sm:text-[40px] lg:text-[44px]">
+          <h2 className="landing-section-title !text-white">
             Results of our work
           </h2>
-          <p className="mt-6 max-w-[550px] text-[18.5px] leading-relaxed text-white/70">
+          <p className="landing-section-description mt-4 max-w-[550px] !text-white/68">
             Quality-first prospecting that turns fewer, better-matched leads into real pipeline.
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-5 xl:grid-cols-4">
+        <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
           {RESULTS.map((r) => (
             <div
               key={r.label}
-              className="result-card flex h-full min-h-[186px] min-w-0 flex-col rounded-[18px] bg-[rgba(75,31,109,0.2)] px-5 py-5 shadow-[0_10px_24px_-20px_rgba(0,0,0,0.65)] sm:min-h-[200px] sm:px-6 sm:py-6 lg:min-h-[208px] lg:px-7 lg:py-7"
+              className="result-card flex h-full min-h-[156px] min-w-0 flex-col rounded-[15px] bg-[rgba(75,31,109,0.1)] p-5 shadow-[0_10px_24px_-20px_rgba(0,0,0,0.55)] sm:min-h-[164px]"
             >
-              <p className="text-[clamp(2.75rem,10vw,4.6rem)] font-semibold leading-none tracking-[-0.04em] text-white/95">
+              <p className="text-[clamp(2.4rem,7vw,3.5rem)] font-medium leading-none tracking-[-0.04em] text-white/95">
                 {r.end != null
                   ? `${r.start}–${r.end}${r.suffix ?? ""}`
                   : `${r.start}${r.suffix ?? ""}`}
               </p>
 
-              <p className="mt-4 text-[12px] font-medium uppercase tracking-[0.18em] text-brand sm:mt-5">
+              <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.16em] text-brand">
                 {r.label}
               </p>
 
-              <p className="mt-3 max-w-none text-[14px] leading-[1.6] text-white/66 sm:max-w-[17rem] lg:max-w-[18rem]">
+              <p className="mt-2.5 max-w-none text-[13px] leading-[1.55] text-white/66 sm:max-w-[18rem]">
                 {r.desc}
               </p>
             </div>
