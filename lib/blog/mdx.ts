@@ -40,6 +40,9 @@ export async function getPostBySlug(slug: string): Promise<{ frontMatter: BlogPo
       category: data.category || "Article",
       readingTime: readingTime(content).text,
       featured: Boolean(data.featured),
+      image: data.image || "",
+      imageAlt: data.imageAlt || data.title || "",
+      imageCreditUrl: data.imageCreditUrl || "",
     } as BlogPost,
     content,
   }

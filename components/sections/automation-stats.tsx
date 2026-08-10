@@ -2,7 +2,7 @@ const METRICS = [
   { value: "200M+", label: "Verified contacts" },
   { value: "89%", label: "ICP match accuracy" },
   { value: "50+", label: "Native integrations" },
-  { value: "14 days", label: "Free trial" },
+  { value: "Live", label: "Performance reporting" },
 ] as const
 
 export default function AutomationStats() {

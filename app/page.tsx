@@ -10,7 +10,7 @@ import Pricing from "@/components/sections/pricing"
 
 export default function Home() {
   return (
-    <main>
+    <main className="flex flex-col gap-3 bg-canvas sm:gap-4">
       <Hero />
       <Features />
       <Platform />

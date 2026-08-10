@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type ComponentType } from "react"
 import { Mail, Network, Search, Target } from "lucide-react"
+import { useReducedMotionPreference } from "@/components/ui/use-reduced-motion-preference"
 
 type Step = { n: string; label: string; title: string; desc: string; Icon: ComponentType<{ className?: string; strokeWidth?: number }>}
 
@@ -25,11 +26,11 @@ function ConnectorArrows({ segment, signal }: ConnectorArrowsProps) {
 
 export default function Platform() {
   const sectionRef = useRef<HTMLElement>(null)
-  const reducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  const [started, setStarted] = useState(reducedMotion)
-  const [activeStep, setActiveStep] = useState(reducedMotion ? 3 : -1)
-  const [beamStep, setBeamStep] = useState(reducedMotion ? 3 : 0)
-  const [revealedStep, setRevealedStep] = useState(reducedMotion ? 3 : -1)
+  const reducedMotion = useReducedMotionPreference()
+  const [started, setStarted] = useState(false)
+  const [activeStep, setActiveStep] = useState(-1)
+  const [beamStep, setBeamStep] = useState(0)
+  const [revealedStep, setRevealedStep] = useState(-1)
   const [arrowSignal, setArrowSignal] = useState<string | null>(null)
   const [isResetting, setIsResetting] = useState(false)
 
@@ -54,7 +55,7 @@ export default function Platform() {
   }, [reducedMotion])
 
   useEffect(() => {
-    if (!started || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    if (!started || reducedMotion) return
 
     const timers: number[] = []
     let stopped = false
@@ -97,34 +98,34 @@ export default function Platform() {
       stopped = true
       timers.forEach(window.clearTimeout)
     }
-  }, [started])
+  }, [reducedMotion, started])
+
+  const displayedActiveStep = reducedMotion ? 3 : activeStep
+  const displayedBeamStep = reducedMotion ? 4 : beamStep
+  const displayedRevealedStep = reducedMotion ? 3 : revealedStep
 
   return (
     <section ref={sectionRef} id="platform" className="relative w-full bg-canvas text-ink">
-      <div className="mx-auto w-full max-w-[1540px] px-4 sm:px-6 xl:px-0 py-5 sm:py-14 lg:pt-5 lg:pb-10">
+      <div className="landing-container py-12 sm:py-14 lg:py-16">
         <div className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-faint">
-            <span className="h-1.5 w-1.5 bg-brand" />
-            The process
-          </div>
-          <h2 className="mt-5 text-[32px] font-medium leading-[1.05] tracking-[-0.03em] text-heading sm:text-[40px] lg:text-[44px]">
+          <h2 className="landing-section-title">
             How it works
           </h2>
-          <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-muted">
+          <p className="landing-section-description mt-4 max-w-xl">
             From a cold list to a warm relationship — the four-step motion Oraami runs for you, on autopilot.
           </p>
         </div>
 
-        <div className={"process-flow relative mt-10 grid grid-cols-1 gap-y-6 sm:mt-12 sm:gap-y-10 xl:grid-cols-4 xl:gap-x-8 xl:gap-y-14 " + (isResetting ? "is-resetting" : "")}>
+        <div className={"process-flow relative mt-8 grid grid-cols-1 gap-y-5 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4 xl:gap-x-7 " + (isResetting ? "is-resetting" : "")}>
           {STEPS.map((s, i) => {
             const { Icon } = s
-            const isActive = activeStep === i
-            const isRevealed = revealedStep >= i
+            const isActive = displayedActiveStep === i
+            const isRevealed = displayedRevealedStep >= i
             return (
-              <div key={s.n} className={"process-step relative min-w-0 " + (isActive ? "is-active " : "") + (isRevealed ? "is-revealed" : "") }>
+              <div key={s.n} className={"process-step relative min-w-0 sm:rounded-[16px] sm:border sm:border-black/[0.06] sm:bg-white sm:p-4 xl:rounded-none xl:border-0 xl:bg-transparent xl:p-0 " + (isActive ? "is-active " : "") + (isRevealed ? "is-revealed" : "") }>
                 <div className="relative sm:hidden pl-12">
                   {i < STEPS.length - 1 && (
-                    <span aria-hidden className={"process-mobile-track " + (beamStep > i ? "is-travelled" : "")}>
+                    <span aria-hidden className={"process-mobile-track " + (displayedBeamStep > i ? "is-travelled" : "")}>
                       <ConnectorArrows segment={i} signal={arrowSignal} />
                     </span>
                   )}
@@ -150,30 +151,25 @@ export default function Platform() {
 
                 <div className="hidden sm:block">
                   {i < STEPS.length - 1 && (
-                  <>
-                    <span aria-hidden className={"process-mobile-track xl:hidden " + (beamStep > i ? "is-travelled" : "")}>
+                    <span aria-hidden className={"process-desktop-segment hidden xl:block " + (displayedBeamStep > i ? "is-travelled" : "")}>
                       <ConnectorArrows segment={i} signal={arrowSignal} />
                     </span>
-                    <span aria-hidden className={"process-desktop-segment hidden xl:block " + (beamStep > i ? "is-travelled" : "")}>
-                      <ConnectorArrows segment={i} signal={arrowSignal} />
-                    </span>
-                  </>
                   )}
 
                   <div className="flex items-center justify-between">
-                  <span className="process-number flex h-12 items-center rounded-md border border-black/20 bg-oraami-accent-secondary px-4 text-[15px] text-oraami-accent-24">
+                  <span className="process-number flex h-10 items-center rounded-md border border-black/15 bg-oraami-accent-secondary px-3 text-[14px] text-oraami-accent-24">
                     <span className="text-brand">.</span>
                     {s.n}
                   </span>
                   </div>
 
-                  <div className="process-content mt-8 xl:mt-10">
+                  <div className="process-content mt-5 xl:mt-8">
                   <span className={"process-icon process-icon--" + (i + 1)}>
                     <Icon className="h-5 w-5 text-brand" strokeWidth={1.75} />
                   </span>
-                  <p className="mt-7 text-[11px] uppercase tracking-widest text-brand">{s.label}</p>
-                  <h3 className="mt-3 text-[20px] font-medium tracking-tight text-ink">{s.title}</h3>
-                  <p className="mt-3 max-w-none text-[15px] leading-relaxed text-muted xl:max-w-[15rem]">{s.desc}</p>
+                  <p className="mt-5 text-[10px] uppercase tracking-widest text-brand">{s.label}</p>
+                  <h3 className="landing-card-title mt-2">{s.title}</h3>
+                  <p className="landing-card-description mt-2 max-w-none xl:max-w-[15rem]">{s.desc}</p>
                   </div>
                 </div>
               </div>

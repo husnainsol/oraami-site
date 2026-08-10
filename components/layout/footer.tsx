@@ -54,11 +54,11 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer id="contact" className="w-full bg-oraami-accent-secondary py-4 text-white sm:py-5 lg:py-6">
-      <div className="mx-auto w-full max-w-[1540px] px-4 sm:px-6 xl:px-0">
-        <div className="border border-brand/40 bg-brand px-6 py-7 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] sm:px-7 sm:py-8 lg:flex lg:items-center lg:justify-between lg:px-8">
+    <footer id="contact" className="w-full overflow-hidden bg-oraami-accent-secondary py-4 text-white sm:py-6">
+      <div className="landing-container">
+        <div className="rounded-[20px] border border-white/15 bg-brand px-5 py-6 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] sm:px-7 sm:py-7 lg:flex lg:items-center lg:justify-between lg:gap-10 lg:px-8">
           <div className="max-w-2xl">
-            <h2 className="text-[28px] font-medium leading-[1.05] tracking-[-0.03em] sm:text-[34px] lg:text-[38px]">
+            <h2 className="text-[26px] font-medium leading-[1.08] tracking-[-0.03em] sm:text-[32px] lg:text-[36px]">
               Ready to book more meetings with quality-first outreach?
             </h2>
             <p className="mt-3 max-w-xl text-[14px] leading-relaxed text-white/78 sm:text-[15px]">
@@ -68,13 +68,13 @@ export default function Footer() {
 
           <Link
             href="/contact"
-            className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-none border border-white/15 bg-oraami-accent-secondary px-6 text-[12px] font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:bg-[#140f38] sm:w-auto lg:mt-0"
+            className="mt-6 inline-flex h-11 w-full items-center justify-center rounded-xl border border-white/15 bg-oraami-accent-secondary px-6 text-[12px] font-semibold text-white transition-colors hover:bg-[#140f38] sm:w-auto lg:mt-0"
           >
             Book a call
           </Link>
         </div>
 
-        <div className="grid gap-10 pb-14 pt-8 sm:grid-cols-2 lg:grid-cols-[1.2fr_1.8fr] lg:gap-8">
+        <div className="grid gap-9 pb-10 pt-8 md:grid-cols-[0.9fr_1.1fr] lg:grid-cols-[1.1fr_1.9fr] lg:gap-10">
           <div className="min-w-0 pl-1 sm:pl-0">
             <Link href="/" aria-label="Oraami home" className="inline-flex items-center gap-3">
               <Image src="/O.svg" alt="" width={28} height={28} className="h-7 w-7" />
@@ -105,7 +105,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="grid min-w-0 grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+          <div className="grid min-w-0 grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:gap-8">
             {Object.entries(footerLinks)
               .filter(([heading]) => heading !== "Legal")
               .map(([heading, links]) => (

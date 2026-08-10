@@ -3,6 +3,8 @@ import path from "path"
 import matter from "gray-matter"
 import readingTime from "reading-time"
 
+export { formatDate } from "./format-date"
+
 export interface BlogPost {
   slug: string
   title: string
@@ -12,6 +14,9 @@ export interface BlogPost {
   category: string
   readingTime: string
   featured: boolean
+  image: string
+  imageAlt: string
+  imageCreditUrl: string
 }
 
 const postsDirectory = path.join(process.cwd(), "content/blog")
@@ -36,12 +41,14 @@ export function getAllPosts(): BlogPost[] {
         category: data.category || "Article",
         readingTime: readingTime(content).text,
         featured: Boolean(data.featured),
+        image: data.image || "",
+        imageAlt: data.imageAlt || data.title || "",
+        imageCreditUrl: data.imageCreditUrl || "",
       } as BlogPost
     })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 }
 
-export function formatDate(iso: string): string {
-  if (!iso) return ""
-  return new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })
+export function getLatestPosts(limit = 3): BlogPost[] {
+  return getAllPosts().slice(0, Math.max(0, limit))
 }

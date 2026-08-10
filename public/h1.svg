@@ -1,9 +1,6 @@
 
 <svg width="1368" height="663" viewBox="0 0 1368 663" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g filter="url(#filter0_f_1384_3101)">
-<rect x="37" y="32" width="1294" height="968.42" rx="16" fill="url(#paint0_linear_1384_3101)"/>
-</g>
-<g filter="url(#filter1_d_1384_3101)">
+<g>
 <rect x="38" y="33" width="1292" height="950.665" rx="30" fill="white" fill-opacity="0.01" shape-rendering="crispEdges"/>
 <rect x="38.5" y="33.5" width="1291" height="949.665" rx="29.5" stroke="white" stroke-opacity="0.1" shape-rendering="crispEdges"/>
 <path

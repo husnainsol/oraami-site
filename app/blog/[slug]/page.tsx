@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { MDXRemote } from "next-mdx-remote/rsc"
@@ -35,6 +36,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         type: "article",
         publishedTime: frontMatter.date,
         authors: [SITE_NAME],
+        images: frontMatter.image ? [{ url: frontMatter.image, alt: frontMatter.imageAlt }] : undefined,
+      },
+      twitter: {
+        ...metadata.twitter,
+        images: frontMatter.image ? [frontMatter.image] : undefined,
       },
     }
   } catch {
@@ -79,6 +85,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     },
     mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_URL}/blog/${frontMatter.slug}` },
     wordCount: content.split(/\s+/).length,
+    image: frontMatter.image ? `${SITE_URL}${frontMatter.image}` : undefined,
   }
 
   return (
@@ -112,6 +119,25 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <h1 className="mt-5 text-[30px] font-medium leading-[1.1] tracking-[-0.02em] text-heading sm:text-[38px] lg:text-[42px]">
             {frontMatter.title}
           </h1>
+          {frontMatter.image && (
+            <div className="mt-10">
+              <div className="relative aspect-[16/9] overflow-hidden rounded-[20px] bg-canvas-soft shadow-[0_24px_60px_-44px_rgba(32,21,21,0.3)]">
+                <Image
+                  src={frontMatter.image}
+                  alt={frontMatter.imageAlt}
+                  fill
+                  priority
+                  sizes="(min-width: 820px) 820px, 100vw"
+                  className="object-cover"
+                />
+              </div>
+              {frontMatter.imageCreditUrl && (
+                <a href={frontMatter.imageCreditUrl} target="_blank" rel="noopener noreferrer" className="mt-2 block text-right text-[11px] text-faint transition-colors hover:text-brand">
+                  Photo on Unsplash
+                </a>
+              )}
+            </div>
+          )}
         </div>
       </section>
 

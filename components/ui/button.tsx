@@ -9,19 +9,19 @@ import { cn } from "@/lib/utils"
  * Change a variant here and every button on the site updates.
  */
 const buttonVariants = cva(
-  "group inline-flex items-center justify-center gap-2 rounded-xl font-medium leading-none whitespace-nowrap transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-offset-2 focus-visible:ring-offset-canvas disabled:pointer-events-none disabled:opacity-55",
+  "group inline-flex items-center justify-center gap-2 rounded-lg font-medium leading-none whitespace-nowrap transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-offset-2 focus-visible:ring-offset-canvas disabled:pointer-events-none disabled:opacity-55",
   {
     variants: {
       variant: {
         primary: "bg-brand text-on-primary hover:bg-brand-hover",
-        secondary: "bg-ink text-on-primary hover:bg-brand",
+        secondary: "bg-oraami-accent-secondary text-on-primary hover:bg-brand",
         outline: "border border-ink/25 bg-canvas text-ink hover:border-ink hover:bg-canvas-soft",
         ghost: "bg-transparent text-ink hover:bg-canvas-soft hover:text-brand",
       },
       size: {
-        sm: "h-9 px-4 text-[14px]",
-        md: "h-11 px-5 text-[15px]",
-        lg: "h-12 px-6 text-[16px]",
+        sm: "h-9 px-3.5 text-[13px] sm:h-10 sm:px-4 sm:text-[14px]",
+        md: "h-10 px-4 text-[14px] sm:h-11 sm:px-5 sm:text-[15px]",
+        lg: "h-11 px-5 text-[14px] sm:h-12 sm:px-6 sm:text-[15px]",
       },
       fullWidth: { true: "w-full" },
     },

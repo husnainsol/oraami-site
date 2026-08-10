@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 import { getAllPosts, formatDate } from "@/lib/blog/blog"
@@ -66,9 +67,14 @@ export default function BlogPage() {
           {featured && (
             <Link
               href={`/blog/${featured.slug}`}
-              className="group flex flex-col justify-between gap-8 border border-black/10 bg-canvas-alt p-8 transition-colors hover:border-brand/30 sm:p-12 lg:flex-row lg:items-end"
+              className="group grid overflow-hidden rounded-[20px] border border-black/10 bg-white transition-colors hover:border-brand/30 lg:grid-cols-[0.9fr_1.1fr]"
             >
-              <div className="max-w-2xl">
+              {featured.image && (
+                <div className="relative min-h-[280px] overflow-hidden bg-canvas-soft lg:min-h-[420px]">
+                  <Image src={featured.image} alt={featured.imageAlt} fill priority sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+                </div>
+              )}
+              <div className="flex max-w-2xl flex-col justify-center p-8 sm:p-10 lg:p-12">
                 <div className="flex items-center gap-3 text-[11px] uppercase tracking-widest text-faint">
                   <span className="text-brand">{featured.category}</span>
                   <span>·</span>
@@ -78,11 +84,11 @@ export default function BlogPage() {
                   {featured.title}
                 </h2>
                 <p className="mt-4 text-[16px] leading-relaxed text-muted">{featured.excerpt}</p>
+                <span className="mt-7 inline-flex shrink-0 items-center gap-2 text-[12px] uppercase tracking-widest text-ink">
+                  Read article
+                  <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand" aria-hidden="true" />
+                </span>
               </div>
-              <span className="inline-flex shrink-0 items-center gap-2 text-[12px] uppercase tracking-widest text-ink">
-                Read article
-                <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand" aria-hidden="true" />
-              </span>
             </Link>
           )}
 
@@ -91,19 +97,26 @@ export default function BlogPage() {
               <Link
                 key={p.slug}
                 href={`/blog/${p.slug}`}
-                className="group flex flex-col rounded-xl border border-black/10 bg-canvas-soft p-7 transition-all duration-300 hover:-translate-y-1 hover:border-brand/30 hover:shadow-[0_24px_50px_-28px_rgba(20,10,0,0.4)]"
+                className="group flex flex-col overflow-hidden rounded-[18px] border border-black/10 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-brand/30 hover:shadow-[0_24px_50px_-28px_rgba(20,10,0,0.4)]"
               >
-                <div className="flex items-center gap-3 text-[11px] uppercase tracking-widest text-faint">
-                  <span className="text-brand">{p.category}</span>
-                  <span>·</span>
-                  <span>{p.readingTime}</span>
+                {p.image && (
+                  <div className="relative aspect-[16/10] overflow-hidden bg-canvas-soft">
+                    <Image src={p.image} alt={p.imageAlt} fill sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.035]" />
+                  </div>
+                )}
+                <div className="flex flex-1 flex-col p-6">
+                  <div className="flex items-center gap-3 text-[11px] uppercase tracking-widest text-faint">
+                    <span className="text-brand">{p.category}</span>
+                    <span>·</span>
+                    <span>{p.readingTime}</span>
+                  </div>
+                  <h3 className="mt-5 flex-1 text-[21px] font-medium leading-snug tracking-tight text-ink">{p.title}</h3>
+                  <p className="mt-3 text-[15px] leading-relaxed text-muted">{p.excerpt}</p>
+                  <span className="mt-6 inline-flex items-center gap-1.5 border-t border-dashed border-black/15 pt-5 text-[11px] uppercase tracking-widest text-ink">
+                    <time dateTime={p.date}>{formatDate(p.date)}</time>
+                    <ArrowUpRight className="ml-auto h-4 w-4 text-faint transition-colors group-hover:text-brand" aria-hidden="true" />
+                  </span>
                 </div>
-                <h3 className="mt-5 flex-1 text-[21px] font-medium leading-snug tracking-tight text-ink">{p.title}</h3>
-                <p className="mt-3 text-[15px] leading-relaxed text-muted">{p.excerpt}</p>
-                <span className="mt-6 inline-flex items-center gap-1.5 border-t border-dashed border-black/15 pt-5 text-[11px] uppercase tracking-widest text-ink">
-                  <time dateTime={p.date}>{formatDate(p.date)}</time>
-                  <ArrowUpRight className="ml-auto h-4 w-4 text-faint transition-colors group-hover:text-brand" aria-hidden="true" />
-                </span>
               </Link>
             ))}
           </div>
