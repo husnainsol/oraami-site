@@ -1,4 +1,5 @@
 import Hero from "@/components/sections/hero"
+import StatsStrip from "@/components/sections/stats-strip"
 import Features from "@/components/sections/features"
 import Platform from "@/components/sections/platform"
 import Results from "@/components/sections/results"
@@ -10,16 +11,17 @@ import Pricing from "@/components/sections/pricing"
 
 export default function Home() {
   return (
-    <main className="flex flex-col gap-3 bg-canvas sm:gap-4">
+    <main className="flex flex-col bg-canvas">
       <Hero />
+      <StatsStrip />
       <Features />
       <Platform />
       <Results />
-      <Solutions />
       <WhyChooseUs />
       <Testimonials />
-      <Pricing />
+      <Solutions />
       <Insights />
+      <Pricing />
     </main>
   )
 }

@@ -20,7 +20,7 @@ export function IcpResearchVisual({ play, reduceMotion }: FeatureVisualProps) {
         <ChartGrid width={420} height={250} />
         <motion.rect
           x="302" y="24" width="104" height="100" rx="14"
-          fill="rgba(255,79,0,0.055)" stroke="var(--color-oraami-accent-1)" strokeDasharray="5 5"
+          fill="rgba(245,73,0,0.055)" stroke="var(--color-oraami-accent-1)" strokeDasharray="5 5"
           animate={loop ? { opacity: [0, 1, 1, 0] } : { opacity: 1 }}
           transition={loop ? { duration: VISUAL_DURATION, times: [0, 0.2, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}
         />

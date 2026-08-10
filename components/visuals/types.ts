@@ -3,7 +3,6 @@ export type FeatureVisualId =
   | "research"
   | "stakeholders"
   | "sequences"
-  | "analytics"
 
 export interface FeatureVisualProps {
   play: boolean

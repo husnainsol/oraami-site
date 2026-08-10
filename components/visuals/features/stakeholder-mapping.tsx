@@ -15,7 +15,7 @@ export function StakeholderMappingVisual({ play, reduceMotion }: FeatureVisualPr
 
   return (
     <FeatureVisualFrame>
-      <div className="relative h-full overflow-hidden rounded-[20px] border border-black/8 bg-[radial-gradient(circle_at_50%_44%,rgba(255,79,0,0.08),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.98),rgba(247,242,238,0.94))]">
+      <div className="relative h-full overflow-hidden rounded-[20px] border border-black/8 bg-[radial-gradient(circle_at_50%_44%,rgba(245,73,0,0.08),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.98),rgba(247,242,238,0.94))]">
         <svg viewBox="0 0 420 250" className="absolute inset-0 h-full w-full" role="img" aria-label="Buying committee stakeholder map">
           <defs>
             <linearGradient id="stakeholder-route" x1="0" y1="0" x2="1" y2="1">

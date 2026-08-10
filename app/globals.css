@@ -4,21 +4,17 @@
   --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
 
-  --color-brand: #ff4f00;
-  --color-brand-hover: #e64700;
-  --color-brand-glow: #ff7a33;
-  --color-brand-faded: #c98a6a;
+  --color-brand: #ff5702;
+  --color-brand-hover: #e64d00;
+  --color-brand-deep: #f54900;
   --color-on-primary: #fffefb;
 
-  --color-ink: #201515;
-  --color-ink-soft: #2f2a26;
-  --color-ink-mid: #36342e;
+  --color-ink: #101828;
   --color-ink-mute: #36342e;
-  --color-heading: #201515;
-  --color-body: #605d52;
-  --color-muted: #605d52;
-  --color-body-mid: #939084;
-  --color-faint: #939084;
+  --color-heading: #1e1a4d;
+  --color-body: #6a7282;
+  --color-muted: #6a7282;
+  --color-faint: #99a1af;
   --color-mute: #c5c0b1;
   --color-hint: #c5c0b1;
   --color-line-num: #c5c0b1;
@@ -27,46 +23,22 @@
   --color-canvas-soft: #f8f4f0;
   --color-canvas-alt: #f8f4f0;
   --color-surface-dark: #201515;
-  --color-console: #1a1310;
 
   --color-outline: #939084;
-  --color-oraami-secondary: #1e1a4d;
   --color-oraami-accent-secondary: #1e1a4d;
 
   --color-oraami-accent-1: #ff4f00;
-  --color-oraami-accent-2: #e64700;
-  --color-oraami-accent-3: #ff7a33;
-  --color-oraami-accent-4: #c98a6a;
-  --color-oraami-accent-5: #fffefb;
-  --color-oraami-accent-6: #201515;
-  --color-oraami-accent-7: #2f2a26;
-  --color-oraami-accent-8: #36342e;
-  --color-oraami-accent-9: #605d52;
-  --color-oraami-accent-10: #939084;
-  --color-oraami-accent-11: #c5c0b1;
-  --color-oraami-accent-12: #fcfcfa;
-  --color-oraami-accent-13: #f8f4f0;
-  --color-oraami-accent-14: #1a1310;
-  --color-oraami-accent-15: #08090b;
-  --color-oraami-accent-16: #ff5702;
-  --color-oraami-accent-17: #ff5a1f;
-  --color-oraami-accent-18: #ff8918;
-  --color-oraami-accent-19: #f3f3f1;
-  --color-oraami-accent-20: #a0a3ad;
-  --color-oraami-accent-21: #e53935;
-  --color-oraami-accent-22: #c82926;
-  --color-oraami-accent-23: #ffffff;
   --color-oraami-accent-24: #faf8f6;
   --color-oraami-accent-25: #0f766e;
   --color-oraami-accent-26: #7157a8;
   --color-oraami-accent-27: #2563eb;
   --color-oraami-accent-28: #d97706;
-  --color-oraami-accent-29: #140f38;
-  --color-oraami-accent-30: #b8aaa2;
-  --color-oraami-accent-31: #c5b8b0;
-  --color-oraami-accent-32: #8f8179;
-  --color-oraami-accent-33: #9f8d83;
-  --color-oraami-accent-34: #ff6a29;
+}
+
+:root {
+  /* Fallbacks — next/font overrides these via the variable classes on <html>. */
+  --font-inter: ui-sans-serif;
+  --font-geist-mono: ui-monospace;
 }
 
 html {
@@ -86,9 +58,9 @@ body {
 
 .site-container {
   width: 100%;
-  max-width: 96.25rem;
+  max-width: 81.5rem;
   margin-inline: auto;
-  padding-inline: 1rem;
+  padding-inline: 1.25rem;
 }
 
 @media (min-width: 40rem) {
@@ -105,9 +77,9 @@ body {
 
 .landing-container,
 .viewport-landing-container {
-  max-width: 96.25rem;
+  max-width: 81.5rem;
   margin-inline: auto;
-  padding-inline: 1rem;
+  padding-inline: 1.25rem;
 }
 
 .landing-container {
@@ -162,62 +134,57 @@ body {
   }
 }
 
+.qd-dot {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #d7d7de;
+  opacity: 0.55;
+  animation: qdSettle 6s ease-in-out infinite;
+}
+
+.qd-dot.qd-keep {
+  animation-name: qdKeep;
+}
+
+@keyframes qdSettle {
+  0%   { opacity: 0.55; transform: scale(0.9); background: #d7d7de; }
+  8%   { opacity: 0.9;  transform: scale(1);   background: #b9b9c4; }
+  38%  { opacity: 0.9;  transform: scale(1);   background: #b9b9c4; }
+  50%  { opacity: 0;    transform: scale(0.5); background: #d7d7de; }
+  100% { opacity: 0;    transform: scale(0.5); background: #d7d7de; }
+}
+
+@keyframes qdKeep {
+  0%   { opacity: 0.55; transform: scale(0.9); background: #d7d7de; }
+  8%   { opacity: 1;    transform: scale(1);   background: var(--color-brand-deep); }
+  92%  { opacity: 1;    transform: scale(1);   background: var(--color-brand-deep); }
+  100% { opacity: 0.55; transform: scale(0.9); background: #d7d7de; }
+}
+
+.qd-badge {
+  opacity: 0;
+  animation: qdBadge 6s ease-in-out infinite;
+}
+
+@keyframes qdBadge {
+  0%, 42%  { opacity: 0; transform: translateY(6px); }
+  52%, 88% { opacity: 1; transform: translateY(0); }
+  100%     { opacity: 0; transform: translateY(6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qd-dot { animation: none; opacity: 0; }
+  .qd-dot.qd-keep { animation: none; opacity: 1; background: var(--color-brand-deep); transform: none; }
+  .qd-badge { animation: none; opacity: 1; transform: none; }
+}
+
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 @utility animate-marquee {
   animation: marquee 20s linear infinite;
-}
-
-@keyframes heroRise {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; translate: 0 0; }
-}
-@utility hero-rise {
-  animation: heroRise 2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-}
-
-@keyframes hubPulse {
-  0%, 100% { opacity: 0.9; }
-  50% { opacity: 0.5; }
-}
-
-.automation-card {
-  position: relative;
-  isolation: isolate;
-  transform: translate3d(0, 0, 0);
-  transition: transform 250ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 250ms ease, border-color 250ms ease;
-}
-
-.automation-card:hover {
-  transform: translate3d(0, -4px, 0);
-}
-
-@keyframes automationLargeEnter {
-  from { opacity: 0; scale: 0.985; }
-  to { opacity: 1; scale: 1; }
-}
-
-@keyframes automationCardEnter {
-  from { opacity: 0; translate: 0 10px; }
-  to { opacity: 1; translate: 0 0; }
-}
-
-.automation-card--large { animation: automationLargeEnter 650ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
-.automation-card--medium { animation: automationCardEnter 560ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
-.automation-card--small { animation: automationCardEnter 480ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
-.automation-card--small:nth-child(3), .automation-card--small:nth-child(6) { animation-delay: 70ms; }
-.automation-card--small:nth-child(4) { animation-delay: 140ms; }
-
-@supports (animation-timeline: view()) {
-  .automation-card {
-    animation-timeline: view();
-    animation-range: entry 5% cover 28%;
-  }
-
-  .automation-card--small:nth-child(3), .automation-card--small:nth-child(6) { animation-range: entry 8% cover 31%; }
-  .automation-card--small:nth-child(4) { animation-range: entry 11% cover 34%; }
 }
 
 .process-flow.is-resetting .process-desktop-segment,

@@ -8,14 +8,14 @@ import {
 } from "framer-motion"
 import { useRef } from "react"
 import { useReducedMotionPreference } from "@/components/ui/use-reduced-motion-preference"
+import { QualityDotsVisual } from "@/components/visuals/quality-dots"
 
 type Principle = {
   n: string
   label: string
   title: string
   desc: string
-  image: string
-  alt: string
+  alt?: string
 }
 
 const PRINCIPLES: Principle[] = [
@@ -24,15 +24,12 @@ const PRINCIPLES: Principle[] = [
     label: "QUALITY",
     title: "Quality over volume",
     desc: "We cap every ICP at 50 high-fit accounts, so your team works the leads that convert — never a bloated list.",
-    image: "/images/principles/quality-over-volume-v2.png",
-    alt: "One carefully selected high-value account isolated from a larger prospect pool",
   },
   {
     n: "02",
     label: "ICP",
     title: "Built around your ICP",
     desc: "Oraami learns exactly who you sell to and shapes every play around your ideal customer, not a generic template.",
-    image: "/p2.svg",
     alt: "Built around your ICP",
   },
   {
@@ -40,16 +37,12 @@ const PRINCIPLES: Principle[] = [
     label: "RESEARCH",
     title: "Deep research, every lead",
     desc: "5–10 minutes of autonomous AI research on each prospect and their full buying committee before a word is sent.",
-    image: "/images/principles/deep-lead-research-v2.png",
-    alt: "A precision research lens revealing layered evidence around a selected account",
   },
   {
     n: "04",
     label: "TRUST",
     title: "Trust that compounds",
     desc: "8–12 personalised touches over 6–12 weeks turn cold accounts into warm relationships that keep paying off.",
-    image: "/p4.svg",
-    alt: "Trust illustration",
   },
 ]
 
@@ -117,14 +110,8 @@ function CopyBlock({
 function WhiteImageCard({ principle }: { principle: Principle }) {
   return (
     <article className="flex h-full w-full flex-col overflow-hidden rounded-[15px] border border-black/[0.05] bg-white p-4 shadow-[0_16px_40px_-36px_rgba(15,23,42,0.26)]">
-      <div className="relative aspect-[16/8] w-full shrink-0 overflow-hidden rounded-[11px] bg-[#f8f8f6]">
-        <Image
-          src={principle.image}
-          alt={principle.alt}
-          fill
-          sizes="(min-width: 1280px) 480px, (min-width: 768px) 50vw, 100vw"
-          className="object-cover object-center"
-        />
+      <div className="relative aspect-[16/8] w-full shrink-0 overflow-hidden rounded-[11px] bg-[linear-gradient(180deg,#fafaf9_0%,#f3f3f1_100%)]">
+        <QualityDotsVisual />
       </div>
 
       <div className="mt-4 min-w-0 flex-1">
@@ -144,7 +131,7 @@ function NotchCard({ principle }: { principle: Principle }) {
     <article className="relative h-full w-full overflow-hidden">
       <Image
         src="/p2.svg"
-        alt={principle.alt}
+        alt={principle.alt ?? principle.title}
         fill
         unoptimized
         sizes="(min-width: 1280px) 500px, (min-width: 640px) 50vw, 100vw"
@@ -154,35 +141,10 @@ function NotchCard({ principle }: { principle: Principle }) {
   )
 }
 
-function ResearchCard({ principle }: { principle: Principle }) {
-  return (
-    <article className="flex h-full w-full flex-col overflow-hidden rounded-[15px] border border-black/[0.05] bg-white p-4 shadow-[0_14px_36px_-34px_rgba(15,23,42,0.24)] sm:flex-row sm:items-stretch">
-      <div className="min-w-0 flex-1 pr-0 sm:pr-4">
-        <CopyBlock
-          n={principle.n}
-          label={principle.label}
-          title={principle.title}
-          desc={principle.desc}
-        />
-      </div>
-
-      <div className="relative mt-4 aspect-[16/8] w-full shrink-0 overflow-hidden rounded-[10px] bg-[#fbfbf8] sm:mt-0 sm:aspect-auto sm:w-[124px] sm:self-stretch xl:w-[136px]">
-        <Image
-          src={principle.image}
-          alt={principle.alt}
-          fill
-          sizes="(min-width: 1280px) 152px, (min-width: 640px) 138px, 100vw"
-          className="object-cover object-center"
-        />
-      </div>
-    </article>
-  )
-}
-
 function TrustCard({ principle }: { principle: Principle }) {
   return (
-    <article className="h-full w-full overflow-hidden rounded-[15px] border border-brand/35 bg-white p-4 shadow-[0_12px_30px_-30px_rgba(255,79,0,0.3)]">
-      <div className="max-w-[270px]">
+    <article className="h-full w-full overflow-hidden rounded-[15px] border border-brand/35 bg-white p-4 shadow-[0_12px_30px_-30px_rgba(245,73,0,0.3)]">
+      <div className="max-w-[330px]">
         <CopyBlock
           n={principle.n}
           label={principle.label}
@@ -204,7 +166,7 @@ function WhyChooseUsDesktop({ active }: { active: boolean }) {
     >
       <motion.div
         variants={itemVariants}
-        className="h-[340px] min-w-0"
+        className="h-[352px] min-w-0"
       >
         <WhiteImageCard principle={PRINCIPLES[0]} />
       </motion.div>
@@ -220,7 +182,7 @@ function WhyChooseUsDesktop({ active }: { active: boolean }) {
         variants={itemVariants}
         className="grid h-[340px] min-w-0 grid-rows-2 gap-3"
       >
-        <ResearchCard principle={PRINCIPLES[2]} />
+        <TrustCard principle={PRINCIPLES[2]} />
         <TrustCard principle={PRINCIPLES[3]} />
       </motion.div>
     </motion.div>
@@ -250,7 +212,7 @@ function WhyChooseUsResponsive({ active }: { active: boolean }) {
         variants={itemVariants}
         className="min-h-[180px] min-w-0"
       >
-        <ResearchCard principle={PRINCIPLES[2]} />
+        <TrustCard principle={PRINCIPLES[2]} />
       </motion.div>
 
       <motion.div

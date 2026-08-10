@@ -108,7 +108,11 @@ export default function Platform() {
     <section ref={sectionRef} id="platform" className="relative w-full bg-canvas text-ink">
       <div className="landing-container py-12 sm:py-14 lg:py-16">
         <div className="max-w-2xl">
-          <h2 className="landing-section-title">
+          <p className="flex items-center gap-2.5 text-[12px] font-medium uppercase tracking-[0.24em] text-[#a8a69d]">
+            <span aria-hidden="true" className="h-2 w-2 bg-brand-deep" />
+            The Process
+          </p>
+          <h2 className="landing-section-title mt-3">
             How it works
           </h2>
           <p className="landing-section-description mt-4 max-w-xl">
@@ -133,16 +137,16 @@ export default function Platform() {
                   <div className="pb-1">
                     <div className="flex items-center justify-between">
                       <span className="process-number flex h-10 items-center rounded-md border border-black/20 bg-oraami-accent-secondary px-3 text-[14px] text-oraami-accent-24">
-                        <span className="text-brand">.</span>
+                        <span className="text-brand-deep">.</span>
                         {s.n}
                       </span>
                     </div>
 
                     <div className="process-content mt-7">
                       <span className={"process-icon process-icon--" + (i + 1)}>
-                        <Icon className="h-5 w-5 text-brand" strokeWidth={1.75} />
+                        <Icon className="h-5 w-5 text-brand-deep" strokeWidth={1.75} />
                       </span>
-                      <p className="mt-6 text-[11px] uppercase tracking-widest text-brand">{s.label}</p>
+                      <p className="mt-6 text-[11px] uppercase tracking-widest text-brand-deep">{s.label}</p>
                       <h3 className="mt-3 text-[19px] font-medium tracking-tight text-ink">{s.title}</h3>
                       <p className="mt-3 text-[14px] leading-relaxed text-muted">{s.desc}</p>
                     </div>
@@ -158,16 +162,16 @@ export default function Platform() {
 
                   <div className="flex items-center justify-between">
                   <span className="process-number flex h-10 items-center rounded-md border border-black/15 bg-oraami-accent-secondary px-3 text-[14px] text-oraami-accent-24">
-                    <span className="text-brand">.</span>
+                    <span className="text-brand-deep">.</span>
                     {s.n}
                   </span>
                   </div>
 
                   <div className="process-content mt-5 xl:mt-8">
                   <span className={"process-icon process-icon--" + (i + 1)}>
-                    <Icon className="h-5 w-5 text-brand" strokeWidth={1.75} />
+                    <Icon className="h-5 w-5 text-brand-deep" strokeWidth={1.75} />
                   </span>
-                  <p className="mt-5 text-[10px] uppercase tracking-widest text-brand">{s.label}</p>
+                  <p className="mt-5 text-[10px] uppercase tracking-widest text-brand-deep">{s.label}</p>
                   <h3 className="landing-card-title mt-2">{s.title}</h3>
                   <p className="landing-card-description mt-2 max-w-none xl:max-w-[15rem]">{s.desc}</p>
                   </div>

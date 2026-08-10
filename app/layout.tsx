@@ -25,7 +25,7 @@ const geistMono = Geist_Mono({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#ff4f00",
+  themeColor: "#ff5702",
   width: "device-width",
   initialScale: 1,
 };
@@ -123,7 +123,7 @@ export default function RootLayout({
           <style>{`[style*="opacity:0"],[style*="opacity: 0"]{opacity:1!important;transform:none!important}`}</style>
         </noscript>
         <Navbar />
-        <div id="main-content" className="pt-[72px] lg:pt-[64px]">{children}</div>
+        <div id="main-content" className="pt-[72px] lg:pt-[100px]">{children}</div>
         <Footer />
       </body>
     </html>

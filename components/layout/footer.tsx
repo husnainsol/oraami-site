@@ -54,7 +54,7 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer id="contact" className="w-full overflow-hidden bg-oraami-accent-secondary py-4 text-white sm:py-6">
+    <footer id="contact" className="mt-3 w-full overflow-hidden bg-oraami-accent-secondary py-4 text-white sm:mt-4 sm:py-6">
       <div className="landing-container">
         <div className="rounded-[20px] border border-white/15 bg-brand px-5 py-6 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] sm:px-7 sm:py-7 lg:flex lg:items-center lg:justify-between lg:gap-10 lg:px-8">
           <div className="max-w-2xl">

@@ -4,7 +4,6 @@ import { useEffect, useRef, useState, type KeyboardEvent } from "react"
 import { AnimatePresence, motion, useAnimationControls, useInView, type Variants } from "framer-motion"
 import {
   ArrowRight,
-  BarChart3,
   Mail,
   Network,
   Search,
@@ -59,14 +58,6 @@ const FEATURES: Feature[] = [
     desc: "A carefully timed sequence of personalised emails over an extended window builds genuine relationships and stronger trust.",
     metric: "6-12",
     metricLabel: "week window",
-  },
-  {
-    id: "analytics",
-    Icon: BarChart3,
-    title: "Analytics & Reporting",
-    desc: "Track replies, meetings, and pipeline performance across every ICP in real time with clearer team visibility.",
-    metric: "Live",
-    metricLabel: "reporting view",
   },
 ]
 
@@ -201,9 +192,11 @@ function FeatureTab({
       }}
       whileHover={reduce ? undefined : { y: -2 }}
       whileTap={reduce ? undefined : { scale: 0.99 }}
-      className="group relative flex h-[88px] w-full flex-col justify-between overflow-hidden rounded-xl border-0 px-3 py-3 text-left transition-[transform,box-shadow,border-color,background-color] duration-200 sm:h-[94px] sm:px-3.5 lg:h-[98px]"
+      className={`group relative flex h-[88px] w-full flex-col justify-between overflow-hidden rounded-xl border px-3 py-3 text-left transition-[transform,box-shadow,border-color,background-color] duration-200 sm:h-[94px] sm:px-3.5 lg:h-[98px] ${
+        active ? "border-brand" : "border-transparent"
+      }`}
       animate={{}}
-      style={{ backgroundColor: active ? "rgba(255,79,0,0.08)" : "#F2F2F2" }}
+      style={{ backgroundColor: active ? "rgba(245,73,0,0.08)" : "#F2F2F2" }}
     >
       {active ? (
         <motion.span
@@ -272,10 +265,10 @@ function FeatureDetails({ feature, reduce }: { feature: Feature; reduce: boolean
       exit={reduce ? undefined : "exit"}
     >
       <motion.div
-        className="flex h-full flex-col justify-center py-2 md:py-4 lg:py-5"
+        className="flex h-full flex-col justify-center py-2 md:py-0"
         variants={reduce ? undefined : detailVariants}
       >
-        <div className="space-y-4 px-1 md:pl-4 md:pr-0 lg:pl-5">
+        <div className="space-y-4">
           <h3 className="landing-card-title max-w-[22ch] text-[clamp(1.5rem,2.4vw,1.8rem)]">
             {feature.title}
           </h3>
@@ -387,7 +380,7 @@ export default function Features() {
     <section ref={sectionRef} id="features" className="relative w-full overflow-hidden bg-[#FFFFFF] text-ink">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(255,79,0,0.04),transparent_30%),radial-gradient(circle_at_80%_20%,rgba(255,79,0,0.03),transparent_28%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(245,73,0,0.04),transparent_30%),radial-gradient(circle_at_80%_20%,rgba(245,73,0,0.03),transparent_28%)]"
       />
 
       <div className="landing-container relative py-12 sm:py-14 lg:py-16">
@@ -412,14 +405,14 @@ export default function Features() {
           initial={false}
           animate={entered ? "visible" : "hidden"}
           variants={listVariants}
-          className="relative mt-8 rounded-[16px] border border-black/5 bg-white p-2.5 sm:p-3"
+          className="relative mt-6 rounded-[16px] border border-black/5 bg-white p-2.5 sm:p-3"
           onKeyDown={handleKeyDown}
           onMouseEnter={() => setAutoplayPaused(true)}
           onMouseLeave={handleAutoplayResume}
         >
-          <div ref={tabListRef} className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+          <div ref={tabListRef} className="grid grid-cols-2 gap-2 lg:grid-cols-4">
             {FEATURES.map((feature, index) => (
-              <motion.div key={feature.id} variants={fadeUp} className={`min-w-0 ${index === FEATURES.length - 1 ? "col-span-2 sm:col-span-1" : ""}`}>
+              <motion.div key={feature.id} variants={fadeUp} className="min-w-0">
                 <FeatureTab
                   feature={feature}
                   index={index}
@@ -436,7 +429,7 @@ export default function Features() {
         </motion.div>
 
         <motion.div
-          className="mt-5 h-auto rounded-[20px] border border-black/[0.04] bg-white p-3 shadow-[0_14px_38px_-34px_rgba(32,21,21,0.32)] sm:rounded-[24px] sm:p-4 md:h-[330px] lg:h-[350px] lg:p-5"
+          className="mt-6 h-auto rounded-[20px] border border-black/[0.04] bg-white p-4 shadow-[0_14px_38px_-34px_rgba(32,21,21,0.32)] sm:rounded-[24px] sm:p-5 md:h-[380px] lg:h-[407px] lg:p-10"
           initial={reduce ? false : { opacity: 0, y: 16 }}
           animate={entered ? { opacity: 1, y: 0 } : undefined}
           transition={{ duration: reduce ? 0 : 0.55, ease }}

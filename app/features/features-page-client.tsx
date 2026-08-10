@@ -433,7 +433,7 @@ function FeatureVisual({ feature }: { feature: Feature }) {
         {!reduceMotion && (
           <motion.div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-y-0 left-0 z-20 w-[22%] bg-[linear-gradient(90deg,transparent,rgba(255,79,0,0.07),transparent)]"
+            className="pointer-events-none absolute inset-y-0 left-0 z-20 w-[22%] bg-[linear-gradient(90deg,transparent,rgba(245,73,0,0.07),transparent)]"
             initial={{ left: "-25%", opacity: 0 }}
             animate={{ left: "110%", opacity: [0, 1, 0] }}
             transition={{ duration: 0.95, ease: EASE }}
@@ -457,7 +457,7 @@ function FeatureVisual({ feature }: { feature: Feature }) {
                     animate={index === 0 ? { y: 0, opacity: 1 } : { y: 0, opacity: 0.66 }}
                     className={cn(
                       "rounded-[22px] border p-4 transition-shadow",
-                      index === 0 ? "border-brand/25 bg-brand/[0.04] shadow-[0_12px_28px_-18px_rgba(255,79,0,0.35)]" : "border-black/10 bg-white",
+                      index === 0 ? "border-brand/25 bg-brand/[0.04] shadow-[0_12px_28px_-18px_rgba(245,73,0,0.35)]" : "border-black/10 bg-white",
                     )}
                   >
                     <div className="flex items-start justify-between gap-3">
@@ -610,7 +610,7 @@ function FeatureVisual({ feature }: { feature: Feature }) {
               <div className="relative h-full min-h-0 overflow-hidden rounded-[22px] border border-black/10 bg-canvas-soft">
                 <svg aria-hidden="true" viewBox="0 0 600 340" preserveAspectRatio="none" className="pointer-events-none absolute inset-0 h-full w-full">
                   {["M300 170 L90 65", "M300 170 L510 65", "M300 170 L84 170", "M300 170 L516 170", "M300 170 L130 285", "M300 170 L470 285"].map((path, index) => (
-                    <motion.path key={path} d={path} stroke={index < 2 ? "rgba(255,79,0,0.5)" : "rgba(30,26,77,0.2)"} strokeWidth="2" fill="none" initial={reduceMotion ? { pathLength: 1 } : { pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.65, delay: index * 0.07, ease: EASE }} />
+                    <motion.path key={path} d={path} stroke={index < 2 ? "rgba(245,73,0,0.5)" : "rgba(30,26,77,0.2)"} strokeWidth="2" fill="none" initial={reduceMotion ? { pathLength: 1 } : { pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.65, delay: index * 0.07, ease: EASE }} />
                   ))}
                 </svg>
                 <div className="absolute left-1/2 top-1/2 z-10 flex h-[72px] w-[112px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-[18px] border border-brand/30 bg-oraami-accent-secondary text-center text-white shadow-[0_18px_38px_-22px_rgba(30,26,77,0.65)]">
@@ -783,7 +783,7 @@ function FeatureVisual({ feature }: { feature: Feature }) {
                 <div className="rounded-[20px] border border-black/10 bg-white p-4">
                   <p className="text-[11px] uppercase tracking-[0.18em] text-muted">Trend line</p>
                   <svg viewBox="0 0 240 120" className="mt-3 h-28 w-full" aria-hidden="true">
-                    <path d="M12 92 C 44 84, 62 78, 84 74 S 126 54, 154 42 S 198 28, 228 20" fill="none" stroke="rgba(255,79,0,0.75)" strokeWidth="3" strokeLinecap="round" />
+                    <path d="M12 92 C 44 84, 62 78, 84 74 S 126 54, 154 42 S 198 28, 228 20" fill="none" stroke="rgba(245,73,0,0.75)" strokeWidth="3" strokeLinecap="round" />
                     <path d="M12 92 C 44 84, 62 78, 84 74 S 126 54, 154 42 S 198 28, 228 20" fill="none" stroke="rgba(30,26,77,0.12)" strokeWidth="10" strokeLinecap="round" />
                   </svg>
                 </div>
@@ -840,7 +840,7 @@ function HeroFeatures() {
     <section className="relative w-full overflow-hidden border-b border-black/10 bg-canvas">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,79,0,0.07),transparent_30%),radial-gradient(circle_at_78%_18%,rgba(30,26,77,0.08),transparent_32%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(245,73,0,0.07),transparent_30%),radial-gradient(circle_at_78%_18%,rgba(30,26,77,0.08),transparent_32%)]"
       />
       <div
         aria-hidden
@@ -872,7 +872,7 @@ function HeroFeatures() {
             From defining your ICP to detecting buying signals, mapping decision-makers and building trust, Oraami runs the complete research process so your team can focus on qualified conversations.
           </p>
           <div className="mt-6 flex flex-wrap gap-3.5">
-            <Button href="#journey" variant="primary" size="lg" icon={ArrowRight} className="h-[54px] px-7 shadow-[0_12px_30px_-14px_rgba(255,79,0,0.8)] transition-[color,background-color,box-shadow,transform] hover:-translate-y-0.5 hover:shadow-[0_16px_34px_-14px_rgba(255,79,0,0.9)] active:translate-y-0">
+            <Button href="#journey" variant="primary" size="lg" icon={ArrowRight} className="h-[54px] px-7 shadow-[0_12px_30px_-14px_rgba(245,73,0,0.8)] transition-[color,background-color,box-shadow,transform] hover:-translate-y-0.5 hover:shadow-[0_16px_34px_-14px_rgba(245,73,0,0.9)] active:translate-y-0">
               Explore the workflow
             </Button>
             <Button href="/contact" variant="outline" size="lg" className="h-[54px] px-7 transition-[color,background-color,border-color,transform] hover:-translate-y-0.5 active:translate-y-0">
@@ -960,7 +960,7 @@ function JourneySection() {
                 className={cn(
                   "group flex min-h-[62px] w-[13rem] shrink-0 items-center gap-2.5 rounded-[17px] border px-3 py-2.5 text-left outline-none transition-[border-color,background-color,color,box-shadow] duration-300 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 min-[1180px]:w-[calc(12.5%_-_0.4375rem)]",
                   activeTab
-                    ? "border-brand/25 bg-brand/[0.055] text-heading shadow-[0_12px_28px_-24px_rgba(255,79,0,0.7)]"
+                    ? "border-brand/25 bg-brand/[0.055] text-heading shadow-[0_12px_28px_-24px_rgba(245,73,0,0.7)]"
                     : "border-transparent bg-canvas-soft/80 text-muted hover:border-black/10 hover:bg-white",
                 )}
               >
@@ -1024,7 +1024,7 @@ function JourneySection() {
     <section id="journey" className="relative w-full overflow-clip border-b border-black/10 bg-canvas text-ink">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_0%,rgba(255,79,0,0.05),transparent_26%),radial-gradient(circle_at_80%_15%,rgba(30,26,77,0.05),transparent_28%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_0%,rgba(245,73,0,0.05),transparent_26%),radial-gradient(circle_at_80%_15%,rgba(30,26,77,0.05),transparent_28%)]"
       />
       <div className="site-container relative pt-14 sm:pt-16 lg:hidden">
         <SectionIntro

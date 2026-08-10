@@ -29,10 +29,6 @@ const PRIMARY_LINKS = [
   { href: "/about", label: "About" },
   { href: "#pricing", label: "Pricing" },
   { href: "/blog", label: "Blog" },
-]
-
-const MOBILE_LINKS = [
-  ...PRIMARY_LINKS,
   { href: "/contact", label: "Contact" },
 ]
 
@@ -46,7 +42,6 @@ function NavbarShell({ pathname }: { pathname: string }) {
   const [scrolled, setScrolled] = useState(false)
   const reduceMotion = useReducedMotionPreference()
   const onHome = pathname === "/"
-  const darkHeader = open || (onHome && !scrolled)
 
   const to = (href: string) => (href.startsWith("#") ? (onHome ? href : "/" + href) : href)
 
@@ -87,78 +82,46 @@ function NavbarShell({ pathname }: { pathname: string }) {
 
   return (
     <header
-      data-nav-state={darkHeader ? "hero" : "scrolled"}
-      className={`fixed inset-x-0 top-0 z-[100] w-full transition-[background-color,color,box-shadow] ${
+      className={`fixed inset-x-0 top-0 z-[100] w-full bg-white text-ink transition-shadow ${
         reduceMotion ? "duration-0" : "duration-300"
-      } ${
-        darkHeader
-          ? "bg-oraami-accent-secondary text-white"
-          : "bg-white/95 text-ink shadow-[0_6px_20px_-18px_rgba(30,26,77,0.22)] backdrop-blur supports-[backdrop-filter]:bg-white/90"
-      }`}
+      } ${scrolled && !open ? "shadow-[0_6px_20px_-18px_rgba(30,26,77,0.22)]" : ""}`}
     >
       <div className="viewport-landing-container">
-        <div className="relative flex h-[72px] w-full items-center justify-between lg:h-[64px]">
-          <div className="flex min-w-0 items-center gap-10 xl:gap-12">
-            <NavLink
-              href={onHome ? "#hero" : "/"}
-              aria-label="Oraami home"
-              className="relative block h-[38px] w-[99px] shrink-0 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
-            >
-              <Image
-                src="/icon1-light.svg"
-                alt="Oraami"
-                width={99}
-                height={38}
-                priority
-                className={`absolute inset-0 h-[38px] w-[99px] object-contain transition-opacity ${
-                  reduceMotion ? "duration-0" : "duration-300"
-                } ${darkHeader ? "opacity-100" : "opacity-0"}`}
-              />
-              <Image
-                src="/icon1.svg"
-                alt=""
-                width={99}
-                height={38}
-                priority
-                aria-hidden="true"
-                className={`absolute inset-0 h-[38px] w-[99px] object-contain transition-opacity ${
-                  reduceMotion ? "duration-0" : "duration-300"
-                } ${darkHeader ? "opacity-0" : "opacity-100"}`}
-              />
-            </NavLink>
+        <div className="relative flex h-[72px] w-full items-center justify-between lg:h-[100px]">
+          <NavLink
+            href={onHome ? "#hero" : "/"}
+            aria-label="Oraami home"
+            className="relative block h-[38px] w-[99px] shrink-0 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
+          >
+            <Image
+              src="/icon1.svg"
+              alt="Oraami"
+              width={99}
+              height={38}
+              priority
+              className="h-[38px] w-[99px] object-contain"
+            />
+          </NavLink>
 
-            <nav className="hidden items-center gap-7 lg:flex xl:gap-8" aria-label="Primary">
-              {PRIMARY_LINKS.map((link) => (
-                <NavLink
-                  key={link.href}
-                  href={to(link.href)}
-                  className={`text-[14px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 xl:text-[15px] ${
-                    darkHeader ? "text-white/78 hover:text-white" : "text-ink/76 hover:text-ink"
-                  }`}
-                >
-                  {link.label}
-                </NavLink>
-              ))}
-            </nav>
-          </div>
+          <nav
+            className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-[34px] lg:flex"
+            aria-label="Primary"
+          >
+            {PRIMARY_LINKS.map((link) => (
+              <NavLink
+                key={link.href}
+                href={to(link.href)}
+                className="text-[16px] font-medium text-ink transition-colors hover:text-brand-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
+              >
+                {link.label}
+              </NavLink>
+            ))}
+          </nav>
 
-          <div className="flex items-center justify-end gap-5 xl:gap-7">
+          <div className="flex items-center justify-end gap-4">
             <NavLink
               href="/contact"
-              className={`hidden text-[14px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 lg:inline-flex xl:text-[15px] ${
-                darkHeader ? "text-white/78 hover:text-white" : "text-ink/76 hover:text-ink"
-              }`}
-            >
-              Contact us
-            </NavLink>
-
-            <NavLink
-              href="/contact"
-              className={`hidden h-10 items-center justify-center gap-2 rounded-lg px-5 text-[14px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 lg:inline-flex ${
-                darkHeader
-                  ? "bg-white text-oraami-accent-secondary hover:bg-white/90"
-                  : "bg-brand text-white hover:bg-[#e64700]"
-              }`}
+              className="hidden h-10 items-center justify-center gap-2 rounded-lg bg-brand px-5 text-[15px] font-semibold text-white transition-colors hover:bg-brand-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 lg:inline-flex"
             >
               Book a Call
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -170,11 +133,7 @@ function NavbarShell({ pathname }: { pathname: string }) {
               aria-expanded={open}
               aria-controls="nav-menu"
               aria-label={open ? "Close menu" : "Open menu"}
-              className={`inline-flex h-12 w-12 items-center justify-center rounded-lg border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 lg:hidden ${
-                darkHeader
-                  ? "border-white/20 bg-transparent text-white hover:border-white/40 hover:bg-white/5"
-                  : "border-black/10 bg-white text-ink hover:border-black/20 hover:bg-canvas-soft"
-              }`}
+              className="inline-flex h-12 w-12 items-center justify-center rounded-lg border border-black/10 bg-white text-ink transition-colors hover:border-black/20 hover:bg-canvas-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 lg:hidden"
             >
               {open ? <X className="h-6 w-6" aria-hidden="true" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
             </button>
@@ -191,11 +150,11 @@ function NavbarShell({ pathname }: { pathname: string }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
                 transition={{ duration: reduceMotion ? 0 : 0.24, ease: [0.2, 0.8, 0.2, 1] as const }}
-                className="fixed inset-x-0 bottom-0 top-[72px] z-[101] overflow-y-auto bg-oraami-accent-secondary text-white lg:hidden"
+                className="fixed inset-x-0 bottom-0 top-[72px] z-[101] overflow-y-auto bg-heading text-white lg:hidden"
               >
                 <div className="viewport-landing-container flex min-h-full flex-col pb-5 pt-5 sm:pb-7 sm:pt-8">
                   <nav aria-label="Primary mobile">
-                    {MOBILE_LINKS.map((link, index) => (
+                    {PRIMARY_LINKS.map((link, index) => (
                       <motion.div
                         key={link.href}
                         initial={reduceMotion ? false : { opacity: 0, x: -12 }}
@@ -222,7 +181,7 @@ function NavbarShell({ pathname }: { pathname: string }) {
                     <NavLink
                       href="/contact"
                       onClick={() => setOpen(false)}
-                      className="flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-white px-5 text-[15px] font-semibold text-oraami-accent-secondary transition-colors hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 sm:max-w-[280px]"
+                      className="flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-brand px-5 text-[15px] font-semibold text-white transition-colors hover:bg-brand-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 sm:max-w-[280px]"
                     >
                       Book a Call
                       <ArrowRight className="h-4 w-4" aria-hidden="true" />

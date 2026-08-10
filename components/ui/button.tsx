@@ -15,7 +15,7 @@ const buttonVariants = cva(
       variant: {
         primary: "bg-brand text-on-primary hover:bg-brand-hover",
         secondary: "bg-oraami-accent-secondary text-on-primary hover:bg-brand",
-        outline: "border border-ink/25 bg-canvas text-ink hover:border-ink hover:bg-canvas-soft",
+        outline: "border border-brand bg-white text-ink hover:border-brand-hover hover:bg-brand/[0.04]",
         ghost: "bg-transparent text-ink hover:bg-canvas-soft hover:text-brand",
       },
       size: {

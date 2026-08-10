@@ -21,7 +21,7 @@ export function TrustBuildingSequencesVisual({ play, reduceMotion }: FeatureVisu
             {CHANNELS.map((channel, index) => <AnimatedLine key={channel.label} d={channel.d} color={channel.color} loop={loop} delay={index * 0.14} width={index === 3 ? 3 : 2} />)}
             {[82, 146, 210, 276, 326, 396].map((x, index) => (
               <motion.g key={x} animate={loop ? { opacity: [0, 0, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.8, delay: index * 0.22, times: [0, 0.35, 0.55, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>
-                <line x1={x} x2={x} y1="34" y2="222" stroke="rgba(255,79,0,0.16)" strokeDasharray="3 4" />
+                <line x1={x} x2={x} y1="34" y2="222" stroke="rgba(245,73,0,0.16)" strokeDasharray="3 4" />
                 <circle cx={x} cy={index === 5 ? 116 : 178 - index * 10} r="4" fill={index === 5 ? "var(--color-oraami-accent-1)" : "var(--color-oraami-accent-24)"} stroke="var(--color-oraami-accent-1)" />
               </motion.g>
             ))}

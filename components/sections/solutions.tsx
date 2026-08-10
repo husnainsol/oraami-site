@@ -96,7 +96,7 @@ const cardVariants: Variants = {
 }
 
 const industryCardClassName =
-  "group relative flex min-h-[300px] w-full flex-col overflow-hidden rounded-[18px] border border-black/[0.05] bg-white shadow-[0_18px_48px_-42px_rgba(32,21,21,0.2)] transition-all duration-300 ease-out hover:shadow-[0_22px_54px_-44px_rgba(255,79,0,0.16)] md:min-h-[250px]"
+  "group relative flex min-h-[300px] w-full flex-col overflow-hidden rounded-[18px] border border-black/[0.05] bg-white shadow-[0_18px_48px_-42px_rgba(32,21,21,0.2)] transition-all duration-300 ease-out hover:shadow-[0_22px_54px_-44px_rgba(245,73,0,0.16)] md:min-h-[369px]"
 
 type StackLayout = { stickyTop: string; endScale: number }
 
@@ -145,8 +145,10 @@ function IndustryCardBody({ industry, reduceMotion }: { industry: Industry; redu
         </p>
       </div>
 
-      <div className="min-h-[178px] min-w-0 w-full overflow-hidden md:min-h-0">
-        <Visual reduceMotion={reduceMotion} />
+      <div className="min-h-[190px] min-w-0 w-full p-3 sm:p-4 md:min-h-0 md:p-5">
+        <div className="h-full w-full overflow-hidden rounded-[16px]">
+          <Visual reduceMotion={reduceMotion} />
+        </div>
       </div>
     </div>
   )
@@ -235,8 +237,8 @@ export default function Solutions() {
   const { stickyTop: stackTop, endScale: stackEndScale } = useStackLayout()
 
   return (
-    <section ref={sectionRef} className="relative w-full overflow-clip bg-canvas text-ink">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_55%_58%,rgba(255,79,0,0.025),transparent_42%)]" />
+    <section ref={sectionRef} className="relative w-full overflow-clip bg-[#f6f6f6] text-ink">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_55%_58%,rgba(245,73,0,0.025),transparent_42%)]" />
 
       <div className="landing-container relative py-12 sm:py-14 lg:py-16">
         <motion.div initial={reduceMotion ? false : "hidden"} animate={animationState} variants={fadeUp} className="max-w-2xl">
@@ -273,7 +275,7 @@ export default function Solutions() {
                   whileHover={reduceMotion ? undefined : { y: -3 }}
                   className={industryCardClassName}
                 >
-                  <div className="relative h-full">
+                  <div className="relative flex flex-1 flex-col">
                     <IndustryCardBody industry={industry} reduceMotion={reduceMotion} />
                   </div>
                 </motion.div>
@@ -282,10 +284,9 @@ export default function Solutions() {
           </div>
         )}
 
-        <div className="relative mt-7 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-          <p className="text-[15px] leading-relaxed text-muted">Not listed? We adapt to any B2B motion.</p>
-          <Button href="/contact" variant="secondary" icon={ArrowRight} className="w-full shrink-0 sm:w-auto">
-            Book a call
+        <div className="relative mt-7 flex justify-end">
+          <Button href="/contact" variant="outline" icon={ArrowRight} className="w-full shrink-0 sm:w-auto">
+            Book a Call
           </Button>
         </div>
       </div>

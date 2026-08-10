@@ -120,7 +120,7 @@ export default function Pricing() {
                 )}
               >
                 {t.popular && (
-                  <span className="absolute -top-3 left-8 rounded-full bg-brand px-3 py-1 text-[10px] uppercase tracking-widest text-white shadow-[0_10px_22px_-14px_rgba(255,79,0,0.55)]">
+                  <span className="absolute -top-3 left-8 rounded-full bg-brand px-3 py-1 text-[10px] uppercase tracking-widest text-white shadow-[0_10px_22px_-14px_rgba(245,73,0,0.55)]">
                     Most popular
                   </span>
                 )}

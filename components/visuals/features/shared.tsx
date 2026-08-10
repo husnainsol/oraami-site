@@ -6,7 +6,7 @@ export const VISUAL_DURATION = 7.2
 
 export function FeatureVisualFrame({ children }: { children: ReactNode }) {
   return (
-    <div className="relative mx-auto h-[280px] w-full max-w-[420px] overflow-hidden rounded-[20px] bg-oraami-accent-secondary p-2 shadow-[0_10px_24px_-20px_rgba(32,21,21,0.24)] sm:h-[300px] sm:rounded-[22px] sm:p-2.5 lg:mx-0 lg:h-[320px] lg:rounded-[24px] lg:p-3">
+    <div className="relative mx-auto h-[280px] w-full max-w-[420px] overflow-hidden rounded-[20px] bg-oraami-accent-secondary p-2 shadow-[0_10px_24px_-20px_rgba(32,21,21,0.24)] sm:h-[300px] sm:rounded-[22px] sm:p-2.5 lg:ml-auto lg:mr-0 lg:h-[320px] lg:rounded-[24px] lg:p-3">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:linear-gradient(to_right,rgba(32,21,21,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(32,21,21,0.12)_1px,transparent_1px)] [background-size:72px_72px]"
