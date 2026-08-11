@@ -2,7 +2,6 @@ import { Gem, Handshake, Search, Target } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import { JsonLd } from "@/components/json-ld"
 import { createMeta } from "@/lib/seo"
-import styles from "./about.module.css"
 
 const { metadata: metadataExport, jsonLd } = createMeta({
   title: "About",
@@ -43,29 +42,42 @@ const PRINCIPLES: Principle[] = [
   },
 ]
 
+const COORDINATES = [
+  { label: "01 / FIT", position: "bottom-[19%] left-[3%]" },
+  { label: "02 / CONTEXT", position: "right-0 top-[17%]" },
+  { label: "03 / TRUST", position: "bottom-[6%] right-[5%]" },
+  { label: "04 / RELEVANCE", position: "left-[10%] top-[14%]" },
+  { label: "05 / TIMING", position: "bottom-0 left-1/2 -translate-x-1/2" },
+]
+
 function SignalOrbit() {
   return (
-    <div className={styles.orbitFrame} aria-hidden="true">
-      <div className={styles.orbitGlow} />
-      <div className={`${styles.orbitRing} ${styles.orbitRingOuter}`}>
-        <span className={`${styles.orbitNode} ${styles.orbitNodeOne}`} />
-        <span className={`${styles.orbitNode} ${styles.orbitNodeTwo}`} />
+    <div className="relative mx-auto aspect-square w-full max-w-[410px]" aria-hidden="true">
+      <div className="absolute inset-[22%] rounded-full bg-brand/15 blur-3xl" />
+      <div className="absolute inset-[3%] rounded-full border border-dashed border-white/15 [animation:spin_34s_linear_infinite] motion-reduce:animate-none">
+        <span className="absolute left-[13%] top-[13%] h-2.5 w-2.5 rounded-full border-2 border-brand bg-heading shadow-[0_0_0_6px_rgba(255,87,2,0.09),0_0_20px_rgba(255,87,2,0.5)]" />
+        <span className="absolute bottom-[24%] right-[6%] h-2.5 w-2.5 rounded-full border-2 border-brand bg-heading shadow-[0_0_0_6px_rgba(255,87,2,0.09),0_0_20px_rgba(255,87,2,0.5)]" />
       </div>
-      <div className={`${styles.orbitRing} ${styles.orbitRingMiddle}`}>
-        <span className={`${styles.orbitNode} ${styles.orbitNodeThree}`} />
+      <div className="absolute inset-[15%] rounded-full border border-brand/40 [animation:spin_24s_linear_infinite_reverse] motion-reduce:animate-none">
+        <span className="absolute right-0 top-[44%] h-2 w-2 rounded-full border-2 border-white/80 bg-heading shadow-[0_0_0_5px_rgba(255,255,255,0.06)]" />
       </div>
-      <div className={`${styles.orbitRing} ${styles.orbitRingInner}`} />
-      <div className={styles.orbitAxisHorizontal} />
-      <div className={styles.orbitAxisVertical} />
-      <div className={styles.orbitCore}>
-        <span className={styles.orbitMark} />
-        <span className={styles.orbitCoreDot} />
+      <div className="absolute inset-[27.5%] rounded-full border border-white/25" />
+      <div className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+      <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-white/15 to-transparent" />
+
+      <div className="absolute left-1/2 top-1/2 grid aspect-square w-[29%] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-heading/85 shadow-[0_24px_60px_rgba(0,0,0,0.24)] backdrop-blur">
+        <span className="aspect-square w-[46%] rotate-[-35deg] rounded-full border-[6px] border-brand border-r-white/90" />
+        <span className="absolute right-[24%] top-[24%] h-1.5 w-1.5 rounded-full bg-brand shadow-[0_0_18px_rgba(255,87,2,0.7)]" />
       </div>
-      <span className={`${styles.orbitCoordinate} ${styles.orbitCoordinateOne}`}>01 / FIT</span>
-      <span className={`${styles.orbitCoordinate} ${styles.orbitCoordinateTwo}`}>02 / CONTEXT</span>
-      <span className={`${styles.orbitCoordinate} ${styles.orbitCoordinateThree}`}>03 / TRUST</span>
-      <span className={`${styles.orbitCoordinate} ${styles.orbitCoordinateFour}`}>04 / RELEVANCE</span>
-      <span className={`${styles.orbitCoordinate} ${styles.orbitCoordinateFive}`}>05 / TIMING</span>
+
+      {COORDINATES.map((coordinate) => (
+        <span
+          key={coordinate.label}
+          className={`absolute font-mono text-[7px] tracking-[0.14em] text-white/40 sm:text-[8px] ${coordinate.position}`}
+        >
+          {coordinate.label}
+        </span>
+      ))}
     </div>
   )
 }
@@ -76,41 +88,37 @@ export default function AboutPage() {
       {jsonLd && <JsonLd schema={jsonLd} />}
 
       <section className="bg-white px-3 pb-3 sm:px-4 sm:pb-4 lg:px-5">
-        <div className={`${styles.hero} relative min-h-[75svh] overflow-hidden rounded-[16px] bg-heading text-white sm:rounded-[20px]`}>
-          <div className={styles.heroGrid} aria-hidden="true" />
-          <div className={styles.heroFlare} aria-hidden="true" />
+        <div className="relative overflow-hidden rounded-[20px] bg-[radial-gradient(circle_at_78%_45%,rgba(255,87,2,0.12),transparent_30%),linear-gradient(135deg,#211c52_0%,#17143f_55%,#121032_100%)] text-white">
+          <div className="pointer-events-none absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,0.055)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.055)_1px,transparent_1px)] [background-size:72px_72px]" aria-hidden="true" />
+          <div className="pointer-events-none absolute -right-[12%] -top-[30%] aspect-square w-[52%] rounded-full bg-brand/10 blur-[100px]" aria-hidden="true" />
 
-          <div className="site-container relative z-10">
-            <div className="grid min-h-[75svh] items-center gap-7 py-12 sm:gap-12 sm:py-16 lg:grid-cols-[minmax(0,1.12fr)_minmax(390px,0.88fr)] lg:gap-16 lg:py-20">
-              <div className={styles.heroCopy}>
-                <h1 className="max-w-[780px] text-balance text-[38px] font-medium leading-[0.98] tracking-[-0.05em] text-[#f9f7ff] min-[420px]:text-[42px] sm:text-[clamp(3.25rem,6.1vw,5.65rem)] sm:tracking-[-0.055em]">
+          <div className="landing-container relative">
+            <div className="grid items-center gap-8 py-12 sm:py-14 lg:grid-cols-[minmax(0,0.56fr)_minmax(350px,0.44fr)] lg:gap-12 lg:py-16">
+              <div>
+                <h1 className="max-w-[570px] text-balance text-[clamp(2.1rem,7.8vw,3.25rem)] font-semibold leading-[1.06] tracking-[-0.03em] text-[#eef2ff]">
                   We measure what matters
-                  <span className="block text-brand"> booked meetings.</span>
+                  <span className="block text-brand">booked meetings.</span>
                 </h1>
-                <p className="mt-6 max-w-[610px] text-[15px] leading-[1.65] text-white/64 sm:mt-8 sm:text-[18px] sm:leading-[1.75]">
+                <p className="mt-5 max-w-[540px] text-[15px] leading-[1.6] text-white/70 sm:text-[16px]">
                   Oraami is the quality-first AI BDR. We replace spray-and-pray with deep research and trust-building outreach — so revenue teams win on relationships, not volume.
                 </p>
               </div>
 
-              <div className={`${styles.heroVisual} mx-auto w-full max-w-[520px] lg:justify-self-end`}>
-                <SignalOrbit />
-              </div>
+              <SignalOrbit />
             </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-white py-16 sm:py-24 lg:py-36">
-        <div className="site-container">
-          <div className="grid gap-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-24">
-            <div>
-              <p className="text-[34px] font-medium leading-[1.02] tracking-[-0.045em] text-heading sm:text-[clamp(2.35rem,4.2vw,4.5rem)]">
-                Cold outreach forgot the person on the other side.
-              </p>
-            </div>
+      <section className="bg-white">
+        <div className="landing-container py-12 sm:py-14 lg:py-16">
+          <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
+            <h2 className="landing-section-title max-w-lg">
+              Cold outreach forgot the person on the other side.
+            </h2>
 
-            <div className="border-l border-brand/30 pl-6 sm:pl-9 lg:pt-2">
-              <div className="space-y-6 text-[16px] leading-[1.8] text-muted sm:text-[18px]">
+            <div className="border-l border-brand/30 pl-5 sm:pl-7">
+              <div className="space-y-4 text-[15px] leading-[1.65] text-muted sm:text-[16px]">
                 <p>
                   B2B prospecting became a numbers game — blast thousands of low-fit contacts, burn your domain, and hope a fraction reply. It buries reps in busywork and trains buyers to ignore you.
                 </p>
@@ -124,47 +132,37 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <div className="mt-14 border-y border-heading/10 py-8 sm:mt-28 sm:py-12">
-            <p className="max-w-[1100px] text-[27px] font-medium leading-[1.08] tracking-[-0.04em] text-heading sm:text-[clamp(1.8rem,3.5vw,3.75rem)]">
-              Fewer accounts. <span className="text-brand">Deeper research.</span> Better conversations.
-            </p>
-          </div>
+          <p className="landing-section-title mt-10 border-y border-black/10 py-7 sm:mt-12">
+            Fewer accounts. <span className="text-brand">Deeper research.</span> Better conversations.
+          </p>
         </div>
       </section>
 
-      <section className="bg-white py-16 sm:py-20 lg:py-24">
-        <div className="site-container">
-          <div className="grid gap-7 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-end lg:gap-24">
-            <h2 className="max-w-[760px] text-[34px] font-medium leading-[0.98] tracking-[-0.05em] text-heading sm:text-[clamp(2.5rem,4.4vw,4.5rem)]">
-              The standard behind every play.
-            </h2>
-            <p className="max-w-xl text-[16px] leading-[1.7] text-muted lg:justify-self-end lg:pb-1 sm:text-[17px]">
+      <section className="bg-canvas">
+        <div className="landing-container py-12 sm:py-14 lg:py-16">
+          <div className="grid gap-5 lg:grid-cols-2 lg:items-end lg:gap-16">
+            <h2 className="landing-section-title max-w-xl">The standard behind every play.</h2>
+            <p className="landing-section-description max-w-xl lg:justify-self-end">
               Technology should make outreach more considered, not more disposable. These principles shape every account we select, every signal we study, and every message we send.
             </p>
           </div>
 
-          <div className="mt-12 grid border-t border-heading/15 md:grid-cols-2 lg:mt-14">
-            {PRINCIPLES.map((principle, index) => {
+          <div className="mt-8 grid gap-3 sm:grid-cols-2">
+            {PRINCIPLES.map((principle) => {
               const { Icon } = principle
               return (
                 <article
                   key={principle.n}
-                  className={`${styles.principle} border-b border-heading/15 py-7 md:min-h-[218px] md:px-8 md:py-7 lg:min-h-[230px] lg:px-10 lg:py-8 ${
-                    index % 2 === 0 ? "md:border-r" : "md:pl-10 lg:pl-14"
-                  }`}
+                  className="group rounded-[15px] border border-black/[0.06] bg-white p-5 transition-[border-color,transform,box-shadow] duration-300 hover:-translate-y-1 hover:border-brand/30 hover:shadow-[0_20px_45px_-36px_rgba(30,26,77,0.4)] sm:p-6"
                 >
                   <div className="flex items-start justify-between">
-                    <span className="font-mono text-[12px] tracking-[0.18em] text-heading/35">{principle.n}</span>
-                    <span className={`${styles.principleIcon} flex h-10 w-10 items-center justify-center rounded-full border border-heading/15 bg-white text-heading transition-all duration-300 sm:h-11 sm:w-11`}>
-                      <Icon className="h-[18px] w-[18px] sm:h-[19px] sm:w-[19px]" strokeWidth={1.5} aria-hidden="true" />
+                    <span className="font-mono text-[10px] tracking-[0.18em] text-faint">{principle.n}</span>
+                    <span className="flex h-10 w-10 items-center justify-center rounded-full border border-heading/15 bg-white text-heading transition-colors group-hover:border-brand/35 group-hover:text-brand">
+                      <Icon className="h-[18px] w-[18px]" strokeWidth={1.5} aria-hidden="true" />
                     </span>
                   </div>
-                  <h3 className="mt-6 text-[22px] font-medium leading-tight tracking-[-0.03em] text-heading sm:mt-8 sm:text-[26px]">
-                    {principle.title}
-                  </h3>
-                  <p className="mt-3 max-w-[490px] text-[15px] leading-[1.65] text-muted">
-                    {principle.desc}
-                  </p>
+                  <h3 className="landing-card-title mt-5">{principle.title}</h3>
+                  <p className="landing-card-description mt-2.5 max-w-[490px]">{principle.desc}</p>
                 </article>
               )
             })}

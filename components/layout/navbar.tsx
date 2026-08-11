@@ -111,7 +111,10 @@ function NavbarShell({ pathname }: { pathname: string }) {
               <NavLink
                 key={link.href}
                 href={to(link.href)}
-                className="text-[16px] font-medium text-ink transition-colors hover:text-brand-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
+                aria-current={pathname === link.href ? "page" : undefined}
+                className={`text-[16px] font-medium transition-colors hover:text-brand-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 ${
+                  pathname === link.href ? "text-brand" : "text-ink"
+                }`}
               >
                 {link.label}
               </NavLink>
@@ -165,7 +168,10 @@ function NavbarShell({ pathname }: { pathname: string }) {
                         <NavLink
                           href={to(link.href)}
                           onClick={() => setOpen(false)}
-                          className="group flex items-center justify-between py-[clamp(1rem,3vh,1.5rem)] text-[clamp(1.65rem,5vw,2rem)] font-medium leading-none tracking-[-0.02em] text-white transition-colors hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50"
+                          aria-current={pathname === link.href ? "page" : undefined}
+                          className={`group flex items-center justify-between py-[clamp(1rem,3vh,1.5rem)] text-[clamp(1.65rem,5vw,2rem)] font-medium leading-none tracking-[-0.02em] transition-colors hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 ${
+                            pathname === link.href ? "text-brand" : "text-white"
+                          }`}
                         >
                           <span>{link.label}</span>
                           <ArrowRight className="h-5 w-5 text-white/45 transition-transform group-hover:translate-x-1 group-hover:text-brand" aria-hidden="true" />
