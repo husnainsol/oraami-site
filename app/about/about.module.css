@@ -1,0 +1,297 @@
+.hero {
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 78% 45%, rgba(255, 87, 2, 0.1), transparent 29%),
+    linear-gradient(135deg, #211c52 0%, #17143f 55%, #121032 100%);
+}
+
+.heroGrid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.2;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(90deg, transparent 4%, black 44%, black 100%);
+}
+
+.heroFlare {
+  position: absolute;
+  top: -30%;
+  right: -12%;
+  width: 52%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgba(255, 87, 2, 0.08);
+  filter: blur(100px);
+}
+
+.heroCopy,
+.heroVisual {
+  animation: enter 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.heroVisual {
+  animation-delay: 120ms;
+}
+
+.orbitFrame {
+  position: relative;
+  width: min(100%, 500px);
+  aspect-ratio: 1;
+  margin-inline: auto;
+}
+
+.orbitGlow {
+  position: absolute;
+  inset: 21%;
+  border-radius: 50%;
+  background: rgba(255, 87, 2, 0.13);
+  filter: blur(42px);
+}
+
+.orbitRing {
+  position: absolute;
+  inset: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.orbitRingOuter {
+  width: 94%;
+  height: 94%;
+  border-style: dashed;
+  animation: rotate 34s linear infinite;
+}
+
+.orbitRingMiddle {
+  width: 70%;
+  height: 70%;
+  border-color: rgba(255, 87, 2, 0.42);
+  animation: rotateReverse 24s linear infinite;
+}
+
+.orbitRingInner {
+  width: 45%;
+  height: 45%;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.orbitAxisHorizontal,
+.orbitAxisVertical {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.14), transparent);
+  transform: translate(-50%, -50%);
+}
+
+.orbitAxisHorizontal {
+  width: 100%;
+  height: 1px;
+}
+
+.orbitAxisVertical {
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(transparent, rgba(255, 255, 255, 0.14), transparent);
+}
+
+.orbitNode {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #ff5702;
+  border-radius: 50%;
+  background: #17143f;
+  box-shadow: 0 0 0 6px rgba(255, 87, 2, 0.09), 0 0 20px rgba(255, 87, 2, 0.5);
+}
+
+.orbitNodeOne {
+  left: 14%;
+  top: 14%;
+}
+
+.orbitNodeTwo {
+  right: 7%;
+  bottom: 25%;
+}
+
+.orbitNodeThree {
+  right: 2%;
+  top: 44%;
+  width: 8px;
+  height: 8px;
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.06);
+}
+
+.orbitCore {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  width: 29%;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 50%;
+  background: rgba(22, 19, 61, 0.82);
+  box-shadow:
+    inset 0 0 28px rgba(255, 255, 255, 0.05),
+    0 24px 60px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(10px);
+  transform: translate(-50%, -50%);
+}
+
+.orbitMark {
+  width: 46%;
+  aspect-ratio: 1;
+  border: 7px solid #ff5702;
+  border-right-color: rgba(255, 255, 255, 0.88);
+  border-radius: 50%;
+  transform: rotate(-35deg);
+}
+
+.orbitCoreDot {
+  position: absolute;
+  top: 25%;
+  right: 25%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff5702;
+  box-shadow: 0 0 18px rgba(255, 87, 2, 0.7);
+}
+
+.orbitCoordinate {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.38);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+}
+
+.orbitCoordinateOne {
+  left: 4%;
+  bottom: 22%;
+}
+
+.orbitCoordinateTwo {
+  right: 0;
+  top: 18%;
+}
+
+.orbitCoordinateThree {
+  right: 6%;
+  bottom: 7%;
+}
+
+.orbitCoordinateFour {
+  left: 11%;
+  top: 15%;
+}
+
+.orbitCoordinateFive {
+  left: 47%;
+  bottom: 1%;
+  transform: translateX(-50%);
+}
+
+.principle {
+  position: relative;
+  overflow: hidden;
+  transition: background-color 300ms ease;
+}
+
+.principle::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #ff5702;
+  content: "";
+  transition: width 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.principle:hover {
+  background: #fcfaf7;
+}
+
+.principle:hover::before {
+  width: 100%;
+}
+
+.principle:hover :global(svg) {
+  color: #ff5702;
+}
+
+.principle:hover .principleIcon {
+  border-color: rgba(255, 87, 2, 0.38);
+  box-shadow: 0 12px 28px -18px rgba(255, 87, 2, 0.75);
+  transform: translateY(-2px);
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rotate {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes rotateReverse {
+  to {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}
+
+@media (max-width: 63.99rem) {
+  .orbitFrame {
+    width: min(88vw, 450px);
+  }
+}
+
+@media (max-width: 39.99rem) {
+  .heroGrid {
+    background-size: 48px 48px;
+  }
+
+  .orbitFrame {
+    width: min(78vw, 280px);
+  }
+
+  .orbitCoordinate {
+    font-size: 6px;
+    letter-spacing: 0.12em;
+  }
+
+  .orbitCoordinateFour {
+    left: 8%;
+  }
+
+  .orbitCoordinateFive {
+    bottom: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroCopy,
+  .heroVisual,
+  .orbitRingOuter,
+  .orbitRingMiddle {
+    animation: none;
+  }
+}

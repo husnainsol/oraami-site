@@ -27,7 +27,7 @@ function NavLink({ href, children, ...rest }: ComponentProps<"a">) {
 const PRIMARY_LINKS = [
   { href: "/features", label: "Features" },
   { href: "/about", label: "About" },
-  { href: "#pricing", label: "Pricing" },
+  { href: "/pricing", label: "Pricing" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ]
