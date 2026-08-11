@@ -26,6 +26,7 @@ function NavLink({ href, children, ...rest }: ComponentProps<"a">) {
 
 const PRIMARY_LINKS = [
   { href: "/features", label: "Features" },
+  { href: "/why-oraami", label: "Why Oraami" },
   { href: "/about", label: "About" },
   { href: "/pricing", label: "Pricing" },
   { href: "/blog", label: "Blog" },
