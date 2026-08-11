@@ -1,4 +1,4 @@
-import { Gem, Handshake, Search, Target } from "lucide-react"
+import { BadgeCheck, Fingerprint, Network, Radar } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import { JsonLd } from "@/components/json-ld"
 import { createMeta } from "@/lib/seo"
@@ -18,27 +18,27 @@ type Principle = { n: string; Icon: LucideIcon; title: string; desc: string }
 const PRINCIPLES: Principle[] = [
   {
     n: "01",
-    Icon: Gem,
-    title: "Quality over volume",
-    desc: "We cap every ICP at 50 high-fit accounts, so your team works the leads that convert — never a bloated list.",
+    Icon: Radar,
+    title: "Fit before scale",
+    desc: "Every list begins with ICP fit, buying context, and a clear reason the account belongs there.",
   },
   {
     n: "02",
-    Icon: Target,
-    title: "Built around your ICP",
-    desc: "Oraami learns exactly who you sell to and shapes every play around your ideal customer, not a template.",
+    Icon: Fingerprint,
+    title: "Research before reach",
+    desc: "Each lead is understood as a real business before your team starts a conversation.",
   },
   {
     n: "03",
-    Icon: Search,
-    title: "Deep research, every lead",
-    desc: "Minutes of autonomous AI research on each prospect and their full buying committee before a word is sent.",
+    Icon: Network,
+    title: "Map the whole account",
+    desc: "We reveal the buying group, influence paths, and stakeholders behind every opportunity.",
   },
   {
     n: "04",
-    Icon: Handshake,
-    title: "Trust that compounds",
-    desc: "Personalised touches over weeks turn cold accounts into warm relationships that keep paying off.",
+    Icon: BadgeCheck,
+    title: "Relevance earns attention",
+    desc: "Useful context and well-matched proof make outreach feel considered from the first touch.",
   },
 ]
 
@@ -96,11 +96,11 @@ export default function AboutPage() {
             <div className="grid items-center gap-8 py-12 sm:py-14 lg:grid-cols-[minmax(0,0.56fr)_minmax(350px,0.44fr)] lg:gap-12 lg:py-16">
               <div>
                 <h1 className="max-w-[570px] text-balance text-[clamp(2.1rem,7.8vw,3.25rem)] font-semibold leading-[1.06] tracking-[-0.03em] text-[#eef2ff]">
-                  We measure what matters
-                  <span className="block text-brand">booked meetings.</span>
+                  Sharper ICPs create
+                  <span className="block text-brand">better-fit leads.</span>
                 </h1>
                 <p className="mt-5 max-w-[540px] text-[15px] leading-[1.6] text-white/70 sm:text-[16px]">
-                  Oraami is the quality-first AI BDR. We replace spray-and-pray with deep research and trust-building outreach — so revenue teams win on relationships, not volume.
+                  Oraami turns a clear ideal customer profile into focused account lists, researched leads, and outreach grounded in real buying context.
                 </p>
               </div>
 
@@ -131,25 +131,6 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div className="border-l border-brand/30 pl-6 sm:pl-9 lg:pt-2">
-              <div className="space-y-6 text-[16px] leading-[1.8] text-muted sm:text-[18px]">
-                <p>
-                  B2B prospecting became a numbers game — blast thousands of low-fit contacts, burn your domain, and hope a fraction reply. It buries reps in busywork and trains buyers to ignore you.
-                </p>
-                <p>
-                  We built Oraami on the opposite belief: fewer, better-matched leads beat blasting thousands. Every ICP is capped at 50 high-fit accounts. Every prospect gets minutes of autonomous AI research. Every message is personalised and scored for quality before it ships.
-                </p>
-                <p>
-                  The result is outreach prospects actually reply to — and a pipeline your team can trust. We measure success in booked meetings, not sends counted.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-14 border-y border-heading/10 py-8 sm:mt-28 sm:py-12">
-            <p className="max-w-[1100px] text-[27px] font-medium leading-[1.08] tracking-[-0.04em] text-heading sm:text-[clamp(1.8rem,3.5vw,3.75rem)]">
-              Fewer accounts. <span className="text-brand">Deeper research.</span> Better conversations.
-            </p>
           </div>
 
           <p className="landing-section-title mt-10 border-y border-black/10 py-7 sm:mt-12">
@@ -158,34 +139,38 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-canvas">
+      <section className="border-t border-black/[0.06] bg-white">
         <div className="landing-container py-12 sm:py-14 lg:py-16">
-          <div className="grid gap-5 lg:grid-cols-2 lg:items-end lg:gap-16">
-            <h2 className="landing-section-title max-w-xl">The standard behind every play.</h2>
-            <p className="landing-section-description max-w-xl lg:justify-self-end">
-              Technology should make outreach more considered, not more disposable. These principles shape every account we select, every signal we study, and every message we send.
-            </p>
-          </div>
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,0.36fr)_minmax(0,0.64fr)] lg:gap-20">
+            <div className="max-w-md lg:pt-2">
+              <h2 className="landing-section-title">The standard behind every play.</h2>
+              <p className="landing-section-description mt-4">
+                Technology should make outreach more considered, not more disposable. These principles guide every account, signal, and message.
+              </p>
+            </div>
 
-          <div className="mt-8 grid gap-3 sm:grid-cols-2">
-            {PRINCIPLES.map((principle) => {
-              const { Icon } = principle
-              return (
-                <article
-                  key={principle.n}
-                  className="group rounded-[15px] border border-black/[0.06] bg-white p-5 transition-[border-color,transform,box-shadow] duration-300 hover:-translate-y-1 hover:border-brand/30 hover:shadow-[0_20px_45px_-36px_rgba(30,26,77,0.4)] sm:p-6"
-                >
-                  <div className="flex items-start justify-between">
-                    <span className="font-mono text-[10px] tracking-[0.18em] text-faint">{principle.n}</span>
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full border border-heading/15 bg-white text-heading transition-colors group-hover:border-brand/35 group-hover:text-brand">
+            <div className="border-t border-black/10">
+              {PRINCIPLES.map((principle) => {
+                const { Icon } = principle
+                return (
+                  <article
+                    key={principle.n}
+                    className="group relative border-b border-black/10 py-6 sm:grid sm:grid-cols-[minmax(0,0.75fr)_minmax(0,1fr)_44px] sm:items-center sm:gap-5 sm:py-7"
+                  >
+                    <span className="absolute inset-y-0 left-0 w-px origin-top scale-y-0 bg-brand transition-transform duration-300 group-hover:scale-y-100" aria-hidden="true" />
+                    <h3 className="landing-card-title transition-colors group-hover:text-brand">
+                      {principle.title}
+                    </h3>
+                    <p className="landing-card-description mt-2.5 max-w-[490px] sm:mt-0">
+                      {principle.desc}
+                    </p>
+                    <span className="mt-5 flex h-10 w-10 items-center justify-center rounded-full border border-heading/15 bg-white text-heading transition-colors group-hover:border-brand/35 group-hover:text-brand sm:mt-0">
                       <Icon className="h-[18px] w-[18px]" strokeWidth={1.5} aria-hidden="true" />
                     </span>
-                  </div>
-                  <h3 className="landing-card-title mt-5">{principle.title}</h3>
-                  <p className="landing-card-description mt-2.5 max-w-[490px]">{principle.desc}</p>
-                </article>
-              )
-            })}
+                  </article>
+                )
+              })}
+            </div>
           </div>
         </div>
       </section>

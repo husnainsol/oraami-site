@@ -1,10 +1,9 @@
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, ArrowUpRight } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
 import { getAllPosts, formatDate } from "@/lib/blog/blog"
 import { createMeta, SITE_URL } from "@/lib/seo"
 import { JsonLd } from "@/components/json-ld"
-import styles from "./blog.module.css"
 
 const { metadata: metadataExport, jsonLd } = createMeta({
   title: "Blog",
@@ -32,114 +31,90 @@ export default function BlogPage() {
   }
 
   return (
-    <main className="bg-white text-ink">
+    <main className="text-ink">
       {jsonLd && <JsonLd schema={jsonLd} />}
       <JsonLd schema={itemListJsonLd} />
 
-      <section className="overflow-hidden bg-white">
-        <div className="site-container pb-14 pt-12 sm:pb-16 sm:pt-14 lg:pb-20 lg:pt-16">
-          <div className="grid gap-7 pb-9 sm:pb-11 lg:grid-cols-[minmax(0,1.3fr)_minmax(290px,0.5fr)] lg:items-end lg:gap-16">
-            <h1 className="max-w-[980px] text-balance text-[40px] font-medium leading-[0.99] tracking-[-0.048em] text-heading sm:text-[clamp(3.25rem,5.5vw,4.8rem)]">
-              Field notes for
-              <span className="block text-brand">better B2B conversations.</span>
-            </h1>
-            <div className="border-l border-brand/35 pl-5 sm:pl-7 lg:mb-1">
-              <p className="text-[15px] leading-[1.75] text-muted sm:text-[17px]">
-                Clear thinking on account research, sharper ICPs, buying committees, and outreach that earns attention.
-              </p>
+      <section className="relative w-full overflow-hidden border-b border-black/10 bg-canvas">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-[60%]"
+          style={{
+            backgroundImage: "radial-gradient(circle, rgba(20,20,20,0.10) 1px, transparent 1.7px)",
+            backgroundSize: "9px 9px",
+            maskImage: "linear-gradient(to bottom, black 0%, transparent 85%)",
+            WebkitMaskImage: "linear-gradient(to bottom, black 0%, transparent 85%)",
+          }}
+        />
+        <div className="site-container relative pb-16 pt-28 lg:pb-16 lg:pt-32">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-faint">
+              <span className="h-1.5 w-1.5 bg-brand" />
+              Blog
             </div>
+            <h1 className="mt-5 text-[34px] font-medium leading-[1.05] tracking-[-0.03em] text-heading sm:text-[44px] lg:text-[52px]">
+              Notes on quality-first prospecting
+            </h1>
+            <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-muted">
+              Research, ICP targeting, and trust-building outreach — the thinking behind fewer, better-matched leads.
+            </p>
           </div>
+        </div>
+      </section>
 
+      <section className="w-full bg-canvas">
+        <div className="site-container py-20">
           {featured && (
             <Link
               href={`/blog/${featured.slug}`}
-              className={`${styles.featuredStory} group mt-8 grid overflow-hidden rounded-[20px] border border-heading/10 bg-white sm:mt-10 sm:rounded-[24px] lg:grid-cols-[minmax(0,1.08fr)_minmax(380px,0.92fr)]`}
+              className="group grid overflow-hidden rounded-[20px] border border-black/10 bg-white transition-colors hover:border-brand/30 lg:grid-cols-[0.9fr_1.1fr]"
             >
               {featured.image && (
-                <div className={`${styles.featuredMedia} relative min-h-[280px] overflow-hidden bg-[#f5f2ee] sm:min-h-[390px] lg:min-h-[470px]`}>
-                  <Image
-                    src={featured.image}
-                    alt={featured.imageAlt}
-                    fill
-                    priority
-                    sizes="(min-width: 1024px) 55vw, 100vw"
-                    className={`${styles.storyImage} object-cover`}
-                  />
+                <div className="relative min-h-[280px] overflow-hidden bg-canvas-soft lg:min-h-[420px]">
+                  <Image src={featured.image} alt={featured.imageAlt} fill priority sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
                 </div>
               )}
-
-              <div className="relative flex flex-col justify-center p-7 sm:p-10 lg:p-12 xl:p-14">
-                <div className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.14em] text-heading/42">
-                  <time dateTime={featured.date}>{formatDate(featured.date)}</time>
-                  <span aria-hidden="true">/</span>
+              <div className="flex max-w-2xl flex-col justify-center p-8 sm:p-10 lg:p-12">
+                <div className="flex items-center gap-3 text-[11px] uppercase tracking-widest text-faint">
+                  <span className="text-brand">{featured.category}</span>
+                  <span>·</span>
                   <span>{featured.readingTime}</span>
                 </div>
-                <h2 className="mt-5 text-balance text-[29px] font-medium leading-[1.08] tracking-[-0.035em] text-heading sm:text-[38px] lg:text-[42px]">
+                <h2 className="mt-5 text-[30px] font-medium leading-tight tracking-[-0.02em] text-heading sm:text-[40px]">
                   {featured.title}
                 </h2>
-                <p className="mt-5 max-w-xl text-[15px] leading-[1.75] text-muted sm:text-[16px]">
-                  {featured.excerpt}
-                </p>
-                <span className="mt-8 inline-flex w-fit items-center gap-3 text-[13px] font-medium text-heading">
-                  Read the story
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand text-white transition-transform duration-300 group-hover:translate-x-1">
-                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </span>
+                <p className="mt-4 text-[16px] leading-relaxed text-muted">{featured.excerpt}</p>
+                <span className="mt-7 inline-flex shrink-0 items-center gap-2 text-[12px] uppercase tracking-widest text-ink">
+                  Read article
+                  <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand" aria-hidden="true" />
                 </span>
               </div>
             </Link>
           )}
-        </div>
-      </section>
 
-      <section className="bg-white pb-20 sm:pb-24 lg:pb-28">
-        <div className="site-container">
-          <div className="flex items-end justify-between gap-6 border-b border-heading/12 pb-5">
-            <h2 className="text-[28px] font-medium tracking-[-0.035em] text-heading sm:text-[34px]">
-              More from Oraami
-            </h2>
-            <span className="hidden font-mono text-[10px] uppercase tracking-[0.16em] text-heading/35 sm:block">
-              {String(rest.length).padStart(2, "0")} stories
-            </span>
-          </div>
-
-          <div className="mt-7 grid gap-5 md:grid-cols-2 lg:gap-6">
-            {rest.map((post, index) => (
+          <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {rest.map((p) => (
               <Link
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className={`${styles.storyCard} group flex min-w-0 flex-col overflow-hidden rounded-[18px] border border-heading/10 bg-white sm:rounded-[20px]`}
+                key={p.slug}
+                href={`/blog/${p.slug}`}
+                className="group flex flex-col overflow-hidden rounded-[18px] border border-black/10 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-brand/30 hover:shadow-[0_24px_50px_-28px_rgba(20,10,0,0.4)]"
               >
-                {post.image && (
-                  <div className="relative aspect-[16/9] overflow-hidden bg-[#f5f2ee] sm:aspect-[16/8.7]">
-                    <Image
-                      src={post.image}
-                      alt={post.imageAlt}
-                      fill
-                      sizes="(min-width: 768px) 50vw, 100vw"
-                      className={`${styles.storyImage} object-cover`}
-                    />
-                    <span className="absolute left-4 top-4 flex h-9 w-9 items-center justify-center rounded-full border border-white/45 bg-white/88 font-mono text-[10px] text-heading shadow-sm backdrop-blur-sm sm:left-5 sm:top-5">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
+                {p.image && (
+                  <div className="relative aspect-[16/10] overflow-hidden bg-canvas-soft">
+                    <Image src={p.image} alt={p.imageAlt} fill sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.035]" />
                   </div>
                 )}
-
-                <div className="flex flex-1 flex-col p-6 sm:p-7 lg:p-8">
-                  <div className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.13em] text-heading/40">
-                    <time dateTime={post.date}>{formatDate(post.date)}</time>
-                    <span aria-hidden="true">/</span>
-                    <span>{post.readingTime}</span>
+                <div className="flex flex-1 flex-col p-6">
+                  <div className="flex items-center gap-3 text-[11px] uppercase tracking-widest text-faint">
+                    <span className="text-brand">{p.category}</span>
+                    <span>·</span>
+                    <span>{p.readingTime}</span>
                   </div>
-                  <h3 className="mt-4 text-balance text-[23px] font-medium leading-[1.16] tracking-[-0.025em] text-heading sm:text-[26px]">
-                    {post.title}
-                  </h3>
-                  <p className={`${styles.cardExcerpt} mt-3 text-[14px] leading-[1.7] text-muted sm:text-[15px]`}>
-                    {post.excerpt}
-                  </p>
-                  <span className="mt-6 flex items-center border-t border-heading/10 pt-5 text-[12px] font-medium text-heading">
-                    Read article
-                    <ArrowUpRight className="ml-auto h-4 w-4 text-heading/45 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand" aria-hidden="true" />
+                  <h3 className="mt-5 flex-1 text-[21px] font-medium leading-snug tracking-tight text-ink">{p.title}</h3>
+                  <p className="mt-3 text-[15px] leading-relaxed text-muted">{p.excerpt}</p>
+                  <span className="mt-6 inline-flex items-center gap-1.5 border-t border-dashed border-black/15 pt-5 text-[11px] uppercase tracking-widest text-ink">
+                    <time dateTime={p.date}>{formatDate(p.date)}</time>
+                    <ArrowUpRight className="ml-auto h-4 w-4 text-faint transition-colors group-hover:text-brand" aria-hidden="true" />
                   </span>
                 </div>
               </Link>
