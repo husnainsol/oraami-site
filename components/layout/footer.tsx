@@ -12,7 +12,7 @@ const footerLinks: Record<string, FooterLink[]> = {
   Company: [
     { name: "Features", href: "/features" },
     { name: "Platform", href: "/platform" },
-    { name: "Pricing", href: "/#pricing" },
+    { name: "Pricing", href: "/pricing" },
     { name: "About", href: "/about" },
   ],
   Resources: [
