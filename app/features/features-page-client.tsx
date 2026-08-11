@@ -1,10 +1,10 @@
 "use client"
 
 import { useRef } from "react"
+import Link from "next/link"
 import type { LucideIcon } from "lucide-react"
-import { ArrowRight, BarChart3, Check, FileCheck2, Gauge, Network, Radar, Target } from "lucide-react"
+import { BarChart3, FileCheck2, Gauge, Radar } from "lucide-react"
 import { useInView } from "framer-motion"
-import { Button } from "@/components/ui/button"
 import { useReducedMotionPreference } from "@/components/ui/use-reduced-motion-preference"
 import { FEATURE_VISUALS } from "@/components/visuals/features"
 import type { FeatureVisualId } from "@/components/visuals/types"
@@ -67,87 +67,47 @@ const CAPABILITIES: Capability[] = [
   },
 ]
 
-const RESEARCH_ROWS = [
-  { label: "Account fit", value: "94%", Icon: Target },
-  { label: "Buying signal", value: "Strong", Icon: Radar },
-  { label: "Stakeholders", value: "6 mapped", Icon: Network },
-] as const
-
-function ResearchPreview() {
-  return (
-    <div className="mx-auto w-full min-w-0 max-w-[480px] overflow-hidden rounded-[16px] border border-white/15 bg-white/[0.06] p-2.5 sm:rounded-[18px] sm:p-4 lg:justify-self-end">
-      <div className="flex min-w-0 items-center justify-between gap-3 border-b border-white/10 px-1 pb-3">
-        <div className="min-w-0">
-          <p className="text-[12px] text-white/55">Account research</p>
-          <p className="mt-0.5 truncate text-[15px] font-medium text-white">Northfield</p>
-        </div>
-        <span className="shrink-0 text-[12px] font-medium text-brand">Complete</span>
-      </div>
-
-      <div className="mt-2.5 min-w-0 rounded-[14px] border border-white/10 bg-[#17143f] p-3 sm:mt-3 sm:rounded-[15px] sm:p-5">
-        <div className="flex items-start justify-between gap-4">
-          <div className="min-w-0">
-            <p className="text-[12px] text-white/50">Target account</p>
-            <p className="mt-1 truncate text-[18px] font-medium text-white">Northfield</p>
-            <p className="mt-1 truncate text-[12px] text-white/55 sm:text-[13px]">B2B software · UK + EU</p>
-          </div>
-          <div className="shrink-0 text-right">
-            <p className="text-[12px] text-white/50">Priority</p>
-            <p className="mt-1 text-[14px] font-medium text-brand">High</p>
-          </div>
-        </div>
-
-        <div className="mt-5 divide-y divide-white/10 rounded-[14px] border border-white/10">
-          {RESEARCH_ROWS.map((row) => {
-            const Icon = row.Icon
-            return (
-              <div key={row.label} className="flex min-w-0 items-center gap-2 px-2.5 py-3 sm:gap-3 sm:px-4">
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand sm:h-8 sm:w-8">
-                  <Icon className="h-4 w-4" strokeWidth={1.75} aria-hidden="true" />
-                </span>
-                <span className="min-w-0 flex-1 truncate text-[12px] text-white/65 sm:text-[13px]">{row.label}</span>
-                <span className="shrink-0 whitespace-nowrap text-[12px] font-medium text-white sm:text-[13px]">{row.value}</span>
-                <Check className="h-3.5 w-3.5 shrink-0 text-brand sm:h-4 sm:w-4" strokeWidth={2.5} aria-hidden="true" />
-              </div>
-            )
-          })}
-        </div>
-
-        <div className="mt-3 flex min-w-0 items-center justify-between gap-2 rounded-[12px] border border-brand/25 bg-brand/10 px-3 py-3 sm:px-4">
-          <p className="min-w-0 text-[12px] font-medium leading-tight text-white sm:text-[13px]">Personalised outreach ready</p>
-          <ArrowRight className="h-4 w-4 shrink-0 text-brand" aria-hidden="true" />
-        </div>
-      </div>
-    </div>
-  )
-}
-
 function FeaturesHero() {
   return (
     <section className="bg-white px-3 pb-3 sm:px-4 sm:pb-4 lg:px-5">
-      <div className="relative max-w-full overflow-hidden rounded-[16px] bg-heading text-white sm:rounded-[20px]">
+      <div className="relative isolate min-h-[70svh] overflow-hidden rounded-[20px] bg-oraami-accent-secondary text-white">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_76%_44%,rgba(255,87,2,0.12),transparent_28%),linear-gradient(135deg,#211c52_0%,#17143f_60%,#121032_100%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_100%_45%,rgba(255,87,2,0.08),transparent_36%)]"
         />
-        <div className="landing-container relative">
-          <div className="grid min-w-0 items-center gap-8 py-10 sm:gap-10 sm:py-14 lg:grid-cols-[minmax(0,0.54fr)_minmax(360px,0.46fr)] lg:gap-14 lg:py-16">
-            <div className="min-w-0 max-w-[590px]">
-              <h1 className="text-balance text-[clamp(1.9rem,9.5vw,3.25rem)] font-semibold leading-[1.06] tracking-[-0.03em] text-[#eef2ff]">
-                Research that turns into
-                <span className="block text-brand">better conversations.</span>
-              </h1>
-              <p className="mt-5 max-w-[540px] text-[15px] leading-[1.6] text-white/70 sm:text-[16px]">
-                Oraami finds the right accounts, understands the people behind them, and helps your team reach out with a clear reason.
-              </p>
-              <div className="mt-7">
-                <Button href="#feature-showcase" variant="primary" size="md" icon={ArrowRight} className="w-full sm:w-auto">
-                  See Oraami in action
-                </Button>
-              </div>
-            </div>
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-[18%] top-1/2 h-[80%] w-[48%] -translate-y-1/2 rounded-full bg-brand/[0.04] blur-[110px]"
+        />
 
-            <ResearchPreview />
+        <div className="landing-container relative flex min-h-[70svh] items-center py-10 sm:py-12 lg:py-14">
+          <div className="mx-auto max-w-[880px] text-center">
+            <h1 className="mx-auto max-w-[760px] text-balance text-[clamp(2.1rem,7.8vw,3.25rem)] font-semibold leading-[1.06] tracking-[-0.03em] text-[#eef2ff]">
+              Find the right prospects.
+              <span className="block">
+                Reach them <span className="text-brand-deep">before</span>
+              </span>
+              <span className="block">anyone else does.</span>
+            </h1>
+
+            <p className="mx-auto mt-7 max-w-[650px] text-[17px] leading-[1.62] text-white/65 sm:text-[18px]">
+              Oraami turns your website into a targeting engine — building your ideal customer profile, surfacing matching companies, and crafting the outreach that gets a reply.
+            </p>
+
+            <div className="mt-9 flex flex-col items-center justify-center gap-5 sm:flex-row sm:gap-4">
+              <Link
+                href="/contact"
+                className="inline-flex h-[50px] items-center justify-center rounded-full bg-gradient-to-r from-brand to-[#ff6b2b] px-7 text-[15px] font-semibold text-white shadow-[0_16px_32px_-16px_rgba(255,87,2,0.72)] transition-[transform,filter] hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 focus-visible:ring-offset-oraami-accent-secondary"
+              >
+                Build your ICP
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex h-[50px] items-center px-1 text-[15px] font-semibold text-white/85 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50"
+              >
+                Talk to Sales
+              </Link>
+            </div>
           </div>
         </div>
       </div>
