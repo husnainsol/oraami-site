@@ -130,6 +130,26 @@ export default function AboutPage() {
                 </p>
               </div>
             </div>
+
+            <div className="border-l border-brand/30 pl-6 sm:pl-9 lg:pt-2">
+              <div className="space-y-6 text-[16px] leading-[1.8] text-muted sm:text-[18px]">
+                <p>
+                  B2B prospecting became a numbers game — blast thousands of low-fit contacts, burn your domain, and hope a fraction reply. It buries reps in busywork and trains buyers to ignore you.
+                </p>
+                <p>
+                  We built Oraami on the opposite belief: fewer, better-matched leads beat blasting thousands. Every ICP is capped at 50 high-fit accounts. Every prospect gets minutes of autonomous AI research. Every message is personalised and scored for quality before it ships.
+                </p>
+                <p>
+                  The result is outreach prospects actually reply to — and a pipeline your team can trust. We measure success in booked meetings, not sends counted.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-14 border-y border-heading/10 py-8 sm:mt-28 sm:py-12">
+            <p className="max-w-[1100px] text-[27px] font-medium leading-[1.08] tracking-[-0.04em] text-heading sm:text-[clamp(1.8rem,3.5vw,3.75rem)]">
+              Fewer accounts. <span className="text-brand">Deeper research.</span> Better conversations.
+            </p>
           </div>
 
           <p className="landing-section-title mt-10 border-y border-black/10 py-7 sm:mt-12">
