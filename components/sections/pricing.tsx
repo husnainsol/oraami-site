@@ -64,7 +64,7 @@ const TIERS: Tier[] = [
   },
 ]
 
-export default function Pricing() {
+export default function Pricing({ page = false }: { page?: boolean }) {
   const [annual, setAnnual] = useState(true)
 
   return (
@@ -83,7 +83,7 @@ export default function Pricing() {
           </div>
 
           <div className="shrink-0">
-            <div className="flex w-fit rounded-xl border border-black/10 bg-canvas-soft p-1">
+            <div className={cn("flex w-fit rounded-xl border border-black/10 p-1", page ? "bg-[#f6f6f6]" : "bg-canvas-soft")}>
               <Button
                 type="button"
                 onClick={() => setAnnual(true)}
@@ -120,7 +120,10 @@ export default function Pricing() {
                 )}
               >
                 {t.popular && (
-                  <span className="absolute -top-3 left-8 rounded-full bg-brand px-3 py-1 text-[10px] uppercase tracking-widest text-white shadow-[0_10px_22px_-14px_rgba(245,73,0,0.55)]">
+                  <span className={cn(
+                    "absolute -top-3 rounded-full bg-brand px-3 py-1 text-[10px] uppercase tracking-widest text-white shadow-[0_10px_22px_-14px_rgba(245,73,0,0.55)]",
+                    page ? "left-1/2 -translate-x-1/2" : "left-8",
+                  )}>
                     Most popular
                   </span>
                 )}
