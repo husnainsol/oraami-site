@@ -1,6 +1,10 @@
 import { JsonLd } from "@/components/json-ld"
-import CompetitorComparison from "@/components/sections/competitor-comparison"
-import WhyChooseUs from "@/components/sections/why-choose-us"
+import {
+  WhyOraamiCta,
+  WhyOraamiHero,
+  WhyOraamiProblem,
+  WhyOraamiReasons,
+} from "@/components/sections/why-choose-us"
 import { createMeta } from "@/lib/seo"
 
 const { metadata: metadataExport, jsonLd } = createMeta({
@@ -18,9 +22,10 @@ export default function WhyOraamiPage() {
   return (
     <main className="bg-white text-ink">
       {jsonLd && <JsonLd schema={jsonLd} />}
-      <h1 className="sr-only">Why Oraami</h1>
-      <WhyChooseUs />
-      <CompetitorComparison />
+      <WhyOraamiHero />
+      <WhyOraamiProblem />
+      <WhyOraamiReasons />
+      <WhyOraamiCta />
     </main>
   )
 }
