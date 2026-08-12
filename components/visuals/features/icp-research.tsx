@@ -20,18 +20,18 @@ export function IcpResearchVisual({ play, reduceMotion }: FeatureVisualProps) {
         <ChartGrid width={420} height={250} />
         <motion.rect
           x="302" y="24" width="104" height="100" rx="14"
-          fill="rgba(245,73,0,0.055)" stroke="var(--color-oraami-accent-1)" strokeDasharray="5 5"
+          fill="rgba(245,73,0,0.055)" stroke="var(--color-orange-deep)" strokeDasharray="5 5"
           animate={loop ? { opacity: [0, 1, 1, 0] } : { opacity: 1 }}
           transition={loop ? { duration: VISUAL_DURATION, times: [0, 0.2, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}
         />
-        <text x="354" y="42" textAnchor="middle" fontSize="13" fontWeight="500" fill="var(--color-oraami-accent-1)">TARGET ZONE</text>
+        <text x="354" y="42" textAnchor="middle" fontSize="13" fontWeight="500" fill="var(--color-orange-deep)">TARGET ZONE</text>
         <text x="214" y="244" textAnchor="middle" fontSize="12" fontWeight="500" fill="rgba(32,21,21,0.58)">BUYING INTENT</text>
         <text x="11" y="132" textAnchor="middle" fontSize="12" fontWeight="500" fill="rgba(32,21,21,0.58)" transform="rotate(-90 11 132)">ICP FIT</text>
         {POINTS.map(([x, y, targetX, targetY, qualified], index) => (
           <motion.circle
             key={`${x}-${y}`}
             r={qualified ? 4.5 : 3.5}
-            fill={qualified ? "var(--color-oraami-accent-1)" : index % 2 ? "var(--color-oraami-accent-26)" : "var(--color-oraami-accent-27)"}
+            fill={qualified ? "var(--color-orange-deep)" : index % 2 ? "var(--color-purple)" : "var(--color-blue)"}
             animate={loop ? { cx: [x, x, targetX], cy: [y, y, targetY], opacity: qualified ? [0.25, 0.75, 1, 1, 0.25] : [0.25, 0.7, 0.12, 0, 0.25] } : { cx: qualified ? targetX : x, cy: qualified ? targetY : y, opacity: qualified ? 1 : 0.14 }}
             transition={loop ? { duration: VISUAL_DURATION, delay: index * 0.035, times: [0, 0.2, 0.72, 0.92, 1], repeat: Infinity, repeatDelay: 1, ease: VISUAL_EASE } : { duration: 0 }}
           />

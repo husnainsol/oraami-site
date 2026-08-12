@@ -3,11 +3,11 @@ import type { FeatureVisualProps } from "../types"
 import { AnimatedLine, ChartTooltip, FeatureVisualFrame, VISUAL_EASE } from "./shared"
 
 const NODES = [
-  { role: "Champion", name: "RevOps Lead", team: "Ops", x: 86, y: 70, color: "var(--color-oraami-accent-26)", score: "92" },
-  { role: "Decision", name: "VP Revenue", team: "Exec", x: 334, y: 62, color: "var(--color-oraami-accent-1)", score: "96" },
-  { role: "Finance", name: "CFO", team: "Budget", x: 360, y: 126, color: "var(--color-oraami-accent-28)", score: "84" },
-  { role: "Security", name: "IT Director", team: "Risk", x: 320, y: 194, color: "var(--color-oraami-accent-27)", score: "76" },
-  { role: "User", name: "Sales Manager", team: "Team", x: 108, y: 190, color: "var(--color-oraami-accent-25)", score: "79" },
+  { role: "Champion", name: "RevOps Lead", team: "Ops", x: 86, y: 70, color: "var(--color-purple)", score: "92" },
+  { role: "Decision", name: "VP Revenue", team: "Exec", x: 334, y: 62, color: "var(--color-orange-deep)", score: "96" },
+  { role: "Finance", name: "CFO", team: "Budget", x: 360, y: 126, color: "var(--color-amber)", score: "84" },
+  { role: "Security", name: "IT Director", team: "Risk", x: 320, y: 194, color: "var(--color-blue)", score: "76" },
+  { role: "User", name: "Sales Manager", team: "Team", x: 108, y: 190, color: "var(--color-teal)", score: "79" },
 ] as const
 
 export function StakeholderMappingVisual({ play, reduceMotion }: FeatureVisualProps) {
@@ -19,9 +19,9 @@ export function StakeholderMappingVisual({ play, reduceMotion }: FeatureVisualPr
         <svg viewBox="0 0 420 250" className="absolute inset-0 h-full w-full" role="img" aria-label="Buying committee stakeholder map">
           <defs>
             <linearGradient id="stakeholder-route" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="var(--color-oraami-accent-26)" />
-              <stop offset="55%" stopColor="var(--color-oraami-accent-1)" />
-              <stop offset="100%" stopColor="var(--color-oraami-accent-28)" />
+              <stop offset="0%" stopColor="var(--color-purple)" />
+              <stop offset="55%" stopColor="var(--color-orange-deep)" />
+              <stop offset="100%" stopColor="var(--color-amber)" />
             </linearGradient>
           </defs>
           {[56, 84, 112].map((radius, index) => (

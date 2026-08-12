@@ -27,28 +27,28 @@
   --color-outline: #939084;
   --color-oraami-accent-secondary: #1e1a4d;
 
-  --color-oraami-accent-1: #ff4f00;
-  --color-oraami-accent-24: #faf8f6;
-  --color-oraami-accent-25: #0f766e;
-  --color-oraami-accent-26: #7157a8;
-  --color-oraami-accent-27: #2563eb;
-  --color-oraami-accent-28: #d97706;
-  --color-oraami-accent-29: #eef2ff;
-  --color-oraami-accent-30: #ff6b2b;
-  --color-oraami-accent-31: #f6f6f6;
-  --color-oraami-accent-32: #ebe7f8;
-  --color-oraami-accent-33: #e7f1fb;
-  --color-oraami-accent-34: #e7f4ee;
-  --color-oraami-accent-35: #d9a06d;
-  --color-oraami-accent-36: #b66e30;
-  --color-oraami-accent-37: #22c55e;
-  --color-oraami-accent-38: #fafafa;
-  --color-oraami-accent-39: #f0ebf8;
-  --color-oraami-accent-40: #f3f4f7;
-  --color-oraami-accent-41: #fff1d9;
-  --color-oraami-accent-42: #a86514;
-  --color-oraami-accent-43: #e5f4ea;
-  --color-oraami-accent-44: #24734c;
+  --color-orange-deep: #ff4f00;
+  --color-cream: #faf8f6;
+  --color-teal: #0f766e;
+  --color-purple: #7157a8;
+  --color-blue: #2563eb;
+  --color-amber: #d97706;
+  --color-indigo-soft: #eef2ff;
+  --color-orange: #ff6b2b;
+  --color-gray-soft: #f6f6f6;
+  --color-lavender-soft: #ebe7f8;
+  --color-blue-soft: #e7f1fb;
+  --color-mint-soft: #e7f4ee;
+  --color-tan: #d9a06d;
+  --color-copper: #b66e30;
+  --color-green: #22c55e;
+  --color-gray-light: #fafafa;
+  --color-lavender-light: #f0ebf8;
+  --color-gray-blue-light: #f3f4f7;
+  --color-amber-soft: #fff1d9;
+  --color-amber-deep: #a86514;
+  --color-green-soft: #e5f4ea;
+  --color-green-deep: #24734c;
 }
 
 :root {

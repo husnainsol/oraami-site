@@ -3,10 +3,10 @@ import type { FeatureVisualProps } from "../types"
 import { AnimatedLine, ChartGrid, ChartTooltip, FeatureVisualFrame } from "./shared"
 
 const CHANNELS = [
-  { label: "Email opens", color: "var(--color-oraami-accent-27)", d: "M22 196 C58 192 82 172 118 178 S166 142 202 150 S250 112 286 122 S342 80 396 92" },
-  { label: "LinkedIn", color: "var(--color-oraami-accent-26)", d: "M22 208 C74 204 88 186 130 192 S182 168 222 174 S276 146 316 154 S360 128 396 134" },
-  { label: "Content", color: "var(--color-oraami-accent-28)", d: "M22 216 C84 212 106 198 146 202 S202 186 240 190 S288 166 326 170 S370 142 396 148" },
-  { label: "Replies", color: "var(--color-oraami-accent-1)", d: "M22 224 C120 222 158 214 210 212 S280 194 320 174 S366 126 396 116" },
+  { label: "Email opens", color: "var(--color-blue)", d: "M22 196 C58 192 82 172 118 178 S166 142 202 150 S250 112 286 122 S342 80 396 92" },
+  { label: "LinkedIn", color: "var(--color-purple)", d: "M22 208 C74 204 88 186 130 192 S182 168 222 174 S276 146 316 154 S360 128 396 134" },
+  { label: "Content", color: "var(--color-amber)", d: "M22 216 C84 212 106 198 146 202 S202 186 240 190 S288 166 326 170 S370 142 396 148" },
+  { label: "Replies", color: "var(--color-orange-deep)", d: "M22 224 C120 222 158 214 210 212 S280 194 320 174 S366 126 396 116" },
 ]
 
 export function TrustBuildingSequencesVisual({ play, reduceMotion }: FeatureVisualProps) {
@@ -22,11 +22,11 @@ export function TrustBuildingSequencesVisual({ play, reduceMotion }: FeatureVisu
             {[82, 146, 210, 276, 326, 396].map((x, index) => (
               <motion.g key={x} animate={loop ? { opacity: [0, 0, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.8, delay: index * 0.22, times: [0, 0.35, 0.55, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>
                 <line x1={x} x2={x} y1="34" y2="222" stroke="rgba(245,73,0,0.16)" strokeDasharray="3 4" />
-                <circle cx={x} cy={index === 5 ? 116 : 178 - index * 10} r="4" fill={index === 5 ? "var(--color-oraami-accent-1)" : "var(--color-oraami-accent-24)"} stroke="var(--color-oraami-accent-1)" />
+                <circle cx={x} cy={index === 5 ? 116 : 178 - index * 10} r="4" fill={index === 5 ? "var(--color-orange-deep)" : "var(--color-cream)"} stroke="var(--color-orange-deep)" />
               </motion.g>
             ))}
-            <motion.text x="168" y="144" fontSize="12" fontWeight="500" fill="var(--color-oraami-accent-26)" animate={loop ? { opacity: [0, 0.2, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.8, times: [0, 0.3, 0.46, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Active</motion.text>
-            <motion.text x="352" y="106" fontSize="12" fontWeight="500" fill="var(--color-oraami-accent-1)" animate={loop ? { opacity: [0, 0, 1, 1, 0], y: [3, 3, 0, 0, -2] } : { opacity: 1, y: 0 }} transition={loop ? { duration: 7.8, times: [0, 0.62, 0.76, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Reply</motion.text>
+            <motion.text x="168" y="144" fontSize="12" fontWeight="500" fill="var(--color-purple)" animate={loop ? { opacity: [0, 0.2, 1, 1, 0] } : { opacity: 1 }} transition={loop ? { duration: 7.8, times: [0, 0.3, 0.46, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Active</motion.text>
+            <motion.text x="352" y="106" fontSize="12" fontWeight="500" fill="var(--color-orange-deep)" animate={loop ? { opacity: [0, 0, 1, 1, 0], y: [3, 3, 0, 0, -2] } : { opacity: 1, y: 0 }} transition={loop ? { duration: 7.8, times: [0, 0.62, 0.76, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}>Reply</motion.text>
           </svg>
           <motion.div className="absolute right-2 top-2 sm:right-4 sm:top-4" animate={loop ? { opacity: [0, 0, 1, 1, 0], scale: [0.95, 0.95, 1, 1, 0.95] } : { opacity: 1, scale: 1 }} transition={loop ? { duration: 7.8, times: [0, 0.68, 0.78, 0.92, 1], repeat: Infinity, repeatDelay: 1 } : { duration: 0 }}><ChartTooltip title="Outcome" value="Meeting booked" /></motion.div>
         </div>
