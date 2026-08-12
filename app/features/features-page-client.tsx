@@ -1,153 +1,61 @@
 "use client"
 
-import { useRef } from "react"
+import Link from "next/link"
+import Image from "next/image"
+import type { ReactNode } from "react"
 import type { LucideIcon } from "lucide-react"
-import { ArrowRight, BarChart3, Check, FileCheck2, Gauge, Network, Radar, Target } from "lucide-react"
-import { useInView } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { useReducedMotionPreference } from "@/components/ui/use-reduced-motion-preference"
-import { FEATURE_VISUALS } from "@/components/visuals/features"
-import type { FeatureVisualId } from "@/components/visuals/types"
-
-type AnimatedFeature = {
-  id: FeatureVisualId
-  title: string
-  description: string
-}
-
-type Capability = {
-  title: string
-  description: string
-  Icon: LucideIcon
-}
-
-const ANIMATED_FEATURES: AnimatedFeature[] = [
-  {
-    id: "icp",
-    title: "Find accounts that actually fit",
-    description: "Oraami filters broad markets into a focused list of high-fit accounts.",
-  },
-  {
-    id: "research",
-    title: "See the signals behind every lead",
-    description: "Research brings company context and buying signals into one clear view.",
-  },
-  {
-    id: "stakeholders",
-    title: "Map the full buying committee",
-    description: "Identify the people, roles, and route into each target account.",
-  },
-  {
-    id: "sequences",
-    title: "Build trust across every touch",
-    description: "Turn verified context into a measured sequence that earns replies.",
-  },
-]
-
-const CAPABILITIES: Capability[] = [
-  {
-    title: "Buying-signal detection",
-    description: "Know when an account has a reason to engage.",
-    Icon: Radar,
-  },
-  {
-    title: "Proof matching",
-    description: "Use the case study that best fits the prospect.",
-    Icon: FileCheck2,
-  },
-  {
-    title: "AI quality scoring",
-    description: "Check relevance, tone, and timing before every send.",
-    Icon: Gauge,
-  },
-  {
-    title: "Analytics & reporting",
-    description: "Connect research and replies to meetings and pipeline.",
-    Icon: BarChart3,
-  },
-]
-
-const RESEARCH_ROWS = [
-  { label: "Account fit", value: "94%", Icon: Target },
-  { label: "Buying signal", value: "Strong", Icon: Radar },
-  { label: "Stakeholders", value: "6 mapped", Icon: Network },
-] as const
-
-function ResearchPreview() {
-  return (
-    <div className="mx-auto w-full min-w-0 max-w-[480px] overflow-hidden rounded-[16px] border border-white/15 bg-white/[0.06] p-2.5 sm:rounded-[18px] sm:p-4 lg:justify-self-end">
-      <div className="flex min-w-0 items-center justify-between gap-3 border-b border-white/10 px-1 pb-3">
-        <div className="min-w-0">
-          <p className="text-[12px] text-white/55">Account research</p>
-          <p className="mt-0.5 truncate text-[15px] font-medium text-white">Northfield</p>
-        </div>
-        <span className="shrink-0 text-[12px] font-medium text-brand">Complete</span>
-      </div>
-
-      <div className="mt-2.5 min-w-0 rounded-[14px] border border-white/10 bg-[#17143f] p-3 sm:mt-3 sm:rounded-[15px] sm:p-5">
-        <div className="flex items-start justify-between gap-4">
-          <div className="min-w-0">
-            <p className="text-[12px] text-white/50">Target account</p>
-            <p className="mt-1 truncate text-[18px] font-medium text-white">Northfield</p>
-            <p className="mt-1 truncate text-[12px] text-white/55 sm:text-[13px]">B2B software · UK + EU</p>
-          </div>
-          <div className="shrink-0 text-right">
-            <p className="text-[12px] text-white/50">Priority</p>
-            <p className="mt-1 text-[14px] font-medium text-brand">High</p>
-          </div>
-        </div>
-
-        <div className="mt-5 divide-y divide-white/10 rounded-[14px] border border-white/10">
-          {RESEARCH_ROWS.map((row) => {
-            const Icon = row.Icon
-            return (
-              <div key={row.label} className="flex min-w-0 items-center gap-2 px-2.5 py-3 sm:gap-3 sm:px-4">
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand sm:h-8 sm:w-8">
-                  <Icon className="h-4 w-4" strokeWidth={1.75} aria-hidden="true" />
-                </span>
-                <span className="min-w-0 flex-1 truncate text-[12px] text-white/65 sm:text-[13px]">{row.label}</span>
-                <span className="shrink-0 whitespace-nowrap text-[12px] font-medium text-white sm:text-[13px]">{row.value}</span>
-                <Check className="h-3.5 w-3.5 shrink-0 text-brand sm:h-4 sm:w-4" strokeWidth={2.5} aria-hidden="true" />
-              </div>
-            )
-          })}
-        </div>
-
-        <div className="mt-3 flex min-w-0 items-center justify-between gap-2 rounded-[12px] border border-brand/25 bg-brand/10 px-3 py-3 sm:px-4">
-          <p className="min-w-0 text-[12px] font-medium leading-tight text-white sm:text-[13px]">Personalised outreach ready</p>
-          <ArrowRight className="h-4 w-4 shrink-0 text-brand" aria-hidden="true" />
-        </div>
-      </div>
-    </div>
-  )
-}
+import {
+  BarChart3,
+  CheckCircle2,
+  ContactRound,
+  Database,
+  PencilLine,
+  Search,
+  Target,
+  Zap,
+} from "lucide-react"
 
 function FeaturesHero() {
   return (
     <section className="bg-white px-3 pb-3 sm:px-4 sm:pb-4 lg:px-5">
-      <div className="relative max-w-full overflow-hidden rounded-[16px] bg-heading text-white sm:rounded-[20px]">
+      <div className="relative isolate min-h-[70svh] overflow-hidden rounded-[20px] bg-oraami-accent-secondary text-white">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_76%_44%,rgba(255,87,2,0.12),transparent_28%),linear-gradient(135deg,#211c52_0%,#17143f_60%,#121032_100%)]"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_100%_45%,color-mix(in_srgb,var(--color-brand)_8%,transparent),transparent_36%)]"
         />
-        <div className="landing-container relative">
-          <div className="grid min-w-0 items-center gap-8 py-10 sm:gap-10 sm:py-14 lg:grid-cols-[minmax(0,0.54fr)_minmax(360px,0.46fr)] lg:gap-14 lg:py-16">
-            <div className="min-w-0 max-w-[590px]">
-              <h1 className="text-balance text-[clamp(1.9rem,9.5vw,3.25rem)] font-semibold leading-[1.06] tracking-[-0.03em] text-[#eef2ff]">
-                Research that turns into
-                <span className="block text-brand">better conversations.</span>
-              </h1>
-              <p className="mt-5 max-w-[540px] text-[15px] leading-[1.6] text-white/70 sm:text-[16px]">
-                Oraami finds the right accounts, understands the people behind them, and helps your team reach out with a clear reason.
-              </p>
-              <div className="mt-7">
-                <Button href="#feature-showcase" variant="primary" size="md" icon={ArrowRight} className="w-full sm:w-auto">
-                  See Oraami in action
-                </Button>
-              </div>
-            </div>
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-[18%] top-1/2 h-[80%] w-[48%] -translate-y-1/2 rounded-full bg-brand/[0.04] blur-[110px]"
+        />
 
-            <ResearchPreview />
+        <div className="landing-container relative flex min-h-[70svh] items-center py-10 sm:py-12 lg:py-14">
+          <div className="mx-auto max-w-[880px] text-center">
+            <h1 className="mx-auto max-w-[760px] text-balance text-[clamp(2.1rem,7.8vw,3.25rem)] font-semibold leading-[1.06] tracking-[-0.03em] text-indigo-soft">
+              Find the right prospects.
+              <span className="block">
+                Reach them <span className="text-brand-deep">before</span>
+              </span>
+              <span className="block">anyone else does.</span>
+            </h1>
+
+            <p className="mx-auto mt-7 max-w-[650px] text-[17px] leading-[1.62] text-white/65 sm:text-[18px]">
+              Oraami turns your website into a targeting engine — building your ideal customer profile, surfacing matching companies, and crafting the outreach that gets a reply.
+            </p>
+
+            <div className="mt-9 flex flex-col items-center justify-center gap-5 sm:flex-row sm:gap-4">
+              <Link
+                href="/contact"
+                className="inline-flex h-[50px] items-center justify-center rounded-full bg-gradient-to-r from-brand to-orange px-7 text-[15px] font-semibold text-white shadow-[0_16px_32px_-16px_color-mix(in_srgb,var(--color-brand)_72%,transparent)] transition-[transform,filter] hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 focus-visible:ring-offset-oraami-accent-secondary"
+              >
+                Build your ICP
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex h-[50px] items-center rounded-full border border-brand px-5 text-[15px] font-semibold text-white/85 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50"
+              >
+                Talk to Sales
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -155,78 +63,294 @@ function FeaturesHero() {
   )
 }
 
-function AnimatedFeatureCard({ feature }: { feature: AnimatedFeature }) {
-  const cardRef = useRef<HTMLElement>(null)
-  const inView = useInView(cardRef, { amount: 0.2, margin: "0px 0px -10% 0px" })
-  const reduceMotion = useReducedMotionPreference()
-  const Visual = FEATURE_VISUALS[feature.id]
+type FeatureCardProps = {
+  title: string
+  description: string
+  Icon: LucideIcon
+  children: ReactNode
+  spaced?: boolean
+}
 
+function FeatureCard({ title, description, Icon, children, spaced = false }: FeatureCardProps) {
   return (
-    <article ref={cardRef} className="overflow-hidden rounded-[18px] border border-black/[0.07] bg-white">
-      <div className="p-5 sm:p-6">
-        <h3 className="landing-card-title">{feature.title}</h3>
-        <p className="landing-card-description mt-2.5 max-w-[34rem]">{feature.description}</p>
-      </div>
-      <div className="bg-[#f6f6f6] p-3 sm:p-4 [&_*]:!shadow-none [&>div]:!mx-0 [&>div]:!h-[260px] [&>div]:!max-w-none sm:[&>div]:!h-[300px]">
-        <Visual play={inView} reduceMotion={reduceMotion} />
-      </div>
+    <article
+      className="flex h-full min-w-0 flex-col rounded-[15px] border border-black/[0.07] bg-white p-[18px] sm:p-5"
+    >
+      <span className="flex h-8 w-8 items-center justify-center rounded-[9px] bg-brand/[0.09] text-brand">
+        <Icon className="h-4 w-4" strokeWidth={1.7} aria-hidden="true" />
+      </span>
+      <h3 className="landing-card-title mt-3.5 !text-[22px] !font-bold">{title}</h3>
+      <p className="landing-card-description mt-2.5 max-w-[36rem] !text-[16.5px]">{description}</p>
+      <div className={spaced ? "mt-auto pt-8" : "mt-auto pt-5"}>{children}</div>
     </article>
   )
 }
 
-function FeatureShowcase() {
-  return (
-    <section id="feature-showcase" className="scroll-mt-24 bg-white text-ink">
-      <div className="landing-container py-12 sm:py-14 lg:py-16">
-        <div className="grid gap-5 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] lg:items-end lg:gap-16">
-          <h2 className="landing-section-title max-w-lg">See the research process in action</h2>
-          <p className="landing-section-description max-w-xl lg:justify-self-end">
-            From account selection to trusted outreach, each step stays connected.
-          </p>
-        </div>
+const Panel = ({ children, className = "" }: { children: ReactNode; className?: string }) => (
+  <div className={`w-full rounded-[12px] border border-black/[0.045] bg-gray-soft p-3.5 sm:p-4 ${className}`}>
+    {children}
+  </div>
+)
 
-        <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          {ANIMATED_FEATURES.map((feature) => (
-            <AnimatedFeatureCard key={feature.id} feature={feature} />
-          ))}
-        </div>
+function IcpBuilderPreview() {
+  const chips = ["B2B SaaS", "50–200 employees", "North America", "Series A–B"]
+
+  return (
+    <Panel className="bg-gray-blue-light p-4 sm:p-5">
+      <p className="text-[13px] font-semibold text-heading">Your ICP, from one input</p>
+      <div className="mt-3 flex h-12 items-center rounded-[9px] border border-black/[0.07] bg-white px-3.5 text-[13px] text-muted">
+        <span className="mr-2 text-brand">↳</span>
+        yourcompany.com
       </div>
-    </section>
+      <div className="mt-3.5 flex flex-wrap gap-1.5">
+        {chips.map((chip) => (
+          <span key={chip} className="rounded-full bg-brand/[0.08] px-3.5 py-1.5 text-[12px] font-medium text-brand-deep">
+            {chip}
+          </span>
+        ))}
+      </div>
+    </Panel>
   )
 }
 
-function CapabilitiesSection() {
+const companies = [
+  { initials: "NA", name: "Northwind Analytics", detail: "Data Infrastructure · 80 employees", color: "bg-lavender-soft text-purple" },
+  { initials: "FR", name: "Fenwick Robotics", detail: "Industrial hardware · 140 employees", color: "bg-blue-soft text-blue" },
+  { initials: "CH", name: "Cedar Health", detail: "Healthtech · 65 employees", color: "bg-mint-soft text-teal" },
+] as const
+
+function LeadDiscoveryPreview() {
   return (
-    <section className="bg-white px-3 pb-3 sm:px-4 sm:pb-4 lg:px-5">
-      <div className="relative overflow-hidden rounded-[20px] border border-black/[0.06] bg-white text-ink">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_20%,rgba(255,87,2,0.045),transparent_24%),radial-gradient(circle_at_88%_70%,rgba(30,26,77,0.035),transparent_22%)]"
-        />
-        <div className="landing-container relative py-12 sm:py-14 lg:py-16">
-          <div className="max-w-2xl">
-            <h2 className="landing-section-title">More intelligence in the same workflow</h2>
-            <p className="landing-section-description mt-4 max-w-xl">
-              The essential checks and insights your team needs before outreach begins.
-            </p>
+    <Panel>
+      <p className="text-[12px] font-medium tracking-[0.075em] text-faint">COMPANIES MATCHING YOUR ICP</p>
+      <div className="mt-2.5 divide-y divide-black/[0.055] px-1">
+        {companies.map((company) => (
+          <div key={company.name} className="flex min-w-0 items-center gap-3.5 py-3.5">
+            <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-[9px] text-[10px] font-semibold ${company.color}`}>
+              {company.initials}
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block truncate text-[15px] font-semibold text-heading">{company.name}</span>
+              <span className="mt-0.5 block truncate text-[12px] text-faint">{company.detail}</span>
+            </span>
+            <span className="h-2 w-2 shrink-0 rounded-full bg-brand/75" aria-label="Matched" />
+          </div>
+        ))}
+      </div>
+    </Panel>
+  )
+}
+
+function LeadMatchingPreview() {
+  const scores = [
+    { score: "92%", label: "High fit", ring: "border-brand", text: "text-brand" },
+    { score: "74%", label: "Good fit", ring: "border-tan", text: "text-copper" },
+    { score: "58%", label: "Low fit", ring: "border-black/15", text: "text-muted" },
+  ]
+
+  return (
+    <Panel className="py-6">
+      <div className="flex items-start justify-around gap-2">
+        {scores.map((item) => (
+          <div key={item.label} className="text-center">
+            <div className={`mx-auto flex h-[62px] w-[62px] items-center justify-center rounded-full border-[3px] bg-white ${item.ring}`}>
+              <span className={`text-[13px] font-semibold ${item.text}`}>{item.score}</span>
+            </div>
+            <p className="mt-2.5 text-[11px] font-medium text-muted">{item.label}</p>
+          </div>
+        ))}
+      </div>
+    </Panel>
+  )
+}
+
+function ContactDiscoveryPreview() {
+  return (
+    <Panel>
+      <div className="mx-auto max-w-[340px] rounded-[10px] border border-black/[0.055] bg-white p-5">
+        <div className="flex items-center gap-2.5">
+          <Image src="/img.svg" alt="Priya Anand" width={44} height={44} className="h-11 w-11 shrink-0 rounded-full object-cover" />
+          <span className="min-w-0 flex-1">
+            <span className="flex items-center gap-1 text-[13px] font-semibold text-heading">
+              Priya Anand
+              <CheckCircle2 className="h-3 w-3 shrink-0 fill-green text-white" strokeWidth={2.5} aria-label="Verified" />
+            </span>
+            <span className="mt-0.5 block truncate text-[11px] text-faint">VP of Sales, Cedar Health</span>
+          </span>
+        </div>
+        <div className="mt-4 truncate rounded-[8px] border border-black/[0.06] bg-gray-light px-3.5 py-3 text-[12px] text-muted">
+          priya.anand@cedarhealth.com
+        </div>
+      </div>
+    </Panel>
+  )
+}
+
+function OutreachPreview() {
+  return (
+    <Panel>
+      <p className="text-[12px] font-semibold text-heading">Drafting for Cedar Health</p>
+      <div className="mt-3 min-h-[106px] rounded-[9px] border border-black/[0.06] bg-white p-3.5 text-[11px] leading-[1.55] text-muted">
+        <p className="max-w-0 overflow-hidden whitespace-nowrap border-r border-brand text-[13px] motion-reduce:max-w-full motion-reduce:border-r-0 motion-reduce:whitespace-normal motion-reduce:animate-none animate-[outreachTextFlow_10s_steps(150,end)_infinite]" aria-label="Hi Priya, noticed Cedar Health is scaling its sales team. Oraami helps teams find high-fit accounts and reach the right decision-makers with relevant, timely outreach.">
+          Hi Priya, noticed Cedar Health is scaling its sales team. Oraami helps teams find high-fit accounts and reach the right decision-makers with relevant, timely outreach.
+        </p>
+      </div>
+    </Panel>
+  )
+}
+
+const sequenceSteps = [
+  { label: "Email 1", accent: true },
+  { label: "LinkedIn touch", accent: false },
+  { label: "Email 2", accent: false },
+  { label: "Break-up email", accent: false },
+] as const
+
+function AutomatedSequencesPreview() {
+  const connectors = ["wait 2d", "wait 3d", "no reply"]
+
+  return (
+    <Panel className="overflow-hidden bg-gray-blue-light py-6">
+      <div className="hidden min-w-0 items-center md:flex">
+        {sequenceSteps.map((step, index) => (
+          <div key={step.label} className="contents">
+            <div
+                className={`flex min-h-[42px] min-w-0 flex-1 items-center justify-center rounded-[9px] border px-2 text-center text-[11px] font-normal ${
+                step.accent ? "border-brand bg-brand text-white" : "border-black/[0.07] bg-white text-heading"
+              }`}
+            >
+              {step.label}
+            </div>
+            {index < connectors.length && (
+              <div className="flex shrink-0 flex-col items-center px-1.5">
+                <span className="whitespace-nowrap text-[9px] text-faint">{connectors[index]}</span>
+                <span className="mt-1 h-px w-4 bg-black/10" aria-hidden="true" />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-x-2 gap-y-2 md:hidden">
+        {sequenceSteps.map((step, index) => (
+          <div key={step.label} className="contents">
+            <div
+                className={`rounded-[8px] border px-2 py-2 text-center text-[10px] font-normal ${
+                step.accent ? "border-brand bg-brand text-white" : "border-black/[0.07] bg-white text-heading"
+              }`}
+            >
+              {step.label}
+            </div>
+            {index < connectors.length ? (
+              <>
+                <span className="text-[8px] text-faint">{connectors[index]}</span>
+                <div className="h-px bg-black/10" aria-hidden="true" />
+              </>
+            ) : (
+              <><span /><span /></>
+            )}
+          </div>
+        ))}
+      </div>
+    </Panel>
+  )
+}
+
+const managedLeads = [
+  { name: "Northwind Analytics", status: "New", className: "bg-lavender-light text-purple" },
+  { name: "Fenwick Robotics", status: "Contacted", className: "bg-amber-soft text-amber-deep" },
+  { name: "Cedar Health", status: "Replied", className: "bg-green-soft text-green-deep" },
+] as const
+
+function LeadManagementPreview() {
+  return (
+    <Panel className="bg-gray-blue-light">
+      <div className="divide-y divide-black/[0.055] px-1">
+        {managedLeads.map((lead) => (
+          <div key={lead.name} className="flex min-w-0 items-center gap-3 py-4">
+            <span className="min-w-0 flex-1 truncate text-[16px] font-semibold text-heading">{lead.name}</span>
+            <span className={`shrink-0 rounded-full px-3.5 py-2 text-[13px] font-medium ${lead.className}`}>{lead.status}</span>
+          </div>
+        ))}
+      </div>
+    </Panel>
+  )
+}
+
+function FeaturesGrid() {
+  return (
+    <section id="feature-showcase" className="scroll-mt-24 bg-white text-ink">
+      <div className="landing-container py-12 sm:py-14 lg:py-16">
+        <div className="max-w-[580px]">
+          <h2 className="text-[22px] font-bold leading-[1.25] tracking-[-0.02em] text-heading">Everything Oraami does</h2>
+          <p className="mt-2.5 text-[18px] leading-[1.6] text-muted">
+            Everything you need to find the right prospects, connect with the right people, and turn quality leads into meaningful conversations.
+          </p>
+        </div>
+
+        <div className="mt-8 space-y-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-[1.06fr_0.94fr]">
+          <FeatureCard
+            title="AI-Powered ICP Builder"
+            description="Give Oraami your website or a short description of your business. It reads it and builds your Ideal Customer Profile — the industries, sizes, and regions that best match your audience."
+            Icon={Target}
+            spaced
+          >
+            <IcpBuilderPreview />
+          </FeatureCard>
+
+          <FeatureCard
+            title="AI Lead Discovery"
+            description="Oraami searches for companies that match your ICP so you don't have to check platform after platform by hand."
+            Icon={Search}
+          >
+            <LeadDiscoveryPreview />
+          </FeatureCard>
           </div>
 
-          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {CAPABILITIES.map((capability) => {
-              const Icon = capability.Icon
-              return (
-                <article
-                  key={capability.title}
-                  className="group min-h-[180px] rounded-[15px] border border-black/[0.07] bg-[#f6f6f6] p-5 transition-colors duration-200 hover:border-brand/35 hover:bg-white sm:p-6"
-                >
-                  <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-black/10 bg-white text-brand transition-colors group-hover:border-brand/35 group-hover:bg-brand/[0.07]">
-                    <Icon className="h-[18px] w-[18px]" strokeWidth={1.5} aria-hidden="true" />
-                  </span>
-                  <h3 className="landing-card-title mt-5">{capability.title}</h3>
-                  <p className="landing-card-description mt-2.5">{capability.description}</p>
-                </article>
-              )
-            })}
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <FeatureCard
+            title="Smart Lead Matching"
+            description="See how closely each prospect matches your ICP at a glance, so you know who to prioritize before you send a single message."
+            Icon={BarChart3}
+          >
+            <LeadMatchingPreview />
+          </FeatureCard>
+
+          <FeatureCard
+            title="Contact Discovery"
+            description="Find the right decision-makers inside each target company and get the contact details you need to reach them."
+            Icon={ContactRound}
+          >
+            <ContactDiscoveryPreview />
+          </FeatureCard>
+
+          <FeatureCard
+            title="Personalized AI Outreach"
+            description="Oraami writes outreach messages using what it knows about each prospect and company, so you're never starting from a blank page."
+            Icon={PencilLine}
+          >
+            <OutreachPreview />
+          </FeatureCard>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-[1.06fr_0.94fr]">
+          <FeatureCard
+            title="Automated Sequences"
+            description="Set up multi-step outreach that follows up on its own, with different messaging depending on how each prospect responds."
+            Icon={Zap}
+            spaced
+          >
+            <AutomatedSequencesPreview />
+          </FeatureCard>
+
+          <FeatureCard
+            title="Lead & Contact Management"
+            description="Every prospect and contact lives in one workspace, so you can review details, track status, and manage outreach without switching tools."
+            Icon={Database}
+          >
+            <LeadManagementPreview />
+          </FeatureCard>
           </div>
         </div>
       </div>
@@ -236,10 +360,9 @@ function CapabilitiesSection() {
 
 export default function FeaturesPageClient() {
   return (
-    <>
+    <div className="features-page">
       <FeaturesHero />
-      <FeatureShowcase />
-      <CapabilitiesSection />
-    </>
+      <FeaturesGrid />
+    </div>
   )
 }

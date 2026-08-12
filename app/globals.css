@@ -27,12 +27,28 @@
   --color-outline: #939084;
   --color-oraami-accent-secondary: #1e1a4d;
 
-  --color-oraami-accent-1: #ff4f00;
-  --color-oraami-accent-24: #faf8f6;
-  --color-oraami-accent-25: #0f766e;
-  --color-oraami-accent-26: #7157a8;
-  --color-oraami-accent-27: #2563eb;
-  --color-oraami-accent-28: #d97706;
+  --color-orange-deep: #ff4f00;
+  --color-cream: #faf8f6;
+  --color-teal: #0f766e;
+  --color-purple: #7157a8;
+  --color-blue: #2563eb;
+  --color-amber: #d97706;
+  --color-indigo-soft: #eef2ff;
+  --color-orange: #ff6b2b;
+  --color-gray-soft: #f6f6f6;
+  --color-lavender-soft: #ebe7f8;
+  --color-blue-soft: #e7f1fb;
+  --color-mint-soft: #e7f4ee;
+  --color-tan: #d9a06d;
+  --color-copper: #b66e30;
+  --color-green: #22c55e;
+  --color-gray-light: #fafafa;
+  --color-lavender-light: #f0ebf8;
+  --color-gray-blue-light: #f3f4f7;
+  --color-amber-soft: #fff1d9;
+  --color-amber-deep: #a86514;
+  --color-green-soft: #e5f4ea;
+  --color-green-deep: #24734c;
 }
 
 :root {
@@ -54,6 +70,10 @@ body {
   color: var(--color-ink);
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   overflow-x: clip;
+}
+
+.features-page {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
 }
 
 .site-container {
@@ -183,6 +203,13 @@ body {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
+
+@keyframes outreachTextFlow {
+  0%, 8% { max-width: 0; }
+  72%, 88% { max-width: 100%; }
+  100% { max-width: 0; }
+}
+
 @utility animate-marquee {
   animation: marquee 20s linear infinite;
 }

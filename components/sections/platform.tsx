@@ -136,7 +136,7 @@ export default function Platform() {
 
                   <div className="pb-1">
                     <div className="flex items-center justify-between">
-                      <span className="process-number flex h-10 items-center rounded-md border border-black/20 bg-oraami-accent-secondary px-3 text-[14px] text-oraami-accent-24">
+                      <span className="process-number flex h-10 items-center rounded-md border border-black/20 bg-oraami-accent-secondary px-3 text-[14px] text-cream">
                         <span className="text-brand-deep">.</span>
                         {s.n}
                       </span>
@@ -161,7 +161,7 @@ export default function Platform() {
                   )}
 
                   <div className="flex items-center justify-between">
-                  <span className="process-number flex h-10 items-center rounded-md border border-black/15 bg-oraami-accent-secondary px-3 text-[14px] text-oraami-accent-24">
+                  <span className="process-number flex h-10 items-center rounded-md border border-black/15 bg-oraami-accent-secondary px-3 text-[14px] text-cream">
                     <span className="text-brand-deep">.</span>
                     {s.n}
                   </span>
