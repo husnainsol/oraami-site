@@ -21,7 +21,7 @@ function FeaturesHero() {
       <div className="relative isolate min-h-[70svh] overflow-hidden rounded-[20px] bg-oraami-accent-secondary text-white">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_100%_45%,rgba(255,87,2,0.08),transparent_36%)]"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_100%_45%,color-mix(in_srgb,var(--color-brand)_8%,transparent),transparent_36%)]"
         />
         <div
           aria-hidden="true"
@@ -30,7 +30,7 @@ function FeaturesHero() {
 
         <div className="landing-container relative flex min-h-[70svh] items-center py-10 sm:py-12 lg:py-14">
           <div className="mx-auto max-w-[880px] text-center">
-            <h1 className="mx-auto max-w-[760px] text-balance text-[clamp(2.1rem,7.8vw,3.25rem)] font-semibold leading-[1.06] tracking-[-0.03em] text-[#eef2ff]">
+            <h1 className="mx-auto max-w-[760px] text-balance text-[clamp(2.1rem,7.8vw,3.25rem)] font-semibold leading-[1.06] tracking-[-0.03em] text-oraami-accent-29">
               Find the right prospects.
               <span className="block">
                 Reach them <span className="text-brand-deep">before</span>
@@ -45,7 +45,7 @@ function FeaturesHero() {
             <div className="mt-9 flex flex-col items-center justify-center gap-5 sm:flex-row sm:gap-4">
               <Link
                 href="/contact"
-                className="inline-flex h-[50px] items-center justify-center rounded-full bg-gradient-to-r from-brand to-[#ff6b2b] px-7 text-[15px] font-semibold text-white shadow-[0_16px_32px_-16px_rgba(255,87,2,0.72)] transition-[transform,filter] hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 focus-visible:ring-offset-oraami-accent-secondary"
+                className="inline-flex h-[50px] items-center justify-center rounded-full bg-gradient-to-r from-brand to-oraami-accent-30 px-7 text-[15px] font-semibold text-white shadow-[0_16px_32px_-16px_color-mix(in_srgb,var(--color-brand)_72%,transparent)] transition-[transform,filter] hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 focus-visible:ring-offset-oraami-accent-secondary"
               >
                 Build your ICP
               </Link>
@@ -87,7 +87,7 @@ function FeatureCard({ title, description, Icon, children, spaced = false }: Fea
 }
 
 const Panel = ({ children, className = "" }: { children: ReactNode; className?: string }) => (
-  <div className={`w-full rounded-[12px] border border-black/[0.045] bg-[#f6f6f6] p-3.5 sm:p-4 ${className}`}>
+  <div className={`w-full rounded-[12px] border border-black/[0.045] bg-oraami-accent-31 p-3.5 sm:p-4 ${className}`}>
     {children}
   </div>
 )
@@ -96,7 +96,7 @@ function IcpBuilderPreview() {
   const chips = ["B2B SaaS", "50–200 employees", "North America", "Series A–B"]
 
   return (
-    <Panel className="bg-[#f3f4f7] p-4 sm:p-5">
+    <Panel className="bg-oraami-accent-40 p-4 sm:p-5">
       <p className="text-[13px] font-semibold text-heading">Your ICP, from one input</p>
       <div className="mt-3 flex h-12 items-center rounded-[9px] border border-black/[0.07] bg-white px-3.5 text-[13px] text-muted">
         <span className="mr-2 text-brand">↳</span>
@@ -114,9 +114,9 @@ function IcpBuilderPreview() {
 }
 
 const companies = [
-  { initials: "NA", name: "Northwind Analytics", detail: "Data Infrastructure · 80 employees", color: "bg-[#ebe7f8] text-[#7157a8]" },
-  { initials: "FR", name: "Fenwick Robotics", detail: "Industrial hardware · 140 employees", color: "bg-[#e7f1fb] text-[#2563eb]" },
-  { initials: "CH", name: "Cedar Health", detail: "Healthtech · 65 employees", color: "bg-[#e7f4ee] text-[#0f766e]" },
+  { initials: "NA", name: "Northwind Analytics", detail: "Data Infrastructure · 80 employees", color: "bg-oraami-accent-32 text-oraami-accent-26" },
+  { initials: "FR", name: "Fenwick Robotics", detail: "Industrial hardware · 140 employees", color: "bg-oraami-accent-33 text-oraami-accent-27" },
+  { initials: "CH", name: "Cedar Health", detail: "Healthtech · 65 employees", color: "bg-oraami-accent-34 text-oraami-accent-25" },
 ] as const
 
 function LeadDiscoveryPreview() {
@@ -144,7 +144,7 @@ function LeadDiscoveryPreview() {
 function LeadMatchingPreview() {
   const scores = [
     { score: "92%", label: "High fit", ring: "border-brand", text: "text-brand" },
-    { score: "74%", label: "Good fit", ring: "border-[#d9a06d]", text: "text-[#b66e30]" },
+    { score: "74%", label: "Good fit", ring: "border-oraami-accent-35", text: "text-oraami-accent-36" },
     { score: "58%", label: "Low fit", ring: "border-black/15", text: "text-muted" },
   ]
 
@@ -173,12 +173,12 @@ function ContactDiscoveryPreview() {
           <span className="min-w-0 flex-1">
             <span className="flex items-center gap-1 text-[13px] font-semibold text-heading">
               Priya Anand
-              <CheckCircle2 className="h-3 w-3 shrink-0 fill-[#22c55e] text-white" strokeWidth={2.5} aria-label="Verified" />
+              <CheckCircle2 className="h-3 w-3 shrink-0 fill-oraami-accent-37 text-white" strokeWidth={2.5} aria-label="Verified" />
             </span>
             <span className="mt-0.5 block truncate text-[11px] text-faint">VP of Sales, Cedar Health</span>
           </span>
         </div>
-        <div className="mt-4 truncate rounded-[8px] border border-black/[0.06] bg-[#fafafa] px-3.5 py-3 text-[12px] text-muted">
+        <div className="mt-4 truncate rounded-[8px] border border-black/[0.06] bg-oraami-accent-38 px-3.5 py-3 text-[12px] text-muted">
           priya.anand@cedarhealth.com
         </div>
       </div>
@@ -191,7 +191,7 @@ function OutreachPreview() {
     <Panel>
       <p className="text-[12px] font-semibold text-heading">Drafting for Cedar Health</p>
       <div className="mt-3 min-h-[106px] rounded-[9px] border border-black/[0.06] bg-white p-3.5 text-[11px] leading-[1.55] text-muted">
-        <p className="outreach-preview-text text-[13px]" aria-label="Hi Priya, noticed Cedar Health is scaling its sales team. Oraami helps teams find high-fit accounts and reach the right decision-makers with relevant, timely outreach.">
+        <p className="max-w-0 overflow-hidden whitespace-nowrap border-r border-brand text-[13px] motion-reduce:max-w-full motion-reduce:border-r-0 motion-reduce:whitespace-normal motion-reduce:animate-none animate-[outreachTextFlow_10s_steps(150,end)_infinite]" aria-label="Hi Priya, noticed Cedar Health is scaling its sales team. Oraami helps teams find high-fit accounts and reach the right decision-makers with relevant, timely outreach.">
           Hi Priya, noticed Cedar Health is scaling its sales team. Oraami helps teams find high-fit accounts and reach the right decision-makers with relevant, timely outreach.
         </p>
       </div>
@@ -210,7 +210,7 @@ function AutomatedSequencesPreview() {
   const connectors = ["wait 2d", "wait 3d", "no reply"]
 
   return (
-    <Panel className="overflow-hidden bg-[#f3f4f7] py-6">
+    <Panel className="overflow-hidden bg-oraami-accent-40 py-6">
       <div className="hidden min-w-0 items-center md:flex">
         {sequenceSteps.map((step, index) => (
           <div key={step.label} className="contents">
@@ -257,14 +257,14 @@ function AutomatedSequencesPreview() {
 }
 
 const managedLeads = [
-  { name: "Northwind Analytics", status: "New", className: "bg-[#f0ebf8] text-[#7157a8]" },
-  { name: "Fenwick Robotics", status: "Contacted", className: "bg-[#fff1d9] text-[#a86514]" },
-  { name: "Cedar Health", status: "Replied", className: "bg-[#e5f4ea] text-[#24734c]" },
+  { name: "Northwind Analytics", status: "New", className: "bg-oraami-accent-39 text-oraami-accent-26" },
+  { name: "Fenwick Robotics", status: "Contacted", className: "bg-oraami-accent-41 text-oraami-accent-42" },
+  { name: "Cedar Health", status: "Replied", className: "bg-oraami-accent-43 text-oraami-accent-44" },
 ] as const
 
 function LeadManagementPreview() {
   return (
-    <Panel className="bg-[#f3f4f7]">
+    <Panel className="bg-oraami-accent-40">
       <div className="divide-y divide-black/[0.055] px-1">
         {managedLeads.map((lead) => (
           <div key={lead.name} className="flex min-w-0 items-center gap-3 py-4">
