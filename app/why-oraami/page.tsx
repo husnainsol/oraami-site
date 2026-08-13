@@ -20,7 +20,7 @@ export const metadata = metadataExport
 
 export default function WhyOraamiPage() {
   return (
-    <main className="bg-white text-ink">
+    <main className="font-sf-pro bg-white text-ink">
       {jsonLd && <JsonLd schema={jsonLd} />}
       <WhyOraamiHero />
       <WhyOraamiProblem />

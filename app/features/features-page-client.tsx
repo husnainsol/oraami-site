@@ -14,6 +14,7 @@ import {
   Target,
   Zap,
 } from "lucide-react"
+import { WhyOraamiCta } from "@/components/sections/why-choose-us"
 
 function FeaturesHero() {
   return (
@@ -363,6 +364,7 @@ export default function FeaturesPageClient() {
     <div className="features-page">
       <FeaturesHero />
       <FeaturesGrid />
+      <WhyOraamiCta />
     </div>
   )
 }

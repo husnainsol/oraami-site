@@ -1,6 +1,8 @@
-import { BadgeCheck, Fingerprint, Network, Radar } from "lucide-react"
+import { ArrowRight, AudioLines, Target, User, Zap } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import { JsonLd } from "@/components/json-ld"
+import { WhyOraamiCta } from "@/components/sections/why-choose-us"
+import { Button } from "@/components/ui/button"
 import { createMeta } from "@/lib/seo"
 
 const { metadata: metadataExport, jsonLd } = createMeta({
@@ -13,98 +15,87 @@ const { metadata: metadataExport, jsonLd } = createMeta({
 })
 export const metadata = metadataExport
 
-type Principle = { n: string; Icon: LucideIcon; title: string; desc: string }
+type Principle = { Icon: LucideIcon; title: string; desc: string }
 
 const PRINCIPLES: Principle[] = [
   {
+    Icon: Target,
+    title: "Signal over noise",
+    desc: "Every feature exists to narrow your list down to who matters, not to widen it.",
+  },
+  {
+    Icon: AudioLines,
+    title: "Built to be used, not configured",
+    desc: "If getting value out of Oraami takes a setup call, we've done something wrong.",
+  },
+  {
+    Icon: Zap,
+    title: "You stay in control",
+    desc: "Oraami ranks, drafts, and follows up — but the judgment calls stay with you.",
+  },
+  {
+    Icon: User,
+    title: "Personal, not generic",
+    desc: "Automation should sound like a person who did their homework, not a mail merge.",
+  },
+]
+
+const STEPS = [
+  {
     n: "01",
-    Icon: Radar,
-    title: "Fit before scale",
-    desc: "Every list begins with ICP fit, buying context, and a clear reason the account belongs there.",
+    title: "Start from real signal",
+    desc: "Every recommendation traces back to something true about your business and the prospect — not a generic list.",
   },
   {
     n: "02",
-    Icon: Fingerprint,
-    title: "Research before reach",
-    desc: "Each lead is understood as a real business before your team starts a conversation.",
+    title: "Automate the busywork",
+    desc: "Research, drafting, and follow-up are the parts that don't need a human every single time — so we handle those.",
   },
   {
     n: "03",
-    Icon: Network,
-    title: "Map the whole account",
-    desc: "We reveal the buying group, influence paths, and stakeholders behind every opportunity.",
-  },
-  {
-    n: "04",
-    Icon: BadgeCheck,
-    title: "Relevance earns attention",
-    desc: "Useful context and well-matched proof make outreach feel considered from the first touch.",
+    title: "Leave the judgment to you",
+    desc: "Oraami surfaces the who and drafts the what. Deciding what actually goes out is always your call.",
   },
 ]
-
-const COORDINATES = [
-  { label: "01 / FIT", position: "bottom-[19%] left-[3%]" },
-  { label: "02 / CONTEXT", position: "right-0 top-[17%]" },
-  { label: "03 / TRUST", position: "bottom-[6%] right-[5%]" },
-  { label: "04 / RELEVANCE", position: "left-[10%] top-[14%]" },
-  { label: "05 / TIMING", position: "bottom-0 left-1/2 -translate-x-1/2" },
-]
-
-function SignalOrbit() {
-  return (
-    <div className="relative mx-auto aspect-square w-full max-w-[410px]" aria-hidden="true">
-      <div className="absolute inset-[22%] rounded-full bg-brand/15 blur-3xl" />
-      <div className="absolute inset-[3%] rounded-full border border-dashed border-white/15 [animation:spin_34s_linear_infinite] motion-reduce:animate-none">
-        <span className="absolute left-[13%] top-[13%] h-2.5 w-2.5 rounded-full border-2 border-brand bg-heading shadow-[0_0_0_6px_rgba(255,87,2,0.09),0_0_20px_rgba(255,87,2,0.5)]" />
-        <span className="absolute bottom-[24%] right-[6%] h-2.5 w-2.5 rounded-full border-2 border-brand bg-heading shadow-[0_0_0_6px_rgba(255,87,2,0.09),0_0_20px_rgba(255,87,2,0.5)]" />
-      </div>
-      <div className="absolute inset-[15%] rounded-full border border-brand/40 [animation:spin_24s_linear_infinite_reverse] motion-reduce:animate-none">
-        <span className="absolute right-0 top-[44%] h-2 w-2 rounded-full border-2 border-white/80 bg-heading shadow-[0_0_0_5px_rgba(255,255,255,0.06)]" />
-      </div>
-      <div className="absolute inset-[27.5%] rounded-full border border-white/25" />
-      <div className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
-      <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-white/15 to-transparent" />
-
-      <div className="absolute left-1/2 top-1/2 grid aspect-square w-[29%] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-heading/85 shadow-[0_24px_60px_rgba(0,0,0,0.24)] backdrop-blur">
-        <span className="aspect-square w-[46%] rotate-[-35deg] rounded-full border-[6px] border-brand border-r-white/90" />
-        <span className="absolute right-[24%] top-[24%] h-1.5 w-1.5 rounded-full bg-brand shadow-[0_0_18px_rgba(255,87,2,0.7)]" />
-      </div>
-
-      {COORDINATES.map((coordinate) => (
-        <span
-          key={coordinate.label}
-          className={`absolute font-mono text-[7px] tracking-[0.14em] text-white/40 sm:text-[8px] ${coordinate.position}`}
-        >
-          {coordinate.label}
-        </span>
-      ))}
-    </div>
-  )
-}
 
 export default function AboutPage() {
   return (
-    <main className="overflow-hidden bg-white text-ink">
+    <main className="font-sf-pro overflow-hidden bg-white text-ink">
       {jsonLd && <JsonLd schema={jsonLd} />}
 
       <section className="bg-white px-3 pb-3 sm:px-4 sm:pb-4 lg:px-5">
-        <div className="relative overflow-hidden rounded-[20px] bg-[radial-gradient(circle_at_78%_45%,rgba(255,87,2,0.12),transparent_30%),linear-gradient(135deg,#211c52_0%,#17143f_55%,#121032_100%)] text-white">
-          <div className="pointer-events-none absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,0.055)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.055)_1px,transparent_1px)] [background-size:72px_72px]" aria-hidden="true" />
-          <div className="pointer-events-none absolute -right-[12%] -top-[30%] aspect-square w-[52%] rounded-full bg-brand/10 blur-[100px]" aria-hidden="true" />
+        <div className="relative isolate min-h-[70svh] overflow-hidden rounded-[20px] bg-oraami-accent-secondary text-white">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_100%_45%,color-mix(in_srgb,var(--color-brand)_8%,transparent),transparent_36%)]"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-[18%] top-1/2 h-[80%] w-[48%] -translate-y-1/2 rounded-full bg-brand/[0.04] blur-[110px]"
+          />
 
-          <div className="landing-container relative">
-            <div className="grid items-center gap-8 py-12 sm:py-14 lg:grid-cols-[minmax(0,0.56fr)_minmax(350px,0.44fr)] lg:gap-12 lg:py-16">
-              <div>
-                <h1 className="max-w-[570px] text-balance text-[clamp(2.1rem,7.8vw,3.25rem)] font-semibold leading-[1.06] tracking-[-0.03em] text-[#eef2ff]">
-                  Sharper ICPs create
-                  <span className="block text-brand">better-fit leads.</span>
-                </h1>
-                <p className="mt-5 max-w-[540px] text-[15px] leading-[1.6] text-white/70 sm:text-[16px]">
-                  Oraami turns a clear ideal customer profile into focused account lists, researched leads, and outreach grounded in real buying context.
-                </p>
+          <div className="landing-container relative flex min-h-[70svh] items-center py-10 sm:py-12 lg:py-14">
+            <div className="mx-auto max-w-[880px] text-center">
+              <h1 className="mx-auto max-w-[760px] text-balance text-[clamp(2.1rem,7.8vw,3.25rem)] font-semibold leading-[1.06] tracking-[-0.03em] text-indigo-soft">
+                Turning <span className="text-brand-deep">AI</span> Into a Smarter
+                <span className="block">Way to Sell</span>
+              </h1>
+
+              <p className="mx-auto mt-7 max-w-[650px] text-[17px] leading-[1.62] text-white/65 sm:text-[18px]">
+                Oraami is an AI-powered sales platform built to help teams find the right prospects, understand their ideal customers, and start better conversations. Instead of spending hours searching, researching, and qualifying leads manually, Oraami brings the process together in one intelligent workspace.
+              </p>
+
+              <div className="mt-9 flex items-center justify-center">
+                <Button
+                  href="/contact"
+                  variant="primary"
+                  size="md"
+                  icon={ArrowRight}
+                  className="px-5 transition-transform hover:-translate-y-0.5 active:translate-y-0"
+                >
+                  Get Started for Free
+                </Button>
               </div>
-
-              <SignalOrbit />
             </div>
           </div>
         </div>
@@ -112,68 +103,74 @@ export default function AboutPage() {
 
       <section className="bg-white">
         <div className="landing-container py-12 sm:py-14 lg:py-16">
-          <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
-            <h2 className="landing-section-title max-w-lg">
-              Cold outreach forgot the person on the other side.
-            </h2>
+          <h2 className="landing-section-title !font-bold">Why We Exist</h2>
 
-            <div className="border-l border-brand/30 pl-5 sm:pl-7">
-              <div className="space-y-4 text-[15px] leading-[1.65] text-muted sm:text-[16px]">
-                <p>
-                  B2B prospecting became a numbers game — blast thousands of low-fit contacts, burn your domain, and hope a fraction reply. It buries reps in busywork and trains buyers to ignore you.
-                </p>
-                <p>
-                  We built Oraami on the opposite belief: fewer, better-matched leads beat blasting thousands. Every ICP is capped at 50 high-fit accounts. Every prospect gets minutes of autonomous AI research. Every message is personalised and scored for quality before it ships.
-                </p>
-                <p>
-                  The result is outreach prospects actually reply to — and a pipeline your team can trust. We measure success in booked meetings, not sends counted.
-                </p>
-              </div>
-            </div>
-
+          <div className="mt-4 space-y-4 text-[15px] leading-[1.65] text-muted sm:text-[16px]">
+            <p>
+              Sales teams rarely have a volume problem. They have a targeting problem — inboxes full of messages sent to the wrong person, at the wrong company, for the wrong reason. Everyone on the receiving end can tell.
+            </p>
+            <p>
+              We built Oraami around a simpler idea: find the few people who are genuinely a fit, understand why they&apos;re a fit, and reach them like it. The lists, the templates, the guesswork in between — that&apos;s what we&apos;re trying to take off your plate.
+            </p>
           </div>
-
-          <p className="landing-section-title mt-10 border-y border-black/10 py-7 sm:mt-12">
-            Fewer accounts. <span className="text-brand">Deeper research.</span> Better conversations.
-          </p>
         </div>
       </section>
 
-      <section className="border-t border-black/[0.06] bg-white">
+      <section className="bg-slate-50">
         <div className="landing-container py-12 sm:py-14 lg:py-16">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,0.36fr)_minmax(0,0.64fr)] lg:gap-20">
-            <div className="max-w-md lg:pt-2">
-              <h2 className="landing-section-title">The standard behind every play.</h2>
-              <p className="landing-section-description mt-4">
-                Technology should make outreach more considered, not more disposable. These principles guide every account, signal, and message.
-              </p>
-            </div>
+          <div className="text-center">
+            <span className="inline-flex items-center rounded-full bg-brand/[0.08] px-3.5 py-1.5 text-[12px] font-medium text-brand-deep">
+              What we believe
+            </span>
+            <h2 className="landing-section-title !font-bold mt-5">
+              The principles behind the product
+            </h2>
+          </div>
 
-            <div className="border-t border-black/10">
-              {PRINCIPLES.map((principle) => {
-                const { Icon } = principle
-                return (
-                  <article
-                    key={principle.n}
-                    className="group relative border-b border-black/10 py-6 sm:grid sm:grid-cols-[minmax(0,0.75fr)_minmax(0,1fr)_44px] sm:items-center sm:gap-5 sm:py-7"
-                  >
-                    <span className="absolute inset-y-0 left-0 w-px origin-top scale-y-0 bg-brand transition-transform duration-300 group-hover:scale-y-100" aria-hidden="true" />
-                    <h3 className="landing-card-title transition-colors group-hover:text-brand">
-                      {principle.title}
-                    </h3>
-                    <p className="landing-card-description mt-2.5 max-w-[490px] sm:mt-0">
-                      {principle.desc}
-                    </p>
-                    <span className="mt-5 flex h-10 w-10 items-center justify-center rounded-full border border-heading/15 bg-white text-heading transition-colors group-hover:border-brand/35 group-hover:text-brand sm:mt-0">
-                      <Icon className="h-[18px] w-[18px]" strokeWidth={1.5} aria-hidden="true" />
-                    </span>
-                  </article>
-                )
-              })}
-            </div>
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {PRINCIPLES.map(({ Icon, title, desc }) => (
+              <article
+                key={title}
+                className="rounded-[15px] border border-black/[0.05] bg-white p-6 shadow-[0_16px_40px_-36px_rgba(15,23,42,0.26)]"
+              >
+                <span className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-brand/[0.09] text-brand">
+                  <Icon className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" />
+                </span>
+                <h3 className="landing-card-title !font-bold mt-4">{title}</h3>
+                <p className="landing-card-description mt-2.5">{desc}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>
+
+      <section className="bg-white">
+        <div className="landing-container py-12 sm:py-14 lg:py-16">
+          <div className="text-center">
+            <span className="inline-flex items-center rounded-full bg-brand/[0.08] px-3.5 py-1.5 text-[12px] font-medium text-brand-deep">
+              How We Work
+            </span>
+            <h2 className="landing-section-title !font-bold mt-5">
+              The Approach, in Three Steps
+            </h2>
+          </div>
+
+          <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-6">
+            {STEPS.map((step, index) => (
+              <div
+                key={step.n}
+                className={index > 0 ? "sm:border-l sm:border-black/10 sm:pl-6" : ""}
+              >
+                <p className="text-[14px] font-bold text-brand">{step.n}</p>
+                <h3 className="landing-card-title !font-bold mt-3">{step.title}</h3>
+                <p className="landing-card-description mt-2.5">{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <WhyOraamiCta />
     </main>
   )
 }

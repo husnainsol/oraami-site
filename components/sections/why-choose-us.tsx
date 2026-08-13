@@ -2,11 +2,12 @@
 
 import Image from "next/image"
 import {
+  animate,
   motion,
   useInView,
   type Variants,
 } from "framer-motion"
-import { useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { AlignLeft, ArrowRight, Check, Clock, Minus, Repeat2, X, type LucideIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useReducedMotionPreference } from "@/components/ui/use-reduced-motion-preference"
@@ -401,8 +402,8 @@ export function WhyOraamiProblem() {
               variants={problemItemVariants}
               className="rounded-[15px] border border-brand/10 bg-brand/[0.04] p-5 shadow-[0_12px_30px_-30px_rgba(245,73,0,0.3)]"
             >
-              <span className="flex h-8 w-8 items-center justify-center rounded-[9px] bg-brand/[0.09] text-brand">
-                <Icon className="h-4 w-4" strokeWidth={1.7} aria-hidden="true" />
+              <span className="flex h-9 w-9 items-center justify-center rounded-[9px] bg-white text-brand">
+                <Icon className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" />
               </span>
 
               <h3 className="mt-3.5 text-[15px] font-bold leading-[1.35] tracking-[-0.01em] text-heading">
@@ -456,6 +457,38 @@ const ICP_STATS = [
   { label: "Campaigns", value: "0" },
 ] as const
 
+const CHAT_ITEMS = [
+  { role: "bot", text: BOT_MESSAGES[0] },
+  { role: "user", text: USER_MESSAGES[0] },
+  { role: "bot", text: BOT_MESSAGES[1] },
+  { role: "user", text: USER_MESSAGES[1] },
+  { role: "bot", text: BOT_MESSAGES[2] },
+] as const
+
+const CHAT_MESSAGE_STAGGER = 0.45
+const CHAT_MESSAGE_DELAY = 0.25
+const CHAT_SCORE_TARGET = 88
+
+const chatListVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: CHAT_MESSAGE_STAGGER,
+      delayChildren: CHAT_MESSAGE_DELAY,
+    },
+  },
+}
+
+const chatBubbleVariants: Variants = {
+  hidden: { opacity: 0, y: 10, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.35, ease: EASE },
+  },
+}
+
 const reasonsItemVariants: Variants = {
   hidden: { opacity: 0, y: 16 },
   visible: {
@@ -486,11 +519,41 @@ function UserBubble({ children }: { children: string }) {
 }
 
 function ChatMockup() {
+  const reduceMotion = useReducedMotionPreference()
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, amount: 0.4 })
+  const [score, setScore] = useState(0)
+
+  useEffect(() => {
+    if (!inView) return
+
+    if (reduceMotion) {
+      setScore(CHAT_SCORE_TARGET)
+      return
+    }
+
+    const scoreStartDelay =
+      (CHAT_MESSAGE_DELAY + CHAT_ITEMS.length * CHAT_MESSAGE_STAGGER) * 1000
+
+    const timeout = setTimeout(() => {
+      animate(0, CHAT_SCORE_TARGET, {
+        duration: 1.1,
+        ease: EASE,
+        onUpdate: (value) => setScore(Math.round(value)),
+      })
+    }, scoreStartDelay)
+
+    return () => clearTimeout(timeout)
+  }, [inView, reduceMotion])
+
   return (
-    <div className="flex h-full flex-col rounded-[20px] bg-oraami-accent-secondary p-6 shadow-[0_16px_40px_-36px_rgba(15,23,42,0.26)] sm:p-7">
+    <div
+      ref={ref}
+      className="flex h-full flex-col rounded-[20px] bg-oraami-accent-secondary p-6 shadow-[0_16px_40px_-36px_rgba(15,23,42,0.26)] sm:p-7"
+    >
       <div className="flex items-center justify-between">
-        <div className="h-[26px] w-[26px] shrink-0 overflow-hidden">
-          <Image src="/icon1.svg" alt="Oraami" width={99} height={38} className="h-[26px] w-auto max-w-none" />
+        <div className="shrink-0">
+          <Image src="/icon2.svg" alt="Oraami" width={99} height={38} className="h-9 w-auto" />
         </div>
         <span className="flex items-center gap-1.5 text-[12px] text-white/60">
           <span className="h-1.5 w-1.5 rounded-full bg-green" aria-hidden="true" />
@@ -498,13 +561,18 @@ function ChatMockup() {
         </span>
       </div>
 
-      <div className="mt-6 flex flex-col gap-3">
-        <BotBubble>{BOT_MESSAGES[0]}</BotBubble>
-        <UserBubble>{USER_MESSAGES[0]}</UserBubble>
-        <BotBubble>{BOT_MESSAGES[1]}</BotBubble>
-        <UserBubble>{USER_MESSAGES[1]}</UserBubble>
-        <BotBubble>{BOT_MESSAGES[2]}</BotBubble>
-      </div>
+      <motion.div
+        variants={chatListVariants}
+        initial={reduceMotion ? false : "hidden"}
+        animate={inView ? "visible" : "hidden"}
+        className="mt-6 flex flex-col gap-3"
+      >
+        {CHAT_ITEMS.map((item, index) => (
+          <motion.div key={index} variants={chatBubbleVariants}>
+            {item.role === "bot" ? <BotBubble>{item.text}</BotBubble> : <UserBubble>{item.text}</UserBubble>}
+          </motion.div>
+        ))}
+      </motion.div>
 
       <div className="mt-4 rounded-[14px] border border-brand/30 bg-white/[0.04] p-4">
         <div className="flex items-center justify-between gap-3">
@@ -516,10 +584,10 @@ function ChatMockup() {
 
         <div className="mt-4 flex items-center justify-between text-[12px]">
           <span className="text-white/50">Specificity Score</span>
-          <span className="font-semibold text-brand-deep">88 / 100</span>
+          <span className="font-semibold text-brand-deep">{score} / 100</span>
         </div>
         <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-white/10">
-          <div className="h-full w-[88%] rounded-full bg-brand" />
+          <div className="h-full rounded-full bg-brand" style={{ width: `${score}%` }} />
         </div>
 
         <div className="mt-4 flex items-center justify-between gap-2">
@@ -696,7 +764,7 @@ export function WhyOraamiCta() {
   return (
     <section className="w-full bg-white text-ink">
       <div className="landing-container py-12 sm:py-14 lg:py-16">
-        <div className="relative overflow-hidden rounded-[24px] bg-brand p-8 sm:p-10 lg:p-14">
+        <div className="relative overflow-hidden rounded-[24px] bg-oraami-accent-secondary p-8 sm:p-10 lg:p-14">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-white/10"
@@ -720,7 +788,7 @@ export function WhyOraamiCta() {
                 variant="primary"
                 size="md"
                 icon={ArrowRight}
-                className="bg-white text-brand hover:bg-white/90 focus-visible:ring-white/50 focus-visible:ring-offset-brand"
+                className="bg-white text-brand hover:bg-white/90 focus-visible:ring-white/50 focus-visible:ring-offset-oraami-accent-secondary"
               >
                 Get Started for Free
               </Button>
@@ -729,7 +797,7 @@ export function WhyOraamiCta() {
                 variant="outline"
                 size="md"
                 icon={ArrowRight}
-                className="border-white bg-transparent text-white hover:border-white hover:bg-white/10 focus-visible:ring-white/50 focus-visible:ring-offset-brand"
+                className="border-white bg-transparent text-white hover:border-white hover:bg-white/10 focus-visible:ring-white/50 focus-visible:ring-offset-oraami-accent-secondary"
               >
                 Book a Demo
               </Button>
