@@ -1,9 +1,10 @@
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowUpRight } from "lucide-react"
+import { ArrowRight, ArrowUpRight } from "lucide-react"
 import { getAllPosts, formatDate } from "@/lib/blog/blog"
 import { createMeta, SITE_URL } from "@/lib/seo"
 import { JsonLd } from "@/components/json-ld"
+import { Button } from "@/components/ui/button"
 
 const { metadata: metadataExport, jsonLd } = createMeta({
   title: "Blog",
@@ -31,33 +32,43 @@ export default function BlogPage() {
   }
 
   return (
-    <main className="text-ink">
+    <main className="font-sf-pro overflow-hidden bg-white text-ink">
       {jsonLd && <JsonLd schema={jsonLd} />}
       <JsonLd schema={itemListJsonLd} />
 
-      <section className="relative w-full overflow-hidden border-b border-black/10 bg-canvas">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-[60%]"
-          style={{
-            backgroundImage: "radial-gradient(circle, rgba(20,20,20,0.10) 1px, transparent 1.7px)",
-            backgroundSize: "9px 9px",
-            maskImage: "linear-gradient(to bottom, black 0%, transparent 85%)",
-            WebkitMaskImage: "linear-gradient(to bottom, black 0%, transparent 85%)",
-          }}
-        />
-        <div className="site-container relative pb-16 pt-28 lg:pb-16 lg:pt-32">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-faint">
-              <span className="h-1.5 w-1.5 bg-brand" />
-              Blog
+      <section className="bg-white px-3 pb-3 sm:px-4 sm:pb-4 lg:px-5">
+        <div className="relative isolate min-h-[70svh] overflow-hidden rounded-[20px] bg-oraami-accent-secondary text-white">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_100%_45%,color-mix(in_srgb,var(--color-brand)_8%,transparent),transparent_36%)]"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-[18%] top-1/2 h-[80%] w-[48%] -translate-y-1/2 rounded-full bg-brand/[0.04] blur-[110px]"
+          />
+
+          <div className="landing-container relative flex min-h-[70svh] items-center py-10 sm:py-12 lg:py-14">
+            <div className="mx-auto max-w-[880px] text-center">
+              <h1 className="mx-auto max-w-[760px] text-balance text-[clamp(2.1rem,7.8vw,3.25rem)] font-semibold leading-[1.06] tracking-[-0.03em] text-indigo-soft">
+                Notes on finding the right <span className="text-brand-deep">buyer</span>
+              </h1>
+
+              <p className="mx-auto mt-7 max-w-[650px] text-[17px] leading-[1.62] text-white/65 sm:text-[18px]">
+                How we think about matching, outreach, and what actually gets a reply — from the team building Oraami.
+              </p>
+
+              <div className="mt-9 flex items-center justify-center">
+                <Button
+                  href="/contact"
+                  variant="primary"
+                  size="md"
+                  icon={ArrowRight}
+                  className="px-5 transition-transform hover:-translate-y-0.5 active:translate-y-0"
+                >
+                  Get Started for Free
+                </Button>
+              </div>
             </div>
-            <h1 className="mt-5 text-[34px] font-medium leading-[1.05] tracking-[-0.03em] text-heading sm:text-[44px] lg:text-[52px]">
-              Notes on quality-first prospecting
-            </h1>
-            <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-muted">
-              Research, ICP targeting, and trust-building outreach — the thinking behind fewer, better-matched leads.
-            </p>
           </div>
         </div>
       </section>
@@ -67,16 +78,30 @@ export default function BlogPage() {
           {featured && (
             <Link
               href={`/blog/${featured.slug}`}
-              className="group grid overflow-hidden rounded-[20px] border border-black/10 bg-white transition-colors hover:border-brand/30 lg:grid-cols-[0.9fr_1.1fr]"
+              className="group grid gap-6 rounded-[20px] border border-black/[0.06] bg-white p-4 shadow-[0_16px_40px_-36px_rgba(15,23,42,0.26)] transition-colors hover:border-brand/30 sm:p-5 lg:grid-cols-[1fr_1.1fr] lg:gap-10 lg:p-6"
             >
-              {featured.image && (
-                <div className="relative min-h-[280px] overflow-hidden bg-canvas-soft lg:min-h-[420px]">
-                  <Image src={featured.image} alt={featured.imageAlt} fill priority sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
-                </div>
-              )}
-              <div className="flex max-w-2xl flex-col justify-center p-8 sm:p-10 lg:p-12">
+              <div className="relative min-h-[280px] overflow-hidden rounded-[16px] bg-oraami-accent-secondary lg:min-h-[340px]">
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_100%_100%,color-mix(in_srgb,var(--color-brand)_55%,transparent),transparent_65%)]"
+                />
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0"
+                  style={{
+                    backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.22) 1px, transparent 1.7px)",
+                    backgroundSize: "9px 9px",
+                    maskImage: "linear-gradient(to bottom, black 0%, transparent 85%)",
+                    WebkitMaskImage: "linear-gradient(to bottom, black 0%, transparent 85%)",
+                  }}
+                />
+                <span className="absolute left-5 top-5 rounded-full bg-white/15 px-3 py-1.5 text-[11px] font-medium uppercase tracking-widest text-white backdrop-blur-sm">
+                  {featured.category}
+                </span>
+              </div>
+              <div className="flex max-w-2xl flex-col justify-center py-2 sm:py-4 lg:py-6">
                 <div className="flex items-center gap-3 text-[11px] uppercase tracking-widest text-faint">
-                  <span className="text-brand">{featured.category}</span>
+                  <time dateTime={featured.date}>{formatDate(featured.date)}</time>
                   <span>·</span>
                   <span>{featured.readingTime}</span>
                 </div>
@@ -84,9 +109,9 @@ export default function BlogPage() {
                   {featured.title}
                 </h2>
                 <p className="mt-4 text-[16px] leading-relaxed text-muted">{featured.excerpt}</p>
-                <span className="mt-7 inline-flex shrink-0 items-center gap-2 text-[12px] uppercase tracking-widest text-ink">
-                  Read article
-                  <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand" aria-hidden="true" />
+                <span className="mt-7 inline-flex shrink-0 items-center gap-2 text-[13px] font-medium text-brand">
+                  Read the post
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
                 </span>
               </div>
             </Link>

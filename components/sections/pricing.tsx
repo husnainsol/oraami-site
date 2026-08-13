@@ -92,24 +92,23 @@ function PricingCompare() {
     <section className="bg-slate-50">
       <div className="landing-container py-12 sm:py-14 lg:py-16">
         <div className="text-center">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-faint">Side by side</p>
-          <h2 className="landing-section-title !font-bold mt-3">Compare all features</h2>
+          <h2 className="font-sf-pro landing-section-title !font-bold">Compare all features</h2>
         </div>
 
         <div className="mt-10 overflow-hidden rounded-[20px] border border-black/[0.05] bg-white shadow-[0_16px_40px_-36px_rgba(15,23,42,0.26)]">
           <div className="overflow-x-auto">
             <div className="min-w-[640px]">
-              <div className={`grid ${COMPARE_GRID_COLS} items-end gap-4 px-6 pb-5 pt-9 sm:px-8`}>
+              <div className={`grid ${COMPARE_GRID_COLS} items-end gap-4 bg-gray-soft px-6 pb-5 pt-6 sm:px-8`}>
                 <div />
                 {COMPARE_PLANS.map((plan) => (
-                  <div key={plan.name} className="relative text-center">
-                    {plan.popular && (
-                      <span className="absolute -top-6 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-brand px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-white">
-                        Popular
-                      </span>
-                    )}
-                    <p className={`text-[17px] font-bold ${plan.popular ? "text-brand" : "text-heading"}`}>
+                  <div key={plan.name} className="text-center">
+                    <p className={`flex items-center justify-center gap-2 text-[17px] font-bold ${plan.popular ? "text-brand" : "text-heading"}`}>
                       {plan.name}
+                      {plan.popular && (
+                        <span className="whitespace-nowrap rounded-full bg-brand px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-white">
+                          Popular
+                        </span>
+                      )}
                     </p>
                     <p className="mt-1 text-[12px] uppercase tracking-wide text-faint">{plan.price}</p>
                   </div>
@@ -120,7 +119,7 @@ function PricingCompare() {
                 <div key={section.title}>
                   <div className={`grid ${COMPARE_GRID_COLS} border-t border-black/10`}>
                     <div className="px-6 py-3 sm:px-8">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-faint">
+                      <p className="text-[11px] font-semibold tracking-[0.15em] text-heading">
                         {section.title}
                       </p>
                     </div>
