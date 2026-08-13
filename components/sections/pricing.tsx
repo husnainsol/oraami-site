@@ -21,6 +21,137 @@ type Tier = {
   popular?: boolean
 }
 
+type CompareValue = boolean | string
+
+type CompareRow = {
+  label: string
+  values: [CompareValue, CompareValue, CompareValue]
+}
+
+type CompareSection = {
+  title: string
+  rows: CompareRow[]
+}
+
+const COMPARE_PLANS = [
+  { name: "Starter", price: "$350 / mo", popular: false },
+  { name: "Growth", price: "$950 / mo", popular: true },
+  { name: "Scale", price: "Custom", popular: false },
+] as const
+
+const COMPARE_SECTIONS: CompareSection[] = [
+  {
+    title: "Core features",
+    rows: [
+      { label: "AI-Powered ICP Builder", values: [true, true, true] },
+      { label: "AI Lead Discovery", values: [true, true, true] },
+      { label: "Smart Lead Matching", values: [true, true, true] },
+      { label: "Contact Discovery", values: [false, true, true] },
+      { label: "Personalized AI Outreach", values: [false, true, true] },
+      { label: "Automated Sequences", values: [false, true, true] },
+      { label: "Lead & Contact Management", values: [true, true, true] },
+    ],
+  },
+  {
+    title: "Limits",
+    rows: [
+      { label: "Matched leads / month", values: ["200", "1,000", "Unlimited"] },
+      { label: "Seats", values: ["Unlimited", "Unlimited", "Unlimited"] },
+      { label: "Custom integrations", values: [false, false, true] },
+      { label: "SSO & advanced permissions", values: [false, false, true] },
+    ],
+  },
+  {
+    title: "Support",
+    rows: [{ label: "Support level", values: ["Email", "Priority", "Dedicated manager"] }],
+  },
+]
+
+const COMPARE_GRID_COLS = "grid-cols-[1.6fr_repeat(3,1fr)]"
+
+function CompareCell({ value, tinted }: { value: CompareValue; tinted: boolean }) {
+  return (
+    <div className={cn("flex items-center justify-center px-4 py-4", tinted && "bg-brand/[0.05]")}>
+      {typeof value === "boolean" ? (
+        value ? (
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand/[0.12] text-ink">
+            <Check className="h-3.5 w-3.5" strokeWidth={3} aria-label="Included" />
+          </span>
+        ) : (
+          <span className="h-px w-3 bg-black/15" aria-hidden="true" />
+        )
+      ) : (
+        <span className="text-[14px] font-bold text-heading">{value}</span>
+      )}
+    </div>
+  )
+}
+
+function PricingCompare() {
+  return (
+    <section className="bg-slate-50">
+      <div className="landing-container py-12 sm:py-14 lg:py-16">
+        <div className="text-center">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-faint">Side by side</p>
+          <h2 className="landing-section-title !font-bold mt-3">Compare all features</h2>
+        </div>
+
+        <div className="mt-10 overflow-hidden rounded-[20px] border border-black/[0.05] bg-white shadow-[0_16px_40px_-36px_rgba(15,23,42,0.26)]">
+          <div className="overflow-x-auto">
+            <div className="min-w-[640px]">
+              <div className={`grid ${COMPARE_GRID_COLS} items-end gap-4 px-6 pb-5 pt-9 sm:px-8`}>
+                <div />
+                {COMPARE_PLANS.map((plan) => (
+                  <div key={plan.name} className="relative text-center">
+                    {plan.popular && (
+                      <span className="absolute -top-6 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-brand px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-white">
+                        Popular
+                      </span>
+                    )}
+                    <p className={`text-[17px] font-bold ${plan.popular ? "text-brand" : "text-heading"}`}>
+                      {plan.name}
+                    </p>
+                    <p className="mt-1 text-[12px] uppercase tracking-wide text-faint">{plan.price}</p>
+                  </div>
+                ))}
+              </div>
+
+              {COMPARE_SECTIONS.map((section) => (
+                <div key={section.title}>
+                  <div className={`grid ${COMPARE_GRID_COLS} border-t border-black/10`}>
+                    <div className="px-6 py-3 sm:px-8">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-faint">
+                        {section.title}
+                      </p>
+                    </div>
+                    <div aria-hidden="true" />
+                    <div className="bg-brand/[0.05]" aria-hidden="true" />
+                    <div aria-hidden="true" />
+                  </div>
+
+                  {section.rows.map((row) => (
+                    <div
+                      key={row.label}
+                      className={`grid ${COMPARE_GRID_COLS} items-stretch border-t border-black/[0.06]`}
+                    >
+                      <div className="flex items-center px-6 py-4 sm:px-8">
+                        <p className="text-[14px] text-heading">{row.label}</p>
+                      </div>
+                      {row.values.map((value, index) => (
+                        <CompareCell key={index} value={value} tinted={index === 1} />
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 const TIERS: Tier[] = [
   {
     name: "Starter",
@@ -68,6 +199,7 @@ export default function Pricing({ page = false }: { page?: boolean }) {
   const [annual, setAnnual] = useState(true)
 
   return (
+    <>
     <section id="pricing" className="relative w-full overflow-hidden bg-canvas text-ink">
       <div className="landing-container py-12 sm:py-14 lg:py-16">
 
@@ -77,7 +209,7 @@ export default function Pricing({ page = false }: { page?: boolean }) {
             <h2 className="landing-section-title">
               Simple, transparent pricing
             </h2>
-            <p className="landing-section-description mt-4 max-w-xl">
+            <p className="landing-section-description mt-5 max-w-xl">
               Pick the plan that matches your pipeline goals — every tier includes deep research and trust-building sequences.
             </p>
           </div>
@@ -106,7 +238,7 @@ export default function Pricing({ page = false }: { page?: boolean }) {
           </div>
         </div>
 
-        <div className="mt-8 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-11 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
           {TIERS.map((t) => {
             const { Icon } = t
             return (
@@ -179,5 +311,8 @@ export default function Pricing({ page = false }: { page?: boolean }) {
 
       </div>
     </section>
+
+    {page && <PricingCompare />}
+    </>
   )
 }
