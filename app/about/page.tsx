@@ -120,10 +120,10 @@ export default function AboutPage() {
         <div className="landing-container py-12 sm:py-14 lg:py-16">
           <div className="text-center">
             <span className="inline-flex items-center rounded-full bg-brand/[0.08] px-3.5 py-1.5 text-[12px] font-medium text-brand-deep">
-              What we believe
+              What we Believe
             </span>
             <h2 className="landing-section-title !font-bold mt-5">
-              The principles behind the product
+              The Principles Behind the Product
             </h2>
           </div>
 
