@@ -45,6 +45,7 @@
   --color-gray-light: #fafafa;
   --color-lavender-light: #f0ebf8;
   --color-gray-blue-light: #f3f4f7;
+  --color-slate-50: #f8fafc;
   --color-amber-soft: #fff1d9;
   --color-amber-deep: #a86514;
   --color-green-soft: #e5f4ea;
@@ -138,6 +139,10 @@ body {
   font-size: clamp(0.875rem, 1vw, 0.9375rem);
   font-weight: 400;
   line-height: 1.6;
+}
+
+.font-sf-pro {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
 }
 
 @media (min-width: 40rem) {
