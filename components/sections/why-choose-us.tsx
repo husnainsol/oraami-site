@@ -285,9 +285,9 @@ export function WhyOraamiHero() {
         <div className="landing-container relative flex min-h-[70svh] items-center py-10 sm:py-12 lg:py-14">
           <div className="mx-auto max-w-[880px] text-center">
             <h1 className="mx-auto max-w-[760px] text-balance text-[clamp(2.1rem,7.8vw,3.25rem)] font-semibold leading-[1.06] tracking-[-0.03em] text-indigo-soft">
-              Stop guessing
+              Stop Guessing
               <span className="block">
-                who&apos;s <span className="text-brand-deep">worth reaching.</span>
+                who&apos;s <span className="text-brand-deep">Worth Reaching.</span>
               </span>
             </h1>
 
@@ -767,16 +767,16 @@ export function WhyOraamiCta() {
         <div className="relative overflow-hidden rounded-[24px] bg-oraami-accent-secondary p-8 sm:p-10 lg:p-14">
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-white/10"
+            className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-brand/16"
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -bottom-20 -left-16 h-64 w-64 rounded-full bg-white/10"
+            className="pointer-events-none absolute -bottom-20 -left-16 h-64 w-64 rounded-full bg-brand/16"
           />
 
           <div className="relative max-w-xl">
             <h2 className="text-[28px] font-bold leading-[1.1] tracking-[-0.03em] text-white sm:text-[34px] lg:text-[40px]">
-              See Oraami in action.
+              See <span className="text-brand">Oraami</span> in action.
             </h2>
             <p className="mt-4 text-[15px] leading-relaxed text-white/85 sm:text-[16px]">
               Set up your ICP, discover your first leads, and send personalized outreach — all in your first session.
@@ -788,7 +788,7 @@ export function WhyOraamiCta() {
                 variant="primary"
                 size="md"
                 icon={ArrowRight}
-                className="bg-white text-brand hover:bg-white/90 focus-visible:ring-white/50 focus-visible:ring-offset-oraami-accent-secondary"
+                className="bg-white text-brand hover:bg-brand hover:text-white focus-visible:ring-white/50 focus-visible:ring-offset-oraami-accent-secondary"
               >
                 Get Started for Free
               </Button>
@@ -797,7 +797,7 @@ export function WhyOraamiCta() {
                 variant="outline"
                 size="md"
                 icon={ArrowRight}
-                className="border-white bg-transparent text-white hover:border-white hover:bg-white/10 focus-visible:ring-white/50 focus-visible:ring-offset-oraami-accent-secondary"
+                className="border-white bg-transparent text-white hover:border-brand hover:bg-white/10 focus-visible:ring-white/50 focus-visible:ring-offset-oraami-accent-secondary"
               >
                 Book a Demo
               </Button>

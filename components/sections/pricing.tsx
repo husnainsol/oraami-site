@@ -195,7 +195,7 @@ const TIERS: Tier[] = [
 ]
 
 export default function Pricing({ page = false }: { page?: boolean }) {
-  const [annual, setAnnual] = useState(true)
+  const [annual, setAnnual] = useState(false)
 
   return (
     <>
@@ -206,7 +206,7 @@ export default function Pricing({ page = false }: { page?: boolean }) {
           <div className="max-w-2xl">
             <div aria-hidden="true" className="pointer-events-none absolute right-0 top-10 h-40 w-40 rounded-full bg-brand/[0.08] blur-3xl" />
             <h2 className="landing-section-title !font-bold">
-              Simple, transparent pricing
+              Simple, Transparent Pricing
             </h2>
             <p className="landing-section-description mt-5 max-w-xl">
               Pick the plan that matches your pipeline goals — every tier includes deep research and trust-building sequences.
@@ -220,7 +220,7 @@ export default function Pricing({ page = false }: { page?: boolean }) {
                 onClick={() => setAnnual(true)}
                 variant={annual ? "primary" : "ghost"}
                 size="sm"
-                className="h-8 rounded-lg px-3 text-[11px] uppercase tracking-wider sm:h-8"
+                className="h-8 rounded-lg px-3 text-[11px] tracking-wider sm:h-8"
               >
                 Annual
               </Button>
@@ -229,7 +229,7 @@ export default function Pricing({ page = false }: { page?: boolean }) {
                 onClick={() => setAnnual(false)}
                 variant={!annual ? "primary" : "ghost"}
                 size="sm"
-                className="h-8 rounded-lg px-3 text-[11px] uppercase tracking-wider sm:h-8"
+                className="h-8 rounded-lg px-3 text-[11px] tracking-wider sm:h-8"
               >
                 Monthly
               </Button>
