@@ -639,7 +639,7 @@ export function WhyOraamiReasons() {
                     <Check className="h-3.5 w-3.5" strokeWidth={2.5} aria-hidden="true" />
                   </span>
                   <div className="min-w-0">
-                    <p className="text-[14.5px] font-bold leading-[1.3] text-heading">{reason.title}</p>
+                    <p className="text-[14.5px] font-bold leading-[1.3] tracking-[-0.01em] text-heading">{reason.title}</p>
                     <p className="landing-card-description mt-1">{reason.desc}</p>
                   </div>
                 </li>

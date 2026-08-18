@@ -205,7 +205,7 @@ export default function Pricing({ page = false }: { page?: boolean }) {
         <div className="flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
           <div className="max-w-2xl">
             <div aria-hidden="true" className="pointer-events-none absolute right-0 top-10 h-40 w-40 rounded-full bg-brand/[0.08] blur-3xl" />
-            <h2 className="landing-section-title">
+            <h2 className="landing-section-title !font-bold">
               Simple, transparent pricing
             </h2>
             <p className="landing-section-description mt-5 max-w-xl">

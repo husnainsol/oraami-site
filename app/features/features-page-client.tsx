@@ -283,7 +283,7 @@ function FeaturesGrid() {
     <section id="feature-showcase" className="scroll-mt-24 bg-white text-ink">
       <div className="landing-container py-12 sm:py-14 lg:py-16">
         <div className="max-w-[580px]">
-          <h2 className="text-[22px] font-bold leading-[1.25] tracking-[-0.02em] text-heading">Everything Oraami does</h2>
+          <h2 className="landing-section-title !font-bold">Everything Oraami does</h2>
           <p className="mt-2.5 text-[18px] leading-[1.6] text-muted">
             Everything you need to find the right prospects, connect with the right people, and turn quality leads into meaningful conversations.
           </p>
