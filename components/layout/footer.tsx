@@ -11,12 +11,12 @@ type FooterLink = {
 const footerLinks: Record<string, FooterLink[]> = {
   Company: [
     { name: "Features", href: "/features" },
-    { name: "Platform", href: "/platform" },
+    { name: "Why Oraami", href: "/why-oraami" },
     { name: "Pricing", href: "/pricing" },
     { name: "About", href: "/about" },
   ],
   Resources: [
-    { name: "Docs" },
+    { name: "Contact", href: "/contact" },
     { name: "Blog", href: "/blog" },
   ],
   Security: [

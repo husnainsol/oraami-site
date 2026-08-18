@@ -179,7 +179,7 @@ export default async function BlogPage({
           <div className="landing-container relative flex min-h-[70svh] items-center py-10 sm:py-12 lg:py-14">
             <div className="mx-auto max-w-[880px] text-center">
               <h1 className="mx-auto max-w-[760px] text-balance text-[clamp(2.1rem,7.8vw,3.25rem)] font-semibold leading-[1.06] tracking-[-0.03em] text-indigo-soft">
-                Notes on finding the right <span className="text-brand-deep">buyer</span>
+                Notes on Finding the Right <span className="text-brand-deep">Buyer</span>
               </h1>
 
               <p className="mx-auto mt-7 max-w-[650px] text-[17px] leading-[1.62] text-white/65 sm:text-[18px]">
