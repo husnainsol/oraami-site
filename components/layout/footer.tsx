@@ -20,7 +20,7 @@ const footerLinks: Record<string, FooterLink[]> = {
     { name: "Blog", href: "/blog" },
   ],
   Security: [
-    { name: "Security", href: "/#security" },
+    { name: "Security", href: "/security" },
     { name: "Privacy", href: "/privacy" },
     { name: "Terms", href: "/terms" },
   ],
@@ -54,27 +54,9 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer id="contact" className="mt-3 w-full overflow-hidden bg-oraami-accent-secondary py-4 text-white sm:mt-4 sm:py-6">
+    <footer id="contact" className="mt-3 w-full overflow-hidden bg-oraami-accent-secondary text-white sm:mt-4">
       <div className="landing-container">
-        <div className="rounded-[20px] border border-white/15 bg-brand px-5 py-6 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] sm:px-7 sm:py-7 lg:flex lg:items-center lg:justify-between lg:gap-10 lg:px-8">
-          <div className="max-w-2xl">
-            <h2 className="text-[26px] font-medium leading-[1.08] tracking-[-0.03em] sm:text-[32px] lg:text-[36px]">
-              Ready to book more meetings with quality-first outreach?
-            </h2>
-            <p className="mt-3 max-w-xl text-[14px] leading-relaxed text-white/78 sm:text-[15px]">
-              Oraami combines deep lead research, buying-committee mapping, and trust-building sequences to help revenue teams find customers ready to buy.
-            </p>
-          </div>
-
-          <Link
-            href="/contact"
-            className="mt-6 inline-flex h-11 w-full items-center justify-center rounded-xl border border-white/15 bg-oraami-accent-secondary px-6 text-[12px] font-semibold text-white transition-colors hover:bg-[#140f38] sm:w-auto lg:mt-0"
-          >
-            Book a call
-          </Link>
-        </div>
-
-        <div className="grid gap-9 pb-10 pt-8 md:grid-cols-[0.9fr_1.1fr] lg:grid-cols-[1.1fr_1.9fr] lg:gap-10">
+        <div className="grid gap-9 pb-10 pt-10 md:grid-cols-[0.9fr_1.1fr] lg:grid-cols-[1.1fr_1.9fr] lg:gap-10">
           <div className="min-w-0 pl-1 sm:pl-0">
             <Link href="/" aria-label="Oraami home" className="inline-flex items-center gap-3">
               <Image src="/O.svg" alt="" width={28} height={28} className="h-7 w-7" />

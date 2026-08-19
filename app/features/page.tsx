@@ -31,7 +31,7 @@ export const metadata = metadataExport
 function FeaturesHero() {
   return (
     <section className="bg-white px-3 pb-3 sm:px-4 sm:pb-4 lg:px-5">
-      <div className="relative isolate min-h-[70svh] overflow-hidden rounded-[20px] bg-oraami-accent-secondary text-white">
+      <div className="relative isolate min-h-[55svh] overflow-hidden rounded-[20px] bg-oraami-accent-secondary text-white">
         <div
           aria-hidden="true"
             className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_100%_45%,color-mix(in_srgb,var(--color-brand)_8%,transparent),transparent_36%)]"
@@ -41,9 +41,9 @@ function FeaturesHero() {
           className="pointer-events-none absolute -right-[18%] top-1/2 h-[80%] w-[48%] -translate-y-1/2 rounded-full bg-brand/[0.04] blur-[110px]"
         />
 
-        <div className="landing-container relative flex min-h-[70svh] items-center py-10 sm:py-12 lg:py-14">
+        <div className="landing-container relative flex min-h-[55svh] items-center py-10 sm:py-12 lg:py-14">
           <div className="mx-auto max-w-[880px] text-center">
-            <h1 className="mx-auto max-w-[760px] text-balance text-[clamp(2.1rem,7.8vw,3.25rem)] font-extrabold leading-[1.06] tracking-[-0.03em] text-indigo-soft">
+            <h1 className="mx-auto max-w-[760px] text-balance text-[clamp(2.1rem,7.8vw,3.25rem)] font-semibold leading-[1.06] tracking-[-0.03em] text-indigo-soft">
               Find the <span className="text-brand-deep">Right Prospects.</span>
               <span className="block">Reach them Before Anyone</span>
               <span className="block">Else Does.</span>
@@ -56,13 +56,13 @@ function FeaturesHero() {
             <div className="mt-9 flex flex-col items-center justify-center gap-5 sm:flex-row sm:gap-4">
               <Link
                 href="/contact"
-                className="inline-flex h-[50px] items-center justify-center rounded-full bg-gradient-to-r from-brand to-orange px-7 text-[15px] font-semibold text-white shadow-[0_16px_32px_-16px_color-mix(in_srgb,var(--color-brand)_72%,transparent)] transition-[transform,filter] hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 focus-visible:ring-offset-oraami-accent-secondary"
+                className="inline-flex h-[50px] items-center justify-center rounded-lg bg-gradient-to-r from-brand to-orange px-7 text-[15px] font-semibold text-white shadow-[0_16px_32px_-16px_color-mix(in_srgb,var(--color-brand)_72%,transparent)] transition-[transform,filter] hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 focus-visible:ring-offset-oraami-accent-secondary"
               >
                 Build your ICP
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex h-[50px] items-center rounded-full border border-brand px-5 text-[15px] font-semibold text-white/85 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50"
+                className="inline-flex h-[50px] items-center rounded-lg border border-brand px-5 text-[15px] font-semibold text-white/85 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50"
               >
                 Talk to Sales
               </Link>

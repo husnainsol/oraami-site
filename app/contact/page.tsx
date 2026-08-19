@@ -24,34 +24,20 @@ const SOCIALS = [
   { href: "https://www.linkedin.com/company/oraami", label: "LinkedIn" },
 ]
 
-const LABEL = "text-[11px] uppercase tracking-widest text-faint"
+const LABEL = "text-[15px] font-semibold tracking-widest text-ink"
 
 export default function ContactPage() {
   return (
-    <main className="text-ink">
+    <main className="font-sf-pro text-ink">
       {jsonLd && <JsonLd schema={jsonLd} />}
 
       <section className="relative w-full overflow-hidden border-b border-black/10 bg-canvas">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-[60%]"
-          style={{
-            backgroundImage: "radial-gradient(circle, rgba(20,20,20,0.10) 1px, transparent 1.7px)",
-            backgroundSize: "9px 9px",
-            maskImage: "linear-gradient(to bottom, black 0%, transparent 85%)",
-            WebkitMaskImage: "linear-gradient(to bottom, black 0%, transparent 85%)",
-          }}
-        />
-        <div className="site-container relative pb-16 pt-28 lg:pb-16 lg:pt-32">
+        <div className="site-container relative pb-8 pt-11 lg:pb-11 lg:pt-16">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-faint">
-              <span className="h-1.5 w-1.5 bg-brand" />
-              Contact
-            </div>
-            <h1 className="mt-5 text-[34px] font-medium leading-[1.05] tracking-[-0.03em] text-heading sm:text-[44px] lg:text-[52px]">
+            <h1 className="text-[34px] font-medium leading-[1.05] tracking-[-0.03em] text-ink sm:text-[44px] lg:text-[52px]">
               Let&apos;s talk.
             </h1>
-            <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-muted">
+            <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-ink-mute">
               Tell us who you sell to and we&apos;ll show you your first 50 deeply-researched, ready-to-buy leads — no spam, no pressure.
             </p>
           </div>
@@ -83,7 +69,7 @@ export default function ContactPage() {
                   <span className={LABEL}>What are you selling?</span>
                   <Textarea rows={5} placeholder="Tell us about your product and ideal customer…" />
                 </label>
-                <Button type="submit" variant="secondary" size="lg" icon={ArrowRight} className="sm:self-start">
+                <Button type="submit" variant="primary" size="lg" icon={ArrowRight} className="sm:self-start">
                   Send message
                 </Button>
               </form>
@@ -96,7 +82,7 @@ export default function ContactPage() {
                   <a href="mailto:hello@oraami.com" className="mt-3 inline-block text-[22px] font-medium tracking-tight text-ink transition-colors hover:text-brand">
                     hello@oraami.com
                   </a>
-                  <p className="mt-2 text-[14px] text-faint">We reply within 1 business day · Remote · Worldwide</p>
+                  <p className="mt-2 text-[14px] text-ink-mute">We reply within 1 business day · Remote · Worldwide</p>
                 </div>
 
                 <div>
@@ -110,7 +96,7 @@ export default function ContactPage() {
                         <span className="text-[13px] text-brand">.{s.n}</span>
                         <div>
                           <h3 className="text-[16px] font-medium text-ink">{s.title}</h3>
-                          <p className="mt-1.5 text-[14px] leading-relaxed text-muted">{s.desc}</p>
+                          <p className="mt-1.5 text-[14px] leading-relaxed text-ink-mute">{s.desc}</p>
                         </div>
                       </div>
                     ))}
@@ -119,7 +105,7 @@ export default function ContactPage() {
 
                 <div>
                   <p className={LABEL}>Follow along</p>
-                  <div className="mt-4 flex gap-6 text-[13px] uppercase tracking-wider text-ink">
+                  <div className="mt-4 flex gap-6 text-[13px] tracking-wider text-ink">
                     {SOCIALS.map((s) => (
                       <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-brand">
                         {s.label}
