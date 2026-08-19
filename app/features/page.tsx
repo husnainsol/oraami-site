@@ -15,6 +15,7 @@ import {
 import { createMeta } from "@/lib/seo"
 import { JsonLd } from "@/components/json-ld"
 import { WhyOraamiCta } from "@/components/sections/why-choose-us"
+import { LINKS } from "@/lib/links"
 
 const { metadata: metadataExport, jsonLd } = createMeta({
   title: "Features",
@@ -55,7 +56,9 @@ function FeaturesHero() {
 
             <div className="mt-9 flex flex-col items-center justify-center gap-5 sm:flex-row sm:gap-4">
               <Link
-                href="/contact"
+                href={LINKS.login}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex h-[50px] w-full items-center justify-center rounded-lg bg-gradient-to-r from-brand to-orange px-7 text-[15px] font-semibold text-white shadow-[0_16px_32px_-16px_color-mix(in_srgb,var(--color-brand)_72%,transparent)] transition-[transform,filter] hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 focus-visible:ring-offset-oraami-accent-secondary sm:w-auto"
               >
                 Build your ICP

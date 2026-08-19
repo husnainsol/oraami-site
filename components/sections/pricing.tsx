@@ -4,6 +4,7 @@ import { useState } from "react"
 import { ArrowRight, Building2, Check, ShieldCheck, User, Users } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { LINKS } from "@/lib/links"
 
 function cn(...c: (string | false | undefined)[]) {
   return c.filter(Boolean).join(" ")
@@ -277,7 +278,7 @@ export default function Pricing({ page = false }: { page?: boolean }) {
                 <p className="landing-card-description mt-3">{t.desc}</p>
 
                 <Button
-                  href="/contact"
+                  href={t.cta === "Talk to sales" ? "/contact" : LINKS.login}
                   fullWidth
                   variant={t.popular ? "primary" : "outline"}
                   size="sm"

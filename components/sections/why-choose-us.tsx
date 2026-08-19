@@ -10,6 +10,7 @@ import {
 import { useEffect, useRef, useState } from "react"
 import { AlignLeft, ArrowRight, Check, Clock, Minus, Repeat2, X, type LucideIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { LINKS } from "@/lib/links"
 import { useReducedMotionPreference } from "@/components/ui/use-reduced-motion-preference"
 import { QualityDotsVisual } from "@/components/visuals/quality-dots"
 
@@ -298,7 +299,7 @@ export function WhyOraamiHero() {
 
             <div className="mt-9 flex items-center justify-center">
               <Button
-                href="/contact"
+                href={LINKS.login}
                 variant="primary"
                 size="md"
                 icon={ArrowRight}
@@ -784,7 +785,7 @@ export function WhyOraamiCta() {
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button
-                href="/contact"
+                href={LINKS.login}
                 variant="primary"
                 size="md"
                 icon={ArrowRight}

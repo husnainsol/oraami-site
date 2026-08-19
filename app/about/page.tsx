@@ -4,6 +4,7 @@ import { JsonLd } from "@/components/json-ld"
 import { WhyOraamiCta } from "@/components/sections/why-choose-us"
 import { Button } from "@/components/ui/button"
 import { createMeta } from "@/lib/seo"
+import { LINKS } from "@/lib/links"
 
 const { metadata: metadataExport, jsonLd } = createMeta({
   title: "About",
@@ -87,7 +88,7 @@ export default function AboutPage() {
 
               <div className="mt-9 flex items-center justify-center">
                 <Button
-                  href="/contact"
+                  href={LINKS.login}
                   variant="primary"
                   size="md"
                   icon={ArrowRight}

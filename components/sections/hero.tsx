@@ -5,6 +5,7 @@ import { ArrowRight, Sparkles } from "lucide-react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { useReducedMotionPreference } from "@/components/ui/use-reduced-motion-preference"
+import { LINKS } from "@/lib/links"
 
 const HERO_COPY =
   "Oraami analyzes your website, understands your product and audience, and surfaces the leads that match your ideal customer profile — automatically."
@@ -60,7 +61,7 @@ export default function Hero() {
 
               <div className="mt-10 flex flex-col gap-4 sm:flex-row">
                 <Button
-                  href="/contact"
+                  href={LINKS.login}
                   variant="primary"
                   size="md"
                   icon={ArrowRight}
