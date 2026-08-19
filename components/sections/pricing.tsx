@@ -105,7 +105,7 @@ function PricingCompare() {
                     <p className={`flex items-center justify-center gap-2 text-[17px] font-bold ${plan.popular ? "text-brand" : "text-heading"}`}>
                       {plan.name}
                       {plan.popular && (
-                        <span className="whitespace-nowrap rounded-full bg-brand px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-white">
+                        <span className="ml-1 whitespace-nowrap rounded-full bg-brand/[0.15] px-2 py-0.5 text-[9px] font-semibold uppercase tracking-widest text-brand">
                           Popular
                         </span>
                       )}
@@ -119,7 +119,7 @@ function PricingCompare() {
                 <div key={section.title}>
                   <div className={`grid ${COMPARE_GRID_COLS} border-t border-black/10`}>
                     <div className="px-6 py-3 sm:px-8">
-                      <p className="text-[11px] font-semibold tracking-[0.15em] text-heading">
+                      <p className="font-sf-pro text-[14px] font-semibold tracking-[0.15em] text-heading">
                         {section.title}
                       </p>
                     </div>

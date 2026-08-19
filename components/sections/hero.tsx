@@ -48,8 +48,8 @@ export default function Hero() {
           </motion.div>
 
           <div className="mt-10 grid min-w-0 gap-10 lg:grid-cols-[minmax(0,0.54fr)_minmax(0,0.46fr)] lg:items-start lg:gap-12">
-            <motion.div variants={itemVariants} className="min-w-0 max-w-[570px]">
-              <h1 className="max-w-[565px] text-balance text-[clamp(2.1rem,7.8vw,3.25rem)] font-semibold leading-[1.06] tracking-[-0.03em] text-[#eef2ff]">
+            <motion.div variants={itemVariants} className="min-w-0 max-w-[705px]">
+              <h1 className="max-w-[700px] text-balance text-[clamp(2.1rem,7.8vw,3.25rem)] font-semibold leading-[1.06] tracking-[-0.03em] text-[#eef2ff]">
                 <span className="block">
                   Identify Customers <span className="text-brand-deep">Most</span>
                 </span>
@@ -64,16 +64,16 @@ export default function Hero() {
                   variant="primary"
                   size="md"
                   icon={ArrowRight}
-                  className="w-full px-5 transition-transform hover:-translate-y-0.5 active:translate-y-0 sm:h-10 sm:w-auto"
+                  className="w-full px-5 transition-transform hover:-translate-y-0.5 active:translate-y-0 sm:h-10 sm:w-auto sm:min-w-[180px]"
                 >
-                  Get Started for Free
+                  Get Started
                 </Button>
                 <Button
                   href="#features"
                   variant="outline"
                   size="md"
                   icon={ArrowRight}
-                  className="w-full border-brand bg-transparent px-5 text-white transition-transform hover:-translate-y-0.5 hover:bg-white/[0.04] hover:text-white active:translate-y-0 sm:h-10 sm:w-auto"
+                  className="w-full border-brand bg-transparent px-5 text-white transition-transform hover:-translate-y-0.5 hover:bg-white/[0.04] hover:text-white active:translate-y-0 sm:h-10 sm:w-auto sm:min-w-[180px]"
                 >
                   Explore Features
                 </Button>
@@ -95,14 +95,14 @@ export default function Hero() {
             <div className="relative w-full overflow-hidden rounded-t-[24px] bg-[#1e1e1e] p-2 pb-0 shadow-[0_0_10px_rgba(245,73,0,0.3),0_0_48px_rgba(245,73,0,0.3)] lg:rounded-t-[40px]">
               <div className="relative overflow-hidden rounded-t-[18px] lg:rounded-t-[32px]">
                 <div className="relative flex h-12 items-center bg-ink px-5">
-                  <span className="flex items-center gap-2" aria-hidden="true">
-                    <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
-                    <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
-                    <span className="h-3 w-3 rounded-full bg-[#28c840]" />
+                  <span className="flex items-center gap-1.5 sm:gap-2" aria-hidden="true">
+                    <span className="h-2 w-2 rounded-full bg-[#ff5f57] sm:h-3 sm:w-3" />
+                    <span className="h-2 w-2 rounded-full bg-[#febc2e] sm:h-3 sm:w-3" />
+                    <span className="h-2 w-2 rounded-full bg-[#28c840] sm:h-3 sm:w-3" />
                   </span>
-                  <span className="absolute left-1/2 flex -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-full bg-white/[0.07] px-4 py-1.5 text-[12px] text-white/70">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#28c840]" aria-hidden="true" />
-                    app.oraami.com / icps
+                  <span className="absolute left-1/2 flex max-w-[calc(100%-96px)] -translate-x-1/2 items-center gap-2 truncate rounded-full bg-white/[0.07] px-4 py-1.5 text-[12px] text-white/70">
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#28c840]" aria-hidden="true" />
+                    <span className="truncate">app.oraami.com / icps</span>
                   </span>
                 </div>
                 <div className="relative w-full overflow-hidden [aspect-ratio:1240/552]">
