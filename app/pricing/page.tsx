@@ -3,6 +3,7 @@ import { JsonLd } from "@/components/json-ld"
 import Pricing from "@/components/sections/pricing"
 import { Button } from "@/components/ui/button"
 import { createMeta } from "@/lib/seo"
+import { LINKS } from "@/lib/links"
 
 const { metadata: metadataExport, jsonLd } = createMeta({
   title: "Pricing",
@@ -44,7 +45,7 @@ export default function PricingPage() {
 
               <div className="mt-9 flex items-center justify-center">
                 <Button
-                  href="/contact"
+                  href={LINKS.login}
                   variant="primary"
                   size="md"
                   icon={ArrowRight}

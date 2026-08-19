@@ -5,6 +5,7 @@ import { getAllPosts, getLatestPosts, formatDate } from "@/lib/blog/blog"
 import { createMeta, SITE_URL } from "@/lib/seo"
 import { JsonLd } from "@/components/json-ld"
 import { Button } from "@/components/ui/button"
+import { LINKS } from "@/lib/links"
 
 const { metadata: metadataExport, jsonLd } = createMeta({
   title: "Blog",
@@ -32,15 +33,6 @@ type MoreFromBlogPost = {
 }
 
 const SYNCED_CARD_VARIANTS: MoreFromBlogVariant[] = ["gradient", "warm", "navy", "gradient", "navy"]
-
-const placeholderCard: MoreFromBlogPost = {
-  category: "Company",
-  date: "Jul 02, 2026",
-  readingTime: "3 min",
-  title: "Signal over noise: our founding principle, revisited.",
-  excerpt: "A short note on the idea we keep coming back to every time we consider adding a new feature.",
-  variant: "gradient",
-}
 
 const cardBackgroundByVariant: Record<MoreFromBlogVariant, string> = {
   gradient: "bg-gradient-to-br from-oraami-accent-secondary to-brand",
@@ -136,7 +128,7 @@ export default async function BlogPage({
     href: `/blog/${post.slug}`,
   }))
 
-  const moreFromBlogPosts: MoreFromBlogPost[] = [...syncedMoreFromBlogPosts, placeholderCard]
+  const moreFromBlogPosts: MoreFromBlogPost[] = syncedMoreFromBlogPosts
 
   const filteredMoreFromBlogPosts =
     activeCategory === "All posts" ? moreFromBlogPosts : moreFromBlogPosts.filter((post) => post.category === activeCategory)
@@ -182,7 +174,7 @@ export default async function BlogPage({
 
               <div className="mt-9 flex items-center justify-center">
                 <Button
-                  href="/contact"
+                  href={LINKS.login}
                   variant="primary"
                   size="md"
                   icon={ArrowRight}
