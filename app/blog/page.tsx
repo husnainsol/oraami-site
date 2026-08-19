@@ -161,7 +161,7 @@ export default async function BlogPage({
   }
 
   return (
-    <main className="font-sf-pro overflow-hidden bg-white text-ink">
+    <main className="overflow-hidden bg-white text-ink">
       {jsonLd && <JsonLd schema={jsonLd} />}
       <JsonLd schema={itemListJsonLd} />
 
@@ -192,7 +192,7 @@ export default async function BlogPage({
                   variant="primary"
                   size="md"
                   icon={ArrowRight}
-                  className="px-5 transition-transform hover:-translate-y-0.5 active:translate-y-0"
+                  className="w-full px-5 transition-transform hover:-translate-y-0.5 active:translate-y-0 sm:w-auto"
                 >
                   Get Started
                 </Button>

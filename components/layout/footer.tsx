@@ -58,9 +58,8 @@ export default function Footer() {
       <div className="landing-container">
         <div className="grid gap-9 pb-10 pt-10 md:grid-cols-[0.9fr_1.1fr] lg:grid-cols-[1.1fr_1.9fr] lg:gap-10">
           <div className="min-w-0 pl-1 sm:pl-0">
-            <Link href="/" aria-label="Oraami home" className="inline-flex items-center gap-3">
-              <Image src="/O.svg" alt="" width={28} height={28} className="h-7 w-7" />
-              <span className="text-[16px] font-bold uppercase tracking-[0.08em] text-white">Oraami</span>
+            <Link href="/" aria-label="Oraami home" className="inline-flex items-center">
+              <Image src="/icon2.svg" alt="Oraami" width={77} height={30} className="h-[30px] w-[77px] object-contain" />
             </Link>
             <p className="mt-5 max-w-[18rem] break-words text-[14px] leading-[1.9] text-white/42">
               The quality-first AI BDR for teams that want better-fit accounts, stronger outreach, and more booked meetings.

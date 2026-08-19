@@ -48,8 +48,8 @@ export default function Hero() {
           </motion.div>
 
           <div className="mt-10 grid min-w-0 gap-10 lg:grid-cols-[minmax(0,0.54fr)_minmax(0,0.46fr)] lg:items-start lg:gap-12">
-            <motion.div variants={itemVariants} className="min-w-0 max-w-[570px]">
-              <h1 className="max-w-[565px] text-balance text-[clamp(2.1rem,7.8vw,3.25rem)] font-semibold leading-[1.06] tracking-[-0.03em] text-[#eef2ff]">
+            <motion.div variants={itemVariants} className="min-w-0 max-w-[705px]">
+              <h1 className="max-w-[700px] text-balance text-[clamp(2.1rem,7.8vw,3.25rem)] font-semibold leading-[1.06] tracking-[-0.03em] text-[#eef2ff]">
                 <span className="block">
                   Identify Customers <span className="text-brand-deep">Most</span>
                 </span>
@@ -64,7 +64,7 @@ export default function Hero() {
                   variant="primary"
                   size="md"
                   icon={ArrowRight}
-                  className="w-full px-5 transition-transform hover:-translate-y-0.5 active:translate-y-0 sm:h-10 sm:w-auto"
+                  className="w-full px-5 transition-transform hover:-translate-y-0.5 active:translate-y-0 sm:h-10 sm:w-auto sm:min-w-[180px]"
                 >
                   Get Started
                 </Button>
@@ -73,7 +73,7 @@ export default function Hero() {
                   variant="outline"
                   size="md"
                   icon={ArrowRight}
-                  className="w-full border-brand bg-transparent px-5 text-white transition-transform hover:-translate-y-0.5 hover:bg-white/[0.04] hover:text-white active:translate-y-0 sm:h-10 sm:w-auto"
+                  className="w-full border-brand bg-transparent px-5 text-white transition-transform hover:-translate-y-0.5 hover:bg-white/[0.04] hover:text-white active:translate-y-0 sm:h-10 sm:w-auto sm:min-w-[180px]"
                 >
                   Explore Features
                 </Button>

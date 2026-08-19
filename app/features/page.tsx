@@ -56,13 +56,13 @@ function FeaturesHero() {
             <div className="mt-9 flex flex-col items-center justify-center gap-5 sm:flex-row sm:gap-4">
               <Link
                 href="/contact"
-                className="inline-flex h-[50px] items-center justify-center rounded-lg bg-gradient-to-r from-brand to-orange px-7 text-[15px] font-semibold text-white shadow-[0_16px_32px_-16px_color-mix(in_srgb,var(--color-brand)_72%,transparent)] transition-[transform,filter] hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 focus-visible:ring-offset-oraami-accent-secondary"
+                className="inline-flex h-[50px] w-full items-center justify-center rounded-lg bg-gradient-to-r from-brand to-orange px-7 text-[15px] font-semibold text-white shadow-[0_16px_32px_-16px_color-mix(in_srgb,var(--color-brand)_72%,transparent)] transition-[transform,filter] hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 focus-visible:ring-offset-oraami-accent-secondary sm:w-auto"
               >
                 Build your ICP
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex h-[50px] items-center rounded-lg border border-brand px-5 text-[15px] font-semibold text-white/85 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50"
+                className="inline-flex h-[50px] w-full items-center justify-center rounded-lg border border-brand px-5 text-[15px] font-semibold text-white/85 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 sm:w-auto"
               >
                 Talk to Sales
               </Link>

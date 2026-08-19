@@ -18,7 +18,7 @@ export const metadata = metadataExport
 
 export default function PricingPage() {
   return (
-    <main className="font-sf-pro overflow-hidden bg-white text-ink">
+    <main className="overflow-hidden bg-white text-ink">
       {jsonLd && <JsonLd schema={jsonLd} />}
 
       <section className="bg-white px-3 pb-3 sm:px-4 sm:pb-4 lg:px-5">
@@ -48,7 +48,7 @@ export default function PricingPage() {
                   variant="primary"
                   size="md"
                   icon={ArrowRight}
-                  className="px-5 transition-transform hover:-translate-y-0.5 active:translate-y-0"
+                  className="w-full px-5 transition-transform hover:-translate-y-0.5 active:translate-y-0 sm:w-auto"
                 >
                   Get Started
                 </Button>

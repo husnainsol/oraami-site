@@ -28,7 +28,7 @@ const LABEL = "text-[15px] font-semibold tracking-widest text-ink"
 
 export default function ContactPage() {
   return (
-    <main className="font-sf-pro text-ink">
+    <main className="text-ink">
       {jsonLd && <JsonLd schema={jsonLd} />}
 
       <section className="relative w-full overflow-hidden border-b border-black/10 bg-canvas">

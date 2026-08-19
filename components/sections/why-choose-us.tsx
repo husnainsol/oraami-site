@@ -302,7 +302,7 @@ export function WhyOraamiHero() {
                 variant="primary"
                 size="md"
                 icon={ArrowRight}
-                className="px-5 transition-transform hover:-translate-y-0.5 active:translate-y-0"
+                className="w-full px-5 transition-transform hover:-translate-y-0.5 active:translate-y-0 sm:w-auto"
               >
                 Get Started
               </Button>
